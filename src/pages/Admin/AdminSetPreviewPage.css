@@ -1,0 +1,382 @@
+/* ================================================
+   AdminSetPreviewPage — Layout
+   ================================================ */
+
+.admin-set-preview-container {
+    padding: 30px;
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+/* Breadcrumb back link */
+.preview-breadcrumb {
+    margin-bottom: 20px;
+}
+
+.preview-breadcrumb .back-btn {
+    color: var(--text-light) !important;
+    font-weight: 600 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.preview-breadcrumb .back-btn:hover {
+    color: var(--primary) !important;
+    background: transparent !important;
+}
+
+/* ================================================
+   Two-column Layout
+   ================================================ */
+
+.preview-layout {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 24px;
+    align-items: flex-start;
+}
+
+/* ================================================
+   Main Content Card — matches .user-list-card
+   ================================================ */
+
+.preview-main-card {
+    padding: 0 !important;
+    overflow: hidden;
+    border-radius: 20px !important;
+    border: 2px solid var(--border-color) !important;
+}
+
+/* ---- Card header block ---- */
+.preview-card-header {
+    padding: 24px 28px;
+    border-bottom: 2px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.preview-card-header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-width: 0;
+}
+
+.type-icon-wrapper {
+    width: 48px;
+    height: 48px;
+    background: var(--primary-light);
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    flex-shrink: 0;
+}
+
+.preview-title-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+}
+
+.preview-set-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.preview-set-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.submission-date {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--text-light);
+    font-size: 0.8125rem;
+    font-weight: 500;
+}
+
+/* Author pill in card header */
+.author-pill {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--input-bg);
+    padding: 8px 14px;
+    border-radius: 40px;
+    flex-shrink: 0;
+    border: 2px solid var(--border-color);
+}
+
+.author-avatar-circle {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.8rem;
+    flex-shrink: 0;
+}
+
+.author-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+}
+
+.author-name {
+    font-weight: 700;
+    color: var(--text-dark);
+    font-size: 0.875rem;
+}
+
+.author-handle {
+    font-size: 0.75rem;
+    color: var(--text-light);
+}
+
+/* ---- Card title group (inside header) ---- */
+.preview-title-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+}
+
+.preview-set-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin: 0;
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.preview-set-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.submission-date {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--text-light);
+    font-size: 0.8125rem;
+    font-weight: 500;
+}
+
+/* ---- Card type label ---- */
+.preview-card-label {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.preview-description-section {
+    padding: 20px 28px;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.section-label {
+    font-size: 0.675rem;
+    font-weight: 800;
+    color: var(--text-light);
+    letter-spacing: 1.2px;
+    margin-bottom: 10px;
+    display: block;
+    text-transform: uppercase;
+}
+
+.description-bubble {
+    background: var(--input-bg);
+    padding: 14px 18px;
+    border-radius: 12px;
+    color: var(--text-dark);
+    font-size: 0.9375rem;
+    line-height: 1.65;
+}
+
+.description-bubble p {
+    margin: 0;
+}
+
+/* ---- Flashcards section ---- */
+.preview-content-section {
+    padding: 24px 28px;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.section-heading {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-dark);
+}
+
+.flashcard-count-badge {
+    background: var(--primary-light);
+    color: var(--primary);
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+}
+
+/* ---- Flashcard list in table ---- */
+.flashcard-list-wrapper {
+    margin-top: 10px;
+}
+
+.flashcard-list-wrapper .ui-table th {
+    background: transparent;
+    padding-top: 24px;
+}
+
+.term-cell-content {
+    width: 35%;
+}
+
+.term-text {
+    color: var(--primary);
+    font-weight: 700;
+}
+
+.definition-cell-content {
+    line-height: 1.6;
+}
+
+.definition-text {
+    margin: 0;
+    color: var(--text-dark);
+}
+
+/* ================================================
+   Sidebar — Moderation Card
+   ================================================ */
+
+.preview-sidebar {
+    position: sticky;
+    top: 24px;
+}
+
+.moderation-card {
+    padding: 0 !important;
+    overflow: hidden;
+    border-radius: 20px !important;
+    border: 2px solid var(--border-color) !important;
+}
+
+.moderation-card-header {
+    padding: 18px 22px;
+    border-bottom: 2px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.moderation-card-header h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin: 0;
+}
+
+.moderation-card-header svg {
+    color: var(--primary);
+}
+
+.moderation-card-body {
+    padding: 20px 22px;
+}
+
+.moderation-notes-area {
+    margin-bottom: 16px;
+}
+
+.moderation-textarea {
+    margin-top: 8px;
+    width: 100%;
+    resize: none;
+    font-size: 0.875rem;
+}
+
+.moderation-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.action-button {
+    width: 100%;
+}
+
+.action-button.approve {
+    background: var(--success) !important;
+    border-color: var(--success) !important;
+}
+
+.action-button.reject {
+    background: var(--error) !important;
+    border-color: var(--error) !important;
+}
+
+/* ================================================
+   Responsive
+   ================================================ */
+
+@media (max-width: 1024px) {
+    .preview-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .preview-sidebar {
+        position: static;
+        order: -1;
+    }
+
+    .moderation-actions {
+        flex-direction: row;
+    }
+}
+
+@media (max-width: 768px) {
+    .admin-set-preview-container {
+        padding: 16px;
+    }
+
+    .moderation-actions {
+        flex-direction: column;
+    }
+}

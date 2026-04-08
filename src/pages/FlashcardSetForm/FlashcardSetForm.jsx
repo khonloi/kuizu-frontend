@@ -1,0 +1,170 @@
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { ChevronLeft, Save, Loader } from 'lucide-react';
+import './FlashcardSetForm.css';
+import { getFlashcardSetById, createFlashcardSet, updateFlashcardSet } from '@/api/flashcards';
+import { Button, Card, Input, Textarea, Select } from '@/components/ui';
+import MainLayout from '@/components/layout';
+
+const FlashcardSetForm = () => {
+    const { setId } = useParams();
+    const navigate = useNavigate();
+    const isEdit = !!setId;
+
+    const [formData, setFormData] = useState({
+        title: '',
+        description: '',
+        category: '',
+        visibility: 'PUBLIC'
+    });
+    const [loading, setLoading] = useState(isEdit);
+    const [submitting, setSubmitting] = useState(false);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        if (isEdit) {
+            fetchSet();
+        }
+    }, [setId]);
+
+    const fetchSet = async () => {
+        try {
+            const data = await getFlashcardSetById(setId);
+            setFormData({
+                title: data.title,
+                description: data.description || '',
+                category: data.category || '',
+                visibility: data.visibility || 'PUBLIC'
+            });
+        } catch (err) {
+            setError('Failed to load set data');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            setSubmitting(true);
+            setError(null);
+
+            if (isEdit) {
+                await updateFlashcardSet(setId, formData);
+                navigate(`/flashcard-sets/${setId}`);
+            } else {
+                const newSet = await createFlashcardSet(formData);
+                navigate(`/flashcard-sets/${newSet.setId}`);
+            }
+        } catch (err) {
+            setError(err.response?.data?.message || 'Something went wrong');
+        } finally {
+            setSubmitting(false);
+        }
+    };
+
+    return (
+        <MainLayout>
+            <div className="form-container">
+                <Button variant="ghost" className="back-link" onClick={() => navigate(-1)}>
+                    <ChevronLeft size={20} />
+                    Cancel
+                </Button>
+
+                <div className="form-header">
+                    <h1>{isEdit ? 'Edit Flashcard Set' : 'Create New Set'}</h1>
+                </div>
+
+                {loading ? (
+                    <div style={{ padding: '100px 0' }}>
+                        <Loader fullPage={false} text="Loading set details..." />
+                    </div>
+                ) : (
+                    <Card className="form-card">
+                        <Card.Body>
+                            <form onSubmit={handleSubmit}>
+                                {error && <div className="error-msg">{error}</div>}
+
+                                <div className="form-group">
+                                    <label htmlFor="title">Title</label>
+                                    <Input
+                                        id="title"
+                                        name="title"
+                                        placeholder='e.g. "Biology 101: Cell Structure"'
+                                        value={formData.title}
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                </div>
+
+                                <div className="form-group">
+                                    <Textarea
+                                        id="description"
+                                        name="description"
+                                        label="Description (Optional)"
+                                        rows="4"
+                                        placeholder="Add a bio to your profile..."
+                                        value={formData.description}
+                                        onChange={handleChange}
+                                    />
+                                </div>
+
+                                <div className="form-group">
+                                    <label htmlFor="category">Category (Optional)</label>
+                                    <Input
+                                        id="category"
+                                        name="category"
+                                        placeholder='e.g. "Biology", "Mathematics", "Japanese"'
+                                        value={formData.category}
+                                        onChange={handleChange}
+                                    />
+                                    <small className="form-help">Sets with the same category will be grouped together in folders.</small>
+                                </div>
+
+                                <div className="form-group">
+                                    <Select
+                                        id="visibility"
+                                        name="visibility"
+                                        label="Visibility"
+                                        value={formData.visibility}
+                                        onChange={handleChange}
+                                    >
+                                        <option value="PUBLIC">Public (Everyone can see)</option>
+                                        <option value="PRIVATE">Private (Only you can see)</option>
+                                        <option value="UNLISTED">Unlisted (Anyone with the link can see)</option>
+                                    </Select>
+                                </div>
+
+                                <div className="form-actions">
+                                    <Button
+                                        type="button"
+                                        variant="outline"
+                                        onClick={() => navigate(-1)}
+                                        disabled={submitting}
+                                    >
+                                        Cancel
+                                    </Button>
+                                    <Button
+                                        type="submit"
+                                        isLoading={submitting}
+                                        className="submit-btn"
+                                        leftIcon={<Save size={18} />}
+                                    >
+                                        {isEdit ? 'Save Changes' : 'Create Set'}
+                                    </Button>
+                                </div>
+                            </form>
+                        </Card.Body>
+                    </Card>
+                )}
+            </div>
+        </MainLayout>
+    );
+};
+
+export default FlashcardSetForm;

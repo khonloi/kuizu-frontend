@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap');
+
+:root {
+  --primary: #4255ff;
+  --primary-hover: #3747d4;
+  --bg-purple: #a8a1ff;
+  --text-dark: #282e3e;
+  --text-light: #586380;
+  --border-color: #edeff2;
+  --input-bg: #f6f7fb;
+  --white: #ffffff;
+  --error: #ff725e;
+  --success: #10b981;
+  --info: #4255ff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: var(--text-dark);
+  background-color: var(--white);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Outfit', sans-serif;
+  color: var(--text-dark);
+}
+
+h1 {
+  font-size: 2.25rem;
+  font-weight: 700;
+  letter-spacing: -1px;
+}
+
+h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+h4 {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+p {
+  color: var(--text-light);
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+label,
+.label {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  letter-spacing: 0.5px;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  font-family: 'Outfit', sans-serif;
+  transition: all 0.2s ease;
+}
+
+input,
+textarea {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1rem;
+  color: var(--text-dark);
+}
+
+.auth-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.w-full {
+  width: 100% !important;
+}
+
+.mt-4 {
+  margin-top: 1rem !important;
+}
+
+.layout-container {
+  min-height: 100vh;
+  background-color: var(--white);
+}
+
+.main-content {
+  min-height: calc(100vh - 72px);
+}
