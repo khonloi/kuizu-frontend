@@ -63,11 +63,9 @@ function App() {
         } />
 
         <Route path="/dashboard" element={
-          <MainLayout>
-            <ProtectedRoute>
-              <DashboardPage />
-            </ProtectedRoute>
-          </MainLayout>
+          <ProtectedRoute>
+            <DashboardPage />
+          </ProtectedRoute>
         } />
 
         <Route path="/admin/users" element={

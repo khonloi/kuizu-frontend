@@ -110,13 +110,58 @@
 }
 
 @media (max-width: 1024px) {
-
-    .navbar-links,
-    .navbar-logo {
-        gap: 20px;
+    .navbar-links {
+        display: none;
     }
 
     .navbar-content {
-        padding: 0 20px;
+        padding: 0 16px;
+        gap: 12px;
+    }
+
+    .navbar-logo {
+        font-size: 24px;
+    }
+
+    .navbar-center {
+        max-width: none;
+    }
+}
+
+.mobile-menu-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    margin-left: -8px;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.mobile-menu-btn:hover {
+    background-color: var(--input-bg);
+}
+
+@media (max-width: 640px) {
+    .navbar-content {
+        padding: 0 12px;
+        gap: 8px;
+    }
+
+    .navbar-logo {
+        display: none; /* Hide logo on phone to make room for search */
+    }
+
+    .navbar-center {
+        display: block;
+        width: 100%;
+        max-width: none;
+    }
+
+    .navbar-right {
+        gap: 8px;
     }
 }

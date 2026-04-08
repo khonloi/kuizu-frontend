@@ -21,7 +21,7 @@ import { useToast } from '@/context/ToastContext';
 import { getPendingCount } from '@/api/moderation';
 import './Sidebar.css';
 
-const Sidebar = ({ isCollapsed, onToggle, activePath = '/dashboard' }) => {
+const Sidebar = ({ isCollapsed, onToggle, activePath = '/dashboard', isMobile, onClose }) => {
     const { user, logout } = useAuth();
     const navigate = useNavigate();
     const toast = useToast();
@@ -37,23 +37,9 @@ const Sidebar = ({ isCollapsed, onToggle, activePath = '/dashboard' }) => {
         navigate('/auth');
     };
 
-    const implementedRoutes = [
-        '/dashboard',
-        '/admin/users',
-        '/admin/submissions/flashcards',
-        '/admin/submissions/classes',
-        '/admin/history',
-        '/admin/stats/flashcards',
-        '/admin/stats/users',
-        '/profile',
-        '/search',
-        '/auth',
-        '/'
-    ];
-
-    const handleNavigation = (path, label) => {
-        // If the path is not implemented, our catch-all route will handle it
+    const handleNavigation = (path) => {
         navigate(path);
+        if (isMobile && onClose) onClose();
     };
 
     const mainLinks = [
@@ -76,7 +62,7 @@ const Sidebar = ({ isCollapsed, onToggle, activePath = '/dashboard' }) => {
     ];
 
     return (
-        <aside className={`sidebar ${isCollapsed ? 'collapsed' : ''} ${isAdmin ? 'admin-sidebar' : ''}`}>
+        <aside className={`sidebar ${isCollapsed ? 'collapsed' : ''} ${isAdmin ? 'admin-sidebar' : ''} ${isMobile ? 'mobile-drawer' : ''}`}>
             <div className="sidebar-sections">
                 {!isAdmin && (
                     <div className="sidebar-section">
@@ -84,10 +70,10 @@ const Sidebar = ({ isCollapsed, onToggle, activePath = '/dashboard' }) => {
                             <div
                                 key={index}
                                 className={`sidebar-item ${activePath.startsWith(link.path) ? 'active' : ''}`}
-                                onClick={() => handleNavigation(link.path, link.label)}
+                                onClick={() => handleNavigation(link.path)}
                             >
                                 <span className="sidebar-icon">{link.icon}</span>
-                                {!isCollapsed && <span className="sidebar-label">{link.label}</span>}
+                                {(!isCollapsed || isMobile) && <span className="sidebar-label">{link.label}</span>}
                             </div>
                         ))}
                     </div>
@@ -95,15 +81,15 @@ const Sidebar = ({ isCollapsed, onToggle, activePath = '/dashboard' }) => {
 
                 {isAdmin && (
                     <div className="sidebar-section">
-                        {!isCollapsed && <h6 className="sidebar-title">Administration</h6>}
+                        {(!isCollapsed || isMobile) && <h6 className="sidebar-title">Administration</h6>}
                         {adminLinks.map((link, index) => (
                             <div
                                 key={index}
                                 className={`sidebar-item ${activePath.startsWith(link.path) ? 'active' : ''}`}
-                                onClick={() => handleNavigation(link.path, link.label)}
+                                onClick={() => handleNavigation(link.path)}
                             >
                                 <span className="sidebar-icon">{link.icon}</span>
-                                {!isCollapsed && <span className="sidebar-label">{link.label}</span>}
+                                {(!isCollapsed || isMobile) && <span className="sidebar-label">{link.label}</span>}
                             </div>
                         ))}
                     </div>
@@ -113,15 +99,15 @@ const Sidebar = ({ isCollapsed, onToggle, activePath = '/dashboard' }) => {
                     <>
                         <div className="sidebar-divider"></div>
                         <div className="sidebar-section">
-                            {!isCollapsed && <h6 className="sidebar-title">Get started</h6>}
+                            {(!isCollapsed || isMobile) && <h6 className="sidebar-title">Get started</h6>}
                             {quickStartLinks.map((link, index) => (
                                 <div
                                     key={index}
                                     className={`sidebar-item ${activePath.startsWith(link.path) ? 'active' : ''}`}
-                                    onClick={() => handleNavigation(link.path, link.label)}
+                                    onClick={() => handleNavigation(link.path)}
                                 >
                                     <span className="sidebar-icon">{link.icon}</span>
-                                    {!isCollapsed && <span className="sidebar-label">{link.label}</span>}
+                                    {(!isCollapsed || isMobile) && <span className="sidebar-label">{link.label}</span>}
                                 </div>
                             ))}
                         </div>
@@ -129,22 +115,25 @@ const Sidebar = ({ isCollapsed, onToggle, activePath = '/dashboard' }) => {
                 )}
             </div>
 
-            <div className={`sidebar-footer ${isCollapsed ? 'collapsed' : ''}`}>
-                <button className="collapse-tab" onClick={onToggle}>
-                    {isCollapsed ? <Menu size={20} /> : <ChevronLeft size={20} />}
-                    {!isCollapsed && <span>Collapse</span>}
-                </button>
+            <div className={`sidebar-footer ${(isCollapsed && !isMobile) ? 'collapsed' : ''}`}>
+                {!isMobile && (
+                    <button className="collapse-tab" onClick={onToggle}>
+                        {isCollapsed ? <Menu size={20} /> : <ChevronLeft size={20} />}
+                        {!isCollapsed && <span>Collapse</span>}
+                    </button>
+                )}
 
-                {isAdmin && user && (
+                {(isAdmin || isMobile) && user && (
                     <div className="nav-profile-section">
                         <img
                             src={user.profilePictureUrl || 'https://api.dicebear.com/7.x/avataaars/svg?seed=Felix'}
                             alt="Profile"
                             className="nav-avatar"
-                            onClick={() => navigate('/profile')}
+                            onClick={() => handleNavigation('/profile')}
                         />
-                        {!useAuth().isMockMode && (
-                            <Button variant="ghost" size="sm" onClick={handleLogout} className="logout-compact-btn">
+                        {isMobile && <span style={{marginLeft: '12px', fontWeight: 600}}>{user.username}</span>}
+                        {(!useAuth().isMockMode && !isCollapsed) && (
+                            <Button variant="ghost" size="sm" onClick={handleLogout} className="logout-compact-btn" style={{marginLeft: 'auto'}}>
                                 Log Out
                             </Button>
                         )}

@@ -13,38 +13,57 @@ const MainLayout = ({ children, isLoading = false }) => {
         const saved = localStorage.getItem('sidebar-collapsed');
         return saved === 'true' ? true : false;
     });
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
+    const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+
+    useEffect(() => {
+        const handleResize = () => {
+            const mobile = window.innerWidth < 1024;
+            setIsMobile(mobile);
+            if (!mobile) setIsMobileSidebarOpen(false);
+        };
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     const toggleSidebar = () => {
-        setIsSidebarCollapsed(prev => {
-            const newState = !prev;
-            localStorage.setItem('sidebar-collapsed', newState.toString());
-            return newState;
-        });
+        if (isMobile) {
+            setIsMobileSidebarOpen(!isMobileSidebarOpen);
+        } else {
+            setIsSidebarCollapsed(prev => {
+                const newState = !prev;
+                localStorage.setItem('sidebar-collapsed', newState.toString());
+                return newState;
+            });
+        }
     };
 
     const isAdmin = user?.role === 'ROLE_ADMIN';
 
     return (
-        <div className={`layout-container ${isSidebarCollapsed ? 'sidebar-collapsed' : ''}`}>
-            {!isAdmin && <Navbar isSidebarCollapsed={isSidebarCollapsed} onToggleSidebar={toggleSidebar} />}
-            <div className="layout-body" style={{ display: 'flex', marginTop: isAdmin ? '0' : '' }}>
-                <Sidebar isCollapsed={isSidebarCollapsed} onToggle={toggleSidebar} activePath={location.pathname} />
-                <div className="content-wrapper" style={{
-                    flex: 1,
-                    marginLeft: isSidebarCollapsed ? '72px' : '240px',
-                    transition: 'margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                    width: '100%',
-                    minHeight: isAdmin ? '100vh' : 'calc(100vh - 5rem)',
-                    backgroundColor: 'var(--white)',
-                    display: 'flex',
-                    flexDirection: 'column'
-                }}>
-                    <main className="main-content" style={{
-                        flex: 1,
-                        display: isLoading ? 'flex' : 'block',
-                        alignItems: isLoading ? 'center' : 'initial',
-                        justifyContent: isLoading ? 'center' : 'initial'
-                    }}>
+        <div className={`layout-container ${isSidebarCollapsed ? 'sidebar-collapsed' : ''} ${isMobile ? 'is-mobile' : ''} ${isMobileSidebarOpen ? 'mobile-sidebar-open' : ''}`}>
+            {!isAdmin && (
+                <Navbar 
+                    isSidebarCollapsed={isSidebarCollapsed} 
+                    onToggleSidebar={toggleSidebar} 
+                    isMobile={isMobile}
+                    onOpenMobileMenu={() => setIsMobileSidebarOpen(true)}
+                />
+            )}
+            
+            <div className="layout-body" style={{ display: 'flex' }}>
+                {isMobileSidebarOpen && <div className="sidebar-overlay" onClick={() => setIsMobileSidebarOpen(false)} />}
+                
+                <Sidebar 
+                    isCollapsed={isMobile ? false : isSidebarCollapsed} 
+                    onToggle={toggleSidebar} 
+                    activePath={location.pathname}
+                    isMobile={isMobile}
+                    onClose={() => setIsMobileSidebarOpen(false)}
+                />
+                
+                <div className={`content-wrapper ${isSidebarCollapsed ? 'collapsed' : ''}`}>
+                    <main className={`main-content ${isLoading ? 'is-loading' : ''}`}>
                         {isLoading ? (
                             <Loader fullPage={false} size="lg" />
                         ) : (

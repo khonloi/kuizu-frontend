@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { searchClasses } from '@/api/class';
 
 
-const Navbar = ({ isSidebarCollapsed, onToggleSidebar }) => {
+const Navbar = ({ isSidebarCollapsed, onToggleSidebar, isMobile, onOpenMobileMenu }) => {
     const { user, logout } = useAuth();
     const { openSetModal } = useModal();
     const navigate = useNavigate();
@@ -76,21 +76,28 @@ const Navbar = ({ isSidebarCollapsed, onToggleSidebar }) => {
         <nav className="navbar">
             <div className="navbar-content">
                 <div className="navbar-left">
+                    {isMobile && (
+                        <button className="mobile-menu-btn" onClick={onOpenMobileMenu}>
+                            <Menu size={24} />
+                        </button>
+                    )}
                     <div className="navbar-logo" onClick={() => navigate('/dashboard')}>Kuizu</div>
-                    <div className="navbar-links">
-                        <Dropdown
-                            label="Study Tools"
-                            items={studyToolsItems}
-                            onItemClick={handleDropdownItemClick}
-                            variant="nav"
-                        />
-                        <Dropdown
-                            label="Subjects"
-                            items={subjectItems}
-                            onItemClick={handleDropdownItemClick}
-                            variant="nav"
-                        />
-                    </div>
+                    {!isMobile && (
+                        <div className="navbar-links">
+                            <Dropdown
+                                label="Study Tools"
+                                items={studyToolsItems}
+                                onItemClick={handleDropdownItemClick}
+                                variant="nav"
+                            />
+                            <Dropdown
+                                label="Subjects"
+                                items={subjectItems}
+                                onItemClick={handleDropdownItemClick}
+                                variant="nav"
+                            />
+                        </div>
+                    )}
                 </div>
 
                 <div className="navbar-center">
@@ -98,7 +105,7 @@ const Navbar = ({ isSidebarCollapsed, onToggleSidebar }) => {
                         onSearch={handleSearchInput}
                         onResultClick={handleResultClick}
                         onEnter={handleSearchEnter}
-                        placeholder="Search for study guides"
+                        placeholder={isMobile ? "Search..." : "Search for study guides"}
                     />
                 </div>
 
@@ -106,11 +113,11 @@ const Navbar = ({ isSidebarCollapsed, onToggleSidebar }) => {
                     <Dropdown
                         items={createItems}
                         onItemClick={handleDropdownItemClick}
-                        variant="create-pill"
+                        variant={isMobile ? "create-pill-mobile" : "create-pill"}
                         showChevron={false}
                     >
                         <Plus size={20} strokeWidth={3} />
-                        <span>Create</span>
+                        {!isMobile && <span>Create</span>}
                     </Dropdown>
                     {user ? (
                         <div className="nav-profile-section">
@@ -120,13 +127,8 @@ const Navbar = ({ isSidebarCollapsed, onToggleSidebar }) => {
                                 className="nav-avatar"
                                 onClick={() => navigate('/profile')}
                             />
-                            {!useAuth().isMockMode && (
-                                <Button variant="ghost" size="sm" onClick={handleLogout} className="logout-compact-btn">
-                                    Log Out
-                                </Button>
-                            )}
                         </div>
-                    ) : (
+                    ) : !isMobile && (
                         <Button
                             variant="primary"
                             size="sm"

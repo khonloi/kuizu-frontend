@@ -132,7 +132,7 @@
 }
 
 .item-card-actions button {
-    padding: 8px !important;
+    padding: 4px !important;
     border-radius: 10px !important;
     color: var(--primary);
 }
@@ -153,4 +153,29 @@
     display: flex;
     align-items: center;
     gap: 6px;
+}
+
+@media (max-width: 768px) {
+    .card-header,
+    .card-body,
+    .card-footer,
+    .item-card-header,
+    .item-card-body,
+    .item-card-footer {
+        padding: 1rem;
+    }
+
+    .item-card-title {
+        font-size: 1rem;
+    }
+
+    .item-card-description {
+        font-size: 0.875rem;
+        -webkit-line-clamp: 3;
+        line-clamp: 3;
+    }
+
+    .username {
+        font-size: 0.8rem;
+    }
 }

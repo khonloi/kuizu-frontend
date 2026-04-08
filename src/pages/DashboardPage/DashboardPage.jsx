@@ -7,6 +7,7 @@ import { useAuth } from '@/context/AuthContext';
 import { useModal } from '@/context/ModalContext';
 import { FolderOpen, Globe, BookOpen, Sparkles } from 'lucide-react';
 import { Button, Card, Loader, EmptyState } from '@/components/ui';
+import MainLayout from '@/components/layout';
 import './DashboardPage.css';
 
 const DashboardPage = () => {
@@ -89,10 +90,9 @@ const DashboardPage = () => {
         triggerCelebration();
     };
 
-    if (isLoading) return <Loader fullPage={true} />;
-
     return (
-        <div className="dashboard-container">
+        <MainLayout isLoading={isLoading}>
+            <div className="dashboard-container">
             {showCelebration && (
                 <div className="celebration-overlay">
                     <Sparkles className="celebration-icon" />
@@ -250,6 +250,7 @@ const DashboardPage = () => {
                 </section>
             )}
         </div>
+      </MainLayout>
     );
 };
 

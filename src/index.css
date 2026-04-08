@@ -105,6 +105,50 @@ textarea {
   background-color: var(--white);
 }
 
+.content-wrapper {
+  flex: 1;
+  margin-left: 240px;
+  transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 100%;
+  min-height: calc(100vh - 5rem);
+  background-color: var(--white);
+  display: flex;
+  flex-direction: column;
+}
+
+.content-wrapper.collapsed {
+  margin-left: 72px;
+}
+
 .main-content {
-  min-height: calc(100vh - 72px);
+  flex: 1;
+}
+
+.main-content.is-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 999;
+}
+
+@media (max-width: 1024px) {
+  .content-wrapper {
+    margin-left: 0 !important;
+  }
+}
+
+@media (max-width: 768px) {
+  h1 { font-size: 1.75rem; }
+  h2 { font-size: 1.25rem; }
+  
+  :root {
+    --dashboard-padding: 1rem;
+  }
 }
