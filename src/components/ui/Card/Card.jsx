@@ -3,10 +3,10 @@ import { User } from 'lucide-react';
 import Badge from '../Badge/Badge';
 import './Card.css';
 
-const Card = ({ 
-    children, 
-    className = '', 
-    title, 
+const Card = ({
+    children,
+    className = '',
+    title,
     badge,
     badgeIcon: BadgeIcon,
     badgeVariant = 'primary',
@@ -15,14 +15,14 @@ const Card = ({
     footerRight,
     actions,
     onClick,
-    ...props 
+    ...props
 }) => {
     // If it has a title, it's an "Item Card" layout
     if (title) {
         return (
-            <div 
-                className={`card item-card ${className}`} 
-                onClick={onClick} 
+            <div
+                className={`card item-card ${className}`}
+                onClick={onClick}
                 {...props}
             >
                 <div className="item-card-header">
@@ -62,12 +62,22 @@ const Card = ({
     }
 
     return (
-        <div 
-            className={`card ${className}`} 
+        <div
+            className={`card ${className}`}
             onClick={onClick}
             {...props}
         >
             {children}
+            {ownerName && (
+                <div className="card-footer">
+                    <div className="user-info">
+                        <div className="user-avatar">
+                            <User size={14} />
+                        </div>
+                        <span className="username">By {ownerName}</span>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

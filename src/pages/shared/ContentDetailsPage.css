@@ -112,6 +112,12 @@
     gap: 1.5rem;
 }
 
+.children-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
 .flashcard-item {
     position: relative;
     border: 2px solid var(--border-color);

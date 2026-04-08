@@ -6,7 +6,7 @@ import { useModal } from '@/context/ModalContext';
 import MainLayout from '@/components/layout';
 import { useNavigate } from 'react-router-dom';
 
-const ContentListPage = ({ 
+const ContentListPage = ({
     type = 'sets', // 'sets' or 'folders'
     fetchPublic,
     fetchMy,
@@ -17,12 +17,13 @@ const ContentListPage = ({
     searchPlaceholder,
     emptyMsg,
     itemLabel,
+    initialTab = 'public',
     navigatePath
 }) => {
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [activeTab, setActiveTab] = useState('public');
+    const [activeTab, setActiveTab] = useState(fetchPublic ? initialTab : 'my');
     const [searchQuery, setSearchQuery] = useState('');
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [itemToDelete, setItemToDelete] = useState(null);
@@ -93,9 +94,12 @@ const ContentListPage = ({
     };
 
     const filteredItems = items.filter(item => {
+        // First filter by tab/visibility if needed
+        if (activeTab === 'private' && item.visibility !== 'PRIVATE') return false;
+
         const titleVal = type === 'sets' ? item.title : (type === 'folders' ? item.name : item.className);
         return (titleVal && titleVal.toLowerCase().includes(searchQuery.toLowerCase())) ||
-               (item.description && item.description.toLowerCase().includes(searchQuery.toLowerCase()));
+            (item.description && item.description.toLowerCase().includes(searchQuery.toLowerCase()));
     });
 
     const getItemId = (item) => item.id || (type === 'sets' ? item.setId : (type === 'folders' ? item.folderId : item.classId));
@@ -132,22 +136,31 @@ const ContentListPage = ({
                                 onChange={(e) => setSearchQuery(e.target.value)}
                             />
                         </div>
-                        <div className="tabs">
-                            <Button
-                                variant="ghost"
-                                className={`tab-item ${activeTab === 'public' ? 'active' : ''}`}
-                                onClick={() => setActiveTab('public')}
-                            >
-                                Public
-                            </Button>
-                            <Button
-                                variant="ghost"
-                                className={`tab-item ${activeTab === 'my' ? 'active' : ''}`}
-                                onClick={() => setActiveTab('my')}
-                            >
-                                My {type === 'sets' ? 'Sets' : 'Folders'}
-                            </Button>
-                        </div>
+                        {fetchPublic && (
+                            <div className="tabs">
+                                <Button
+                                    variant="ghost"
+                                    className={`tab-item ${activeTab === 'my' ? 'active' : ''}`}
+                                    onClick={() => setActiveTab('my')}
+                                >
+                                    All {type === 'sets' ? 'Sets' : (type === 'folders' ? 'Folders' : 'Classes')}
+                                </Button>
+                                <Button
+                                    variant="ghost"
+                                    className={`tab-item ${activeTab === 'public' ? 'active' : ''}`}
+                                    onClick={() => setActiveTab('public')}
+                                >
+                                    Public
+                                </Button>
+                                <Button
+                                    variant="ghost"
+                                    className={`tab-item ${activeTab === 'private' ? 'active' : ''}`}
+                                    onClick={() => setActiveTab('private')}
+                                >
+                                    Private
+                                </Button>
+                            </div>
+                        )}
                     </div>
                 </div>
 
@@ -165,44 +178,46 @@ const ContentListPage = ({
                         />
                     </div>
                 ) : (
-                    <div className="content-grid">
+                    <>
                         {filteredItems.length > 0 ? (
-                            filteredItems.map(item => (
-                                <Card
-                                    key={getItemId(item)}
-                                    onClick={() => navigate(`${navigatePath}/${getItemId(item)}`)}
-                                    title={getItemTitle(item)}
-                                    badge={`${getItemCount(item)} ${itemLabel}`}
-                                    description={item.description}
-                                    ownerName={activeTab === 'my' ? 'You' : item.ownerDisplayName}
-                                    footerRight={
-                                        item.visibility && (
-                                            <Badge variant={item.visibility === 'PUBLIC' ? 'success' : 'secondary'} size="sm">
-                                                {item.visibility.charAt(0) + item.visibility.slice(1).toLowerCase()}
-                                            </Badge>
-                                        )
-                                    }
-                                    actions={activeTab === 'my' && (
-                                        <>
-                                            <Button
-                                                variant="ghost"
-                                                size="sm"
-                                                onClick={(e) => handleEditClick(e, item)}
-                                            >
-                                                <Pencil size={16} />
-                                            </Button>
-                                            <Button
-                                                variant="ghost"
-                                                size="sm"
-                                                className="delete-btn"
-                                                onClick={(e) => handleDelete(e, item)}
-                                            >
-                                                <Trash2 size={16} />
-                                            </Button>
-                                        </>
-                                    )}
-                                />
-                            ))
+                            <div className="content-grid">
+                                {filteredItems.map(item => (
+                                    <Card
+                                        key={getItemId(item)}
+                                        onClick={() => navigate(`${navigatePath}/${getItemId(item)}`)}
+                                        title={getItemTitle(item)}
+                                        badge={`${getItemCount(item)} ${itemLabel}`}
+                                        description={item.description}
+                                        ownerName={activeTab === 'my' ? 'You' : item.ownerDisplayName}
+                                        footerRight={
+                                            item.visibility && (
+                                                <Badge variant={item.visibility === 'PUBLIC' ? 'success' : 'secondary'} size="sm">
+                                                    {item.visibility.charAt(0) + item.visibility.slice(1).toLowerCase()}
+                                                </Badge>
+                                            )
+                                        }
+                                        actions={activeTab === 'my' && (
+                                            <>
+                                                <Button
+                                                    variant="ghost"
+                                                    size="sm"
+                                                    onClick={(e) => handleEditClick(e, item)}
+                                                >
+                                                    <Pencil size={16} />
+                                                </Button>
+                                                <Button
+                                                    variant="ghost"
+                                                    size="sm"
+                                                    className="delete-btn"
+                                                    onClick={(e) => handleDelete(e, item)}
+                                                >
+                                                    <Trash2 size={16} />
+                                                </Button>
+                                            </>
+                                        )}
+                                    />
+                                ))}
+                            </div>
                         ) : (
                             <EmptyState
                                 icon={Search}
@@ -210,7 +225,7 @@ const ContentListPage = ({
                                 description={searchQuery ? "Try a different search term or check your spelling." : "Start by creating your own or exploring public ones."}
                             />
                         )}
-                    </div>
+                    </>
                 )}
 
                 <ConfirmationModal

@@ -11,22 +11,6 @@ const ClassDetailsPage = () => {
 
     const handleRefresh = () => setRefreshTrigger(prev => prev + 1);
 
-    const handleDeleteChild = async (cid, childId) => {
-        // We can't easily know if childId is a member or material here 
-        // without passing more info to ContentDetailsPage.
-        // However, ContentDetailsPage activeTab state is internal.
-        
-        // Let's refine ContentDetailsPage to pass type of deletion if possible, 
-        // OR we can try to guess based on ID format if they were different.
-        // But for Classes, we have materials and members.
-        
-        // Actually, I'll update ContentDetailsPage to pass the current section to deleteChild.
-        // FOR NOW, I'll just check if removeClassMaterial fails, try removeMember. (Not ideal)
-        
-        // BETTER: I'll update ContentDetailsPage to have separate delete handlers or pass section.
-        // I chose to pass the section in my next edit.
-    };
-
     const handleOpenAdd = (type) => {
         if (type === 'join') openJoinClassModal(classId, handleRefresh);
         else if (type === 'leave') openLeaveClassModal(classId, handleRefresh);

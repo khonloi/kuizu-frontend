@@ -402,7 +402,7 @@ const ContentDetailsPage = ({
                                 )}
                             </div>
 
-                            <div className="children-list">
+                            <div className={type === 'sets' ? "children-list" : "children-grid"}>
                                 {filteredChildren.length > 0 ? (
                                     filteredChildren.map((child, index) => (
                                         type === 'sets' ? (
@@ -465,17 +465,18 @@ const ContentDetailsPage = ({
                                             />
                                         )
                                     ))
-                                ) : (
-                                    <div className="empty-children">
-                                        <p>No {type === 'sets' ? 'flashcards' : 'sets'} here yet.</p>
-                                        {isOwner && (
-                                            <Button onClick={handleAddChildClick}>
-                                                Add your first {type === 'sets' ? 'card' : 'set'}
-                                            </Button>
-                                        )}
-                                    </div>
-                                )}
+                                ) : null}
                             </div>
+                            {filteredChildren.length === 0 && (
+                                <div className="empty-children">
+                                    <p>No {type === 'sets' ? 'flashcards' : 'sets'} here yet.</p>
+                                    {isOwner && (
+                                        <Button onClick={handleAddChildClick}>
+                                            Add your first {type === 'sets' ? 'card' : 'set'}
+                                        </Button>
+                                    )}
+                                </div>
+                            )}
                         </>
                     )}
                 </div>

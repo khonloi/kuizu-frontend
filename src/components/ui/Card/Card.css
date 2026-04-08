@@ -4,7 +4,7 @@
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
-    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s ease;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .card:hover {
@@ -41,7 +41,6 @@
 }
 
 .item-card:hover {
-    transform: translateY(-8px);
     border-color: var(--primary);
     box-shadow: 0 12px 30px rgba(66, 85, 255, 0.15);
 }
@@ -121,7 +120,7 @@
 }
 
 .username {
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     font-weight: 600;
     color: var(--text-dark);
 }
