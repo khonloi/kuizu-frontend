@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ContentDetailsPage from '../shared/ContentDetailsPage';
-import { getFolderDetail, removeSetFromFolder } from '@/api/folder';
+import { getFolderDetail, removeSetFromFolder, deleteFolder } from '@/api/folder';
 import { useModal } from '@/context/ModalContext';
 import AddSetToFolderModal from '../../components/Folder/AddSetToFolderModal';
 import AddCategoryModal from '../../components/Folder/AddCategoryModal';
@@ -25,6 +25,7 @@ const FolderDetailPage = () => {
                 type="folders"
                 getById={getFolderDetail}
                 deleteChild={(folderId, setId) => removeSetFromFolder(folderId, setId)}
+                deleteItem={deleteFolder}
                 openEditModal={openFolderModal}
                 openAddChildModal={() => setIsAddSetOpen(true)}
                 backPath="/folders"

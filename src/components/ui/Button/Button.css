@@ -15,7 +15,14 @@
 .btn-content {
     display: flex;
     align-items: center;
-    gap: 6px;
+    line-height: 1;
+}
+
+.btn-icon-left,
+.btn-icon-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .btn:active {

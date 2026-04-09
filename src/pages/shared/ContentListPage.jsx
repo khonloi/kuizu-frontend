@@ -173,7 +173,7 @@ const ContentListPage = ({
                                         description={item.description}
                                         ownerName={activeTab === 'my' ? 'You' : item.ownerDisplayName}
                                         footerRight={
-                                            item.visibility && (
+                                            item.visibility && (item.ownerId === user?.userId || item.owner?.userId === user?.userId || item.ownerUserId === user?.userId || item.ownerUsername === user?.username) && (
                                                 <Badge variant={item.visibility === 'PUBLIC' ? 'success' : 'secondary'} size="sm">
                                                     {item.visibility.charAt(0) + item.visibility.slice(1).toLowerCase()}
                                                 </Badge>

@@ -8,10 +8,11 @@ import MainLayout from '@/components/layout';
 import { useAuth } from '@/context/AuthContext';
 import { useToast } from '@/context/ToastContext';
 
-const ContentDetailsPage = ({ 
+const ContentDetailsPage = ({
     type = 'sets', // 'sets', 'folders', or 'classes'
     getById,
     getChildren,
+    deleteItem,
     deleteChild,
     processRequest,
     openEditModal,
@@ -25,14 +26,16 @@ const ContentDetailsPage = ({
     const navigate = useNavigate();
     const { user } = useAuth();
     const { success: toastSuccess, error: toastError } = useToast();
-    
+
     const [item, setItem] = useState(null);
     const [children, setChildren] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     const [isDeleting, setIsDeleting] = useState(false);
+    const [isDeletingItem, setIsDeletingItem] = useState(false);
     const [childToDelete, setChildToDelete] = useState(null);
+    const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
     const [activeTag, setActiveTag] = useState('all');
     const [activeTab, setActiveTab] = useState('materials');
 
@@ -40,12 +43,12 @@ const ContentDetailsPage = ({
         try {
             setLoading(true);
             const data = await getById(id);
-            
+
             // Check ownership and visibility
             const itemOwnerId = data.ownerId || data.owner?.userId || data.ownerUserId || data.userId;
             const isOwner = itemOwnerId === user?.userId || data.ownerUsername === user?.username || data.username === user?.username;
             const isPublic = data.visibility === 'PUBLIC';
-            
+
             if (!isOwner && !isPublic) {
                 setError("You do not have permission to view this content.");
                 setLoading(false);
@@ -53,7 +56,7 @@ const ContentDetailsPage = ({
             }
 
             setItem(data);
-            
+
             // Set children based on type
             if (type === 'sets') {
                 const childrenData = getChildren ? await getChildren(id) : [];
@@ -99,7 +102,7 @@ const ContentDetailsPage = ({
         try {
             setIsDeleting(true);
             await deleteChild(id, childToDelete, activeTab);
-            
+
             if (type === 'classes') {
                 if (activeTab === 'materials') {
                     setChildren(children.filter(c => c.materialId !== childToDelete));
@@ -112,13 +115,28 @@ const ContentDetailsPage = ({
             } else {
                 setChildren(children.filter(c => (c.setId || c.cardId) !== childToDelete));
             }
-            
+
             setChildToDelete(null);
             toastSuccess('Removed successfully.');
         } catch (err) {
             toastError('Failed to remove item.');
         } finally {
             setIsDeleting(false);
+        }
+    };
+
+    const handleDeleteItem = async () => {
+        if (!deleteItem) return;
+        try {
+            setIsDeletingItem(true);
+            await deleteItem(id);
+            toastSuccess(`${type.charAt(0).toUpperCase() + type.slice(1, -1)} deleted successfully.`);
+            navigate(backPath);
+        } catch (err) {
+            toastError(`Failed to delete ${type.slice(0, -1)}.`);
+        } finally {
+            setIsDeletingItem(false);
+            setShowDeleteConfirm(false);
         }
     };
 
@@ -140,7 +158,7 @@ const ContentDetailsPage = ({
             </div>
         </MainLayout>
     );
-    
+
     if (error || !id) return (
         <MainLayout>
             <div style={{ padding: '100px 40px' }}>
@@ -175,14 +193,14 @@ const ContentDetailsPage = ({
                 <div className="content-hero">
                     <div className="content-info-main">
                         <h1 className="content-title">
-                            {getItemTitle()}
+                            <span className="title-text">{getItemTitle()}</span>
                             {item.status && item.status !== 'ACTIVE' && item.status !== 'APPROVED' && (
-                                <Badge variant={item.status === 'PENDING' ? 'warning' : 'error'} style={{ marginLeft: '12px', verticalAlign: 'middle' }}>
+                                <Badge variant={item.status === 'PENDING' ? 'warning' : 'error'}>
                                     {item.status === 'PENDING' ? 'Pending Review' : 'Rejected'}
                                 </Badge>
                             )}
                             {(item.status === 'ACTIVE' || item.status === 'APPROVED') && (
-                                <Badge variant="success" style={{ marginLeft: '12px', verticalAlign: 'middle' }}>Active</Badge>
+                                <Badge variant="success">Active</Badge>
                             )}
                         </h1>
                         <p className="content-description">{item.description || 'No description provided.'}</p>
@@ -195,136 +213,126 @@ const ContentDetailsPage = ({
                             <div className="meta-item">
                                 {type === 'sets' ? <Layers size={16} /> : (type === 'folders' ? <FolderOpen size={16} /> : <Users size={16} />)}
                                 <span>
-                                    {type === 'sets' ? `${children.length} terms` : 
-                                     type === 'folders' ? `${children.length} sets` : 
-                                     `${item.members?.length || 0} members`}
+                                    {type === 'sets' ? `${children.length} terms` :
+                                        type === 'folders' ? `${children.length} sets` :
+                                            `${item.members?.length || 0} members`}
                                 </span>
                             </div>
                         </div>
 
-                        {type === 'folders' && item.categories?.length > 0 && (
-                            <div className="folder-tags">
-                                <Button 
-                                    variant="ghost" 
-                                    size="sm" 
-                                    className={`tag-btn ${activeTag === 'all' ? 'active' : ''}`}
-                                    onClick={() => setActiveTag('all')}
-                                >
-                                    All
-                                </Button>
-                                {item.categories.map(cat => (
-                                    <Button 
-                                        key={cat.name}
-                                        variant="ghost" 
-                                        size="sm" 
-                                        className={`tag-btn ${activeTag === cat.name ? 'active' : ''}`}
-                                        onClick={() => setActiveTag(cat.name)}
-                                    >
-                                        {cat.name}
-                                    </Button>
-                                ))}
-                            </div>
-                        )}
-                    </div>
 
-                    <div className="content-actions">
-                        {type === 'sets' && (
-                            <>
+                        <div className="content-actions">
+                            {type === 'sets' && (
+                                <>
+                                    <Button
+                                        className="study-btn"
+                                        size="lg"
+                                        variant="outline"
+                                        onClick={() => navigate(`/study/${id}`, { state: { cards: children } })}
+                                        leftIcon={<BookOpen size={20} />}
+                                    >
+                                        Study
+                                    </Button>
+                                    <Button
+                                        className="play-btn"
+                                        size="lg"
+                                        variant="outline"
+                                        onClick={() => navigate(`/quiz/${id}`, { state: { cards: children } })}
+                                        disabled={children.length < 2}
+                                        leftIcon={<Play size={20} fill="currentColor" />}
+                                    >
+                                        Take Quiz
+                                    </Button>
+                                </>
+                            )}
+
+                            {type === 'folders' && (
                                 <Button
-                                    className="study-btn w-full"
+                                    className="study-btn"
                                     size="lg"
                                     variant="outline"
-                                    onClick={() => navigate(`/study/${id}`, { state: { cards: children } })}
+                                    onClick={() => {
+                                        const allCards = children.reduce((acc, set) => [...acc, ...(set.flashcards || [])], []);
+                                        if (allCards.length === 0) {
+                                            toastError("No flashcards found in this folder's sets.");
+                                            return;
+                                        }
+                                        navigate(`/study/folder-${id}`, { state: { cards: allCards, fromLabel: 'Back to Folder', folderName: item.name } });
+                                    }}
                                     leftIcon={<BookOpen size={20} />}
                                 >
-                                    Study
+                                    Study All
                                 </Button>
-                                <Button
-                                    className="play-btn w-full"
-                                    size="lg"
-                                    variant="outline"
-                                    onClick={() => navigate(`/quiz/${id}`, { state: { cards: children } })}
-                                    disabled={children.length < 2}
-                                    leftIcon={<Play size={20} fill="currentColor" />}
-                                >
-                                    Take Quiz
-                                </Button>
-                            </>
-                        )}
-                        
-                        {type === 'folders' && (
-                             <Button
-                                className="study-btn w-full"
-                                size="lg"
-                                variant="outline"
-                                onClick={() => {
-                                    const allCards = children.reduce((acc, set) => [...acc, ...(set.flashcards || [])], []);
-                                    if (allCards.length === 0) {
-                                         toastError("No flashcards found in this folder's sets.");
-                                         return;
-                                    }
-                                    navigate(`/study/folder-${id}`, { state: { cards: allCards, fromLabel: 'Back to Folder', folderName: item.name } });
-                                }}
-                                leftIcon={<BookOpen size={20} />}
-                            >
-                                Study All
-                            </Button>
-                        )}
+                            )}
 
-                        {type === 'classes' && !isOwner && (
-                            item.isMember ? (
-                                <Button variant="outline" size="lg" className="w-full text-red-500 hover:bg-red-50" onClick={() => openAddChildModal('leave')}>
-                                    Leave Class
-                                </Button>
-                            ) : (
-                                <Button variant="primary" size="lg" className="w-full" onClick={() => openAddChildModal('join')}>
-                                    Join Class
-                                </Button>
-                            )
-                        )}
+                            {type === 'classes' && !isOwner && (
+                                item.isMember ? (
+                                    <Button variant="outline" size="lg" className="text-red-500 hover:bg-red-50" onClick={() => openAddChildModal('leave')}>
+                                        Leave Class
+                                    </Button>
+                                ) : (
+                                    <Button variant="primary" size="lg" onClick={() => openAddChildModal('join')}>
+                                        Join Class
+                                    </Button>
+                                )
+                            )}
 
-                        {isOwner && (
-                            <Button
-                                className="w-full"
-                                variant="outline"
-                                size="lg"
-                                onClick={() => openEditModal(id, handleUpdateSuccess)}
-                                leftIcon={<Pencil size={20} />}
-                            >
-                                Edit {type === 'sets' ? 'Set' : type === 'folders' ? 'Folder' : 'Class'}
-                            </Button>
-                        )}
+                            {isOwner && (
+                                <>
+                                    <Button
+                                        variant="outline"
+                                        size="lg"
+                                        onClick={() => openEditModal(id, handleUpdateSuccess)}
+                                        leftIcon={<Pencil size={20} />}
+                                    >
+                                        Edit {type === 'sets' ? 'Set' : type === 'folders' ? 'Folder' : 'Class'}
+                                    </Button>
+                                    <Button
+                                        variant="primary"
+                                        size="lg"
+                                        onClick={handleAddChildClick}
+                                        leftIcon={<Plus size={20} />}
+                                    >
+                                        Add {type === 'sets' ? 'Card' : type === 'folders' ? 'Set' : 'Resource'}
+                                    </Button>
+                                    <Button
+                                        variant="ghost"
+                                        size="lg"
+                                        className="text-red-500 hover:bg-red-50"
+                                        onClick={() => setShowDeleteConfirm(true)}
+                                        leftIcon={<Trash2 size={20} />}
+                                    >
+                                        Delete {type === 'sets' ? 'Set' : type === 'folders' ? 'Folder' : 'Class'}
+                                    </Button>
+                                </>
+                            )}
+                        </div>
                     </div>
                 </div>
 
                 <div className="children-section">
                     {type === 'classes' ? (
                         <div className="class-detail-tabs">
-                            <Tabs 
+                            <Tabs
                                 tabs={[
                                     { label: <div className="flex items-center gap-2"><FileText size={18} /> Materials</div>, key: 'materials' },
                                     { label: <div className="flex items-center gap-2"><Users size={18} /> Members <span className="tab-count">{item.members?.length || 0}</span></div>, key: 'members' },
                                     ...(isOwner ? [{ label: <div className="flex items-center gap-2"><UserPlus size={18} /> Requests {item.joinRequests?.length > 0 && <span className="tab-badge">{item.joinRequests.length}</span>}</div>, key: 'requests' }] : [])
                                 ].map(t => ({ ...t, content: null }))}
-                                activeIndex={[ 'materials', 'members', 'requests' ].indexOf(activeTab)}
-                                onTabChange={(idx) => setActiveTab([ 'materials', 'members', 'requests' ][idx])}
+                                activeIndex={['materials', 'members', 'requests'].indexOf(activeTab)}
+                                onTabChange={(idx) => setActiveTab(['materials', 'members', 'requests'][idx])}
                             />
-                            
+
                             <div className="tab-content" style={{ marginTop: '2rem' }}>
                                 {activeTab === 'materials' && (
                                     <div className="materials-view">
                                         <div className="section-header">
                                             <h2>Resources</h2>
-                                            {isOwner && (
-                                                <Button variant="ghost" size="sm" onClick={openAddChildModal} leftIcon={<Plus size={18} />}>
-                                                    Add Resource
-                                                </Button>
-                                            )}
                                         </div>
                                         <div className="children-list" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1.5rem', flexDirection: 'unset' }}>
                                             {children.length > 0 ? (
                                                 children.map(m => (
-                                                    <Card 
+                                                    <Card
                                                         key={m.materialId}
                                                         onClick={() => navigate(m.materialType === 'FOLDER' ? `/folders/${m.materialRefId}` : `/flashcard-sets/${m.materialRefId}`)}
                                                         title={m.materialName}
@@ -402,16 +410,6 @@ const ContentDetailsPage = ({
                         <>
                             <div className="section-header">
                                 <h2>{type === 'sets' ? 'Terms' : 'Sets'} in this {type === 'sets' ? 'set' : 'folder'} ({children.length})</h2>
-                                {isOwner && (
-                                    <Button
-                                        variant="ghost"
-                                        className="add-child-btn"
-                                        onClick={handleAddChildClick}
-                                        leftIcon={<Plus size={20} />}
-                                    >
-                                        Add {type === 'sets' ? 'Card' : 'Set'}
-                                    </Button>
-                                )}
                             </div>
 
                             <div className={type === 'sets' ? "children-list" : "children-grid"}>
@@ -502,6 +500,17 @@ const ContentDetailsPage = ({
                     confirmText="Remove"
                     type="danger"
                     isLoading={isDeleting}
+                />
+
+                <ConfirmationModal
+                    isOpen={showDeleteConfirm}
+                    onClose={() => setShowDeleteConfirm(false)}
+                    onConfirm={handleDeleteItem}
+                    title={`Delete ${type === 'sets' ? 'Flashcard Set' : type === 'folders' ? 'Folder' : 'Class'}`}
+                    message={`Are you sure you want to delete this ${type.slice(0, -1)}? All data will be permanently removed. This action cannot be undone.`}
+                    confirmText="Delete"
+                    type="danger"
+                    isLoading={isDeletingItem}
                 />
             </div>
         </MainLayout>
