@@ -19,57 +19,9 @@ api.interceptors.request.use((config) => {
 
 // Mocking mechanism: Use an adapter to short-circuit requests before they are sent
 if (isMockMode) {
-  api.defaults.adapter = async (config) => {
-    const { mockApi } = await import("./mockApi");
-    const url = config.url;
-    console.log(`[Mock API] Intercepted: ${config.method.toUpperCase()} ${url}`);
-
-    let data;
-    try {
-      if (url.includes("/users/me")) data = await mockApi.getMyProfile();
-      else if (url.includes("/flashcard-sets/my")) data = await mockApi.getMyFlashcardSets();
-      else if (url.includes("/flashcard-sets")) {
-        const setIdMatch = url.match(/\/flashcard-sets\/(\d+)/);
-        data = setIdMatch ? await mockApi.getFlashcardSetById(setIdMatch[1]) : await mockApi.getPublicFlashcardSets();
-      }
-      else if (url.includes("/flashcards/set/")) {
-        const setIdMatch = url.match(/\/flashcards\/set\/(\d+)/);
-        data = setIdMatch ? await mockApi.getFlashcardsBySetId(setIdMatch[1]) : [];
-      }
-      else if (url.includes("/folders/me")) data = await mockApi.getMyFolders();
-      else if (url.includes("/folders/public")) data = await mockApi.getPublicFolders();
-      else if (url.includes("/folders/")) {
-        const folderIdMatch = url.match(/\/folders\/(\d+)/);
-        data = folderIdMatch ? await mockApi.getFolderDetail(folderIdMatch[1]) : [];
-      }
-      else if (url.includes("/classes/me")) data = await mockApi.getMyClasses();
-      else if (url.includes("/classes/public")) data = await mockApi.getPublicClasses();
-      else if (url.includes("/notifications")) data = await mockApi.getNotifications();
-      else if (url.includes("/classes/")) {
-        const classIdMatch = url.match(/\/classes\/(\d+)/);
-        data = classIdMatch ? await mockApi.getClassDetails(classIdMatch[1]) : [];
-      }
-      else data = [];
-
-      return {
-        data,
-        status: 200,
-        statusText: "OK",
-        headers: {},
-        config,
-      };
-    } catch (error) {
-      return Promise.reject({
-        response: {
-          data: { message: error.message || "Mock error" },
-          status: error.response?.status || 500,
-          statusText: "Internal Server Error",
-          headers: {},
-          config,
-        },
-      });
-    }
-  };
+  import("./mocks/adapter").then(({ setupMockAdapter }) => {
+    setupMockAdapter(api);
+  });
 } else {
   api.interceptors.response.use(
     (response) => response,
