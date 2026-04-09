@@ -19,9 +19,8 @@ api.interceptors.request.use((config) => {
 
 // Mocking mechanism: Use an adapter to short-circuit requests before they are sent
 if (isMockMode) {
-  import("./mocks/adapter").then(({ setupMockAdapter }) => {
-    setupMockAdapter(api);
-  });
+  const { setupMockAdapter } = await import("./mocks/adapter");
+  setupMockAdapter(api);
 } else {
   api.interceptors.response.use(
     (response) => response,

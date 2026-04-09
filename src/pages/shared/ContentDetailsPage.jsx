@@ -41,11 +41,12 @@ const ContentDetailsPage = ({
             setLoading(true);
             const data = await getById(id);
             
-            // Check ownership
+            // Check ownership and visibility
             const itemOwnerId = data.ownerId || data.owner?.userId || data.ownerUserId || data.userId;
             const isOwner = itemOwnerId === user?.userId || data.ownerUsername === user?.username || data.username === user?.username;
+            const isPublic = data.visibility === 'PUBLIC';
             
-            if (!isOwner) {
+            if (!isOwner && !isPublic) {
                 setError("You do not have permission to view this content.");
                 setLoading(false);
                 return;

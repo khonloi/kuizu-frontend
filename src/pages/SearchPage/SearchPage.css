@@ -29,6 +29,60 @@
 
 .search-page-subtitle {
     margin: 0;
+    margin-bottom: 24px;
+    color: var(--text-light);
+}
+
+.search-tabs {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+}
+
+.search-tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.search-tab-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    background: transparent;
+    color: var(--text-muted);
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.search-tab-btn:hover {
+    background: var(--bg-hover);
+    color: var(--text-main);
+}
+
+.search-tab-btn.active {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+    box-shadow: 0 4px 12px rgba(var(--primary-rgb, 108, 92, 231), 0.3);
+}
+
+.tab-count {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+}
+
+.search-tab-btn:not(.active) .tab-count {
+    background: var(--bg-secondary);
+    color: var(--text-muted);
 }
 
 /* Results Grid */
