@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { searchClasses } from '@/api/class';
 
 
-const Navbar = ({ isSidebarCollapsed, onToggleSidebar, isMobile, onOpenMobileMenu }) => {
+const Navbar = ({ isSidebarCollapsed, onToggleSidebar, isMobile, onOpenMobileMenu, showSidebarToggle = true }) => {
     const { user, logout } = useAuth();
     const { openSetModal } = useModal();
     const navigate = useNavigate();
@@ -76,7 +76,7 @@ const Navbar = ({ isSidebarCollapsed, onToggleSidebar, isMobile, onOpenMobileMen
         <nav className="navbar">
             <div className="navbar-content">
                 <div className="navbar-left">
-                    {isMobile && (
+                    {isMobile && showSidebarToggle && (
                         <button className="mobile-menu-btn" onClick={onOpenMobileMenu}>
                             <Menu size={24} />
                         </button>
@@ -110,25 +110,30 @@ const Navbar = ({ isSidebarCollapsed, onToggleSidebar, isMobile, onOpenMobileMen
                 </div>
 
                 <div className="navbar-right">
-                    <Dropdown
-                        items={createItems}
-                        onItemClick={handleDropdownItemClick}
-                        variant={isMobile ? "create-pill-mobile" : "create-pill"}
-                        showChevron={false}
-                    >
-                        <Plus size={20} strokeWidth={3} />
-                        {!isMobile && <span>Create</span>}
-                    </Dropdown>
-                    {user ? (
-                        <div className="nav-profile-section">
-                            <img
-                                src={user.profilePictureUrl || 'https://api.dicebear.com/7.x/avataaars/svg?seed=Felix'}
-                                alt="Profile"
-                                className="nav-avatar"
-                                onClick={() => navigate('/profile')}
-                            />
-                        </div>
-                    ) : !isMobile && (
+                    {!isMobile && (
+                        <>
+                            <Dropdown
+                                items={createItems}
+                                onItemClick={handleDropdownItemClick}
+                                variant="create-pill"
+                                showChevron={false}
+                            >
+                                <Plus size={20} strokeWidth={3} />
+                                <span>Create</span>
+                            </Dropdown>
+                            {user && (
+                                <div className="nav-profile-section">
+                                    <img
+                                        src={user.profilePictureUrl || 'https://api.dicebear.com/7.x/avataaars/svg?seed=Felix'}
+                                        alt="Profile"
+                                        className="nav-avatar"
+                                        onClick={() => navigate('/profile')}
+                                    />
+                                </div>
+                            )}
+                        </>
+                    )}
+                    {!user && !isMobile && (
                         <Button
                             variant="primary"
                             size="sm"

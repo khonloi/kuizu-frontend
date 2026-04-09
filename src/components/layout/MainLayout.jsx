@@ -6,7 +6,7 @@ import { Loader } from '../ui';
 import { useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
-const MainLayout = ({ children, isLoading = false }) => {
+const MainLayout = ({ children, isLoading = false, showSidebar = true }) => {
     const { user } = useAuth();
     const location = useLocation();
     const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(() => {
@@ -39,30 +39,34 @@ const MainLayout = ({ children, isLoading = false }) => {
     };
 
     const isAdmin = user?.role === 'ROLE_ADMIN';
+    const effectiveShowSidebar = showSidebar && !isAdmin;
 
     return (
-        <div className={`layout-container ${isSidebarCollapsed ? 'sidebar-collapsed' : ''} ${isMobile ? 'is-mobile' : ''} ${isMobileSidebarOpen ? 'mobile-sidebar-open' : ''}`}>
+        <div className={`layout-container ${isSidebarCollapsed && effectiveShowSidebar ? 'sidebar-collapsed' : ''} ${!effectiveShowSidebar ? 'no-sidebar' : ''} ${isMobile ? 'is-mobile' : ''} ${isMobileSidebarOpen ? 'mobile-sidebar-open' : ''}`}>
             {!isAdmin && (
                 <Navbar 
                     isSidebarCollapsed={isSidebarCollapsed} 
                     onToggleSidebar={toggleSidebar} 
                     isMobile={isMobile}
                     onOpenMobileMenu={() => setIsMobileSidebarOpen(true)}
+                    showSidebarToggle={effectiveShowSidebar}
                 />
             )}
             
             <div className="layout-body" style={{ display: 'flex' }}>
                 {isMobileSidebarOpen && <div className="sidebar-overlay" onClick={() => setIsMobileSidebarOpen(false)} />}
                 
-                <Sidebar 
-                    isCollapsed={isMobile ? false : isSidebarCollapsed} 
-                    onToggle={toggleSidebar} 
-                    activePath={location.pathname}
-                    isMobile={isMobile}
-                    onClose={() => setIsMobileSidebarOpen(false)}
-                />
+                {effectiveShowSidebar && (
+                    <Sidebar 
+                        isCollapsed={isMobile ? false : isSidebarCollapsed} 
+                        onToggle={toggleSidebar} 
+                        activePath={location.pathname}
+                        isMobile={isMobile}
+                        onClose={() => setIsMobileSidebarOpen(false)}
+                    />
+                )}
                 
-                <div className={`content-wrapper ${isSidebarCollapsed ? 'collapsed' : ''}`}>
+                <div className={`content-wrapper ${isSidebarCollapsed && effectiveShowSidebar ? 'collapsed' : ''} ${!effectiveShowSidebar ? 'full-width' : ''}`}>
                     <main className={`main-content ${isLoading ? 'is-loading' : ''}`}>
                         {isLoading ? (
                             <Loader fullPage={false} size="lg" />

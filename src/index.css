@@ -120,6 +120,10 @@ textarea {
   margin-left: 72px;
 }
 
+.content-wrapper.full-width {
+  margin-left: 0;
+}
+
 .main-content {
   flex: 1;
 }

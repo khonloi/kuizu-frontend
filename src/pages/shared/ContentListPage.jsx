@@ -5,6 +5,7 @@ import { Button, Card, Loader, ConfirmationModal, Badge, EmptyState } from '@/co
 import { useModal } from '@/context/ModalContext';
 import MainLayout from '@/components/layout';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/context/AuthContext';
 
 const ContentListPage = ({
     type = 'sets', // 'sets' or 'folders'
@@ -23,12 +24,13 @@ const ContentListPage = ({
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [activeTab, setActiveTab] = useState(fetchPublic ? initialTab : 'my');
+    const [activeTab, setActiveTab] = useState('my');
     const [searchQuery, setSearchQuery] = useState('');
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [itemToDelete, setItemToDelete] = useState(null);
     const [isDeleting, setIsDeleting] = useState(false);
     const navigate = useNavigate();
+    const { user } = useAuth();
 
     useEffect(() => {
         fetchData();
@@ -37,10 +39,15 @@ const ContentListPage = ({
     const fetchData = async () => {
         try {
             setLoading(true);
-            const data = activeTab === 'public'
-                ? await fetchPublic()
-                : await fetchMy();
-            setItems(Array.isArray(data) ? data : []);
+            const data = await fetchMy();
+            
+            // Extra safety filter to only show items belonging to the user
+            const userItems = (Array.isArray(data) ? data : []).filter(item => {
+                const itemOwnerId = item.ownerId || item.owner?.userId || item.ownerUserId || item.userId;
+                return itemOwnerId === user?.userId || item.ownerUsername === user?.username || item.username === user?.username;
+            });
+            
+            setItems(userItems);
         } catch (err) {
             console.error(`Error fetching ${type}:`, err);
             setError(`Could not load ${type}.`);
@@ -136,31 +143,7 @@ const ContentListPage = ({
                                 onChange={(e) => setSearchQuery(e.target.value)}
                             />
                         </div>
-                        {fetchPublic && (
-                            <div className="tabs">
-                                <Button
-                                    variant="ghost"
-                                    className={`tab-item ${activeTab === 'my' ? 'active' : ''}`}
-                                    onClick={() => setActiveTab('my')}
-                                >
-                                    All {type === 'sets' ? 'Sets' : (type === 'folders' ? 'Folders' : 'Classes')}
-                                </Button>
-                                <Button
-                                    variant="ghost"
-                                    className={`tab-item ${activeTab === 'public' ? 'active' : ''}`}
-                                    onClick={() => setActiveTab('public')}
-                                >
-                                    Public
-                                </Button>
-                                <Button
-                                    variant="ghost"
-                                    className={`tab-item ${activeTab === 'private' ? 'active' : ''}`}
-                                    onClick={() => setActiveTab('private')}
-                                >
-                                    Private
-                                </Button>
-                            </div>
-                        )}
+                        {/* Removed tabs to only show user's own data */}
                     </div>
                 </div>
 

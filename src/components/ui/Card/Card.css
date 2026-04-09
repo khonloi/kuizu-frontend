@@ -146,13 +146,19 @@
     color: var(--error) !important;
 }
 
-.item-card-footer-right {
-    font-size: 0.85rem;
-    font-weight: 500;
-    color: var(--text-light);
+.item-card-badge-container {
     display: flex;
     align-items: center;
-    gap: 6px;
+    margin-left: -0.25rem;
+}
+
+.item-card-badge-container .badge {
+    padding: 2px 8px;
+    font-size: 0.7rem;
+}
+
+.item-card-footer-right {
+    display: none; /* Removed as it's now in user-info */
 }
 
 @media (max-width: 768px) {

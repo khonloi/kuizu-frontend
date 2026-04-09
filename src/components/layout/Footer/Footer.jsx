@@ -61,7 +61,7 @@ const Footer = () => {
 
                     <div className="footer-app-box">
                         <img
-                            src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Rickrolling_QR_code.png"
+                            src="https://i.redd.it/69fkt08cnkk41.jpg"
                             alt="Get the app"
                             className="qr-code-img"
                         />

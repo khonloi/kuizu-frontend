@@ -45,12 +45,12 @@ const Card = ({
                             <User size={14} />
                         </div>
                         <span className="username">{ownerName}</span>
+                        {footerRight && (
+                            <div className="item-card-badge-container">
+                                {footerRight}
+                            </div>
+                        )}
                     </div>
-                    {footerRight && (
-                        <div className="item-card-footer-right">
-                            {footerRight}
-                        </div>
-                    )}
                     {actions && (
                         <div className="item-card-actions" onClick={(e) => e.stopPropagation()}>
                             {actions}

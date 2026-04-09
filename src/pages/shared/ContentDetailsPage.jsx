@@ -40,6 +40,17 @@ const ContentDetailsPage = ({
         try {
             setLoading(true);
             const data = await getById(id);
+            
+            // Check ownership
+            const itemOwnerId = data.ownerId || data.owner?.userId || data.ownerUserId || data.userId;
+            const isOwner = itemOwnerId === user?.userId || data.ownerUsername === user?.username || data.username === user?.username;
+            
+            if (!isOwner) {
+                setError("You do not have permission to view this content.");
+                setLoading(false);
+                return;
+            }
+
             setItem(data);
             
             // Set children based on type
