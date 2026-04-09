@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
     Home,
-    Library,
-    Bell,
-    Users,
     BookOpen,
     Folder,
     GraduationCap,
@@ -18,16 +15,12 @@ import { useNavigate } from 'react-router-dom';
 import { Button, ComingSoonModal } from '../../ui';
 import { useAuth } from '@/context/AuthContext';
 import { useToast } from '@/context/ToastContext';
-import { getPendingCount } from '@/api/moderation';
 import './Sidebar.css';
 
 const Sidebar = ({ isCollapsed, onToggle, activePath = '/dashboard', isMobile, onClose }) => {
     const { user, logout } = useAuth();
     const navigate = useNavigate();
     const toast = useToast();
-    const [isComingSoonOpen, setIsComingSoonOpen] = useState(false);
-    const [currentFeature, setCurrentFeature] = useState('');
-    const [pendingCount, setPendingCount] = useState(0);
 
     const isAdmin = user?.role === 'ROLE_ADMIN';
 
@@ -44,7 +37,6 @@ const Sidebar = ({ isCollapsed, onToggle, activePath = '/dashboard', isMobile, o
 
     const mainLinks = [
         { icon: <Home size={22} />, label: 'Home', path: '/dashboard' },
-        { icon: <Library size={22} />, label: 'Library', path: '/library' },
     ];
 
     const adminLinks = [
@@ -131,9 +123,9 @@ const Sidebar = ({ isCollapsed, onToggle, activePath = '/dashboard', isMobile, o
                             className="nav-avatar"
                             onClick={() => handleNavigation('/profile')}
                         />
-                        {isMobile && <span style={{marginLeft: '12px', fontWeight: 600}}>{user.username}</span>}
+                        {isMobile && <span style={{ marginLeft: '12px', fontWeight: 600 }}>{user.username}</span>}
                         {(!useAuth().isMockMode && !isCollapsed) && (
-                            <Button variant="ghost" size="sm" onClick={handleLogout} className="logout-compact-btn" style={{marginLeft: 'auto'}}>
+                            <Button variant="ghost" size="sm" onClick={handleLogout} className="logout-compact-btn" style={{ marginLeft: 'auto' }}>
                                 Log Out
                             </Button>
                         )}

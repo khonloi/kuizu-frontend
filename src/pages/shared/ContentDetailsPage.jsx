@@ -1,9 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ChevronLeft, Play, Plus, Pencil, Trash2, User, Layers, BookOpen, FolderOpen, Users, FileText, UserPlus } from 'lucide-react';
-import './ContentDetailsPage.css';
 import { Button, Card, Loader, ConfirmationModal, Badge, EmptyState, Tabs } from '@/components/ui';
-import { useModal } from '@/context/ModalContext';
 import MainLayout from '@/components/layout';
 import { useAuth } from '@/context/AuthContext';
 import { useToast } from '@/context/ToastContext';
@@ -153,7 +151,7 @@ const ContentDetailsPage = ({
 
     if (loading) return (
         <MainLayout isLoading={true}>
-            <div style={{ padding: '100px 0', textAlign: 'center' }}>
+            <div className="py-24 text-center">
                 <Loader text="Loading details..." />
             </div>
         </MainLayout>
@@ -161,7 +159,7 @@ const ContentDetailsPage = ({
 
     if (error || !id) return (
         <MainLayout>
-            <div style={{ padding: '100px 40px' }}>
+            <div className="py-24 px-10">
                 <EmptyState
                     icon={BookOpen}
                     title="Oops! Something went wrong"
@@ -184,16 +182,16 @@ const ContentDetailsPage = ({
 
     return (
         <MainLayout>
-            <div className="content-details-container">
-                <Button variant="ghost" className="back-link" onClick={() => navigate(backPath)}>
+            <div className="p-6">
+                <Button variant="ghost" className="flex items-center gap-2 text-[#586380] font-semibold mb-8 transition-colors hover:text-[#4255ff] p-0 h-auto" onClick={() => navigate(backPath)}>
                     <ChevronLeft size={20} />
                     Back to {type === 'sets' ? 'Sets' : type === 'folders' ? 'Folders' : 'Classes'}
                 </Button>
 
-                <div className="content-hero">
-                    <div className="content-info-main">
-                        <h1 className="content-title">
-                            <span className="title-text">{getItemTitle()}</span>
+                <div className="flex justify-between items-start mb-12 gap-12 md:flex-col md:gap-6 md:mb-8">
+                    <div className="flex-1">
+                        <h1 className="text-3xl font-extrabold mb-3 text-[#282e3e] flex items-center gap-4">
+                            <span className="leading-[1.1]">{getItemTitle()}</span>
                             {item.status && item.status !== 'ACTIVE' && item.status !== 'APPROVED' && (
                                 <Badge variant={item.status === 'PENDING' ? 'warning' : 'error'}>
                                     {item.status === 'PENDING' ? 'Pending Review' : 'Rejected'}
@@ -203,14 +201,14 @@ const ContentDetailsPage = ({
                                 <Badge variant="success">Active</Badge>
                             )}
                         </h1>
-                        <p className="content-description">{item.description || 'No description provided.'}</p>
+                        <p className="text-base text-[#586380] leading-relaxed mb-8">{item.description || 'No description provided.'}</p>
 
-                        <div className="content-meta">
-                            <div className="meta-item">
+                        <div className="flex gap-8 md:flex-col md:gap-3">
+                            <div className="flex items-center gap-3 text-[#586380] text-sm">
                                 <User size={16} />
-                                <span>Created by <strong>{item.ownerDisplayName}</strong></span>
+                                <span>Created by <strong className="text-[#282e3e] font-semibold">{item.ownerDisplayName}</strong></span>
                             </div>
-                            <div className="meta-item">
+                            <div className="flex items-center gap-3 text-[#586380] text-sm">
                                 {type === 'sets' ? <Layers size={16} /> : (type === 'folders' ? <FolderOpen size={16} /> : <Users size={16} />)}
                                 <span>
                                     {type === 'sets' ? `${children.length} terms` :
@@ -221,11 +219,10 @@ const ContentDetailsPage = ({
                         </div>
 
 
-                        <div className="content-actions">
+                        <div className="mt-10 flex flex-row flex-wrap gap-5 md:w-full md:min-w-0">
                             {type === 'sets' && (
                                 <>
                                     <Button
-                                        className="study-btn"
                                         size="lg"
                                         variant="outline"
                                         onClick={() => navigate(`/study/${id}`, { state: { cards: children } })}
@@ -234,7 +231,6 @@ const ContentDetailsPage = ({
                                         Study
                                     </Button>
                                     <Button
-                                        className="play-btn"
                                         size="lg"
                                         variant="outline"
                                         onClick={() => navigate(`/quiz/${id}`, { state: { cards: children } })}
@@ -248,7 +244,6 @@ const ContentDetailsPage = ({
 
                             {type === 'folders' && (
                                 <Button
-                                    className="study-btn"
                                     size="lg"
                                     variant="outline"
                                     onClick={() => {
@@ -310,26 +305,26 @@ const ContentDetailsPage = ({
                     </div>
                 </div>
 
-                <div className="children-section">
+                <div>
                     {type === 'classes' ? (
-                        <div className="class-detail-tabs">
+                        <div>
                             <Tabs
                                 tabs={[
                                     { label: <div className="flex items-center gap-2"><FileText size={18} /> Materials</div>, key: 'materials' },
-                                    { label: <div className="flex items-center gap-2"><Users size={18} /> Members <span className="tab-count">{item.members?.length || 0}</span></div>, key: 'members' },
-                                    ...(isOwner ? [{ label: <div className="flex items-center gap-2"><UserPlus size={18} /> Requests {item.joinRequests?.length > 0 && <span className="tab-badge">{item.joinRequests.length}</span>}</div>, key: 'requests' }] : [])
+                                    { label: <div className="flex items-center gap-2"><Users size={18} /> Members <span className="bg-[#edeff2] text-[#586380] px-2 py-0.5 rounded-full text-xs ml-1">{item.members?.length || 0}</span></div>, key: 'members' },
+                                    ...(isOwner ? [{ label: <div className="flex items-center gap-2"><UserPlus size={18} /> Requests {item.joinRequests?.length > 0 && <span className="bg-[#4255ff] text-white px-2 py-0.5 rounded-full text-xs ml-1">{item.joinRequests.length}</span>}</div>, key: 'requests' }] : [])
                                 ].map(t => ({ ...t, content: null }))}
                                 activeIndex={['materials', 'members', 'requests'].indexOf(activeTab)}
                                 onTabChange={(idx) => setActiveTab(['materials', 'members', 'requests'][idx])}
                             />
 
-                            <div className="tab-content" style={{ marginTop: '2rem' }}>
+                            <div className="mt-8">
                                 {activeTab === 'materials' && (
-                                    <div className="materials-view">
-                                        <div className="section-header">
-                                            <h2>Resources</h2>
+                                    <div>
+                                        <div className="flex justify-center items-center mb-8 md:justify-start">
+                                            <h2 className="text-2xl font-bold">Resources</h2>
                                         </div>
-                                        <div className="children-list" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1.5rem', flexDirection: 'unset' }}>
+                                        <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-6 lg:grid-cols-[repeat(auto-fill,minmax(280px,1fr))] md:grid-cols-1 md:gap-4">
                                             {children.length > 0 ? (
                                                 children.map(m => (
                                                     <Card
@@ -339,8 +334,8 @@ const ContentDetailsPage = ({
                                                         badge={m.materialType === 'FOLDER' ? 'Folder' : 'Set'}
                                                         description={m.materialType}
                                                         actions={isOwner && (
-                                                            <Button variant="ghost" size="sm" className="delete-btn" onClick={(e) => { e.stopPropagation(); setChildToDelete(m.materialId); }}>
-                                                                <Trash2 size={16} />
+                                                            <Button variant="ghost" size="sm" className="hover:text-[#ff725e]" onClick={(e) => { e.stopPropagation(); setChildToDelete(m.materialId); }}>
+                                                                  <Trash2 size={16} />
                                                             </Button>
                                                         )}
                                                     />
@@ -353,12 +348,12 @@ const ContentDetailsPage = ({
                                 )}
 
                                 {activeTab === 'members' && (
-                                    <div className="members-view">
-                                        <div className="members-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '1.5rem' }}>
+                                    <div>
+                                        <div className="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-6">
                                             {item.members?.map(member => (
                                                 <Card key={member.userId}>
                                                     <Card.Body className="p-4 flex items-center gap-4">
-                                                        <div className="avatar" style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'var(--primary)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold' }}>
+                                                        <div className="w-10 h-10 rounded-full bg-[#4255ff] text-white flex items-center justify-center font-bold">
                                                             {member.displayName.charAt(0)}
                                                         </div>
                                                         <div className="flex-1">
@@ -378,18 +373,18 @@ const ContentDetailsPage = ({
                                 )}
 
                                 {activeTab === 'requests' && (
-                                    <div className="requests-view flex flex-col gap-4">
+                                    <div className="flex flex-col gap-4">
                                         {item.joinRequests?.length > 0 ? (
                                             item.joinRequests.map(req => (
                                                 <Card key={req.requestId} className="p-4">
                                                     <div className="flex justify-between items-center">
                                                         <div className="flex items-center gap-4">
-                                                            <div className="avatar" style={{ width: '40px', height: '40px', borderRadius: '50%', background: '#eee', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                                            <div className="w-10 h-10 rounded-full bg-[#edeff2] flex items-center justify-center">
                                                                 <User size={20} />
                                                             </div>
                                                             <div>
                                                                 <div className="font-bold">{req.displayName}</div>
-                                                                <div className="text-sm text-light">{req.message || 'No message'}</div>
+                                                                <div className="text-sm text-[#586380]">{req.message || 'No message'}</div>
                                                             </div>
                                                         </div>
                                                         <div className="flex gap-2">
@@ -408,30 +403,30 @@ const ContentDetailsPage = ({
                         </div>
                     ) : (
                         <>
-                            <div className="section-header">
-                                <h2>{type === 'sets' ? 'Terms' : 'Sets'} in this {type === 'sets' ? 'set' : 'folder'} ({children.length})</h2>
+                            <div className="flex justify-center items-center mb-8 md:justify-start">
+                                <h2 className="text-2xl font-bold">{type === 'sets' ? 'Terms' : 'Sets'} in this {type === 'sets' ? 'set' : 'folder'} ({children.length})</h2>
                             </div>
 
-                            <div className={type === 'sets' ? "children-list" : "children-grid"}>
+                            <div className={type === 'sets' ? "flex flex-col gap-6" : "grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-6 lg:grid-cols-[repeat(auto-fill,minmax(280px,1fr))] md:grid-cols-1 md:gap-4"}>
                                 {filteredChildren.length > 0 ? (
                                     filteredChildren.map((child, index) => (
                                         type === 'sets' ? (
-                                            <Card key={child.cardId} className="flashcard-item">
-                                                <Card.Body className="flashcard-item-body">
-                                                    <div className="card-index">{index + 1}</div>
-                                                    <div className="card-content">
-                                                        <div className="term-side">
-                                                            <div className="side-label">TERM</div>
-                                                            <div className="side-text">{child.term}</div>
+                                            <Card key={child.cardId} className="relative border-2 border-[#edeff2] transition-colors overflow-hidden hover:border-[#4255ff]">
+                                                <Card.Body className="flex p-4 gap-6 md:flex-col md:gap-4">
+                                                    <div className="text-xl font-bold text-[#586380] min-w-[32px] flex items-center justify-center">{index + 1}</div>
+                                                    <div className="flex-1 flex items-center gap-8 md:flex-col md:items-start md:gap-6">
+                                                        <div className="flex-1">
+                                                            <div className="text-xs font-extrabold text-[#586380] tracking-wider mb-2">TERM</div>
+                                                            <div className="text-lg text-[#282e3e] font-medium">{child.term}</div>
                                                         </div>
-                                                        <div className="divider"></div>
-                                                        <div className="definition-side">
-                                                            <div className="side-label">DEFINITION</div>
-                                                            <div className="side-text">{child.definition}</div>
+                                                        <div className="w-[1px] h-10 bg-[#edeff2] md:w-full md:h-[1px]"></div>
+                                                        <div className="flex-1">
+                                                            <div className="text-xs font-extrabold text-[#586380] tracking-wider mb-2">DEFINITION</div>
+                                                            <div className="text-lg text-[#282e3e] font-medium">{child.definition}</div>
                                                         </div>
                                                     </div>
                                                     {isOwner && (
-                                                        <div className="card-actions">
+                                                        <div className="flex flex-col gap-2 md:flex-row md:justify-end">
                                                             <Button
                                                                 variant="ghost"
                                                                 size="sm"
@@ -442,7 +437,7 @@ const ContentDetailsPage = ({
                                                             <Button
                                                                 variant="ghost"
                                                                 size="sm"
-                                                                className="delete-btn"
+                                                                className="hover:text-[#ff725e]"
                                                                 onClick={() => setChildToDelete(child.cardId)}
                                                             >
                                                                 <Trash2 size={18} />
@@ -463,7 +458,7 @@ const ContentDetailsPage = ({
                                                     <Button
                                                         variant="ghost"
                                                         size="sm"
-                                                        className="delete-btn"
+                                                        className="hover:text-[#ff725e]"
                                                         onClick={(e) => {
                                                             e.stopPropagation();
                                                             setChildToDelete(child.setId);
@@ -478,8 +473,8 @@ const ContentDetailsPage = ({
                                 ) : null}
                             </div>
                             {filteredChildren.length === 0 && (
-                                <div className="empty-children">
-                                    <p>No {type === 'sets' ? 'flashcards' : 'sets'} here yet.</p>
+                                <div className="text-center p-16 bg-[#f6f7fb] rounded-xl border-2 border-dashed border-[#edeff2]">
+                                    <p className="mb-6 text-[#586380]">No {type === 'sets' ? 'flashcards' : 'sets'} here yet.</p>
                                     {isOwner && (
                                         <Button onClick={handleAddChildClick}>
                                             Add your first {type === 'sets' ? 'card' : 'set'}

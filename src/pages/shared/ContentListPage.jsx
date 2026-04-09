@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Search, Plus, Pencil, Trash2, BookOpen } from 'lucide-react';
-import './ContentListPage.css';
 import { Button, Card, Loader, ConfirmationModal, Badge, EmptyState } from '@/components/ui';
 import { useModal } from '@/context/ModalContext';
 import MainLayout from '@/components/layout';
@@ -40,13 +39,13 @@ const ContentListPage = ({
         try {
             setLoading(true);
             const data = await fetchMy();
-            
+
             // Extra safety filter to only show items belonging to the user
             const userItems = (Array.isArray(data) ? data : []).filter(item => {
                 const itemOwnerId = item.ownerId || item.owner?.userId || item.ownerUserId || item.userId;
                 return itemOwnerId === user?.userId || item.ownerUsername === user?.username || item.username === user?.username;
             });
-            
+
             setItems(userItems);
         } catch (err) {
             console.error(`Error fetching ${type}:`, err);
@@ -120,12 +119,13 @@ const ContentListPage = ({
 
     return (
         <MainLayout>
-            <div className="content-list-container">
-                <div className="content-list-header">
-                    <div className="header-top">
-                        <h1 className="content-list-title">{title}</h1>
+            <div className="p-6">
+                <div className="mb-6">
+                    <div className="flex justify-between items-center mb-8 md:flex-row md:items-center md:gap-6 md:mb-6">
+                        <h1 className="text-3xl font-bold text-[#282e3e]">{title}</h1>
                         <Button
-                            className="create-btn"
+                            variant="primary"
+                            className="flex items-center gap-2 h-auto py-3 rounded-lg"
                             onClick={handleCreateClick}
                         >
                             <Plus size={20} />
@@ -133,26 +133,26 @@ const ContentListPage = ({
                         </Button>
                     </div>
 
-                    <div className="header-filters">
-                        <div className="search-bar">
-                            <Search size={20} className="search-icon" />
+                    <div className="flex justify-between items-center gap-4 md:flex-col md:items-stretch">
+                        <div className="relative flex-1 max-w-lg md:max-w-none">
+                            <Search size={20} className="absolute left-4 top-1/2 -translate-y-1/2 text-[#586380]" />
                             <input
                                 type="text"
+                                className="w-full pl-12 pr-4 py-3 border-2 border-[#edeff2] rounded-xl bg-[#f6f7fb] text-base transition-all focus:outline-none focus:border-[#4255ff] focus:bg-white"
                                 placeholder={searchPlaceholder}
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                             />
                         </div>
-                        {/* Removed tabs to only show user's own data */}
                     </div>
                 </div>
 
                 {loading ? (
-                    <div style={{ padding: '80px 40px' }}>
+                    <div className="py-20 px-10">
                         <Loader fullPage={false} text={`Loading ${type}...`} />
                     </div>
                 ) : error ? (
-                    <div style={{ padding: '80px 40px' }}>
+                    <div className="py-20 px-10">
                         <EmptyState
                             icon={BookOpen}
                             title="Oops! Something went wrong"
@@ -163,7 +163,7 @@ const ContentListPage = ({
                 ) : (
                     <>
                         {filteredItems.length > 0 ? (
-                            <div className="content-grid">
+                            <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-6 lg:grid-cols-[repeat(auto-fill,minmax(280px,1fr))] md:grid-cols-1 md:gap-4">
                                 {filteredItems.map(item => (
                                     <Card
                                         key={getItemId(item)}
@@ -191,7 +191,7 @@ const ContentListPage = ({
                                                 <Button
                                                     variant="ghost"
                                                     size="sm"
-                                                    className="delete-btn"
+                                                    className="hover:text-[#ff725e]"
                                                     onClick={(e) => handleDelete(e, item)}
                                                 >
                                                     <Trash2 size={16} />
