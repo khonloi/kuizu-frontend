@@ -199,12 +199,12 @@ const ContentDetailsPage = ({
                         <div className="flex-1 min-w-0">
                             <h1 className="text-3xl font-bold text-[#282e3e] flex items-center gap-3 flex-wrap">
                                 {getItemTitle()}
-                                {item.status && item.status !== 'ACTIVE' && item.status !== 'APPROVED' && (
+                                {isOwner && item.status && item.status !== 'ACTIVE' && item.status !== 'APPROVED' && (
                                     <Badge variant={item.status === 'PENDING' ? 'warning' : 'error'} size="sm">
                                         {item.status === 'PENDING' ? 'Pending Review' : 'Rejected'}
                                     </Badge>
                                 )}
-                                {(item.status === 'ACTIVE' || item.status === 'APPROVED') && (
+                                {isOwner && (item.status === 'ACTIVE' || item.status === 'APPROVED') && (
                                     <Badge variant="success" size="sm">Active</Badge>
                                 )}
                             </h1>

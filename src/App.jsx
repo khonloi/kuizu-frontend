@@ -10,10 +10,10 @@ import StatisticsPage from './pages/Admin/StatisticsPage';
 import SearchPage from './pages/SearchPage/SearchPage';
 import ComingSoonPage from './pages/ComingSoonPage';
 import FoldersPage from './pages/FoldersPage/FoldersPage';
-import FolderDetailPage from './pages/FolderDetailPage/FolderDetailPage';
+import FolderDetailPage from './pages/FoldersPage/FolderDetailPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage/ForgotPasswordPage';
 import FlashcardSetsPage from './pages/FlashcardSetsPage/FlashcardSetsPage';
-import FlashcardSetDetailsPage from './pages/FlashcardSetDetailsPage/FlashcardSetDetailsPage';
+import FlashcardSetDetailsPage from './pages/FlashcardSetsPage/FlashcardSetDetailsPage';
 import FlashcardSetForm from './pages/FlashcardSetForm/FlashcardSetForm';
 import FlashcardForm from './pages/FlashcardForm/FlashcardForm';
 import QuizPage from './pages/QuizPage/QuizPage';
@@ -24,10 +24,12 @@ import ClassesPage from './pages/ClassesPage/ClassesPage';
 import ClassDetailsPage from './pages/ClassesPage/ClassDetailsPage';
 
 import MainLayout from './components/layout';
+import ScrollToTop from './components/layout/ScrollToTop';
 
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/auth" element={<AuthPage />} />

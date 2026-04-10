@@ -180,17 +180,23 @@ const DashboardPage = () => {
 
                     {classes.length > 0 ? (
                         <div className="grid grid-cols-[repeat(auto-fill,minmax(340px,1fr))] gap-6">
-                            {classes.map(cls => (
-                                <Card
-                                    key={cls.classId}
-                                    onClick={() => navigate(`/classes/${cls.classId}`)}
-                                    title={cls.className}
-                                    badge={cls.status === 'PENDING' ? 'Pending Review' : (cls.status === 'REJECTED' ? 'Rejected' : 'Class')}
-                                    badgeVariant={cls.status === 'PENDING' ? 'warning' : (cls.status === 'REJECTED' ? 'error' : 'primary')}
-                                    description={cls.description}
-                                    ownerName={cls.ownerDisplayName}
-                                />
-                            ))}
+                                {classes.map(cls => {
+                                    const isOwner = cls.ownerId === user?.userId || cls.ownerUsername === user?.username || cls.userId === user?.userId;
+                                    const statusText = (isOwner && cls.status === 'PENDING') ? 'Pending Review' : ((isOwner && cls.status === 'REJECTED') ? 'Rejected' : 'Class');
+                                    const statusVariant = (isOwner && cls.status === 'PENDING') ? 'warning' : ((isOwner && cls.status === 'REJECTED') ? 'error' : 'primary');
+
+                                    return (
+                                        <Card
+                                            key={cls.classId}
+                                            onClick={() => navigate(`/classes/${cls.classId}`)}
+                                            title={cls.className}
+                                            badge={statusText}
+                                            badgeVariant={statusVariant}
+                                            description={cls.description}
+                                            ownerName={cls.ownerDisplayName}
+                                        />
+                                    );
+                                })}
                         </div>
                     ) : (
                         <EmptyState

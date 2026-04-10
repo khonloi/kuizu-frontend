@@ -73,7 +73,7 @@ const Navbar = ({ isSidebarCollapsed, onToggleSidebar, isMobile, onOpenMobileMen
 
     return (
         <nav className="fixed top-0 left-0 right-0 h-20 bg-white border-b-2 border-[#edeff2] z-[50]">
-            <div className="h-full px-6 flex items-center justify-between gap-5 mx-auto md:px-4 md:gap-3">
+            <div className="h-full px-6 flex items-center justify-between gap-5 mx-auto md:gap-3">
                 <div className="flex items-center gap-6">
                     {showSidebarToggle && (
                         <button
@@ -84,7 +84,7 @@ const Navbar = ({ isSidebarCollapsed, onToggleSidebar, isMobile, onOpenMobileMen
                         </button>
                     )}
                     <div
-                        className="text-2xl font-extrabold text-[#4255ff] cursor-pointer tracking-tight hidden sm:block"
+                        className="text-3xl font-extrabold text-[#4255ff] cursor-pointer tracking-tight hidden sm:block"
                         onClick={() => navigate('/dashboard')}
                     >
                         Kuizu
