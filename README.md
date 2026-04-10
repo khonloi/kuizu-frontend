@@ -1,18 +1,66 @@
-# React + Vite
+# Kuizu 📚
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Kuizu is a modern, utility-first flashcard learning platform designed to help students and teachers organize study materials efficiently. Inspired by industry leaders but built with a clean, high-performance architecture, Kuizu enables users to create, share, and master study content through an intuitive and responsive interface.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Dynamic Flashcards**: Create and study flashcard sets with a streamlined interface.
+- **Content Organization**: Group related study sets into Folders for better academic structure.
+- **Collaborative Classes**: Connect with other students or join teacher-led classes to study together.
+- **Responsive Dashboard**: A unified view of your recent activity, suggested content, and active classes.
+- **Responsive Design**: Fully optimized for Desktop, Tablet, and Mobile using Tailwind CSS.
+- **Administrator Suite**: Comprehensive management tools for administrators to handle content submissions and user statistics.
 
-## React Compiler
+## 🛠️ Tech Stack
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+- **Frontend**: React.js
+- **Styling**: Tailwind CSS (Utility-first architecture)
+- **Icons**: Lucide React
+- **Routing**: React Router DOM
+- **Authentication**: Custom Context-based Auth Provider
+- **State Management**: React Hooks & Context API
 
-Note: This will impact Vite dev & build performances.
+## 📦 Project Structure
 
-## Expanding the ESLint configuration
+```text
+src/
+├── api/            # API service layers and mock data handlers
+├── components/     # Reusable UI elements and layout components
+│   ├── layout/     # Navbar, Sidebar, and Footer
+│   └── ui/         # Buttons, Cards, Modals, and Loaders
+├── context/        # Authentication, Toast, and Modal contexts
+├── features/       # Feature-specific logic (e.g., Study sets, Search)
+├── hooks/          # Custom React hooks
+├── pages/          # Primary view components
+└── utils/          # Formatting and helper functions
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🚦 Getting Started
+
+### Prerequisites
+
+- Node.js (v16.0 or higher)
+- npm or yarn
+
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/your-repo/kuizu-frontend.git
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+## 📄 License
+
+&copy; 2026 Kaison Corporation. All rights reserved.

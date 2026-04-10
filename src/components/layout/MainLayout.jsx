@@ -44,28 +44,28 @@ const MainLayout = ({ children, isLoading = false, showSidebar = true }) => {
     return (
         <div className={`layout-container ${isSidebarCollapsed && effectiveShowSidebar ? 'sidebar-collapsed' : ''} ${!effectiveShowSidebar ? 'no-sidebar' : ''} ${isMobile ? 'is-mobile' : ''} ${isMobileSidebarOpen ? 'mobile-sidebar-open' : ''}`}>
             {!isAdmin && (
-                <Navbar 
-                    isSidebarCollapsed={isSidebarCollapsed} 
-                    onToggleSidebar={toggleSidebar} 
+                <Navbar
+                    isSidebarCollapsed={isSidebarCollapsed}
+                    onToggleSidebar={toggleSidebar}
                     isMobile={isMobile}
                     onOpenMobileMenu={() => setIsMobileSidebarOpen(true)}
                     showSidebarToggle={effectiveShowSidebar}
                 />
             )}
-            
-            <div className="layout-body" style={{ display: 'flex' }}>
+
+            <div className="layout-body flex pt-20">
                 {isMobileSidebarOpen && <div className="sidebar-overlay" onClick={() => setIsMobileSidebarOpen(false)} />}
-                
+
                 {effectiveShowSidebar && (
-                    <Sidebar 
-                        isCollapsed={isMobile ? false : isSidebarCollapsed} 
-                        onToggle={toggleSidebar} 
+                    <Sidebar
+                        isCollapsed={isMobile ? false : isSidebarCollapsed}
+                        onToggle={toggleSidebar}
                         activePath={location.pathname}
                         isMobile={isMobile}
                         onClose={() => setIsMobileSidebarOpen(false)}
                     />
                 )}
-                
+
                 <div className={`content-wrapper ${isSidebarCollapsed && effectiveShowSidebar ? 'collapsed' : ''} ${!effectiveShowSidebar ? 'full-width' : ''}`}>
                     <main className={`main-content ${isLoading ? 'is-loading' : ''}`}>
                         {isLoading ? (
