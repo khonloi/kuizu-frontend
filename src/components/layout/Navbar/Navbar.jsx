@@ -72,7 +72,7 @@ const Navbar = ({ isSidebarCollapsed, onToggleSidebar, isMobile, onOpenMobileMen
     };
 
     return (
-        <nav className="fixed top-0 left-0 right-0 h- bg-white border-b-2 border-[#edeff2] z-[50]">
+        <nav className="fixed top-0 left-0 right-0 h-20 bg-white border-b-2 border-[#edeff2] z-[50]">
             <div className="h-full px-6 flex items-center justify-between gap-5 mx-auto max-w-[1400px] md:px-4 md:gap-3">
                 <div className="flex items-center gap-6">
                     {showSidebarToggle && (
