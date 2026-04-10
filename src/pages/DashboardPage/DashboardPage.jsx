@@ -108,7 +108,7 @@ const DashboardPage = () => {
                     </div>
 
                     {flashcardSets.length > 0 ? (
-                        <div className="grid grid-cols-[repeat(auto-fill,minmax(320px,1fr))] gap-6 lg:grid-cols-[repeat(auto-fill,minmax(280px,1fr))] lg:gap-5 md:grid-cols-1 md:gap-4">
+                        <div className="grid grid-cols-[repeat(auto-fill,minmax(340px,1fr))] gap-6">
                             {flashcardSets.slice(0, 4).map(set => (
                                 <Card
                                     key={set.id || set.setId}
@@ -141,7 +141,7 @@ const DashboardPage = () => {
                     </div>
 
                     {folders.length > 0 ? (
-                        <div className="grid grid-cols-[repeat(auto-fill,minmax(320px,1fr))] gap-6 lg:grid-cols-[repeat(auto-fill,minmax(280px,1fr))] lg:gap-5 md:grid-cols-1 md:gap-4">
+                        <div className="grid grid-cols-[repeat(auto-fill,minmax(340px,1fr))] gap-6">
                             {folders.map(folder => (
                                 <Card
                                     key={folder.id || folder.folderId}
@@ -176,7 +176,7 @@ const DashboardPage = () => {
                     </div>
 
                     {classes.length > 0 ? (
-                        <div className="grid grid-cols-[repeat(auto-fill,minmax(320px,1fr))] gap-6 lg:grid-cols-[repeat(auto-fill,minmax(280px,1fr))] lg:gap-5 md:grid-cols-1 md:gap-4">
+                        <div className="grid grid-cols-[repeat(auto-fill,minmax(340px,1fr))] gap-6">
                             {classes.map(cls => (
                                 <Card
                                     key={cls.classId}
@@ -208,7 +208,7 @@ const DashboardPage = () => {
                                 <Button variant="ghost" size="sm" onClick={() => navigate('/flashcard-sets')}>View all</Button>
                             </div>
                         </div>
-                        <div className="grid grid-cols-[repeat(auto-fill,minmax(320px,1fr))] gap-6 lg:grid-cols-[repeat(auto-fill,minmax(280px,1fr))] lg:gap-5 md:grid-cols-1 md:gap-4">
+                        <div className="grid grid-cols-[repeat(auto-fill,minmax(340px,1fr))] gap-6">
                             {publicFlashcardSets.slice(0, 4).map(set => (
                                 <Card
                                     key={set.id || set.setId}
@@ -232,7 +232,7 @@ const DashboardPage = () => {
                                 <Button variant="ghost" size="sm" onClick={() => navigate('/folders')}>View all</Button>
                             </div>
                         </div>
-                        <div className="grid grid-cols-[repeat(auto-fill,minmax(320px,1fr))] gap-6 lg:grid-cols-[repeat(auto-fill,minmax(280px,1fr))] lg:gap-5 md:grid-cols-1 md:gap-4">
+                        <div className="grid grid-cols-[repeat(auto-fill,minmax(340px,1fr))] gap-6">
                             {publicFolders.slice(0, 4).map(folder => (
                                 <Card
                                     key={folder.id || folder.folderId}

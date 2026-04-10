@@ -84,7 +84,7 @@ const Card = ({
 };
 
 const CardHeader = ({ children, className = '', ...props }) => (
-    <div className={`p-4 px-8 border-b border-[#edeff2] bg-transparent ${className}`} {...props}>
+    <div className={`p-5 border-b border-[#edeff2] bg-transparent ${className}`} {...props}>
         {children}
     </div>
 );
@@ -96,13 +96,13 @@ const CardTitle = ({ children, className = '', ...props }) => (
 );
 
 const CardBody = ({ children, className = '', ...props }) => (
-    <div className={`p-8 ${className}`} {...props}>
+    <div className={`p-5 ${className}`} {...props}>
         {children}
     </div>
 );
 
 const CardFooter = ({ children, className = '', ...props }) => (
-    <div className={`p-4 px-8 border-t border-[#edeff2] bg-[#f6f7fb] ${className}`} {...props}>
+    <div className={`p-5 border-t border-[#edeff2] bg-[#f6f7fb] ${className}`} {...props}>
         {children}
     </div>
 );

@@ -163,7 +163,7 @@ const ContentListPage = ({
                 ) : (
                     <>
                         {filteredItems.length > 0 ? (
-                            <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-6 lg:grid-cols-[repeat(auto-fill,minmax(280px,1fr))] md:grid-cols-1 md:gap-4">
+                            <div className="grid grid-cols-[repeat(auto-fill,minmax(340px,1fr))] gap-6">
                                 {filteredItems.map(item => (
                                     <Card
                                         key={getItemId(item)}

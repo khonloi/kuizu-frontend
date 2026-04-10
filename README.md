@@ -2,6 +2,9 @@
 
 Kuizu is a modern, utility-first flashcard learning platform designed to help students and teachers organize study materials efficiently. Inspired by industry leaders but built with a clean, high-performance architecture, Kuizu enables users to create, share, and master study content through an intuitive and responsive interface.
 
+> [!NOTE]
+> This project is a continuation of the original [Kuizu](https://github.com/Kuizu-Organization/kuizu) repository.
+
 ## 🚀 Features
 
 - **Dynamic Flashcards**: Create and study flashcard sets with a streamlined interface.
@@ -13,11 +16,14 @@ Kuizu is a modern, utility-first flashcard learning platform designed to help st
 
 ## 🛠️ Tech Stack
 
-- **Frontend**: React.js
-- **Styling**: Tailwind CSS (Utility-first architecture)
+Kuizu is built using the **MERN stack** for full-stack performance and scalability:
+
+- **Frontend**: React.js with Tailwind CSS
+- **Backend**: Node.js & Express.js
+- **Database**: MongoDB
 - **Icons**: Lucide React
 - **Routing**: React Router DOM
-- **Authentication**: Custom Context-based Auth Provider
+- **Authentication**: Custom JWT & Context-based Auth Provider
 - **State Management**: React Hooks & Context API
 
 ## 📦 Project Structure

@@ -183,59 +183,52 @@ const ContentDetailsPage = ({
     return (
         <MainLayout>
             <div className="p-6">
-                <Button variant="ghost" className="flex items-center gap-2 text-[#586380] font-semibold mb-8 transition-colors hover:text-[#4255ff] p-0 h-auto" onClick={() => navigate(backPath)}>
-                    <ChevronLeft size={20} />
-                    Back to {type === 'sets' ? 'Sets' : type === 'folders' ? 'Folders' : 'Classes'}
-                </Button>
+                {/* Navigation & Header */}
+                <div className="mb-8">
+                    <Button
+                        variant="ghost"
+                        size="sm"
+                        className="flex items-center gap-1.5 text-[#586380] p-0 h-auto mb-6 hover:text-[#4255ff]"
+                        onClick={() => navigate(backPath)}
+                    >
+                        <ChevronLeft size={16} />
+                        Back to {type === 'sets' ? 'Sets' : type === 'folders' ? 'Folders' : 'Classes'}
+                    </Button>
 
-                <div className="flex justify-between items-start mb-12 gap-12 md:flex-col md:gap-6 md:mb-8">
-                    <div className="flex-1">
-                        <h1 className="text-3xl font-extrabold mb-3 text-[#282e3e] flex items-center gap-4">
-                            <span className="leading-[1.1]">{getItemTitle()}</span>
-                            {item.status && item.status !== 'ACTIVE' && item.status !== 'APPROVED' && (
-                                <Badge variant={item.status === 'PENDING' ? 'warning' : 'error'}>
-                                    {item.status === 'PENDING' ? 'Pending Review' : 'Rejected'}
-                                </Badge>
-                            )}
-                            {(item.status === 'ACTIVE' || item.status === 'APPROVED') && (
-                                <Badge variant="success">Active</Badge>
-                            )}
-                        </h1>
-                        <p className="text-base text-[#586380] leading-relaxed mb-8">{item.description || 'No description provided.'}</p>
-
-                        <div className="flex gap-8 md:flex-col md:gap-3">
-                            <div className="flex items-center gap-3 text-[#586380] text-sm">
-                                <User size={16} />
-                                <span>Created by <strong className="text-[#282e3e] font-semibold">{item.ownerDisplayName}</strong></span>
-                            </div>
-                            <div className="flex items-center gap-3 text-[#586380] text-sm">
-                                {type === 'sets' ? <Layers size={16} /> : (type === 'folders' ? <FolderOpen size={16} /> : <Users size={16} />)}
-                                <span>
-                                    {type === 'sets' ? `${children.length} terms` :
-                                        type === 'folders' ? `${children.length} sets` :
-                                            `${item.members?.length || 0} members`}
-                                </span>
-                            </div>
+                    <div className="flex flex-col gap-6">
+                        <div className="flex-1 min-w-0">
+                            <h1 className="text-3xl font-bold text-[#282e3e] flex items-center gap-3 flex-wrap">
+                                {getItemTitle()}
+                                {item.status && item.status !== 'ACTIVE' && item.status !== 'APPROVED' && (
+                                    <Badge variant={item.status === 'PENDING' ? 'warning' : 'error'} size="sm">
+                                        {item.status === 'PENDING' ? 'Pending Review' : 'Rejected'}
+                                    </Badge>
+                                )}
+                                {(item.status === 'ACTIVE' || item.status === 'APPROVED') && (
+                                    <Badge variant="success" size="sm">Active</Badge>
+                                )}
+                            </h1>
                         </div>
 
-
-                        <div className="mt-10 flex flex-row flex-wrap gap-5 md:w-full md:min-w-0">
+                        <div className="flex gap-4 flex-wrap items-center">
                             {type === 'sets' && (
                                 <>
                                     <Button
+                                        variant="primary"
                                         size="lg"
-                                        variant="outline"
+                                        className="h-12 px-8"
                                         onClick={() => navigate(`/study/${id}`, { state: { cards: children } })}
                                         leftIcon={<BookOpen size={20} />}
                                     >
                                         Study
                                     </Button>
                                     <Button
-                                        size="lg"
                                         variant="outline"
+                                        size="lg"
+                                        className="h-12 px-6"
                                         onClick={() => navigate(`/quiz/${id}`, { state: { cards: children } })}
                                         disabled={children.length < 2}
-                                        leftIcon={<Play size={20} fill="currentColor" />}
+                                        leftIcon={<Play size={20} />}
                                     >
                                         Take Quiz
                                     </Button>
@@ -244,8 +237,9 @@ const ContentDetailsPage = ({
 
                             {type === 'folders' && (
                                 <Button
+                                    variant="primary"
                                     size="lg"
-                                    variant="outline"
+                                    className="h-12 px-8"
                                     onClick={() => {
                                         const allCards = children.reduce((acc, set) => [...acc, ...(set.flashcards || [])], []);
                                         if (allCards.length === 0) {
@@ -262,49 +256,73 @@ const ContentDetailsPage = ({
 
                             {type === 'classes' && !isOwner && (
                                 item.isMember ? (
-                                    <Button variant="outline" size="lg" className="text-red-500 hover:bg-red-50" onClick={() => openAddChildModal('leave')}>
+                                    <Button variant="outline" size="lg" className="h-12 px-6 text-red-500 hover:bg-red-50" onClick={() => openAddChildModal('leave')}>
                                         Leave Class
                                     </Button>
                                 ) : (
-                                    <Button variant="primary" size="lg" onClick={() => openAddChildModal('join')}>
+                                    <Button variant="primary" size="lg" className="h-12 px-8" onClick={() => openAddChildModal('join')}>
                                         Join Class
                                     </Button>
                                 )
                             )}
 
-                            {isOwner && (
-                                <>
-                                    <Button
-                                        variant="outline"
-                                        size="lg"
-                                        onClick={() => openEditModal(id, handleUpdateSuccess)}
-                                        leftIcon={<Pencil size={20} />}
-                                    >
-                                        Edit {type === 'sets' ? 'Set' : type === 'folders' ? 'Folder' : 'Class'}
-                                    </Button>
-                                    <Button
-                                        variant="primary"
-                                        size="lg"
-                                        onClick={handleAddChildClick}
-                                        leftIcon={<Plus size={20} />}
-                                    >
-                                        Add {type === 'sets' ? 'Card' : type === 'folders' ? 'Set' : 'Resource'}
-                                    </Button>
-                                    <Button
-                                        variant="ghost"
-                                        size="lg"
-                                        className="text-red-500 hover:bg-red-50"
-                                        onClick={() => setShowDeleteConfirm(true)}
-                                        leftIcon={<Trash2 size={20} />}
-                                    >
-                                        Delete {type === 'sets' ? 'Set' : type === 'folders' ? 'Folder' : 'Class'}
-                                    </Button>
-                                </>
-                            )}
+                            <div className="flex items-center gap-4 flex-wrap">
+                                {isOwner && (
+                                    <>
+                                        <Button
+                                            variant="ghost"
+                                            className="text-[#586380] hover:text-[#4255ff]"
+                                            onClick={() => openEditModal(id, handleUpdateSuccess)}
+                                            leftIcon={<Pencil size={18} />}
+                                        >
+                                            Edit
+                                        </Button>
+                                        <Button
+                                            variant="ghost"
+                                            className="text-[#586380] hover:text-[#282e3e]"
+                                            onClick={handleAddChildClick}
+                                            leftIcon={<Plus size={18} />}
+                                        >
+                                            Add {type === 'sets' ? 'Card' : type === 'folders' ? 'Set' : 'Resource'}
+                                        </Button>
+                                        <Button
+                                            variant="ghost"
+                                            className="text-[#ff725e] hover:bg-red-50"
+                                            onClick={() => setShowDeleteConfirm(true)}
+                                        >
+                                            <Trash2 size={18} />
+                                        </Button>
+                                    </>
+                                )}
+                            </div>
                         </div>
                     </div>
                 </div>
 
+                {/* Metadata & Description */}
+                <div className="mb-6 bg-[#f6f7fb] rounded-2xl border border-[#edeff2] overflow-hidden">
+                    <div className="p-6 pb-5">
+                        <p className="text-[#586380] leading-relaxed max-w-3xl">
+                            {item.description || 'No description provided.'}
+                        </p>
+                    </div>
+                    <div className="px-6 py-5 border-t border-[#edeff2] flex gap-6 flex-wrap text-sm bg-white/50">
+                        <div className="flex items-center gap-2 text-[#586380]">
+                            <User size={16} />
+                            <span>Created by <strong className="text-[#282e3e] font-semibold">{item.ownerDisplayName}</strong></span>
+                        </div>
+                        <div className="flex items-center gap-2 text-[#586380]">
+                            {type === 'sets' ? <Layers size={16} /> : (type === 'folders' ? <FolderOpen size={16} /> : <Users size={16} />)}
+                            <span className="font-semibold text-[#282e3e]">
+                                {type === 'sets' ? `${children.length} terms` :
+                                    type === 'folders' ? `${children.length} sets` :
+                                        `${item.members?.length || 0} members`}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Content Sections */}
                 <div>
                     {type === 'classes' ? (
                         <div>
@@ -320,71 +338,66 @@ const ContentDetailsPage = ({
 
                             <div className="mt-8">
                                 {activeTab === 'materials' && (
-                                    <div>
-                                        <div className="flex justify-center items-center mb-8 md:justify-start">
-                                            <h2 className="text-2xl font-bold">Resources</h2>
-                                        </div>
-                                        <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-6 lg:grid-cols-[repeat(auto-fill,minmax(280px,1fr))] md:grid-cols-1 md:gap-4">
-                                            {children.length > 0 ? (
-                                                children.map(m => (
-                                                    <Card
-                                                        key={m.materialId}
-                                                        onClick={() => navigate(m.materialType === 'FOLDER' ? `/folders/${m.materialRefId}` : `/flashcard-sets/${m.materialRefId}`)}
-                                                        title={m.materialName}
-                                                        badge={m.materialType === 'FOLDER' ? 'Folder' : 'Set'}
-                                                        description={m.materialType}
-                                                        actions={isOwner && (
-                                                            <Button variant="ghost" size="sm" className="hover:text-[#ff725e]" onClick={(e) => { e.stopPropagation(); setChildToDelete(m.materialId); }}>
-                                                                  <Trash2 size={16} />
-                                                            </Button>
-                                                        )}
-                                                    />
-                                                ))
-                                            ) : (
+                                    <div className="grid grid-cols-[repeat(auto-fill,minmax(340px,1fr))] gap-6">
+                                        {children.length > 0 ? (
+                                            children.map(m => (
+                                                <Card
+                                                    key={m.materialId}
+                                                    onClick={() => navigate(m.materialType === 'FOLDER' ? `/folders/${m.materialRefId}` : `/flashcard-sets/${m.materialRefId}`)}
+                                                    title={m.materialName}
+                                                    badge={m.materialType === 'FOLDER' ? 'Folder' : 'Set'}
+                                                    description={m.materialType === 'FOLDER' ? 'Grouped educational content' : 'Flashcard collection'}
+                                                    actions={isOwner && (
+                                                        <Button variant="ghost" size="sm" className="hover:text-[#ff725e]" onClick={(e) => { e.stopPropagation(); setChildToDelete(m.materialId); }}>
+                                                            <Trash2 size={16} />
+                                                        </Button>
+                                                    )}
+                                                />
+                                            ))
+                                        ) : (
+                                            <div className="col-span-full">
                                                 <EmptyState icon={Layers} title="No materials" description="This class has no shared materials yet." />
-                                            )}
-                                        </div>
+                                            </div>
+                                        )}
                                     </div>
                                 )}
 
                                 {activeTab === 'members' && (
-                                    <div>
-                                        <div className="grid grid-cols-[repeat(auto-fill,minmax(240px,1fr))] gap-6">
-                                            {item.members?.map(member => (
-                                                <Card key={member.userId}>
-                                                    <Card.Body className="p-4 flex items-center gap-4">
-                                                        <div className="w-10 h-10 rounded-full bg-[#4255ff] text-white flex items-center justify-center font-bold">
-                                                            {member.displayName.charAt(0)}
-                                                        </div>
-                                                        <div className="flex-1">
-                                                            <div className="font-bold">{member.displayName}</div>
-                                                            <Badge variant={member.role === 'OWNER' ? 'error' : 'secondary'} size="sm">{member.role}</Badge>
-                                                        </div>
-                                                        {isOwner && member.role !== 'OWNER' && (
-                                                            <Button variant="ghost" size="sm" className="text-red-500" onClick={() => setChildToDelete(member.userId)}>
-                                                                <Trash2 size={16} />
-                                                            </Button>
-                                                        )}
-                                                    </Card.Body>
-                                                </Card>
-                                            ))}
-                                        </div>
+                                    <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-6">
+                                        {item.members?.map(member => (
+                                            <Card key={member.userId}>
+                                                <Card.Body className="p-4 flex items-center gap-4">
+                                                    <div className="w-10 h-10 rounded-full bg-[#4255ff] text-white flex items-center justify-center font-bold">
+                                                        {member.displayName.charAt(0)}
+                                                    </div>
+                                                    <div className="flex-1">
+                                                        <div className="font-bold">{member.displayName}</div>
+                                                        <Badge variant={member.role === 'OWNER' ? 'error' : 'secondary'} size="sm">{member.role}</Badge>
+                                                    </div>
+                                                    {isOwner && member.role !== 'OWNER' && (
+                                                        <Button variant="ghost" size="sm" className="text-red-500" onClick={() => setChildToDelete(member.userId)}>
+                                                            <Trash2 size={16} />
+                                                        </Button>
+                                                    )}
+                                                </Card.Body>
+                                            </Card>
+                                        ))}
                                     </div>
                                 )}
 
                                 {activeTab === 'requests' && (
-                                    <div className="flex flex-col gap-4">
+                                    <div className="grid grid-cols-1 gap-4 max-w-2xl">
                                         {item.joinRequests?.length > 0 ? (
                                             item.joinRequests.map(req => (
                                                 <Card key={req.requestId} className="p-4">
                                                     <div className="flex justify-between items-center">
                                                         <div className="flex items-center gap-4">
-                                                            <div className="w-10 h-10 rounded-full bg-[#edeff2] flex items-center justify-center">
+                                                            <div className="w-10 h-10 rounded-full bg-[#edeff2] flex items-center justify-center text-[#586380]">
                                                                 <User size={20} />
                                                             </div>
                                                             <div>
-                                                                <div className="font-bold">{req.displayName}</div>
-                                                                <div className="text-sm text-[#586380]">{req.message || 'No message'}</div>
+                                                                <div className="font-bold text-[#282e3e]">{req.displayName}</div>
+                                                                <div className="text-sm text-[#586380]">{req.message || 'Wants to join the class'}</div>
                                                             </div>
                                                         </div>
                                                         <div className="flex gap-2">
@@ -403,47 +416,53 @@ const ContentDetailsPage = ({
                         </div>
                     ) : (
                         <>
-                            <div className="flex justify-center items-center mb-8 md:justify-start">
-                                <h2 className="text-2xl font-bold">{type === 'sets' ? 'Terms' : 'Sets'} in this {type === 'sets' ? 'set' : 'folder'} ({children.length})</h2>
+                            <div className="mb-6">
+                                <h2 className="text-2xl font-bold text-[#282e3e]">
+                                    {children.length} {type === 'sets' ? 'terms' : 'sets'} in this {type === 'sets' ? 'set' : 'folder'}
+                                </h2>
                             </div>
 
-                            <div className={type === 'sets' ? "flex flex-col gap-6" : "grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-6 lg:grid-cols-[repeat(auto-fill,minmax(280px,1fr))] md:grid-cols-1 md:gap-4"}>
+                            <div className="grid grid-cols-[repeat(auto-fill,minmax(340px,1fr))] gap-6">
                                 {filteredChildren.length > 0 ? (
                                     filteredChildren.map((child, index) => (
                                         type === 'sets' ? (
-                                            <Card key={child.cardId} className="relative border-2 border-[#edeff2] transition-colors overflow-hidden hover:border-[#4255ff]">
-                                                <Card.Body className="flex p-4 gap-6 md:flex-col md:gap-4">
-                                                    <div className="text-xl font-bold text-[#586380] min-w-[32px] flex items-center justify-center">{index + 1}</div>
-                                                    <div className="flex-1 flex items-center gap-8 md:flex-col md:items-start md:gap-6">
-                                                        <div className="flex-1">
-                                                            <div className="text-xs font-extrabold text-[#586380] tracking-wider mb-2">TERM</div>
-                                                            <div className="text-lg text-[#282e3e] font-medium">{child.term}</div>
+                                            <Card key={child.cardId} className="h-full border-2 border-[#edeff2] transition-all hover:border-[#4255ff] flex flex-col">
+                                                <Card.Body className="flex-1 flex flex-col">
+                                                    <div className="flex justify-between items-start h-6 mb-2">
+                                                        <div className="text-sm font-black text-[#282e3e]">{index + 1}</div>
+                                                        {isOwner && (
+                                                            <div className="flex gap-1 ml-auto">
+                                                                <Button
+                                                                    variant="ghost"
+                                                                    size="sm"
+                                                                    className="text-[#586380] hover:text-[#4255ff]"
+                                                                    onClick={() => handleEditChildClick(child.cardId)}
+                                                                >
+                                                                    <Pencil size={14} />
+                                                                </Button>
+                                                                <Button
+                                                                    variant="ghost"
+                                                                    size="sm"
+                                                                    className="text-[#586380] hover:text-[#ff725e]"
+                                                                    onClick={() => setChildToDelete(child.cardId)}
+                                                                >
+                                                                    <Trash2 size={14} />
+                                                                </Button>
+                                                            </div>
+                                                        )}
+                                                    </div>
+
+                                                    <div className="flex-1 flex flex-col">
+                                                        <div className="pb-4 flex-1 flex flex-col justify-center">
+                                                            <div className="text-[11px] font-black text-[#98a2b3] tracking-[0.1em] mb-2 uppercase">Term</div>
+                                                            <div className="text-xl text-[#282e3e] font-bold leading-tight">{child.term}</div>
                                                         </div>
-                                                        <div className="w-[1px] h-10 bg-[#edeff2] md:w-full md:h-[1px]"></div>
-                                                        <div className="flex-1">
-                                                            <div className="text-xs font-extrabold text-[#586380] tracking-wider mb-2">DEFINITION</div>
-                                                            <div className="text-lg text-[#282e3e] font-medium">{child.definition}</div>
+
+                                                        <div className="pt-4 border-t border-[#edeff2] flex-1 flex flex-col justify-center">
+                                                            <div className="text-[11px] font-black text-[#98a2b3] tracking-[0.1em] mb-2 uppercase">Definition</div>
+                                                            <div className="text-base text-[#586380] font-medium leading-relaxed">{child.definition}</div>
                                                         </div>
                                                     </div>
-                                                    {isOwner && (
-                                                        <div className="flex flex-col gap-2 md:flex-row md:justify-end">
-                                                            <Button
-                                                                variant="ghost"
-                                                                size="sm"
-                                                                onClick={() => handleEditChildClick(child.cardId)}
-                                                            >
-                                                                <Pencil size={18} />
-                                                            </Button>
-                                                            <Button
-                                                                variant="ghost"
-                                                                size="sm"
-                                                                className="hover:text-[#ff725e]"
-                                                                onClick={() => setChildToDelete(child.cardId)}
-                                                            >
-                                                                <Trash2 size={18} />
-                                                            </Button>
-                                                        </div>
-                                                    )}
                                                 </Card.Body>
                                             </Card>
                                         ) : (
@@ -470,18 +489,19 @@ const ContentDetailsPage = ({
                                             />
                                         )
                                     ))
-                                ) : null}
+                                ) : (
+                                    <div className="col-span-full">
+                                        <div className="text-center p-16 bg-[#f6f7fb] rounded-3xl border-2 border-dashed border-[#edeff2]">
+                                            <p className="mb-6 text-[#586380] text-lg font-medium">No {type === 'sets' ? 'flashcards' : 'sets'} here yet.</p>
+                                            {isOwner && (
+                                                <Button variant="primary" size="lg" onClick={handleAddChildClick} leftIcon={<Plus size={20} />}>
+                                                    Add first {type === 'sets' ? 'card' : 'set'}
+                                                </Button>
+                                            )}
+                                        </div>
+                                    </div>
+                                )}
                             </div>
-                            {filteredChildren.length === 0 && (
-                                <div className="text-center p-16 bg-[#f6f7fb] rounded-xl border-2 border-dashed border-[#edeff2]">
-                                    <p className="mb-6 text-[#586380]">No {type === 'sets' ? 'flashcards' : 'sets'} here yet.</p>
-                                    {isOwner && (
-                                        <Button onClick={handleAddChildClick}>
-                                            Add your first {type === 'sets' ? 'card' : 'set'}
-                                        </Button>
-                                    )}
-                                </div>
-                            )}
                         </>
                     )}
                 </div>

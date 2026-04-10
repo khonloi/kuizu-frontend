@@ -6,6 +6,11 @@ export default {
       fontFamily: {
         sans: ['"Outfit"', "sans-serif"],
       },
+      screens: {
+        '3xl': '1920px',
+        '4xl': '2560px',
+        '5xl': '3200px',
+      },
       keyframes: {
         float: {
           '0%, 100%': { transform: 'translateY(0px)' },
