@@ -10,7 +10,7 @@ const Footer = () => {
                     <ul className="list-none p-0 m-0">
                         <li className="mb-3">
                             <a href="/about" className="no-underline text-sm font-semibold text-[#282e3e] transition-all hover:text-[#4255ff] hover:underline">
-                                About Kuizu
+                                About Kitra
                             </a>
                         </li>
                     </ul>
@@ -24,7 +24,7 @@ const Footer = () => {
                         <li className="mb-3"><a href="/learn" className="no-underline text-sm font-semibold text-[#282e3e] transition-all hover:text-[#4255ff] hover:underline">Learn</a></li>
                         <li className="mb-3"><a href="/study-groups" className="no-underline text-sm font-semibold text-[#282e3e] transition-all hover:text-[#4255ff] hover:underline">Study groups</a></li>
                         <li className="mb-3"><a href="/solutions" className="no-underline text-sm font-semibold text-[#282e3e] transition-all hover:text-[#4255ff] hover:underline">Solutions</a></li>
-                        <li className="mb-3"><a href="/plus" className="no-underline text-sm font-semibold text-[#282e3e] transition-all hover:text-[#4255ff] hover:underline">Kuizu Plus</a></li>
+                        <li className="mb-3"><a href="/plus" className="no-underline text-sm font-semibold text-[#282e3e] transition-all hover:text-[#4255ff] hover:underline">Kitra Plus</a></li>
                     </ul>
                 </div>
 
@@ -33,7 +33,7 @@ const Footer = () => {
                     <ul className="list-none p-0 m-0">
                         <li className="mb-3"><a href="/live" className="no-underline text-sm font-semibold text-[#282e3e] transition-all hover:text-[#4255ff] hover:underline">Live</a></li>
                         <li className="mb-3"><a href="/blog" className="no-underline text-sm font-semibold text-[#282e3e] transition-all hover:text-[#4255ff] hover:underline">Blog</a></li>
-                        <li className="mb-3"><a href="/teachers-plus" className="no-underline text-sm font-semibold text-[#282e3e] transition-all hover:text-[#4255ff] hover:underline">Kuizu Plus for Teachers</a></li>
+                        <li className="mb-3"><a href="/teachers-plus" className="no-underline text-sm font-semibold text-[#282e3e] transition-all hover:text-[#4255ff] hover:underline">Kitra Plus for Teachers</a></li>
                     </ul>
                 </div>
 
@@ -50,7 +50,7 @@ const Footer = () => {
                         <li className="mb-3"><a href="/privacy-choices" className="no-underline text-sm font-semibold text-[#282e3e] transition-all hover:text-[#4255ff] hover:underline">Your Privacy Choices</a></li>
                         <li className="mb-3"><a href="/ads-cookies" className="no-underline text-sm font-semibold text-[#282e3e] transition-all hover:text-[#4255ff] hover:underline">Ad and Cookie Policy</a></li>
                         <li className="mb-3"><a href="/targeted-ads" className="no-underline text-sm font-semibold text-[#282e3e] transition-all hover:text-[#4255ff] hover:underline">Interest-Based Ads</a></li>
-                        <li className="mb-3"><a href="/schools" className="no-underline text-sm font-semibold text-[#282e3e] transition-all hover:text-[#4255ff] hover:underline">Kuizu for Schools</a></li>
+                        <li className="mb-3"><a href="/schools" className="no-underline text-sm font-semibold text-[#282e3e] transition-all hover:text-[#4255ff] hover:underline">Kitra for Schools</a></li>
                         <li className="mb-3"><a href="/parents" className="no-underline text-sm font-semibold text-[#282e3e] transition-all hover:text-[#4255ff] hover:underline">Parents</a></li>
                     </ul>
                 </div>

@@ -113,7 +113,7 @@ const ForgotPasswordPage = () => {
         try {
             const data = await verifyRegistration(email, otpCode);
             await login(data, data.token);
-            toast.success('Account verified successfully! Welcome to Kuizu.');
+            toast.success('Account verified successfully! Welcome to Kitra.');
             navigate('/dashboard');
         } catch (err) {
             const msg = err.response?.data?.message || 'Invalid OTP. Please try again.';

@@ -8,7 +8,7 @@ export const mockUsers = [
     profilePictureUrl: "https://api.dicebear.com/7.x/avataaars/svg?seed=John",
     role: "ROLE_STUDENT",
     status: "ACTIVE",
-    createdAt: "2023-01-01T10:00:00Z"
+    createdAt: "2023-01-01T10:00:00Z",
   },
   {
     userId: "u2-uuid-8765-4321",
@@ -19,18 +19,18 @@ export const mockUsers = [
     profilePictureUrl: "https://api.dicebear.com/7.x/avataaars/svg?seed=Jane",
     role: "ROLE_TEACHER",
     status: "ACTIVE",
-    createdAt: "2023-02-15T09:30:00Z"
+    createdAt: "2023-02-15T09:30:00Z",
   },
   {
     userId: "u3-uuid-admin-9999",
     username: "admin_user",
-    email: "admin@kuizu.com",
+    email: "admin@kitra.com",
     displayName: "System Admin",
-    bio: "Managing Kuizu platform.",
+    bio: "Managing Kitra platform.",
     profilePictureUrl: "https://api.dicebear.com/7.x/avataaars/svg?seed=Admin",
     role: "ROLE_ADMIN",
     status: "ACTIVE",
-    createdAt: "2022-12-01T00:00:00Z"
+    createdAt: "2022-12-01T00:00:00Z",
   },
   {
     userId: "u4-uuid",
@@ -38,7 +38,7 @@ export const mockUsers = [
     displayName: "Bob Wilson",
     role: "ROLE_STUDENT",
     status: "ACTIVE",
-    profilePictureUrl: "https://api.dicebear.com/7.x/avataaars/svg?seed=Bob"
+    profilePictureUrl: "https://api.dicebear.com/7.x/avataaars/svg?seed=Bob",
   },
   {
     userId: "u5-uuid",
@@ -46,7 +46,7 @@ export const mockUsers = [
     displayName: "Alice Wonderland",
     role: "ROLE_STUDENT",
     status: "ACTIVE",
-    profilePictureUrl: "https://api.dicebear.com/7.x/avataaars/svg?seed=Alice"
+    profilePictureUrl: "https://api.dicebear.com/7.x/avataaars/svg?seed=Alice",
   },
   {
     userId: "u6-uuid",
@@ -54,7 +54,8 @@ export const mockUsers = [
     displayName: "Charlie Brown",
     role: "ROLE_STUDENT",
     status: "ACTIVE",
-    profilePictureUrl: "https://api.dicebear.com/7.x/avataaars/svg?seed=Charlie"
+    profilePictureUrl:
+      "https://api.dicebear.com/7.x/avataaars/svg?seed=Charlie",
   },
   {
     userId: "u7-uuid",
@@ -62,7 +63,7 @@ export const mockUsers = [
     displayName: "David Beck",
     role: "ROLE_STUDENT",
     status: "ACTIVE",
-    profilePictureUrl: "https://api.dicebear.com/7.x/avataaars/svg?seed=David"
+    profilePictureUrl: "https://api.dicebear.com/7.x/avataaars/svg?seed=David",
   },
   {
     userId: "u8-uuid",
@@ -70,7 +71,7 @@ export const mockUsers = [
     displayName: "Eva Smith",
     role: "ROLE_STUDENT",
     status: "ACTIVE",
-    profilePictureUrl: "https://api.dicebear.com/7.x/avataaars/svg?seed=Eva"
+    profilePictureUrl: "https://api.dicebear.com/7.x/avataaars/svg?seed=Eva",
   },
   {
     userId: "u9-uuid",
@@ -78,7 +79,7 @@ export const mockUsers = [
     displayName: "Frank Miller",
     role: "ROLE_STUDENT",
     status: "ACTIVE",
-    profilePictureUrl: "https://api.dicebear.com/7.x/avataaars/svg?seed=Frank"
+    profilePictureUrl: "https://api.dicebear.com/7.x/avataaars/svg?seed=Frank",
   },
   {
     userId: "u10-uuid",
@@ -86,7 +87,7 @@ export const mockUsers = [
     displayName: "Grace Hopper",
     role: "ROLE_STUDENT",
     status: "ACTIVE",
-    profilePictureUrl: "https://api.dicebear.com/7.x/avataaars/svg?seed=Grace"
+    profilePictureUrl: "https://api.dicebear.com/7.x/avataaars/svg?seed=Grace",
   },
   {
     userId: "u11-uuid",
@@ -94,7 +95,7 @@ export const mockUsers = [
     displayName: "Henry Ford",
     role: "ROLE_STUDENT",
     status: "ACTIVE",
-    profilePictureUrl: "https://api.dicebear.com/7.x/avataaars/svg?seed=Henry"
+    profilePictureUrl: "https://api.dicebear.com/7.x/avataaars/svg?seed=Henry",
   },
   {
     userId: "u12-uuid",
@@ -102,6 +103,6 @@ export const mockUsers = [
     displayName: "Isabel Luna",
     role: "ROLE_STUDENT",
     status: "ACTIVE",
-    profilePictureUrl: "https://api.dicebear.com/7.x/avataaars/svg?seed=Isabel"
-  }
+    profilePictureUrl: "https://api.dicebear.com/7.x/avataaars/svg?seed=Isabel",
+  },
 ];

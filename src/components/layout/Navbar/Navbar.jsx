@@ -87,7 +87,7 @@ const Navbar = ({ isSidebarCollapsed, onToggleSidebar, isMobile, onOpenMobileMen
                         className="text-3xl font-extrabold text-[#4255ff] cursor-pointer tracking-tight hidden sm:block"
                         onClick={() => navigate('/dashboard')}
                     >
-                        Kuizu
+                        Kitra
                     </div>
                     <div className="hidden lg:flex items-center gap-7">
                         <Dropdown

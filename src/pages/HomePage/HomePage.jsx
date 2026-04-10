@@ -19,7 +19,7 @@ const HomePage = () => {
                                 <span>Revolutionize Your Study Habits</span>
                             </div>
                             <h1 className="text-5xl lg:text-[64px] leading-tight font-extrabold mb-6 text-[#282e3e] tracking-tight">
-                                Master any subject with <span className="bg-gradient-to-br from-[#4255ff] to-[#a8a1ff] bg-clip-text text-transparent">Kuizu</span>
+                                Master any subject with <span className="bg-gradient-to-br from-[#4255ff] to-[#a8a1ff] bg-clip-text text-transparent">Kitra</span>
                             </h1>
                             <p className="text-lg lg:text-xl leading-relaxed text-[#586380] mb-10 max-w-xl mx-auto lg:mx-0">
                                 The most effective way to learn, practice, and master anything. Join thousands of students using AI-powered flashcards and interactive tests.
@@ -78,14 +78,14 @@ const HomePage = () => {
                                     </div>
                                 </Card.Body>
                             </Card>
-                            
+
                             <div className="bg-white rounded-2xl shadow-xl border border-[#edeff2] absolute top-10 sm:top-1/4 -left-4 sm:-left-8 px-5 py-4 flex items-center gap-3 animate-float z-20">
                                 <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-[#a8a1ff]/15 text-[#a8a1ff]">
                                     <Brain size={24} />
                                 </div>
                                 <span className="font-bold text-sm text-[#282e3e]">Active Recall</span>
                             </div>
-                            
+
                             <div className="bg-white rounded-2xl shadow-xl border border-[#edeff2] absolute bottom-10 sm:bottom-1/4 -right-4 sm:-right-8 px-5 py-4 flex items-center gap-3 animate-float-reverse z-20">
                                 <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-[#4255ff]/15 text-[#4255ff]">
                                     <CheckCircle2 size={24} />
@@ -139,7 +139,7 @@ const HomePage = () => {
                     <section className="py-20 lg:py-24 px-6 max-w-5xl mx-auto border-t border-[#edeff2]">
                         <div className="bg-gradient-to-br from-[#4255ff] to-[#6366f1] rounded-[32px] p-10 lg:p-20 text-center shadow-2xl shadow-[#4255ff]/20">
                             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold mb-6 text-white leading-tight">Ready to boost your grades?</h2>
-                            <p className="text-lg sm:text-xl text-white/90 mb-10 max-w-2xl mx-auto">Join Kuizu today and start your journey towards academic excellence.</p>
+                            <p className="text-lg sm:text-xl text-white/90 mb-10 max-w-2xl mx-auto">Join Kitra today and start your journey towards academic excellence.</p>
                             <Button
                                 variant="white"
                                 size="lg"

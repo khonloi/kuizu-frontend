@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import { ChevronLeft, CheckCircle2, XCircle, AlertCircle } from 'lucide-react';
+import { ChevronLeft, CheckCircle2, XCircle, AlertCircle, Trophy } from 'lucide-react';
 import { getFlashcardsBySetId } from '@/api/flashcards';
 import { submitQuiz } from '@/api/study';
 import { Button, Card, Loader, Modal } from '@/components/ui';
 import MainLayout from '@/components/layout';
-import './QuizPage.css';
 
 const QuizPage = () => {
     const { setId } = useParams();
@@ -105,7 +104,7 @@ const QuizPage = () => {
         const isFolder = setId.startsWith('folder-');
         try {
             setIsSubmitting(true);
-            
+
             if (!isFolder) {
                 await submitQuiz({
                     setId: parseInt(setId),
@@ -143,28 +142,36 @@ const QuizPage = () => {
     };
 
     if (error) return (
-        <MainLayout>
-            <div className="error-container">
-                <AlertCircle size={48} />
-                <p>{error}</p>
-                <Button onClick={() => navigate(-1)}>Go Back</Button>
+        <MainLayout showNavbar={false} showSidebar={false} showFooter={false}>
+            <div className="max-w-md mx-auto py-24 px-6 text-center">
+                <div className="w-16 h-16 bg-[#fef2f2] rounded-2xl flex items-center justify-center mx-auto mb-6 text-[#ef4444]">
+                    <AlertCircle size={32} />
+                </div>
+                <h2 className="text-2xl font-black text-[#282e3e] mb-2">Quiz unavailable</h2>
+                <p className="text-[#586380] mb-8 font-bold">{error}</p>
+                <Button variant="primary" onClick={() => navigate(-1)}>Go Back</Button>
             </div>
         </MainLayout>
     );
 
     if (isFinished) {
         const correctCount = answers.filter(a => a.isCorrect).length;
+        const percentage = Math.round((correctCount / questions.length) * 100);
+        
         return (
-            <MainLayout>
-                <div className="quiz-finished-container">
-                    <Card className="finish-card">
-                        <h2>Quiz Finished!</h2>
-                        <div className="score-summary">
-                            <span className="score-big">{correctCount} / {questions.length}</span>
-                            <p>You've completed the quiz.</p>
+            <MainLayout showNavbar={false} showSidebar={false} showFooter={false}>
+                <div className="max-w-xl mx-auto py-16 px-6 sm:py-24 animate-fade-in-up">
+                    <Card className="text-center p-12 bg-white rounded-[32px] border-2 border-[#edeff2] shadow-2xl">
+                        <div className="w-20 h-20 bg-[#ededff] rounded-full flex items-center justify-center mx-auto mb-8 text-[#4255ff]">
+                            <Trophy size={48} />
+                        </div>
+                        <h2 className="text-4xl font-black text-[#282e3e] mb-2">Quiz Finished!</h2>
+                        <div className="my-10">
+                            <span className="text-7xl font-black text-[#4255ff]">{correctCount} <span className="text-3xl text-[#586380]/40">/ {questions.length}</span></span>
+                            <div className="mt-4 text-xl font-bold text-[#586380]">{percentage}% Accurate</div>
                         </div>
                         <Button
-                            className="submit-btn"
+                            className="w-full h-16 text-xl font-black rounded-2xl shadow-lg shadow-[#4255ff]/20"
                             size="lg"
                             onClick={handleSubmitQuiz}
                             disabled={isSubmitting}
@@ -177,72 +184,87 @@ const QuizPage = () => {
         );
     }
 
-    if (loading || questions.length === 0) return <MainLayout><div className="loading-container"><Loader /></div></MainLayout>;
+    if (loading || questions.length === 0) return <MainLayout showNavbar={false} showSidebar={false} showFooter={false} isLoading={true}><div className="flex-1 flex items-center justify-center p-12"><Loader size="lg" /></div></MainLayout>;
 
     const currentQuestion = questions[currentQuestionIndex];
 
     return (
-        <MainLayout>
-            <div className="quiz-container">
-                <div className="quiz-header">
+        <MainLayout showNavbar={false} showSidebar={false} showFooter={false} fullHeight={true}>
+            <div className="max-w-[850px] mx-auto px-6 py-10 h-full flex flex-col">
+                <header className="flex items-center justify-between gap-6 mb-8 mt-2">
                     <Button
-                        variant="outline"
+                        variant="ghost"
                         size="sm"
                         onClick={() => navigate(backPath)}
                         leftIcon={<ChevronLeft size={20} />}
-                        className="back-set-btn"
+                        className="text-[#586380] font-black h-auto p-0 hover:text-[#4255ff]"
                     >
                         {backLabel}
                     </Button>
-                    <div className="quiz-header-right">
-                        <div className="quiz-progress-text">
-                            Question <span className="current">{currentQuestionIndex + 1}</span> of <span className="total">{questions.length}</span>
+
+                    <div className="flex items-center gap-8">
+                        <div className="text-[#586380] font-bold">
+                            Question <span className="text-[#282e3e] text-xl font-black">{currentQuestionIndex + 1}</span> of <span className="text-[#282e3e] font-black">{questions.length}</span>
                         </div>
                         <Button
-                            variant="primary"
+                            variant="ghost"
                             size="sm"
-                            className="finish-quiz-btn"
+                            className="text-[#ff725e] font-black hover:bg-red-50"
                             onClick={() => setShowFinishModal(true)}
                         >
                             Finish
                         </Button>
                     </div>
+                </header>
+
+                <div className="w-full h-1.5 bg-[#edeff2] rounded-full overflow-hidden mb-12 shadow-inner">
+                    <div
+                        className="h-full bg-[#4255ff] transition-all duration-300 ease-out shadow-[0_0_10px_rgba(66,85,255,0.4)]"
+                        style={{ width: `${((currentQuestionIndex + 1) / questions.length) * 100}%` }}
+                    />
                 </div>
 
-                <div className="quiz-progress-bar">
-                    <div className="progress-bar-bg">
-                        <div
-                            className="progress-bar-fill"
-                            style={{ width: `${((currentQuestionIndex + 1) / questions.length) * 100}%` }}
-                        ></div>
+                <div className="animate-fade-in-up">
+                    <div className="bg-white rounded-[32px] border-2 border-[#edeff2] shadow-xl p-10 mb-10 text-center">
+                        <span className="text-[11px] font-black text-[#98a2b3] tracking-widest uppercase mb-4 block">Question</span>
+                        <h1 className="text-4xl font-black text-[#282e3e] leading-tight break-words uppercase">
+                            {currentQuestion.term}
+                        </h1>
                     </div>
-                </div>
 
-                <div className="question-content">
-                    <h1 className="question-term">{currentQuestion.term}</h1>
-                    <div className="options-grid">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         {currentQuestion.options.map((option, idx) => {
-                            let optionClass = 'option-btn';
-                            if (selectedOption === option) {
-                                optionClass += option === currentQuestion.correctAnswer ? ' correct' : ' incorrect';
-                            } else if (selectedOption !== null && option === currentQuestion.correctAnswer) {
-                                optionClass += ' correct';
+                            const isSelected = selectedOption === option;
+                            const isCorrect = option === currentQuestion.correctAnswer;
+                            const showSuccess = isCorrect && selectedOption !== null;
+                            const showWrong = isSelected && !isCorrect;
+
+                            let baseStyle = "group relative flex items-center p-6 bg-white border-2 rounded-2xl text-left transition-all duration-200 cursor-pointer disabled:cursor-default";
+                            let borderStyle = "border-[#edeff2] hover:border-[#4255ff] hover:bg-[#f0f2ff] hover:shadow-lg hover:-translate-y-1";
+                            let textStyle = "text-[#282e3e] font-bold text-lg";
+                            let labelStyle = "bg-[#f6f7fb] text-[#586380]";
+
+                            if (showSuccess) {
+                                borderStyle = "border-[#10b981] bg-[#f0fdf4] shadow-lg shadow-[#10b981]/10";
+                                labelStyle = "bg-[#10b981] text-white";
+                            } else if (showWrong) {
+                                borderStyle = "border-[#ef4444] bg-[#fef2f2] shadow-lg shadow-[#ef4444]/10";
+                                labelStyle = "bg-[#ef4444] text-white";
                             }
 
                             return (
                                 <button
                                     key={idx}
-                                    className={optionClass}
+                                    className={`${baseStyle} ${borderStyle} ${selectedOption !== null ? 'hover:translate-y-0 hover:shadow-none' : ''}`}
                                     onClick={() => handleOptionSelect(option)}
                                     disabled={selectedOption !== null}
                                 >
-                                    <span className="option-label">{String.fromCharCode(65 + idx)}</span>
-                                    <span className="option-text">{option}</span>
-                                    {selectedOption === option && (
-                                        option === currentQuestion.correctAnswer ?
-                                            <CheckCircle2 className="status-icon" size={20} /> :
-                                            <XCircle className="status-icon" size={20} />
-                                    )}
+                                    <span className={`w-10 h-10 rounded-xl flex items-center justify-center font-black text-sm mr-5 shrink-0 transition-colors ${labelStyle}`}>
+                                        {String.fromCharCode(65 + idx)}
+                                    </span>
+                                    <span className={`flex-1 ${textStyle}`}>{option}</span>
+                                    {showSuccess && <CheckCircle2 className="text-[#10b981] ml-4 shrink-0" size={24} />}
+                                    {showWrong && <XCircle className="text-[#ef4444] ml-4 shrink-0" size={24} />}
                                 </button>
                             );
                         })}
@@ -255,16 +277,18 @@ const QuizPage = () => {
                 onClose={() => setShowFinishModal(false)}
                 title="Finish Quiz Early?"
                 footer={
-                    <div style={{ display: 'flex', gap: '12px', justifyContent: 'flex-end' }}>
+                    <div className="flex gap-3 justify-end">
                         <Button
-                            variant="secondary"
+                            variant="ghost"
                             onClick={() => setShowFinishModal(false)}
                             disabled={isSubmitting}
+                            className="font-black text-[#586380]"
                         >
-                            Cancel
+                            Back to Quiz
                         </Button>
                         <Button
                             variant="primary"
+                            className="bg-[#ff725e] hover:bg-[#ff5a43] border-none font-black px-6"
                             onClick={() => {
                                 setShowFinishModal(false);
                                 handleSubmitQuiz();
@@ -276,7 +300,11 @@ const QuizPage = () => {
                     </div>
                 }
             >
-                <p>Are you sure you want to finish this quiz early? Your progress so far will be saved and calculated.</p>
+                <div className="py-2">
+                    <p className="text-[#586380] font-bold leading-relaxed">
+                        Are you sure you want to finish this quiz early? Your progress so far will be saved and calculated.
+                    </p>
+                </div>
             </Modal>
         </MainLayout>
     );

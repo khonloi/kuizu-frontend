@@ -1,6 +1,6 @@
-# Kuizu 📚
+# Kitra 📚
 
-Kuizu is a modern, utility-first flashcard learning platform designed to help students and teachers organize study materials efficiently. Inspired by industry leaders but built with a clean, high-performance architecture, Kuizu enables users to create, share, and master study content through an intuitive and responsive interface.
+Kitra is a modern, utility-first flashcard learning platform designed to help students and teachers organize study materials efficiently. Inspired by industry leaders but built with a clean, high-performance architecture, Kitra enables users to create, share, and master study content through an intuitive and responsive interface.
 
 > [!NOTE]
 > This project is a continuation of the original [Kuizu](https://github.com/Kuizu-Organization/kuizu) repository.
@@ -16,7 +16,7 @@ Kuizu is a modern, utility-first flashcard learning platform designed to help st
 
 ## 🛠️ Tech Stack
 
-Kuizu is built using the **MERN stack** for full-stack performance and scalability:
+Kitra is built using the **MERN stack** for full-stack performance and scalability:
 
 - **Frontend**: React.js with Tailwind CSS
 - **Backend**: Node.js & Express.js
@@ -53,7 +53,7 @@ src/
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-repo/kuizu-frontend.git
+   git clone https://github.com/khonloi/kuizu-frontend.git
    ```
 
 2. Install dependencies:
@@ -69,4 +69,4 @@ src/
 
 ## 📄 License
 
-&copy; 2026 Kaison Corporation. All rights reserved.
+&copy; 2026 Nguyen Minh Khoi. All rights reserved.

@@ -6,7 +6,14 @@ import { Loader } from '../ui';
 import { useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
-const MainLayout = ({ children, isLoading = false, showSidebar = true }) => {
+const MainLayout = ({ 
+    children, 
+    isLoading = false, 
+    showSidebar = true, 
+    showNavbar = true, 
+    showFooter = true,
+    fullHeight = false
+}) => {
     const { user } = useAuth();
     const location = useLocation();
     const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(() => {
@@ -40,10 +47,11 @@ const MainLayout = ({ children, isLoading = false, showSidebar = true }) => {
 
     const isAdmin = user?.role === 'ROLE_ADMIN';
     const effectiveShowSidebar = showSidebar && !isAdmin;
+    const effectiveShowNavbar = showNavbar && !isAdmin;
 
     return (
-        <div className={`layout-container ${isSidebarCollapsed && effectiveShowSidebar ? 'sidebar-collapsed' : ''} ${!effectiveShowSidebar ? 'no-sidebar' : ''} ${isMobile ? 'is-mobile' : ''} ${isMobileSidebarOpen ? 'mobile-sidebar-open' : ''}`}>
-            {!isAdmin && (
+        <div className={`layout-container ${isSidebarCollapsed && effectiveShowSidebar ? 'sidebar-collapsed' : ''} ${!effectiveShowSidebar ? 'no-sidebar' : ''} ${!effectiveShowNavbar ? 'no-navbar' : ''} ${isMobile ? 'is-mobile' : ''} ${isMobileSidebarOpen ? 'mobile-sidebar-open' : ''} ${fullHeight ? 'h-screen overflow-hidden' : 'min-h-screen'}`}>
+            {effectiveShowNavbar && (
                 <Navbar
                     isSidebarCollapsed={isSidebarCollapsed}
                     onToggleSidebar={toggleSidebar}
@@ -53,7 +61,7 @@ const MainLayout = ({ children, isLoading = false, showSidebar = true }) => {
                 />
             )}
 
-            <div className="layout-body flex pt-20">
+            <div className={`layout-body flex ${effectiveShowNavbar ? 'pt-20' : ''} ${fullHeight ? 'h-full overflow-hidden' : ''}`}>
                 {isMobileSidebarOpen && <div className="sidebar-overlay" onClick={() => setIsMobileSidebarOpen(false)} />}
 
                 {effectiveShowSidebar && (
@@ -67,15 +75,15 @@ const MainLayout = ({ children, isLoading = false, showSidebar = true }) => {
                     />
                 )}
 
-                <div className={`content-wrapper ${isSidebarCollapsed && effectiveShowSidebar ? 'collapsed' : ''} ${!effectiveShowSidebar ? 'full-width' : ''}`}>
-                    <main className={`main-content ${isLoading ? 'is-loading' : ''}`}>
+                <div className={`content-wrapper ${isSidebarCollapsed && effectiveShowSidebar ? 'collapsed' : ''} ${!effectiveShowSidebar ? 'full-width' : ''} ${fullHeight ? 'h-full overflow-hidden' : ''}`}>
+                    <main className={`main-content ${isLoading ? 'is-loading' : ''} ${fullHeight ? 'h-full overflow-y-auto' : ''}`}>
                         {isLoading ? (
                             <Loader fullPage={false} size="lg" />
                         ) : (
                             children
                         )}
                     </main>
-                    {!isLoading && <Footer />}
+                    {!isLoading && showFooter && <Footer />}
                 </div>
             </div>
         </div>

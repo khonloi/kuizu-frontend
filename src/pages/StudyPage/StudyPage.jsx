@@ -1,12 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import { ChevronLeft, RotateCcw, CheckCircle2, XCircle, Trophy, Keyboard, Shuffle, Star } from 'lucide-react';
+import { ChevronLeft, RotateCcw, CheckCircle2, XCircle, Trophy, Keyboard, Shuffle, Star, BookOpen as BookIcon } from 'lucide-react';
 import { getFlashcardsBySetId } from '@/api/flashcards';
-import { updateStudyProgress } from '@/api/study';
 import { useToast } from '@/context/ToastContext';
 import { Button, Card, Loader } from '@/components/ui';
 import MainLayout from '@/components/layout';
-import './StudyPage.css';
 
 const StudyPage = () => {
     const { setId } = useParams();
@@ -25,7 +23,6 @@ const StudyPage = () => {
 
     const backPath = location.state?.from || `/flashcard-sets/${setId}`;
     const backLabel = location.state?.fromLabel || 'Back to Set';
-    const studyTitle = location.state?.folderName || '';
 
     const progress = cards.length > 0 ? ((currentIndex + 1) / cards.length) * 100 : 0;
 
@@ -95,7 +92,6 @@ const StudyPage = () => {
     useEffect(() => {
         const handleKeyDown = (e) => {
             if (isFinished) return;
-
             if (e.code === 'Space') {
                 e.preventDefault();
                 handleFlip();
@@ -107,18 +103,21 @@ const StudyPage = () => {
                 handlePrevious();
             }
         };
-
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, [currentIndex, isFlipped, isFinished, cards.length]);
 
-    if (loading) return <MainLayout><div className="loading-container"><Loader /></div></MainLayout>;
+    if (loading) return <MainLayout showNavbar={false} showSidebar={false} showFooter={false} fullHeight={true} isLoading={true}><div className="flex-1 flex items-center justify-center p-16"><Loader size="lg" /></div></MainLayout>;
 
     if (cards.length === 0) return (
-        <MainLayout>
-            <div className="error-container">
-                <p>No cards found in this set.</p>
-                <Button onClick={() => navigate(-1)}>Go Back</Button>
+        <MainLayout showNavbar={false} showSidebar={false} showFooter={false}>
+            <div className="max-w-md mx-auto py-24 px-6 text-center">
+                <div className="w-16 h-16 bg-[#edeff2] rounded-2xl flex items-center justify-center mx-auto mb-6 text-[#586380]">
+                    <BookIcon size={32} />
+                </div>
+                <h2 className="text-2xl font-black text-[#282e3e] mb-2">No cards found</h2>
+                <p className="text-[#586380] mb-8 font-bold">This set doesn't have any cards to study yet.</p>
+                <Button variant="primary" onClick={() => navigate(-1)}>Go Back</Button>
             </div>
         </MainLayout>
     );
@@ -126,15 +125,20 @@ const StudyPage = () => {
     if (isFinished) {
         const starredCards = allCards.filter(c => starredCardIds.has(c.cardId));
         return (
-            <MainLayout>
-                <div className="study-finished-container">
-                    <Card className="finish-card">
-                        <Trophy size={64} className="finish-icon" />
-                        <h2>Congratulations!</h2>
-                        <p>You've completed this study session. All {cards.length} cards reviewed!</p>
+            <MainLayout showNavbar={false} showSidebar={false} showFooter={false}>
+                <div className="max-w-2xl mx-auto py-16 px-6 sm:py-24 animate-fade-in-up">
+                    <Card className="text-center p-16 bg-white rounded-3xl border-2 border-[#edeff2] shadow-xl">
+                        <div className="w-20 h-20 bg-[#ecfdf5] rounded-full flex items-center justify-center mx-auto mb-8 text-[#10b981]">
+                            <Trophy size={48} />
+                        </div>
+                        <h2 className="text-4xl font-black text-[#282e3e] mb-4">Congratulations!</h2>
+                        <p className="text-[#586380] text-lg font-bold mb-10">You've completed this study session. All {cards.length} cards reviewed!</p>
 
-                        <div className="finish-actions" style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginTop: '2rem', flexWrap: 'wrap' }}>
+                        <div className="flex flex-col gap-4 max-w-sm mx-auto">
                             <Button
+                                variant="primary"
+                                size="lg"
+                                className="h-14 text-lg font-black"
                                 onClick={() => {
                                     setCards(shuffleArray(allCards));
                                     setCurrentIndex(0);
@@ -142,13 +146,14 @@ const StudyPage = () => {
                                     setIsFinished(false);
                                     setHasTriggeredFinish(false);
                                 }}
+                                leftIcon={<RotateCcw size={20} />}
                             >
-                                <RotateCcw size={18} />
                                 Study All Again
                             </Button>
                             {starredCards.length > 0 && (
                                 <Button
-                                    variant="secondary"
+                                    size="lg"
+                                    className="h-14 text-lg font-black bg-[#f59e0b] hover:bg-[#d97706] text-white border-none"
                                     onClick={() => {
                                         setCards(shuffleArray(starredCards));
                                         setCurrentIndex(0);
@@ -156,13 +161,17 @@ const StudyPage = () => {
                                         setIsFinished(false);
                                         setHasTriggeredFinish(false);
                                     }}
-                                    style={{ backgroundColor: '#f59e0b', color: 'white', borderColor: '#f59e0b' }}
+                                    leftIcon={<Star size={20} fill="white" />}
                                 >
-                                    <Star size={18} fill="currentColor" />
                                     Study Starred ({starredCards.length})
                                 </Button>
                             )}
-                             <Button variant="outline" onClick={() => navigate(backPath)} className="return-btn">
+                            <Button
+                                variant="outline"
+                                size="lg"
+                                className="h-14 text-lg font-black"
+                                onClick={() => navigate(backPath)}
+                            >
                                 {backLabel}
                             </Button>
                         </div>
@@ -173,47 +182,42 @@ const StudyPage = () => {
     }
 
     const currentCard = cards[currentIndex];
-    if (!currentCard) return null; // Safety check
+    const isStarred = currentCard ? starredCardIds.has(currentCard.cardId) : false;
 
     const toggleStar = (e) => {
         e.stopPropagation();
         const currentCardId = currentCard.cardId;
         setStarredCardIds(prev => {
             const next = new Set(prev);
-            if (next.has(currentCardId)) {
-                next.delete(currentCardId);
-            } else {
-                next.add(currentCardId);
-            }
+            if (next.has(currentCardId)) next.delete(currentCardId);
+            else next.add(currentCardId);
             return next;
         });
     };
 
     return (
-        <MainLayout>
-            <div className="study-page-container">
-                <div className="study-header">
-                    <div className="study-header-left">
-                         <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => navigate(backPath)}
-                            leftIcon={<ChevronLeft size={20} />}
-                            className="back-set-btn"
-                        >
-                            {backLabel}
-                        </Button>
-                    </div>
+        <MainLayout showNavbar={false} showSidebar={false} showFooter={false} fullHeight={true}>
+            <div className="max-w-[1000px] mx-auto p-6 flex flex-col h-full w-full">
+                <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 mb-8 mt-2">
+                    <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => navigate(backPath)}
+                        leftIcon={<ChevronLeft size={20} />}
+                        className="text-[#586380] font-black h-auto p-0 hover:text-[#4255ff]"
+                    >
+                        {backLabel}
+                    </Button>
 
-                    <div className="study-header-right">
-                        <div className="progress-text">
-                            Card <span className="current">{currentIndex + 1}</span> of <span className="total">{cards.length}</span>
+                    <div className="flex items-center justify-between sm:justify-end gap-8">
+                        <div className="text-[#586380] font-bold">
+                            Card <span className="text-[#282e3e] text-xl font-black">{currentIndex + 1}</span> of <span className="text-[#282e3e] font-black">{cards.length}</span>
                         </div>
-                        <div className="header-actions">
+                        <div className="flex items-center gap-2">
                             <Button
-                                variant="ghost"
+                                variant="outline"
                                 size="icon"
-                                className="shuffle-btn"
+                                className="w-10 h-10 rounded-xl border-[#edeff2] shadow-sm hover:border-[#4255ff] hover:text-[#4255ff]"
                                 onClick={handleShuffle}
                                 title="Shuffle cards"
                             >
@@ -221,83 +225,73 @@ const StudyPage = () => {
                             </Button>
                         </div>
                     </div>
-                </div>
+                </header>
 
-                <div className="study-progress-bar">
-                    <div className="progress-bar-bg">
-                        <div className="progress-bar-fill" style={{ width: `${progress}%` }}></div>
-                    </div>
-                </div>
-
-                <div className="study-card-area">
+                <div className="w-full h-1.5 bg-[#edeff2] rounded-full overflow-hidden mb-12 shadow-inner">
                     <div
-                        className={`flashcard-wrapper ${isFlipped ? 'flipped' : ''}`}
+                        className="h-full bg-[#4255ff] transition-all duration-300 ease-out shadow-[0_0_10px_rgba(66,85,255,0.4)]"
+                        style={{ width: `${progress}%` }}
+                    />
+                </div>
+
+                <div className="flex-1 flex flex-col items-center justify-center perspective-1000">
+                    <div
+                        className={`relative w-full max-w-[700px] h-[450px] cursor-pointer preserve-3d transition-transform duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] ${isFlipped ? 'rotate-y-180' : ''}`}
                         onClick={handleFlip}
                     >
                         {/* Front Face */}
-                        <div className="flashcard-face flashcard-front">
-                            <Button
-                                variant="ghost"
-                                size="icon"
-                                className={`star-btn ${starredCardIds.has(currentCard.cardId) ? 'starred' : ''}`}
+                        <div className="absolute inset-0 w-full h-full backface-hidden bg-white border-2 border-[#edeff2] rounded-[32px] shadow-2xl p-16 flex flex-col items-center justify-center text-center">
+                            <button
+                                className={`absolute top-8 right-8 p-0 border-none bg-transparent transition-all duration-200 hover:scale-110 z-10 ${isStarred ? 'text-[#f59e0b]' : 'text-[#d1d5db]'}`}
                                 onClick={toggleStar}
-                                title={starredCardIds.has(currentCard.cardId) ? "Unstar" : "Star"}
-                                style={{ color: starredCardIds.has(currentCard.cardId) ? '#f59e0b' : 'inherit' }}
                             >
-                                <Star size={24} fill={starredCardIds.has(currentCard.cardId) ? "currentColor" : "none"} />
-                            </Button>
-                            <span className="face-label">Term</span>
-                            <div className="card-text">{currentCard.term}</div>
-                            <span className="card-hint">Click or press Space to flip</span>
+                                <Star size={28} fill={isStarred ? "currentColor" : "none"} />
+                            </button>
+                            <span className="absolute top-8 left-8 text-[11px] font-black text-[#98a2b3] tracking-widest uppercase">Term</span>
+                            <div className="text-4xl font-black text-[#282e3e] leading-tight max-w-[500px] break-words uppercase">{currentCard.term}</div>
+                            <span className="absolute bottom-8 text-sm font-bold text-[#586380] opacity-50">Click to flip • Press Space</span>
                         </div>
 
                         {/* Back Face */}
-                        <div className="flashcard-face flashcard-back">
-                            <Button
-                                variant="ghost"
-                                size="icon"
-                                className={`star-btn ${starredCardIds.has(currentCard.cardId) ? 'starred' : ''}`}
+                        <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 bg-[#f9fafb] border-2 border-[#edeff2] rounded-[32px] shadow-2xl p-16 flex flex-col items-center justify-center text-center">
+                            <button
+                                className={`absolute top-8 right-8 p-0 border-none bg-transparent transition-all duration-200 hover:scale-110 z-10 ${isStarred ? 'text-[#f59e0b]' : 'text-[#d1d5db]'}`}
                                 onClick={toggleStar}
-                                title={starredCardIds.has(currentCard.cardId) ? "Unstar" : "Star"}
-                                style={{ color: starredCardIds.has(currentCard.cardId) ? '#f59e0b' : 'inherit' }}
                             >
-                                <Star size={24} fill={starredCardIds.has(currentCard.cardId) ? "currentColor" : "none"} />
-                            </Button>
-                            <span className="face-label">Definition</span>
-                            <div className="card-text">{currentCard.definition}</div>
-                            <span className="card-hint">Click or press Space to flip back</span>
+                                <Star size={28} fill={isStarred ? "currentColor" : "none"} />
+                            </button>
+                            <span className="absolute top-8 left-8 text-[11px] font-black text-[#98a2b3] tracking-widest uppercase">Definition</span>
+                            <div className="text-3xl font-bold text-[#282e3e] leading-relaxed max-w-[500px] break-words">{currentCard.definition}</div>
+                            <span className="absolute bottom-8 text-sm font-bold text-[#586380] opacity-50">Click to flip • Press Space</span>
                         </div>
                     </div>
 
-                    <div className="study-controls">
-                        <div className="control-btn">
+                    <div className="flex items-center gap-6 mt-12 w-full max-w-[700px]">
+                        <div className="flex-1 flex flex-col items-center gap-2">
                             <Button
                                 variant="outline"
                                 size="lg"
-                                className="nav-btn"
+                                className="w-full h-16 rounded-2xl border-2 border-[#edeff2] text-xl font-black hover:border-[#4255ff] hover:text-[#4255ff]"
                                 onClick={(e) => { e.stopPropagation(); handlePrevious(); }}
                                 disabled={currentIndex === 0}
                             >
-                                <ChevronLeft size={24} />
-                                Previous
+                                <ChevronLeft size={24} strokeWidth={3} />
+                                <span className="ml-2">Previous</span>
                             </Button>
-                            <span className="btn-label">Press ←</span>
+                            <span className="text-[10px] font-black text-[#98a2b3] uppercase tracking-widest hidden sm:block">Press ←</span>
                         </div>
 
-                        <div className="control-btn">
+                        <div className="flex-1 flex flex-col items-center gap-2">
                             <Button
+                                variant="primary"
                                 size="lg"
-                                className="nav-btn"
+                                className="w-full h-16 rounded-2xl text-xl font-black shadow-lg shadow-[#4255ff]/20"
                                 onClick={(e) => { e.stopPropagation(); handleNext(); }}
                             >
-                                {currentIndex === cards.length - 1 ? 'Finish' : (
-                                    <>
-                                        Next
-                                        <ChevronLeft size={24} style={{ transform: 'rotate(180deg)' }} />
-                                    </>
-                                )}
+                                <span className="mr-2">{currentIndex === cards.length - 1 ? 'Finish' : 'Next'}</span>
+                                <ChevronLeft size={24} strokeWidth={3} className="rotate-180" />
                             </Button>
-                            <span className="btn-label">Press →</span>
+                            <span className="text-[10px] font-black text-[#98a2b3] uppercase tracking-widest hidden sm:block">Press →</span>
                         </div>
                     </div>
                 </div>

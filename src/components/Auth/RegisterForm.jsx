@@ -240,7 +240,7 @@ const RegisterForm = ({ onToggle }) => {
             />
 
             <p className="terms-text" style={{ fontSize: '0.8125rem', color: 'var(--text-light)', marginBottom: '1.5rem', lineHeight: '1.5' }}>
-                By clicking Sign up, you accept Kuizu's <a href="#" style={{ color: 'var(--primary)', textDecoration: 'none' }}>Terms of Service</a> and <a href="#" style={{ color: 'var(--primary)', textDecoration: 'none' }}>Privacy Policy</a>
+                By clicking Sign up, you accept Kitra's <a href="#" style={{ color: 'var(--primary)', textDecoration: 'none' }}>Terms of Service</a> and <a href="#" style={{ color: 'var(--primary)', textDecoration: 'none' }}>Privacy Policy</a>
             </p>
 
             <Button type="submit" isLoading={loading} className="w-full" disabled={loading}>

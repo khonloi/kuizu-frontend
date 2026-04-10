@@ -118,7 +118,7 @@ const LoginForm = ({ onToggle }) => {
             </div>
 
             <p className="terms-text" style={{ fontSize: '0.8125rem', color: 'var(--text-light)', marginBottom: '1.5rem', lineHeight: '1.5' }}>
-                By clicking Log in, you accept Kuizu's <a href="#" style={{ color: 'var(--primary)', textDecoration: 'none' }}>Terms of Service</a> and <a href="#" style={{ color: 'var(--primary)', textDecoration: 'none' }}>Privacy Policy</a>
+                By clicking Log in, you accept Kitra's <a href="#" style={{ color: 'var(--primary)', textDecoration: 'none' }}>Terms of Service</a> and <a href="#" style={{ color: 'var(--primary)', textDecoration: 'none' }}>Privacy Policy</a>
             </p>
 
             <Button type="submit" isLoading={loading} className="w-full" disabled={loading}>
@@ -126,7 +126,7 @@ const LoginForm = ({ onToggle }) => {
             </Button>
 
             <Button variant="ghost" className="w-full mt-4" onClick={onToggle} disabled={loading}>
-                New to Kuizu? Create an account
+                New to Kitra? Create an account
             </Button>
         </form>
     );

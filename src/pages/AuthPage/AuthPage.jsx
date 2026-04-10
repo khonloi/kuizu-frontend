@@ -99,7 +99,7 @@ const AuthPage = () => {
                 <div className="hero-content">
                     <h1>Study effectively and comfortably.</h1>
                 </div>
-                <div className="brand-logo">Kuizu</div>
+                <div className="brand-logo">Kitra</div>
             </div>
             <div className="auth-right">
                 <div className="auth-close">
