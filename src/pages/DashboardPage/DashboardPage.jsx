@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getMyClasses } from '@/api/class';
+import { getMyClasses, getPublicClasses } from '@/api/class';
 import { getMyFolders, getPublicFolders } from '@/api/folder';
 import { getMyFlashcardSets, getFlashcardSetById, getPublicFlashcardSets } from '@/api/flashcards';
 import { useAuth } from '@/context/AuthContext';
@@ -13,6 +13,7 @@ const DashboardPage = () => {
     const { user } = useAuth();
     const { openSetModal, openFolderModal, openClassModal } = useModal();
     const [classes, setClasses] = useState([]);
+    const [publicClasses, setPublicClasses] = useState([]);
     const [folders, setFolders] = useState([]);
     const [publicFolders, setPublicFolders] = useState([]);
     const [flashcardSets, setFlashcardSets] = useState([]);
@@ -26,8 +27,9 @@ const DashboardPage = () => {
     const fetchDashboardData = async () => {
         try {
             setIsLoading(true);
-            const [classData, folderData, pubFolderData, mySetsData, publicSetsData] = await Promise.all([
+            const [classData, pubClassData, folderData, pubFolderData, mySetsData, publicSetsData] = await Promise.all([
                 getMyClasses(),
+                getPublicClasses(),
                 getMyFolders(),
                 getPublicFolders(),
                 getMyFlashcardSets(),
@@ -54,6 +56,7 @@ const DashboardPage = () => {
             const displaySets = recentSets.length > 0 ? recentSets : mySetsData;
 
             setClasses(classData);
+            setPublicClasses(pubClassData);
             setFolders(folderData);
             setPublicFolders(pubFolderData);
             setFlashcardSets(displaySets);
@@ -198,6 +201,33 @@ const DashboardPage = () => {
                         />
                     )}
                 </section>
+
+                {/* Suggested Classes Section */}
+                {publicClasses.filter(pc => !classes.some(c => c.classId === pc.classId)).length > 0 && (
+                    <section className="mb-12 md:mb-8">
+                        <div className="flex justify-between items-center mb-6 gap-4 md:mb-4">
+                            <h2 className="m-0 text-2xl font-bold text-[#282e3e]">Suggested Classes</h2>
+                            <div className="flex gap-3 items-center flex-shrink-0">
+                                <Button variant="ghost" size="sm" onClick={() => navigate('/classes')}>View all</Button>
+                            </div>
+                        </div>
+                        <div className="grid grid-cols-[repeat(auto-fill,minmax(340px,1fr))] gap-6">
+                            {publicClasses
+                                .filter(pc => !classes.some(c => c.classId === pc.classId))
+                                .slice(0, 4)
+                                .map(cls => (
+                                    <Card
+                                        key={cls.classId}
+                                        onClick={() => navigate(`/classes/${cls.classId}`)}
+                                        title={cls.className}
+                                        badge="Class"
+                                        description={cls.description}
+                                        ownerName={cls.ownerDisplayName}
+                                    />
+                                ))}
+                        </div>
+                    </section>
+                )}
 
                 {/* Suggested Public Sets */}
                 {publicFlashcardSets.length > 0 && (

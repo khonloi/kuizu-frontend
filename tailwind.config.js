@@ -27,6 +27,10 @@ export default {
         'toast-progress': {
           '0%': { transform: 'scaleX(1)' },
           '100%': { transform: 'scaleX(0)' },
+        },
+        'fade-in-up': {
+          '0%': { opacity: '0', transform: 'translateY(10px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
         }
       },
       animation: {
@@ -35,6 +39,7 @@ export default {
         'slide-down': 'slide-down 0.3s ease-out forwards',
         'toast-slide-up': 'toast-slide-up 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
         'toast-progress': 'toast-progress linear forwards',
+        'fade-in-up': 'fade-in-up 0.3s ease-out forwards',
       }
     },
   },

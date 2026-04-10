@@ -5,12 +5,12 @@ export const mockFlashcardSets = [
     setId: 1,
     owner: mockUsers[1],
     ownerDisplayName: "Jane Smith",
-    title: "Basic Biology",
-    description: "Fundamentals of biology for beginners.",
+    title: "80s New Wave Essentials",
+    description: "Key bands and sounds that defined the New Wave era.",
     cardCount: 10,
     visibility: "PUBLIC",
     status: "APPROVED",
-    category: "Science",
+    category: "Music",
     version: 1,
     createdAt: "2023-03-01T12:00:00Z",
     updatedAt: "2023-03-05T14:30:00Z"
@@ -33,12 +33,12 @@ export const mockFlashcardSets = [
     setId: 3,
     owner: mockUsers[1],
     ownerDisplayName: "Jane Smith",
-    title: "World History: 20th Century",
-    description: "Major events of the 1900s.",
+    title: "Post-Punk & Synthpop",
+    description: "Deep dive into the transition from punk to electronic textures.",
     cardCount: 10,
     visibility: "PUBLIC",
-    status: "PENDING",
-    category: "History",
+    status: "APPROVED",
+    category: "Culture",
     version: 1,
     createdAt: "2023-05-20T08:00:00Z",
     updatedAt: "2023-05-20T08:00:00Z"
@@ -136,18 +136,17 @@ export const mockFlashcardSets = [
   }
 ];
 
-export const mockFlashcards = [
-  // Set 1: Biology
-  { cardId: 101, setId: 1, term: "Mitochondria", definition: "Powerhouse of the cell.", orderIndex: 0, isDeleted: false },
-  { cardId: 102, setId: 1, term: "Photosynthesis", definition: "Converting light to chemical energy.", orderIndex: 1, isDeleted: false },
-  { cardId: 103, setId: 1, term: "Ribosome", definition: "Site of protein synthesis.", orderIndex: 2, isDeleted: false },
-  { cardId: 104, setId: 1, term: "Nucleus", definition: "Control center (contains DNA).", orderIndex: 3, isDeleted: false },
-  { cardId: 105, setId: 1, term: "Cytoplasm", definition: "Jelly-like substance within a cell.", orderIndex: 4, isDeleted: false },
-  { cardId: 106, setId: 1, term: "Cell Wall", definition: "Rigid outer layer in plant cells.", orderIndex: 5, isDeleted: false },
-  { cardId: 107, setId: 1, term: "Chloroplast", definition: "Organelle for photosynthesis in plants.", orderIndex: 6, isDeleted: false },
-  { cardId: 108, setId: 1, term: "Vacuole", definition: "Storage area within a cell.", orderIndex: 7, isDeleted: false },
-  { cardId: 109, setId: 1, term: "DNA", definition: "Genetic blueprint of life.", orderIndex: 8, isDeleted: false },
-  { cardId: 110, setId: 1, term: "RNA", definition: "Molecule that translates DNA into proteins.", orderIndex: 9, isDeleted: false },
+export const mockFlashcards = [  // Set 1: 80s New Wave Essentials
+  { cardId: 101, setId: 1, term: "The Cure", definition: "Pioneering gothic rock and new wave band led by Robert Smith.", orderIndex: 0, isDeleted: false },
+  { cardId: 102, setId: 1, term: "Depeche Mode", definition: "Electronic legends who brought synthpop to the masses.", orderIndex: 1, isDeleted: false },
+  { cardId: 103, setId: 1, term: "Synthpop", definition: "Genre characterized by the primary use of synthesizers.", orderIndex: 2, isDeleted: false },
+  { cardId: 104, setId: 1, term: "Roland TR-808", definition: "Iconic drum machine that defined 80s electronic beats.", orderIndex: 3, isDeleted: false },
+  { cardId: 105, setId: 1, term: "New Order", definition: "Formed by Joy Division members, blending rock with dance music.", orderIndex: 4, isDeleted: false },
+  { cardId: 106, setId: 1, term: "A Flock of Seagulls", definition: "Known for their unique hair and 'I Ran (So Far Away)'.", orderIndex: 5, isDeleted: false },
+  { cardId: 107, setId: 1, term: "The Cars", definition: "Merged 60s pop with 70s rock and 80s synth.", orderIndex: 6, isDeleted: false },
+  { cardId: 108, setId: 1, term: "Tears for Fears", definition: "British duo famous for 'Everybody Wants to Rule the World'.", orderIndex: 7, isDeleted: false },
+  { cardId: 109, setId: 1, term: "Duran Duran", definition: "MTV legends and pioneers of the 'Second British Invasion'.", orderIndex: 8, isDeleted: false },
+  { cardId: 110, setId: 1, term: "The Human League", definition: "Synth-pop innovators known for 'Don't You Want Me'.", orderIndex: 9, isDeleted: false },
 
   // Set 2: React
   { cardId: 201, setId: 2, term: "useState", definition: "Hook for state management in functional components.", orderIndex: 0, isDeleted: false },
@@ -161,17 +160,17 @@ export const mockFlashcards = [
   { cardId: 209, setId: 2, term: "Higher-Order Component", definition: "Function that takes a component and returns a new one.", orderIndex: 8, isDeleted: false },
   { cardId: 210, setId: 2, term: "Reconciliation", definition: "Process of updating the real DOM to match the virtual DOM.", orderIndex: 9, isDeleted: false },
 
-  // Set 3: History
-  { cardId: 301, setId: 3, term: "World War I", definition: "Global conflict from 1914 to 1918.", orderIndex: 0, isDeleted: false },
-  { cardId: 302, setId: 3, term: "Treaty of Versailles", definition: "Peace treaty that ended WWI.", orderIndex: 1, isDeleted: false },
-  { cardId: 303, setId: 3, term: "Great Depression", definition: "Severe global economic downturn in the 1930s.", orderIndex: 2, isDeleted: false },
-  { cardId: 304, setId: 3, term: "World War II", definition: "Global conflict from 1939 to 1945.", orderIndex: 3, isDeleted: false },
-  { cardId: 305, setId: 3, term: "United Nations", definition: "Organization formed after WWII to promote peace.", orderIndex: 4, isDeleted: false },
-  { cardId: 306, setId: 3, term: "Cold War", definition: "Decades of tension between USA and USSR.", orderIndex: 5, isDeleted: false },
-  { cardId: 307, setId: 3, term: "Berlin Wall", definition: "Wall dividing East and West Berlin.", orderIndex: 6, isDeleted: false },
-  { cardId: 308, setId: 3, term: "Russian Revolution", definition: "1917 revolution leading to the Soviet Union.", orderIndex: 7, isDeleted: false },
-  { cardId: 309, setId: 3, term: "Civil Rights Movement", definition: "USA struggle for racial equality in the 50s-60s.", orderIndex: 8, isDeleted: false },
-  { cardId: 310, setId: 3, term: "Space Race", definition: "Competition for space exploration superiority.", orderIndex: 9, isDeleted: false },
+  // Set 3: Post-Punk & Synthpop
+  { cardId: 301, setId: 3, term: "Joy Division", definition: "The bleak, intense precursors to the New Wave sound.", orderIndex: 0, isDeleted: false },
+  { cardId: 302, setId: 3, term: "Ian Curtis", definition: "Iconic vocalist whose tragic life haunted Joy Division's legacy.", orderIndex: 1, isDeleted: false },
+  { cardId: 303, setId: 3, term: "Sixteenth-note hats", definition: "The driving, electronic percussion style of synthpop.", orderIndex: 2, isDeleted: false },
+  { cardId: 304, setId: 3, term: "Goth Rock", definition: "The darker, atmospheric subgenre born from Post-Punk.", orderIndex: 3, isDeleted: false },
+  { cardId: 305, setId: 3, term: "Robert Smith", definition: "The eyeliner-wearing genius behind The Cure.", orderIndex: 4, isDeleted: false },
+  { cardId: 306, setId: 3, term: "Siouxsie Sioux", definition: "The queen of Post-Punk and leader of the Banshees.", orderIndex: 5, isDeleted: false },
+  { cardId: 307, setId: 3, term: "Electronic Realism", definition: "The focus on clinical, machine-like audio fidelity.", orderIndex: 6, isDeleted: false },
+  { cardId: 308, setId: 3, term: "Factory Records", definition: "Manchester label that birthed the Post-Punk sound.", orderIndex: 7, isDeleted: false },
+  { cardId: 309, setId: 3, term: "Bauhaus", definition: "Often cited as the first true Goth Rock band.", orderIndex: 8, isDeleted: false },
+  { cardId: 310, setId: 3, term: "The Smiths", definition: "Defined 80s indie with jangle-pop and Morrissey's wit.", orderIndex: 9, isDeleted: false },
 
   // Set 4: Chemistry
   { cardId: 401, setId: 4, term: "Benzene", definition: "A circular organic hydrocarbon (C6H6).", orderIndex: 0, isDeleted: false },

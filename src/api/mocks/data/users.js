@@ -47,5 +47,61 @@ export const mockUsers = [
     role: "ROLE_STUDENT",
     status: "ACTIVE",
     profilePictureUrl: "https://api.dicebear.com/7.x/avataaars/svg?seed=Alice"
+  },
+  {
+    userId: "u6-uuid",
+    username: "charlie_brown",
+    displayName: "Charlie Brown",
+    role: "ROLE_STUDENT",
+    status: "ACTIVE",
+    profilePictureUrl: "https://api.dicebear.com/7.x/avataaars/svg?seed=Charlie"
+  },
+  {
+    userId: "u7-uuid",
+    username: "david_beck",
+    displayName: "David Beck",
+    role: "ROLE_STUDENT",
+    status: "ACTIVE",
+    profilePictureUrl: "https://api.dicebear.com/7.x/avataaars/svg?seed=David"
+  },
+  {
+    userId: "u8-uuid",
+    username: "eva_smith",
+    displayName: "Eva Smith",
+    role: "ROLE_STUDENT",
+    status: "ACTIVE",
+    profilePictureUrl: "https://api.dicebear.com/7.x/avataaars/svg?seed=Eva"
+  },
+  {
+    userId: "u9-uuid",
+    username: "frank_miller",
+    displayName: "Frank Miller",
+    role: "ROLE_STUDENT",
+    status: "ACTIVE",
+    profilePictureUrl: "https://api.dicebear.com/7.x/avataaars/svg?seed=Frank"
+  },
+  {
+    userId: "u10-uuid",
+    username: "grace_hopper",
+    displayName: "Grace Hopper",
+    role: "ROLE_STUDENT",
+    status: "ACTIVE",
+    profilePictureUrl: "https://api.dicebear.com/7.x/avataaars/svg?seed=Grace"
+  },
+  {
+    userId: "u11-uuid",
+    username: "henry_ford",
+    displayName: "Henry Ford",
+    role: "ROLE_STUDENT",
+    status: "ACTIVE",
+    profilePictureUrl: "https://api.dicebear.com/7.x/avataaars/svg?seed=Henry"
+  },
+  {
+    userId: "u12-uuid",
+    username: "isabel_luna",
+    displayName: "Isabel Luna",
+    role: "ROLE_STUDENT",
+    status: "ACTIVE",
+    profilePictureUrl: "https://api.dicebear.com/7.x/avataaars/svg?seed=Isabel"
   }
 ];

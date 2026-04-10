@@ -1,4 +1,4 @@
-import { mockClasses, mockClassMembers } from "../data";
+import { mockClasses, mockClassMembers, mockClassMaterials } from "../data";
 
 export const classHandlers = {
   getMyClasses: async (userId = "u1-uuid-1234-5678") => {
@@ -18,8 +18,10 @@ export const classHandlers = {
       .map((c) => ({ ...c, title: c.className }));
   },
   getClassDetails: async (classId) => {
-    const clazz = mockClasses.find((c) => c.classId === parseInt(classId));
+    const numericId = parseInt(classId);
+    const clazz = mockClasses.find((c) => c.classId === numericId);
     if (!clazz) return null;
+
     const members = mockClassMembers
       .filter((cm) => cm.classId === clazz.classId)
       .map((cm) => ({
@@ -27,23 +29,7 @@ export const classHandlers = {
         role: cm.role,
       }));
 
-    const classMaterials =
-      clazz.classId === 1
-        ? [
-            {
-              materialId: 1001,
-              materialType: "SET",
-              materialRefId: 1,
-              materialName: "Basic Biology",
-            },
-            {
-              materialId: 1002,
-              materialType: "FOLDER",
-              materialRefId: 4,
-              materialName: "General Science",
-            },
-          ]
-        : [];
+    const classMaterials = mockClassMaterials.filter((m) => m.classId === numericId);
 
     return {
       ...clazz,
@@ -53,10 +39,10 @@ export const classHandlers = {
       ownerUserId: clazz.owner.userId,
       ownerUsername: clazz.owner.username,
       joinRequests:
-        clazz.classId === 1
+        numericId % 3 === 0 // Give some classes requests
           ? [
               {
-                requestId: 501,
+                requestId: 500 + numericId,
                 userId: "u4-uuid",
                 displayName: "Bob Wilson",
                 message: "Please let me in!",

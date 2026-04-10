@@ -62,6 +62,7 @@ const MainLayout = ({ children, isLoading = false, showSidebar = true }) => {
                         onToggle={toggleSidebar}
                         activePath={location.pathname}
                         isMobile={isMobile}
+                        isMobileOpen={isMobileSidebarOpen}
                         onClose={() => setIsMobileSidebarOpen(false)}
                     />
                 )}

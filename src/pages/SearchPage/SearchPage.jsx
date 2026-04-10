@@ -4,8 +4,7 @@ import { getPublicClasses } from '@/api/class';
 import { getPublicFlashcardSets } from '@/api/flashcards';
 import { getPublicFolders } from '@/api/folder';
 import { Search, BookOpen, Layers, Folder, GraduationCap, PackageOpen } from 'lucide-react';
-import { Loader, EmptyState, Card, Badge } from '@/components/ui';
-import './SearchPage.css';
+import { Loader, EmptyState, Card, Badge, Tabs } from '@/components/ui';
 
 const SearchPage = () => {
     const [searchParams] = useSearchParams();
@@ -30,29 +29,27 @@ const SearchPage = () => {
 
             try {
                 setIsLoading(true);
-                // Use the provided /public endpoints
                 const [setsData, foldersData, classesData] = await Promise.all([
                     getPublicFlashcardSets(),
                     getPublicFolders(),
                     getPublicClasses()
                 ]);
-                
-                // Filter results based on the query locally
-                const filteredSets = setsData.filter(s => 
-                    s.title?.toLowerCase().includes(query) || 
+
+                const filteredSets = setsData.filter(s =>
+                    s.title?.toLowerCase().includes(query) ||
                     s.description?.toLowerCase().includes(query)
                 );
-                
-                const filteredFolders = foldersData.filter(f => 
-                    f.name?.toLowerCase().includes(query) || 
+
+                const filteredFolders = foldersData.filter(f =>
+                    f.name?.toLowerCase().includes(query) ||
                     f.description?.toLowerCase().includes(query)
                 );
 
-                const filteredClasses = classesData.filter(c => 
-                    c.className?.toLowerCase().includes(query) || 
+                const filteredClasses = classesData.filter(c =>
+                    c.className?.toLowerCase().includes(query) ||
                     c.description?.toLowerCase().includes(query)
                 );
-                
+
                 setResults({
                     sets: filteredSets,
                     folders: filteredFolders,
@@ -68,7 +65,7 @@ const SearchPage = () => {
         fetchResults();
     }, [query]);
 
-    const tabs = [
+    const tabOptions = [
         { id: 'all', label: 'All Results', icon: Search },
         { id: 'sets', label: 'Flashcard Sets', icon: Layers, count: results.sets.length },
         { id: 'folders', label: 'Folders', icon: Folder, count: results.folders.length },
@@ -79,8 +76,7 @@ const SearchPage = () => {
         if (activeTab === 'sets') return results.sets.map(item => ({ ...item, type: 'set' }));
         if (activeTab === 'folders') return results.folders.map(item => ({ ...item, type: 'folder' }));
         if (activeTab === 'classes') return results.classes.map(item => ({ ...item, type: 'class' }));
-        
-        // All
+
         return [
             ...results.sets.map(item => ({ ...item, type: 'set' })),
             ...results.folders.map(item => ({ ...item, type: 'folder' })),
@@ -94,30 +90,32 @@ const SearchPage = () => {
     const renderResults = () => {
         if (isLoading) {
             return (
-                <div className="search-loading-container">
-                    <Loader fullPage={false} />
-                    <p>Searching for resources...</p>
+                <div className="py-24 flex flex-col items-center justify-center gap-4 text-[#586380]">
+                    <Loader fullPage={false} size="lg" />
+                    <p className="font-bold">Scouring our databases...</p>
                 </div>
             );
         }
 
         if (filteredResults.length === 0) {
             return (
-                <EmptyState
-                    icon={PackageOpen}
-                    title="No results found"
-                    description={`We couldn't find any ${activeTab === 'all' ? 'results' : activeTab} matching "${query}". Try adjusting your search keywords.`}
-                />
+                <div className="py-12">
+                    <EmptyState
+                        icon={PackageOpen}
+                        title="No results found"
+                        description={`We couldn't find any ${activeTab === 'all' ? 'results' : activeTab} matching "${query}". Try adjusting your search keywords.`}
+                    />
+                </div>
             );
         }
 
         return (
-            <div className="search-results-grid">
+            <div className="grid grid-cols-[repeat(auto-fill,minmax(340px,1fr))] gap-6 animate-fade-in-up">
                 {filteredResults.map(item => {
                     const title = item.title || item.className || item.name;
                     const id = item.setId || item.folderId || item.classId;
                     const type = item.type;
-                    
+
                     let badgeIcon = Layers;
                     let navigatePath = `/flashcard-sets/${id}`;
                     let footerText = null;
@@ -155,32 +153,45 @@ const SearchPage = () => {
     };
 
     return (
-        <div className="search-page-container">
-            <header className="search-page-header">
-                <div className="search-page-title">
-                    <Search size={28} className="search-page-icon" />
-                    <h1>Search Results for "{query}"</h1>
+        <div className="p-6">
+            <header className="mb-10">
+                <div className="flex items-center gap-4 mb-4">
+                    <div className="w-14 h-14 bg-[#ededff] rounded-2xl flex items-center justify-center text-[#4255ff]">
+                        <Search size={28} />
+                    </div>
+                    <div>
+                        <h1 className="text-3xl font-black text-[#282e3e]">Search Results for "{query}"</h1>
+                        <p className="text-[#586380] font-bold mt-1">
+                            Found {totalResults} matches across all categories.
+                        </p>
+                    </div>
                 </div>
-                <p className="search-page-subtitle">
-                    Found {totalResults} results matching your search.
-                </p>
-                
-                <div className="search-tabs">
-                    {tabs.map(tab => (
-                        <button
-                            key={tab.id}
-                            className={`search-tab-btn ${activeTab === tab.id ? 'active' : ''}`}
-                            onClick={() => setActiveTab(tab.id)}
-                        >
-                            <tab.icon size={18} />
-                            <span>{tab.label}</span>
-                            {tab.count !== undefined && <span className="tab-count">{tab.count}</span>}
-                        </button>
-                    ))}
+
+                <div className="mt-8">
+                    <Tabs
+                        tabs={tabOptions.map(tab => ({
+                            label: (
+                                <div className="flex items-center gap-2">
+                                    <tab.icon size={18} />
+                                    <span>{tab.label}</span>
+                                    {tab.count !== undefined && (
+                                        <span className={`px-2 py-0.5 rounded-full text-xs font-black
+                                            ${activeTab === tab.id ? 'bg-[#ededff] text-[#4255ff]' : 'bg-[#edeff2] text-[#586380]'}
+                                        `}>
+                                            {tab.count}
+                                        </span>
+                                    )}
+                                </div>
+                            ),
+                            key: tab.id
+                        }))}
+                        activeIndex={tabOptions.findIndex(t => t.id === activeTab)}
+                        onTabChange={(idx) => setActiveTab(tabOptions[idx].id)}
+                    />
                 </div>
             </header>
 
-            <main className="search-results-section">
+            <main>
                 {renderResults()}
             </main>
         </div>
