@@ -73,7 +73,7 @@ const Navbar = ({ isSidebarCollapsed, onToggleSidebar, isMobile, onOpenMobileMen
 
     return (
         <nav className="fixed top-0 left-0 right-0 h-20 bg-white border-b-2 border-[#edeff2] z-[50]">
-            <div className="h-full px-6 flex items-center justify-between gap-5 mx-auto max-w-[1400px] md:px-4 md:gap-3">
+            <div className="h-full px-6 flex items-center justify-between gap-5 mx-auto md:px-4 md:gap-3">
                 <div className="flex items-center gap-6">
                     {showSidebarToggle && (
                         <button
@@ -105,7 +105,7 @@ const Navbar = ({ isSidebarCollapsed, onToggleSidebar, isMobile, onOpenMobileMen
                     </div>
                 </div>
 
-                <div className="flex-1 max-w-[800px] md:max-w-none">
+                <div className="flex-1">
                     <SearchBar
                         onSearch={handleSearchInput}
                         onResultClick={handleResultClick}
@@ -139,7 +139,7 @@ const Navbar = ({ isSidebarCollapsed, onToggleSidebar, isMobile, onOpenMobileMen
                             <Button
                                 variant="primary"
                                 size="sm"
-                                className="!h-11 !px-6 !text-[15px] !font-bold !rounded-full border-none"
+                                className="!h-11 !px-6 !text-sm !font-bold !rounded-full border-none"
                                 onClick={() => navigate('/auth')}
                             >
                                 Log in

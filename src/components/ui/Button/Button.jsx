@@ -33,7 +33,7 @@ const Button = ({
     return (
         <button className={classes} disabled={disabled || isLoading} {...props}>
             {isLoading && (
-                <span className={`animate-spin rounded-full border-2 border-t-current w-[18px] h-[18px] ${variant === 'secondary' ? 'border-[#4255ff]/30' : 'border-white/30'}`} />
+                <span className={`animate-spin rounded-full border-2 border-t-current w-5 h-5 ${variant === 'secondary' ? 'border-[#4255ff]/30' : 'border-white/30'}`} />
             )}
             {!isLoading && leftIcon && <span className="flex items-center justify-center">{leftIcon}</span>}
             <span className="flex items-center leading-none gap-1">{children}</span>

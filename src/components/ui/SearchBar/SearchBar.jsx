@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Search } from 'lucide-react';
-import './SearchBar.css';
 
 const SearchBar = ({
     onSearch,
@@ -54,12 +53,12 @@ const SearchBar = ({
     };
 
     return (
-        <div className={`search-wrapper ${className}`}>
-            <Search size={18} className="search-icon" />
+        <div className={`relative w-full flex items-center ${className}`}>
+            <Search size={18} className="absolute left-5 text-[#586380]" />
             <input
                 type="text"
                 placeholder={placeholder}
-                className="nav-search-input"
+                className="w-full h-11 bg-[#f6f7fb] border-none rounded-full py-0 pr-5 pl-14 text-sm font-medium transition-all duration-200 hover:bg-[#edeff2] focus:outline-none focus:bg-white focus:shadow-[0_0_0_2px_#4255ff]"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onKeyDown={handleKeyDown}
@@ -67,22 +66,22 @@ const SearchBar = ({
                 onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
             />
             {showDropdown && (
-                <div className="search-dropdown">
+                <div className="absolute top-[calc(100%+8px)] left-0 w-full bg-white border border-[#edeff2] rounded-xl shadow-xl overflow-hidden z-50 max-h-96 overflow-y-auto">
                     {isSearching ? (
-                        <div className="search-dropdown-item search-dropdown-message">Searching...</div>
+                        <div className="text-[#586380] text-sm text-center p-5 cursor-default">Searching...</div>
                     ) : searchResults.length > 0 ? (
                         searchResults.map((result, idx) => (
                             <div
                                 key={result.id || idx}
-                                className="search-dropdown-item"
+                                className="px-5 py-3 cursor-pointer border-b border-[#edeff2] last:border-b-0 transition-colors duration-200 hover:bg-[#f6f7fb]"
                                 onClick={() => handleResultClick(result)}
                             >
-                                <div className="search-item-title">{result.title}</div>
-                                {result.subtitle && <div className="search-item-owner">{result.subtitle}</div>}
+                                <div className="font-semibold text-[#282e3e] mb-1">{result.title}</div>
+                                {result.subtitle && <div className="text-xs text-[#586380]">{result.subtitle}</div>}
                             </div>
                         ))
                     ) : (
-                        <div className="search-dropdown-item search-dropdown-message">No results found</div>
+                        <div className="text-[#586380] text-sm text-center p-5 cursor-default">No results found</div>
                     )}
                 </div>
             )}
