@@ -50,7 +50,7 @@ const MainLayout = ({
     const effectiveShowNavbar = showNavbar && !isAdmin;
 
     return (
-        <div className={`layout-container ${isSidebarCollapsed && effectiveShowSidebar ? 'sidebar-collapsed' : ''} ${!effectiveShowSidebar ? 'no-sidebar' : ''} ${!effectiveShowNavbar ? 'no-navbar' : ''} ${isMobile ? 'is-mobile' : ''} ${isMobileSidebarOpen ? 'mobile-sidebar-open' : ''} ${fullHeight ? 'h-screen overflow-hidden' : 'min-h-screen'}`}>
+        <div className={`layout-container ${isSidebarCollapsed && effectiveShowSidebar ? 'sidebar-collapsed' : ''} ${!effectiveShowSidebar ? 'no-sidebar' : ''} ${!effectiveShowNavbar ? 'no-navbar' : ''} ${isMobile ? 'is-mobile' : ''} ${isMobileSidebarOpen ? 'mobile-sidebar-open' : ''} ${fullHeight ? 'h-dvh overflow-hidden' : 'min-h-dvh'}`}>
             {effectiveShowNavbar && (
                 <Navbar
                     isSidebarCollapsed={isSidebarCollapsed}

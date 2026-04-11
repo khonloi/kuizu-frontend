@@ -121,7 +121,7 @@ const ContentListPage = ({
         <MainLayout>
             <div className="p-6">
                 <div className="mb-6">
-                    <div className="flex justify-between items-center mb-8 md:flex-row md:items-center md:gap-6 md:mb-6">
+                    <div className="flex justify-between items-center mb-8 md:flex-row md:items-center">
                         <h1 className="text-3xl font-bold text-[#282e3e]">{title}</h1>
                         <Button
                             variant="primary"

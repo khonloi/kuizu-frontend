@@ -9,7 +9,7 @@ const HomePage = () => {
 
     return (
         <MainLayout showSidebar={false}>
-            <div className="flex flex-col min-h-screen pb-10">
+            <div className="flex flex-col min-h-screen">
                 <main className="flex-1 overflow-x-hidden">
                     {/* Hero Section */}
                     <section className="py-20 lg:py-32 px-6 max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-12 lg:gap-16 relative text-center lg:text-left border-b border-[#edeff2]">
@@ -62,8 +62,8 @@ const HomePage = () => {
                             </div>
                         </div>
 
-                        <div className="flex-1 relative flex justify-center items-center w-full mt-12 lg:mt-0">
-                            <Card className="w-full max-w-sm h-96 z-10 mx-auto !rounded-3xl shadow-2xl !border-none">
+                        <div className="flex-1 relative flex justify-center items-center w-full mt-12 lg:mt-0 px-8 sm:px-12">
+                            <Card className="w-full max-w-sm h-96 z-10 mx-auto rounded-3xl shadow-2xl border-none font-sans">
                                 <Card.Body className="h-full flex flex-col p-8">
                                     <div className="flex gap-2 mb-8">
                                         <div className="w-2 h-2 rounded-full bg-[#edeff2]"></div>

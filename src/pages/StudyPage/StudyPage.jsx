@@ -198,7 +198,7 @@ const StudyPage = () => {
     return (
         <MainLayout showNavbar={false} showSidebar={false} showFooter={false} fullHeight={true}>
             <div className="max-w-[1000px] mx-auto p-6 flex flex-col h-full w-full">
-                <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 mb-8 mt-2">
+                <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 mb-6">
                     <Button
                         variant="ghost"
                         size="sm"
@@ -227,7 +227,7 @@ const StudyPage = () => {
                     </div>
                 </header>
 
-                <div className="w-full h-1.5 bg-[#edeff2] rounded-full overflow-hidden mb-12 shadow-inner">
+                <div className="w-full h-1.5 bg-[#edeff2] rounded-full overflow-hidden mb-8 shadow-inner">
                     <div
                         className="h-full bg-[#4255ff] transition-all duration-300 ease-out shadow-[0_0_10px_rgba(66,85,255,0.4)]"
                         style={{ width: `${progress}%` }}
@@ -240,7 +240,10 @@ const StudyPage = () => {
                         onClick={handleFlip}
                     >
                         {/* Front Face */}
-                        <div className="absolute inset-0 w-full h-full backface-hidden bg-white border-2 border-[#edeff2] rounded-[32px] shadow-2xl p-16 flex flex-col items-center justify-center text-center">
+                        <div 
+                            className="absolute inset-0 w-full h-full backface-hidden bg-white border-2 border-[#edeff2] rounded-[32px] shadow-2xl p-16 flex flex-col items-center justify-center text-center"
+                            style={{ transform: 'translateZ(1px)' }}
+                        >
                             <button
                                 className={`absolute top-8 right-8 p-0 border-none bg-transparent transition-all duration-200 hover:scale-110 z-10 ${isStarred ? 'text-[#f59e0b]' : 'text-[#d1d5db]'}`}
                                 onClick={toggleStar}
@@ -248,12 +251,15 @@ const StudyPage = () => {
                                 <Star size={28} fill={isStarred ? "currentColor" : "none"} />
                             </button>
                             <span className="absolute top-8 left-8 text-[11px] font-black text-[#98a2b3] tracking-widest uppercase">Term</span>
-                            <div className="text-4xl font-black text-[#282e3e] leading-tight max-w-[500px] break-words uppercase">{currentCard.term}</div>
+                            <div className="text-4xl font-black text-[#282e3e] leading-tight max-w-[500px] break-words">{currentCard.term}</div>
                             <span className="absolute bottom-8 text-sm font-bold text-[#586380] opacity-50">Click to flip • Press Space</span>
                         </div>
 
                         {/* Back Face */}
-                        <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 bg-[#f9fafb] border-2 border-[#edeff2] rounded-[32px] shadow-2xl p-16 flex flex-col items-center justify-center text-center">
+                        <div 
+                            className="absolute inset-0 w-full h-full backface-hidden bg-[#f9fafb] border-2 border-[#edeff2] rounded-[32px] shadow-2xl p-16 flex flex-col items-center justify-center text-center"
+                            style={{ transform: 'rotateY(180deg) translateZ(1px)' }}
+                        >
                             <button
                                 className={`absolute top-8 right-8 p-0 border-none bg-transparent transition-all duration-200 hover:scale-110 z-10 ${isStarred ? 'text-[#f59e0b]' : 'text-[#d1d5db]'}`}
                                 onClick={toggleStar}

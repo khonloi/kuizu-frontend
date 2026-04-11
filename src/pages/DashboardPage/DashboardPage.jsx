@@ -101,9 +101,9 @@ const DashboardPage = () => {
                         <span className="font-semibold text-[#282e3e]">Great job! Content created.</span>
                     </div>
                 )}
-                <section className="mb-12 md:mb-8">
+                <section className="mb-8">
                     <div className="flex justify-between items-center mb-6 gap-4 md:mb-4">
-                        <h2 className="m-0 text-2xl font-bold text-[#282e3e]">Recent Flashcard Sets</h2>
+                        <h2 className="m-0 text-2xl font-bold text-[#282e3e]">Recent Sets</h2>
                         <div className="flex gap-3 items-center flex-shrink-0">
                             <Button variant="outline" size="sm" onClick={() => openSetModal(null, handleSetCreated)}>New Flashcard Set</Button>
                             <Button variant="ghost" size="sm" onClick={() => navigate('/flashcard-sets')}>View all</Button>
@@ -134,7 +134,7 @@ const DashboardPage = () => {
                 </section>
 
                 {/* Folders Section */}
-                <section className="mb-12 md:mb-8">
+                <section className="mb-8">
                     <div className="flex justify-between items-center mb-6 gap-4 md:mb-4">
                         <h2 className="m-0 text-2xl font-bold text-[#282e3e]">My Folders</h2>
                         <div className="flex gap-3 items-center flex-shrink-0">
@@ -167,7 +167,7 @@ const DashboardPage = () => {
                 </section>
 
                 {/* Classes Section */}
-                <section className="mb-12 md:mb-8">
+                <section className="mb-8">
                     <div className="flex justify-between items-center mb-6 gap-4 md:mb-4">
                         <h2 className="m-0 text-2xl font-bold text-[#282e3e]">My Classes</h2>
                         <div className="flex gap-3 items-center flex-shrink-0">
@@ -180,23 +180,23 @@ const DashboardPage = () => {
 
                     {classes.length > 0 ? (
                         <div className="grid grid-cols-[repeat(auto-fill,minmax(340px,1fr))] gap-6">
-                                {classes.map(cls => {
-                                    const isOwner = cls.ownerId === user?.userId || cls.ownerUsername === user?.username || cls.userId === user?.userId;
-                                    const statusText = (isOwner && cls.status === 'PENDING') ? 'Pending Review' : ((isOwner && cls.status === 'REJECTED') ? 'Rejected' : 'Class');
-                                    const statusVariant = (isOwner && cls.status === 'PENDING') ? 'warning' : ((isOwner && cls.status === 'REJECTED') ? 'error' : 'primary');
+                            {classes.map(cls => {
+                                const isOwner = cls.ownerId === user?.userId || cls.ownerUsername === user?.username || cls.userId === user?.userId;
+                                const statusText = (isOwner && cls.status === 'PENDING') ? 'Pending Review' : ((isOwner && cls.status === 'REJECTED') ? 'Rejected' : 'Class');
+                                const statusVariant = (isOwner && cls.status === 'PENDING') ? 'warning' : ((isOwner && cls.status === 'REJECTED') ? 'error' : 'primary');
 
-                                    return (
-                                        <Card
-                                            key={cls.classId}
-                                            onClick={() => navigate(`/classes/${cls.classId}`)}
-                                            title={cls.className}
-                                            badge={statusText}
-                                            badgeVariant={statusVariant}
-                                            description={cls.description}
-                                            ownerName={cls.ownerDisplayName}
-                                        />
-                                    );
-                                })}
+                                return (
+                                    <Card
+                                        key={cls.classId}
+                                        onClick={() => navigate(`/classes/${cls.classId}`)}
+                                        title={cls.className}
+                                        badge={statusText}
+                                        badgeVariant={statusVariant}
+                                        description={cls.description}
+                                        ownerName={cls.ownerDisplayName}
+                                    />
+                                );
+                            })}
                         </div>
                     ) : (
                         <EmptyState
@@ -210,7 +210,7 @@ const DashboardPage = () => {
 
                 {/* Suggested Classes Section */}
                 {publicClasses.filter(pc => !classes.some(c => c.classId === pc.classId)).length > 0 && (
-                    <section className="mb-12 md:mb-8">
+                    <section className="mb-8">
                         <div className="flex justify-between items-center mb-6 gap-4 md:mb-4">
                             <h2 className="m-0 text-2xl font-bold text-[#282e3e]">Suggested Classes</h2>
                             <div className="flex gap-3 items-center flex-shrink-0">
@@ -237,7 +237,7 @@ const DashboardPage = () => {
 
                 {/* Suggested Public Sets */}
                 {publicFlashcardSets.length > 0 && (
-                    <section className="mb-12 md:mb-8">
+                    <section className="mb-8">
                         <div className="flex justify-between items-center mb-6 gap-4 md:mb-4">
                             <h2 className="m-0 text-2xl font-bold text-[#282e3e]">Suggested Flashcard Sets</h2>
                             <div className="flex gap-3 items-center flex-shrink-0">
@@ -261,7 +261,7 @@ const DashboardPage = () => {
 
                 {/* Suggested Public Folders */}
                 {publicFolders.length > 0 && (
-                    <section className="mb-12 md:mb-8">
+                    <section className="mb-8">
                         <div className="flex justify-between items-center mb-6 gap-4 md:mb-4">
                             <h2 className="m-0 text-2xl font-bold text-[#282e3e]">Suggested Folders</h2>
                             <div className="flex gap-3 items-center flex-shrink-0">

@@ -156,8 +156,8 @@ const SearchPage = () => {
         <div className="p-6">
             <header className="mb-10">
                 <div className="flex items-center gap-4 mb-4">
-                    <div className="w-14 h-14 bg-[#ededff] rounded-2xl flex items-center justify-center text-[#4255ff]">
-                        <Search size={28} />
+                    <div className="w-16 h-16 bg-[#ededff] rounded-2xl flex items-center justify-center text-[#4255ff]">
+                        <Search size={32} />
                     </div>
                     <div>
                         <h1 className="text-3xl font-black text-[#282e3e]">Search Results for "{query}"</h1>

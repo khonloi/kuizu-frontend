@@ -16,7 +16,10 @@ const Card = ({
     onClick,
     ...props
 }) => {
-    const baseCardStyles = `bg-white border-2 border-[#edeff2] rounded-2xl overflow-hidden shadow-sm transition-all duration-200 hover:shadow-md ${className}`;
+    const hasBorder = className.includes('border-');
+    const hasRounded = className.includes('rounded-');
+    
+    const baseCardStyles = `bg-white ${!hasBorder ? 'border-2 border-[#edeff2]' : ''} ${!hasRounded ? 'rounded-2xl' : ''} overflow-hidden shadow-sm transition-all duration-200 hover:shadow-md ${className}`;
 
     // If it has a title, it's an "Item Card" layout
     if (title) {

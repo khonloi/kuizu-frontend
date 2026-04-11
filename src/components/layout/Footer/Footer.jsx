@@ -69,8 +69,7 @@ const Footer = () => {
                             className="w-20 h-20 object-cover mb-2 rounded-lg"
                         />
                         <div className="flex flex-col items-center text-xs font-bold text-[#282e3e] leading-[1.2]">
-                            <span>Get the</span>
-                            <span>app</span>
+                            <span>Get the App</span>
                         </div>
                     </div>
                 </div>

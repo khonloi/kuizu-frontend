@@ -270,7 +270,7 @@ const ContentDetailsPage = ({
                                 {isOwner && (
                                     <>
                                         <Button
-                                            variant="ghost"
+                                            variant="outline"
                                             className="text-[#586380] hover:text-[#4255ff]"
                                             onClick={() => openEditModal(id, handleUpdateSuccess)}
                                             leftIcon={<Pencil size={18} />}
@@ -278,7 +278,7 @@ const ContentDetailsPage = ({
                                             Edit
                                         </Button>
                                         <Button
-                                            variant="ghost"
+                                            variant="outline"
                                             className="text-[#586380] hover:text-[#282e3e]"
                                             onClick={handleAddChildClick}
                                             leftIcon={<Plus size={18} />}
@@ -286,11 +286,12 @@ const ContentDetailsPage = ({
                                             Add {type === 'sets' ? 'Card' : type === 'folders' ? 'Set' : 'Resource'}
                                         </Button>
                                         <Button
-                                            variant="ghost"
+                                            variant="outline"
                                             className="text-[#ff725e] hover:bg-red-50"
                                             onClick={() => setShowDeleteConfirm(true)}
+                                            leftIcon={<Trash2 size={18} />}
                                         >
-                                            <Trash2 size={18} />
+                                            Delete {type === 'sets' ? 'Set' : type === 'folders' ? 'Folder' : 'Class'}
                                         </Button>
                                     </>
                                 )}
@@ -300,13 +301,13 @@ const ContentDetailsPage = ({
                 </div>
 
                 {/* Metadata & Description */}
-                <div className="mb-6 bg-[#f6f7fb] rounded-2xl border border-[#edeff2] overflow-hidden">
+                <div className="mb-8 bg-[#f6f7fb] rounded-2xl border-2 border-[#edeff2] overflow-hidden">
                     <div className="p-6 pb-5">
                         <p className="text-[#586380] leading-relaxed max-w-3xl">
                             {item.description || 'No description provided.'}
                         </p>
                     </div>
-                    <div className="px-6 py-5 border-t border-[#edeff2] flex gap-6 flex-wrap text-sm bg-white/50">
+                    <div className="px-6 py-5 border-t-2 border-[#edeff2] flex gap-6 flex-wrap text-sm bg-white/50">
                         <div className="flex items-center gap-2 text-[#586380]">
                             <User size={16} />
                             <span>Created by <strong className="text-[#282e3e] font-semibold">{item.ownerDisplayName}</strong></span>
@@ -458,7 +459,7 @@ const ContentDetailsPage = ({
                                                             <div className="text-xl text-[#282e3e] font-bold leading-tight">{child.term}</div>
                                                         </div>
 
-                                                        <div className="pt-4 border-t border-[#edeff2] flex-1 flex flex-col justify-center">
+                                                        <div className="pt-4 border-t-2 border-[#edeff2] flex-1 flex flex-col justify-center">
                                                             <div className="text-[11px] font-black text-[#98a2b3] tracking-[0.1em] mb-2 uppercase">Definition</div>
                                                             <div className="text-base text-[#586380] font-medium leading-relaxed">{child.definition}</div>
                                                         </div>

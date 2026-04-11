@@ -16,7 +16,7 @@ const Badge = ({ children, variant = 'primary', size = 'md', className = '' }) =
     };
 
     return (
-        <span className={`inline-flex items-center justify-center font-bold uppercase tracking-wider rounded-full whitespace-nowrap transition-all
+        <span className={`inline-flex items-center justify-center font-bold uppercase tracking-wider rounded-lg whitespace-nowrap transition-all
             ${variants[variant] || variants.primary}
             ${sizes[size] || sizes.md}
             ${className}`}
