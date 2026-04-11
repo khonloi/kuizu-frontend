@@ -62,8 +62,8 @@ const HomePage = () => {
                             </div>
                         </div>
 
-                        <div className="flex-1 relative flex justify-center items-center w-full mt-12 lg:mt-0 px-8 sm:px-12">
-                            <Card className="w-full max-w-sm h-96 z-10 mx-auto rounded-3xl shadow-2xl border-none font-sans">
+                        <div className="flex-1 relative flex justify-center items-center w-full mt-12 lg:mt-0">
+                            <Card className="w-full max-w-sm h-96 z-10 mx-auto !rounded-3xl shadow-2xl !border-none">
                                 <Card.Body className="h-full flex flex-col p-8">
                                     <div className="flex gap-2 mb-8">
                                         <div className="w-2 h-2 rounded-full bg-[#edeff2]"></div>
