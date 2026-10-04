@@ -1,0 +1,46 @@
+:root {
+  /* Duolingo Theme Tokens */
+  --duo-green: #58cc02;
+  --duo-green-shadow: #46a302;
+  --duo-green-light: #d7ffb8;
+  --duo-blue: #1cb0f6;
+  --duo-blue-shadow: #1899d6;
+  --duo-red: #ff4b4b;
+  --duo-red-shadow: #ea2b2b;
+  --duo-yellow: #ffc800;
+  --duo-yellow-shadow: #e5a400;
+  --duo-orange: #ff9600;
+  --duo-orange-shadow: #e08200;
+  --duo-purple: #ce82ff;
+  --duo-purple-shadow: #a546e8;
+
+  /* Kahoot 4-Tile Answer Colors */
+  --kahoot-red: #e21b3c;
+  --kahoot-red-shadow: #b8122d;
+  --kahoot-blue: #1368ce;
+  --kahoot-blue-shadow: #0c4ea3;
+  --kahoot-yellow: #ffa602;
+  --kahoot-yellow-shadow: #d88700;
+  --kahoot-green: #26890c;
+  --kahoot-green-shadow: #1b6807;
+
+  /* Surfaces & Backgrounds */
+  --bg-primary: #0b0f19;
+  --bg-card: rgba(23, 32, 54, 0.75);
+  --bg-card-hover: rgba(30, 41, 69, 0.9);
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-focus: rgba(88, 204, 2, 0.4);
+
+  /* Typography Colors */
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+
+  /* Elevation & 3D Depth */
+  --btn-radius: 16px;
+  --card-radius: 20px;
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
+  --shadow-glow-duo: 0 0 20px rgba(88, 204, 2, 0.35);
+  --shadow-glow-kahoot: 0 0 25px rgba(226, 27, 60, 0.3);
+}
