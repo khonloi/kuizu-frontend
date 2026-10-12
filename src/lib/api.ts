@@ -1,3 +1,5 @@
+import { handleMockApiRequest } from '../mock/mock-handler';
+
 export class ApiError extends Error {
   constructor(
     public statusCode: number,
@@ -49,6 +51,19 @@ export async function apiClient<T = unknown>(
   const headers = new Headers(options.headers || {});
   if (!headers.has('Content-Type') && !(options.body instanceof FormData)) {
     headers.set('Content-Type', 'application/json');
+  }
+
+  // Offline Demo Mode Check
+  if (process.env.NEXT_PUBLIC_DEMO_MODE === 'true') {
+    try {
+      const parsedBody = options.body && typeof options.body === 'string' ? JSON.parse(options.body) : options.body;
+      const mockRes = await handleMockApiRequest<T>(url, options.method || 'GET', parsedBody);
+      if (mockRes !== null) {
+        return mockRes;
+      }
+    } catch {
+      // Continue to live request if parsing fails
+    }
   }
 
   try {
@@ -125,6 +140,25 @@ export async function apiClient<T = unknown>(
     if (err instanceof ApiError) {
       throw err;
     }
+
+    // Auto-fallback to offline mock handler if backend connection fails
+    try {
+      const parsedBody =
+        options.body && typeof options.body === 'string'
+          ? JSON.parse(options.body)
+          : options.body;
+      const mockFallback = await handleMockApiRequest<T>(
+        url,
+        options.method || 'GET',
+        parsedBody,
+      );
+      if (mockFallback !== null) {
+        return mockFallback;
+      }
+    } catch {
+      // Fall through to ApiError
+    }
+
     throw new ApiError(0, (err as Error).message || 'Network connection error');
   }
 }
