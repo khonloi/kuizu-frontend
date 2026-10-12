@@ -2,21 +2,20 @@
 
 import React, { useState } from 'react';
 import { Heart, Flame, Gem, Sparkles, Snowflake, Zap } from 'lucide-react';
-import { Card } from '../../../components/ui/card';
-import { Button } from '../../../components/ui/button';
-import { Badge } from '../../../components/ui/badge';
-import { useAuthStore } from '../../../stores/auth.store';
-import { useAudioStore } from '../../../stores/audio.store';
-import { useUiStore } from '../../../stores/ui.store';
-import { api } from '../../../lib/api';
-import { fireVictoryConfetti } from '../../../lib/confetti';
-import type { StreakFreezePurchaseResult } from '../../../types/gamification.types';
+import { Card, Button, Badge } from '@/components/ui';
+import { useAuthStore } from '@/stores/auth.store';
+import { useAudioStore } from '@/stores/audio.store';
+import { useUiStore } from '@/stores/ui.store';
+import { api } from '@/lib/api';
+import { fireVictoryConfetti } from '@/lib/confetti';
+import type { StreakFreezePurchaseResult } from '@/types/gamification.types';
 
 export default function ShopPage() {
   const { user, updateGems } = useAuthStore();
   const { playSuccess, playError } = useAudioStore();
   const openHeartModal = useUiStore((s) => s.openHeartModal);
   const [isFreezeLoading, setIsFreezeLoading] = useState(false);
+  const [isWagerLoading, setIsWagerLoading] = useState(false);
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
 
   const currentGems = user?.gems ?? 100;
@@ -40,6 +39,25 @@ export default function ShopPage() {
       setSuccessMsg((err as Error).message || 'Unable to purchase Streak Freeze.');
     } finally {
       setIsFreezeLoading(false);
+    }
+  };
+
+  const handleBuyWager = async () => {
+    setIsWagerLoading(true);
+    setSuccessMsg(null);
+    try {
+      const res = await api.post<{ success: boolean; gemsRemaining?: number; message?: string }>(
+        '/api/v1/users/me/wager/double'
+      );
+      updateGems(res.gemsRemaining ?? Math.max(0, currentGems - 50));
+      playSuccess();
+      fireVictoryConfetti();
+      setSuccessMsg(res.message || 'Double or Nothing wager placed! Maintain 7-day streak to win 100 gems.');
+    } catch (err) {
+      playError();
+      setSuccessMsg((err as Error).message || 'Unable to place wager.');
+    } finally {
+      setIsWagerLoading(false);
     }
   };
 
@@ -89,6 +107,7 @@ export default function ShopPage() {
             fontWeight: 800,
             fontSize: '0.95rem',
           }}
+          className="animate-pop"
         >
           {successMsg}
         </div>
@@ -208,7 +227,9 @@ export default function ShopPage() {
             variant="yellow"
             size="md"
             fullWidth
-            onClick={() => { playSuccess(); fireVictoryConfetti(); }}
+            isLoading={isWagerLoading}
+            disabled={isWagerLoading || currentGems < 50}
+            onClick={handleBuyWager}
             leftIcon={<Sparkles size={18} />}
           >
             Wager 50 Gems

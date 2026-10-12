@@ -1,176 +1,92 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import {
-  Flame,
-  Heart,
-  Gem,
-  Zap,
-  Play,
-  BookOpen,
   Sparkles,
-  Server,
-  ExternalLink,
-  Triangle,
-  Diamond,
-  Circle,
-  Square,
-  CheckCircle2,
-  RefreshCw,
+  BookOpen,
+  Play,
+  Users,
+  ShoppingBag,
+  Trophy,
+  Volume2,
+  Heart,
+  Zap,
+  Flame,
+  ArrowRight,
+  Radio,
+  Gamepad2,
+  Sparkle,
 } from 'lucide-react';
 import styles from './page.module.css';
-import { getGameSocket } from '../lib/socket';
-import { audioEngine } from '../lib/audio-engine';
-import { fireVictoryConfetti } from '../lib/confetti';
-
-interface HealthResponse {
-  status: string;
-  timestamp?: string;
-  uptime?: number;
-  message?: string;
-  services?: {
-    database?: {
-      status: string;
-      readyState?: number;
-    };
-    api?: {
-      status: string;
-      nodeVersion?: string;
-    };
-  };
-}
+import { Button, Card, Badge } from '@/components/ui';
+import { useAudioStore } from '@/stores/audio.store';
+import { useAuthStore } from '@/stores/auth.store';
+import { fireVictoryConfetti, fireStreakFireworks } from '@/lib/confetti';
 
 export default function HomePage() {
-  const [pin, setPin] = useState('');
-  const [nickname, setNickname] = useState('');
-  const [healthData, setHealthData] = useState<HealthResponse | null>(null);
-  const [isHealthLoading, setIsHealthLoading] = useState(false);
-  const [socketStatus, setSocketStatus] = useState<'disconnected' | 'connecting' | 'connected'>('connecting');
-  const [selectedTile, setSelectedTile] = useState<string | null>(null);
+  const { user } = useAuthStore();
+  const { playSuccess, playError, playPop, playFanfare } = useAudioStore();
 
-  // Check backend health
-  const checkHealth = async () => {
-    setIsHealthLoading(true);
-    try {
-      const res = await fetch('/api/health');
-      if (res.ok) {
-        const data = (await res.json()) as HealthResponse;
-        setHealthData(data);
-      } else {
-        setHealthData({ status: 'error', message: `HTTP ${res.status}` });
-      }
-    } catch (err) {
-      setHealthData({ status: 'offline', message: (err as Error).message });
-    } finally {
-      setIsHealthLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    let isMounted = true;
-
-    const loadInitialHealth = async () => {
-      setIsHealthLoading(true);
-      try {
-        const res = await fetch('/api/health');
-        if (res.ok) {
-          const data = (await res.json()) as HealthResponse;
-          if (isMounted) setHealthData(data);
-        } else {
-          if (isMounted) setHealthData({ status: 'error', message: `HTTP ${res.status}` });
-        }
-      } catch (err) {
-        if (isMounted) setHealthData({ status: 'offline', message: (err as Error).message });
-      } finally {
-        if (isMounted) setIsHealthLoading(false);
-      }
-    };
-
-    void loadInitialHealth();
-
-    // Test socket connection
-    const socket = getGameSocket();
-
-    socket.connect();
-
-    socket.on('connect', () => {
-      if (isMounted) setSocketStatus('connected');
-    });
-
-    socket.on('disconnect', () => {
-      if (isMounted) setSocketStatus('disconnected');
-    });
-
-    socket.on('connect_error', () => {
-      if (isMounted) setSocketStatus('disconnected');
-    });
-
-    return () => {
-      isMounted = false;
-      socket.disconnect();
-    };
-  }, []);
-
-  const triggerCelebration = () => {
-    audioEngine.playSuccess();
+  const handleTestSuccess = () => {
+    playSuccess();
     fireVictoryConfetti();
   };
 
-  const handleTileClick = (color: string) => {
-    setSelectedTile(color);
-    audioEngine.playPop();
-    triggerCelebration();
+  const handleTestFanfare = () => {
+    playFanfare();
+    fireStreakFireworks();
+  };
+
+  const handleTestPop = () => {
+    playPop();
+  };
+
+  const handleTestError = () => {
+    playError();
   };
 
   return (
     <main className={styles.container}>
-      {/* Header bar */}
+      {/* Top Navigation Bar */}
       <header className={styles.header}>
         <div className={styles.brand}>
           <div className={styles.logoIcon}>⚡</div>
           <span className={styles.logoText}>KUIZU</span>
         </div>
 
-        <div className={styles.statsBar}>
-          <div className={styles.statItem} title="Active Streak">
-            <Flame className="w-5 h-5 text-orange-500" color="#ff9600" fill="#ff9600" />
-            <span style={{ color: '#ff9600' }}>7</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', flexWrap: 'wrap' }}>
+          {/* Stats Bar */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: 'var(--duo-orange)', fontWeight: 800 }}>
+              <Flame size={20} fill="var(--duo-orange)" />
+              <span>{user?.streak.count ?? 7}</span>
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: 'var(--duo-red)', fontWeight: 800 }}>
+              <Heart size={20} fill="var(--duo-red)" />
+              <span>{user?.hearts ?? 5}</span>
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: 'var(--duo-yellow)', fontWeight: 900 }}>
+              <Zap size={20} fill="var(--duo-yellow)" />
+              <span>{user?.xp ?? 450} XP</span>
+            </div>
           </div>
 
-          <div className={styles.statItem} title="Hearts Remaining">
-            <Heart className="w-5 h-5 text-red-500" color="#ff4b4b" fill="#ff4b4b" />
-            <span style={{ color: '#ff4b4b' }}>5</span>
-          </div>
-
-          <div className={styles.statItem} title="Gems Stash">
-            <Gem className="w-5 h-5 text-blue-400" color="#1cb0f6" fill="#1cb0f6" />
-            <span style={{ color: '#1cb0f6' }}>320</span>
-          </div>
-
-          <div className={styles.statItem} title="Total XP">
-            <Zap className="w-5 h-5 text-yellow-400" color="#ffc800" fill="#ffc800" />
-            <span style={{ color: '#ffc800' }}>450 XP</span>
-          </div>
-
-          <a
-            href="http://localhost:4000/api/docs"
-            target="_blank"
-            rel="noreferrer"
-            className="btn-3d btn-secondary"
-            style={{ padding: '0.45rem 0.9rem', fontSize: '0.85rem' }}
-          >
-            <span>Swagger Docs</span>
-            <ExternalLink size={14} />
-          </a>
+          <Link href="/learn" onClick={playPop}>
+            <Button variant="duo" size="sm" rightIcon={<ArrowRight size={16} />}>
+              Open Learning Hub
+            </Button>
+          </Link>
         </div>
       </header>
 
-      {/* Hero */}
+      {/* Hero Section */}
       <section className={styles.hero}>
         <div className={styles.badge}>
-          <Sparkles size={14} />
-          <span>Next-Gen MERN Stack 2026</span>
+          <Sparkles size={16} />
+          <span>Next-Gen Gamified Learning Engine</span>
         </div>
 
         <h1 className={styles.title}>
@@ -179,258 +95,187 @@ export default function HomePage() {
         </h1>
 
         <p className={styles.subtitle}>
-          A unified gamified learning platform built on NestJS 12, Next.js 16 App Router,
-          Mongoose, Socket.IO realtime battles, and modern CSS design tokens.
+          The unified gamification platform uniting self-paced mastery with intense multiplayer projector battles. Powered by real-time WebSockets, 3D tactile physics, and rich sensory feedback.
         </p>
 
         <div className={styles.ctaGroup}>
-          <Link
-            href="/learn"
-            className="btn-3d btn-duo"
-          >
-            <BookOpen size={20} />
-            <span>Start Learning Path</span>
+          <Link href="/learn" onClick={playPop}>
+            <Button variant="duo" size="lg" leftIcon={<BookOpen size={20} />}>
+              Explore Quest Path
+            </Button>
           </Link>
 
-          <a
-            href="#live-arena"
-            className="btn-3d btn-kahoot"
+          <Link href="/arena/join" onClick={playPop}>
+            <Button variant="kahoot" size="lg" leftIcon={<Gamepad2 size={20} />}>
+              Join Live Battle
+            </Button>
+          </Link>
+
+          <Link href="/arena/host" onClick={playPop}>
+            <Button variant="secondary" size="lg" leftIcon={<Radio size={20} />}>
+              Host Projector Game
+            </Button>
+          </Link>
+        </div>
+      </section>
+
+      {/* 4 Feature Showcases */}
+      <section className={styles.showcaseGrid}>
+        {/* Feature 1: Duolingo Quest Path */}
+        <Card padding="lg" glow="duo">
+          <div className={styles.cardIcon} style={{ background: 'rgba(88, 204, 2, 0.15)' }}>
+            🗾
+          </div>
+          <Badge variant="duo" size="sm">SELF-PACED MASTERY</Badge>
+          <h2 style={{ fontSize: '1.5rem', fontWeight: 900, marginTop: '0.5rem' }}>
+            Sine-Wave Curriculum Tree
+          </h2>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', margin: '0.5rem 0 1.5rem', lineHeight: 1.6 }}>
+            Meandering skill nodes, persistent progress unlocking, XP rewards, and lesson completion crown badges.
+          </p>
+          <Link href="/learn" onClick={playPop}>
+            <Button variant="duo" size="md" fullWidth rightIcon={<ArrowRight size={16} />}>
+              Start Japanese Lesson
+            </Button>
+          </Link>
+        </Card>
+
+        {/* Feature 2: Multiplayer Live Arena */}
+        <Card padding="lg" glow="kahoot">
+          <div className={styles.cardIcon} style={{ background: 'rgba(226, 27, 60, 0.15)' }}>
+            🎮
+          </div>
+          <Badge variant="red" size="sm">REAL-TIME MULTIPLAYER</Badge>
+          <h2 style={{ fontSize: '1.5rem', fontWeight: 900, marginTop: '0.5rem' }}>
+            Kahoot Projector Arena
+          </h2>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', margin: '0.5rem 0 1.5rem', lineHeight: 1.6 }}>
+            Host quizzes on classroom screens with instant QR code join, speed bonus formulas, and Olympic podium ceremonies.
+          </p>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
+            <Link href="/arena/host" onClick={playPop}>
+              <Button variant="kahoot" size="md" fullWidth leftIcon={<Play size={16} />}>
+                Host Game
+              </Button>
+            </Link>
+            <Link href="/arena/join" onClick={playPop}>
+              <Button variant="secondary" size="md" fullWidth leftIcon={<Users size={16} />}>
+                Join PIN
+              </Button>
+            </Link>
+          </div>
+        </Card>
+
+        {/* Feature 3: Economy & Shop */}
+        <Card padding="lg" glow="blue">
+          <div className={styles.cardIcon} style={{ background: 'rgba(28, 176, 246, 0.15)' }}>
+            💎
+          </div>
+          <Badge variant="blue" size="sm">GAMIFIED ECONOMY</Badge>
+          <h2 style={{ fontSize: '1.5rem', fontWeight: 900, marginTop: '0.5rem' }}>
+            Power-Ups & Streak Stash
+          </h2>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', margin: '0.5rem 0 1.5rem', lineHeight: 1.6 }}>
+            Replenish hearts, equip streak freezes, or wager gems in double-or-nothing streak challenges.
+          </p>
+          <Link href="/shop" onClick={playPop}>
+            <Button variant="secondary" size="md" fullWidth leftIcon={<ShoppingBag size={16} />}>
+              Visit Kuizu Shop
+            </Button>
+          </Link>
+        </Card>
+
+        {/* Feature 4: Competitive Leagues */}
+        <Card padding="lg" glow="none">
+          <div className={styles.cardIcon} style={{ background: 'rgba(255, 200, 0, 0.15)' }}>
+            🏆
+          </div>
+          <Badge variant="yellow" size="sm">LEAGUES & RANKS</Badge>
+          <h2 style={{ fontSize: '1.5rem', fontWeight: 900, marginTop: '0.5rem' }}>
+            Weekly Leaderboard
+          </h2>
+          <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', margin: '0.5rem 0 1.5rem', lineHeight: 1.6 }}>
+            Climb from Bronze to Diamond league. Earn top XP to earn promotions and exclusive avatar flair.
+          </p>
+          <Link href="/leaderboard" onClick={playPop}>
+            <Button variant="secondary" size="md" fullWidth leftIcon={<Trophy size={16} />}>
+              View Standings
+            </Button>
+          </Link>
+        </Card>
+      </section>
+
+      {/* Interactive Sensory Soundboard Section */}
+      <section className={styles.soundboardSection}>
+        <Badge variant="duo" size="sm" icon={<Volume2 size={16} />}>
+          AUDIO & SENSORY ENGINE PREVIEW
+        </Badge>
+        <h2 style={{ fontSize: '2rem', fontWeight: 900, marginTop: '0.75rem' }}>
+          Feel Every Tap with Tactile Sound & Motion
+        </h2>
+        <p style={{ color: 'var(--text-secondary)', fontSize: '1.05rem', maxWidth: '640px', margin: '0.5rem auto 0', lineHeight: 1.6 }}>
+          Test the procedural Web Audio synthesizer and confetti engine directly in your browser.
+        </p>
+
+        <div className={styles.soundGrid}>
+          <Button
+            variant="duo"
+            size="lg"
+            onClick={handleTestSuccess}
+            leftIcon={<Sparkle size={18} />}
           >
-            <Play size={20} />
-            <span>Join Live Battle</span>
+            Correct Answer
+          </Button>
+
+          <Button
+            variant="kahoot"
+            size="lg"
+            onClick={handleTestFanfare}
+            leftIcon={<Trophy size={18} />}
+          >
+            Victory Fanfare
+          </Button>
+
+          <Button
+            variant="secondary"
+            size="lg"
+            onClick={handleTestPop}
+            leftIcon={<Volume2 size={18} />}
+          >
+            Tactile Pop
+          </Button>
+
+          <Button
+            variant="danger"
+            size="lg"
+            onClick={handleTestError}
+            leftIcon={<Heart size={18} />}
+          >
+            Mistake / Heart Lost
+          </Button>
+        </div>
+      </section>
+
+      {/* Clean System Architecture Status Footer */}
+      <footer className={styles.statusFooter}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+          <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: 'var(--duo-green)', boxShadow: '0 0 10px var(--duo-green)' }} />
+          <span style={{ fontSize: '0.95rem', fontWeight: 800 }}>Kuizu v2 Architecture Operational</span>
+        </div>
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+          <span>Next.js 16 App Router</span>
+          <span>NestJS Realtime Socket.IO</span>
+          <span>Custom CSS Modules</span>
+          <a
+            href="http://localhost:4000/api/docs"
+            target="_blank"
+            rel="noreferrer"
+            style={{ color: 'var(--duo-blue)', fontWeight: 700 }}
+          >
+            API Docs ↗
           </a>
         </div>
-      </section>
-
-      {/* 2-Column Split: Duolingo Quest vs Kahoot Arena */}
-      <section className={styles.grid2} id="live-arena">
-        {/* Duolingo Quest Card */}
-        <div className={`glass-card ${styles.featureCard}`}>
-          <div className={styles.cardHeader}>
-            <div>
-              <span style={{ fontSize: '0.85rem', color: 'var(--duo-green)', fontWeight: 800 }}>
-                SELF-PACED MASTERY
-              </span>
-              <h2 style={{ fontSize: '1.6rem', fontWeight: 800, marginTop: '0.2rem' }}>
-                Unit 1: Essential Greetings
-              </h2>
-            </div>
-            <div className={styles.cardIcon} style={{ background: 'rgba(88, 204, 2, 0.15)' }}>
-              🗾
-            </div>
-          </div>
-
-          <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', marginBottom: '1.5rem' }}>
-            Interactive Japanese Foundations with audio prompts, multiple choice, translation exercises, and streak boosters.
-          </p>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginTop: 'auto' }}>
-            <div
-              style={{
-                background: 'rgba(255, 255, 255, 0.04)',
-                padding: '1rem',
-                borderRadius: '14px',
-                border: '1px solid var(--border-subtle)',
-              }}
-            >
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', marginBottom: '0.5rem' }}>
-                <span>Unit Progress</span>
-                <span style={{ color: 'var(--duo-green)', fontWeight: 700 }}>1 / 3 Lessons</span>
-              </div>
-              <div style={{ width: '100%', height: '10px', background: 'rgba(255, 255, 255, 0.1)', borderRadius: '999px', overflow: 'hidden' }}>
-                <div style={{ width: '33%', height: '100%', background: 'var(--duo-green)' }} />
-              </div>
-            </div>
-
-            <button
-              onClick={triggerCelebration}
-              className="btn-3d btn-duo"
-              style={{ width: '100%' }}
-            >
-              <span>Practice Lesson (+20 XP)</span>
-            </button>
-          </div>
-        </div>
-
-        {/* Kahoot Live Arena Card */}
-        <div className={`glass-card ${styles.featureCard}`}>
-          <div className={styles.cardHeader}>
-            <div>
-              <span style={{ fontSize: '0.85rem', color: 'var(--kahoot-red)', fontWeight: 800 }}>
-                MULTIPLAYER REAL-TIME
-              </span>
-              <h2 style={{ fontSize: '1.6rem', fontWeight: 800, marginTop: '0.2rem' }}>
-                Live Quiz Arena
-              </h2>
-            </div>
-            <div className={styles.cardIcon} style={{ background: 'rgba(226, 27, 60, 0.15)' }}>
-              🎮
-            </div>
-          </div>
-
-          <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
-            Enter a 6-digit game PIN to join a live host screen, or host your own trivia battle with speed scoring.
-          </p>
-
-          <div className={styles.pinInputContainer}>
-            <input
-              type="text"
-              placeholder="PIN"
-              maxLength={6}
-              value={pin}
-              onChange={(e) => setPin(e.target.value.replace(/\D/g, ''))}
-              className={styles.pinInput}
-            />
-            <input
-              type="text"
-              placeholder="Your Nickname"
-              value={nickname}
-              onChange={(e) => setNickname(e.target.value)}
-              className={styles.pinInput}
-              style={{ width: '180px', letterSpacing: 'normal', textAlign: 'left' }}
-            />
-          </div>
-
-          {selectedTile && (
-            <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', textAlign: 'center', marginBottom: '0.5rem' }}>
-              Selected Tile: <strong style={{ color: 'var(--text-primary)', textTransform: 'capitalize' }}>{selectedTile}</strong>
-            </div>
-          )}
-
-          <div className={styles.kahootTiles}>
-            <div
-              onClick={() => handleTileClick('red')}
-              className={`${styles.tile} ${styles.tileRed}`}
-            >
-              <Triangle size={22} fill="#ffffff" />
-              <span>Red Triangle</span>
-            </div>
-
-            <div
-              onClick={() => handleTileClick('blue')}
-              className={`${styles.tile} ${styles.tileBlue}`}
-            >
-              <Diamond size={22} fill="#ffffff" />
-              <span>Blue Diamond</span>
-            </div>
-
-            <div
-              onClick={() => handleTileClick('yellow')}
-              className={`${styles.tile} ${styles.tileYellow}`}
-            >
-              <Circle size={22} fill="#ffffff" />
-              <span>Yellow Circle</span>
-            </div>
-
-            <div
-              onClick={() => handleTileClick('green')}
-              className={`${styles.tile} ${styles.tileGreen}`}
-            >
-              <Square size={22} fill="#ffffff" />
-              <span>Green Square</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Live System Diagnostics Card */}
-      <section className={`glass-card ${styles.diagCard}`}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <Server size={24} color="var(--duo-blue)" />
-            <div>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: 800 }}>Infrastructure & Health Diagnostics</h3>
-              <p style={{ color: 'var(--text-secondary)', fontSize: '0.85rem' }}>
-                Verifying live communication between Next.js (port 3001) and NestJS backend (port 4000)
-              </p>
-            </div>
-          </div>
-
-          <button
-            onClick={checkHealth}
-            disabled={isHealthLoading}
-            className="btn-3d btn-secondary"
-            style={{ padding: '0.5rem 1rem', fontSize: '0.85rem' }}
-          >
-            <RefreshCw size={14} className={isHealthLoading ? 'animate-spin' : ''} />
-            <span>Refresh Ping</span>
-          </button>
-        </div>
-
-        <div className={styles.diagGrid}>
-          {/* REST API Status */}
-          <div className={styles.diagItem}>
-            <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Backend REST API</span>
-            <div style={{ display: 'flex', alignItems: 'center', fontWeight: 800, fontSize: '1.05rem' }}>
-              <span
-                className={`${styles.statusIndicator} ${
-                  healthData?.status === 'ok' || healthData?.status === 'degraded'
-                    ? styles.statusOnline
-                    : styles.statusOffline
-                }`}
-              />
-              <span>{healthData?.status ? healthData.status.toUpperCase() : 'CHECKING...'}</span>
-            </div>
-            <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
-              Route: /api/health (proxied)
-            </span>
-          </div>
-
-          {/* Database Status */}
-          <div className={styles.diagItem}>
-            <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>MongoDB Connection</span>
-            <div style={{ display: 'flex', alignItems: 'center', fontWeight: 800, fontSize: '1.05rem' }}>
-              <span
-                className={`${styles.statusIndicator} ${
-                  healthData?.services?.database?.status === 'connected'
-                    ? styles.statusOnline
-                    : styles.statusConnecting
-                }`}
-              />
-              <span>{healthData?.services?.database?.status?.toUpperCase() || 'DISCONNECTED'}</span>
-            </div>
-            <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
-              URI: mongodb://127.0.0.1:27017/kuizu
-            </span>
-          </div>
-
-          {/* Socket.IO Status */}
-          <div className={styles.diagItem}>
-            <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Socket.IO Gateway</span>
-            <div style={{ display: 'flex', alignItems: 'center', fontWeight: 800, fontSize: '1.05rem' }}>
-              <span
-                className={`${styles.statusIndicator} ${
-                  socketStatus === 'connected'
-                    ? styles.statusOnline
-                    : socketStatus === 'connecting'
-                    ? styles.statusConnecting
-                    : styles.statusOffline
-                }`}
-              />
-              <span>{socketStatus.toUpperCase()}</span>
-            </div>
-            <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
-              Namespace: /game
-            </span>
-          </div>
-
-          {/* Architecture info */}
-          <div className={styles.diagItem}>
-            <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>MERN Architecture</span>
-            <div style={{ display: 'flex', alignItems: 'center', fontWeight: 800, fontSize: '1.05rem', color: 'var(--duo-green)' }}>
-              <CheckCircle2 size={16} style={{ marginRight: '0.4rem' }} />
-              <span>Scaffold Ready</span>
-            </div>
-            <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
-              NestJS 12 + Next.js 16
-            </span>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer style={{ textAlign: 'center', color: 'var(--text-muted)', fontSize: '0.85rem' }}>
-        <p>Kuizu v2 — Duolingo + Kahoot Clone Architecture</p>
       </footer>
     </main>
   );

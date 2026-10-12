@@ -1,33 +1,35 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Trophy, Zap, TrendingUp, Flame } from 'lucide-react';
-import { Card } from '../../../components/ui/card';
-import { Badge } from '../../../components/ui/badge';
-import { Avatar } from '../../../components/ui/avatar';
-import { useAuthStore } from '../../../stores/auth.store';
-
-interface LeaderboardUser {
-  rank: number;
-  name: string;
-  xp: number;
-  streak: number;
-  isCurrentUser?: boolean;
-}
-
-const SAMPLE_LEADERBOARD: LeaderboardUser[] = [
-  { rank: 1, name: 'SakuraNinja', xp: 1420, streak: 14 },
-  { rank: 2, name: 'CyberSamurai', xp: 1280, streak: 21 },
-  { rank: 3, name: 'TokyoDrifter', xp: 1150, streak: 9 },
-  { rank: 4, name: 'AnimeSensei', xp: 980, streak: 12 },
-  { rank: 5, name: 'PixelHero', xp: 870, streak: 6 },
-  { rank: 6, name: 'KanjiMaster', xp: 740, streak: 4 },
-  { rank: 7, name: 'RamenLover', xp: 620, streak: 3 },
-  { rank: 8, name: 'NightOwl', xp: 510, streak: 1 },
-];
+import { Card, Badge, Avatar } from '@/components/ui';
+import { useAuthStore } from '@/stores/auth.store';
+import { api } from '@/lib/api';
+import type { LeaderboardEntry } from '@/types/gamification.types';
 
 export default function LeaderboardPage() {
   const user = useAuthStore((s) => s.user);
+  const [entries, setEntries] = useState<LeaderboardEntry[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    let isMounted = true;
+    api
+      .get<LeaderboardEntry[]>('/api/v1/leaderboard')
+      .then((data) => {
+        if (isMounted && Array.isArray(data)) {
+          setEntries(data);
+        }
+      })
+      .catch(() => {})
+      .finally(() => {
+        if (isMounted) setIsLoading(false);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem' }}>
@@ -58,86 +60,112 @@ export default function LeaderboardPage() {
             </div>
 
             <div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
                 <Badge variant="yellow" size="sm">
-                  {user?.league || 'Sapphire'} League
+                  ACTIVE TOURNAMENT
                 </Badge>
                 <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
-                  Ends in 2 days
+                  Ends in 2d 14h
                 </span>
               </div>
-              <h1 style={{ fontSize: '1.85rem', fontWeight: 900, marginTop: '0.25rem' }}>
-                Weekly Tiered Competition
+              <h1 style={{ fontSize: '2rem', fontWeight: 900, marginTop: '0.35rem' }}>
+                {user?.league || 'Diamond'} League
               </h1>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
+                Top 3 advance to the Champion division. Keep practicing daily to earn XP!
+              </p>
             </div>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--duo-green)', fontWeight: 800, fontSize: '0.9rem' }}>
-            <TrendingUp size={18} />
-            <span>Top 5 Advance to Ruby League</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            <Badge variant="duo" size="md" icon={<TrendingUp size={16} />}>
+              Promotion Zone: Top 3
+            </Badge>
           </div>
         </div>
       </Card>
 
       {/* Leaderboard Table Card */}
-      <Card padding="none">
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-          {SAMPLE_LEADERBOARD.map((entry) => {
-            const isPromotion = entry.rank <= 5;
-            const isTop3 = entry.rank <= 3;
-            const rankColor =
-              entry.rank === 1
-                ? 'var(--duo-yellow)'
-                : entry.rank === 2
-                  ? '#cbd5e1'
-                  : entry.rank === 3
-                    ? '#d97706'
-                    : 'var(--text-muted)';
+      <Card padding="md">
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+          {isLoading && entries.length === 0 ? (
+            <div style={{ textAlign: 'center', padding: '2rem', color: 'var(--text-secondary)' }}>
+              Loading league rankings...
+            </div>
+          ) : (
+            entries.map((entry) => {
+              const isCurrentUser =
+                entry.isCurrentUser || (user && entry.username.includes(user.username));
+              const isTop3 = entry.rank <= 3;
 
-            return (
-              <div
-                key={entry.rank}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  padding: '1rem 1.5rem',
-                  borderBottom: '1px solid var(--border-subtle)',
-                  backgroundColor: isPromotion ? 'rgba(88, 204, 2, 0.03)' : 'transparent',
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
-                  {/* Rank number or medal */}
-                  <span
-                    style={{
-                      width: '28px',
-                      fontSize: '1.15rem',
-                      fontWeight: 900,
-                      color: rankColor,
-                      textAlign: 'center',
-                    }}
-                  >
-                    {isTop3 ? (entry.rank === 1 ? '🥇' : entry.rank === 2 ? '🥈' : '🥉') : entry.rank}
-                  </span>
+              return (
+                <div
+                  key={entry.userId || entry.rank}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    padding: '0.85rem 1.25rem',
+                    borderRadius: '16px',
+                    backgroundColor: isCurrentUser
+                      ? 'rgba(88, 204, 2, 0.12)'
+                      : isTop3
+                      ? 'rgba(255, 255, 255, 0.05)'
+                      : 'transparent',
+                    border: isCurrentUser
+                      ? '1.5px solid var(--duo-green)'
+                      : '1px solid transparent',
+                    transition: 'all 0.15s ease',
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
+                    {/* Rank Number / Medal */}
+                    <div style={{ width: '32px', textAlign: 'center', fontWeight: 900, fontSize: '1.1rem' }}>
+                      {entry.rank === 1 ? (
+                        <span style={{ fontSize: '1.4rem' }}>🥇</span>
+                      ) : entry.rank === 2 ? (
+                        <span style={{ fontSize: '1.4rem' }}>🥈</span>
+                      ) : entry.rank === 3 ? (
+                        <span style={{ fontSize: '1.4rem' }}>🥉</span>
+                      ) : (
+                        <span style={{ color: 'var(--text-muted)' }}>#{entry.rank}</span>
+                      )}
+                    </div>
 
-                  <Avatar name={entry.name} size="md" ring={isTop3 ? 'gold' : 'none'} />
+                    <Avatar
+                      name={entry.username}
+                      src={entry.avatarUrl}
+                      size="sm"
+                      ring={isTop3 ? 'gold' : isCurrentUser ? 'duo' : 'none'}
+                    />
 
-                  <div style={{ display: 'flex', flexDirection: 'column' }}>
-                    <span style={{ fontWeight: 800, fontSize: '1rem' }}>{entry.name}</span>
-                    <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-                      <Flame size={13} color="var(--duo-orange)" />
-                      {entry.streak} day streak
-                    </span>
+                    <div>
+                      <span style={{ fontWeight: 800, fontSize: '1rem', color: isCurrentUser ? 'var(--duo-green)' : 'inherit' }}>
+                        {entry.username}
+                      </span>
+                      {isCurrentUser && (
+                        <span style={{ marginLeft: '0.5rem', fontSize: '0.75rem', color: 'var(--duo-green)', fontWeight: 800 }}>
+                          (You)
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', color: 'var(--duo-orange)', fontWeight: 800, fontSize: '0.9rem' }}>
+                      <Flame size={16} fill="var(--duo-orange)" />
+                      <span>{entry.streakCount}d</span>
+                    </div>
+
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontWeight: 900, color: 'var(--duo-yellow)', minWidth: '90px', justifyContent: 'flex-end' }}>
+                      <Zap size={18} fill="var(--duo-yellow)" />
+                      <span>{entry.xp.toLocaleString()} XP</span>
+                    </div>
                   </div>
                 </div>
-
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontWeight: 900, color: 'var(--duo-yellow)' }}>
-                  <Zap size={16} fill="var(--duo-yellow)" />
-                  <span>{entry.xp} XP</span>
-                </div>
-              </div>
-            );
-          })}
+              );
+            })
+          )}
         </div>
       </Card>
     </div>

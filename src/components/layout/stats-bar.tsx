@@ -5,10 +5,10 @@ import Link from 'next/link';
 import clsx from 'clsx';
 import { Flame, Heart, Gem, Zap, Volume2, VolumeX } from 'lucide-react';
 import styles from './stats-bar.module.css';
-import { useAuthStore } from '../../stores/auth.store';
-import { useAudioStore } from '../../stores/audio.store';
-import { useUiStore } from '../../stores/ui.store';
-import { Avatar } from '../ui/avatar';
+import { useAuthStore } from '@/stores/auth.store';
+import { useAudioStore } from '@/stores/audio.store';
+import { useUiStore } from '@/stores/ui.store';
+import { Avatar } from '@/components/ui';
 
 export function StatsBar() {
   const user = useAuthStore((s) => s.user);

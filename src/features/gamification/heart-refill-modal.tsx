@@ -2,14 +2,13 @@
 
 import React, { useState } from 'react';
 import { Heart, Gem, Sparkles } from 'lucide-react';
-import { Modal } from '../../components/ui/modal';
-import { Button } from '../../components/ui/button';
-import { useUiStore } from '../../stores/ui.store';
-import { useAuthStore } from '../../stores/auth.store';
-import { useAudioStore } from '../../stores/audio.store';
-import { fireHeartRefillConfetti } from '../../lib/confetti';
-import { api } from '../../lib/api';
-import type { HeartRefillResult } from '../../types/gamification.types';
+import { Modal, Button } from '@/components/ui';
+import { useUiStore } from '@/stores/ui.store';
+import { useAuthStore } from '@/stores/auth.store';
+import { useAudioStore } from '@/stores/audio.store';
+import { fireHeartRefillConfetti } from '@/lib/confetti';
+import { api } from '@/lib/api';
+import type { HeartRefillResult } from '@/types/gamification.types';
 
 const REFILL_GEM_COST = 350;
 

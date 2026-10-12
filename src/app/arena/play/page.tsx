@@ -3,15 +3,13 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { Flame, Zap, ArrowLeft, CheckCircle2, XCircle } from 'lucide-react';
-import styles from '../../../features/arena/arena.module.css';
-import { Card } from '../../../components/ui/card';
-import { Button } from '../../../components/ui/button';
-import { Badge } from '../../../components/ui/badge';
-import { CountdownTimer } from '../../../features/arena/components/countdown-timer';
-import { KahootTile, type KahootColor } from '../../../features/arena/components/kahoot-tile';
-import { useGameStore } from '../../../stores/game.store';
-import { useArenaSocket } from '../../../features/arena/hooks/use-arena-socket';
-import { useAudioStore } from '../../../stores/audio.store';
+import styles from '@/features/arena/arena.module.css';
+import { Card, Button, Badge } from '@/components/ui';
+import { CountdownTimer } from '@/features/arena/components/countdown-timer';
+import { KahootTile, type KahootColor } from '@/features/arena/components/kahoot-tile';
+import { useGameStore } from '@/stores/game.store';
+import { useArenaSocket } from '@/features/arena/hooks/use-arena-socket';
+import { useAudioStore } from '@/stores/audio.store';
 
 export default function ArenaPlayerPlayPage() {
   const gameStore = useGameStore();
@@ -40,6 +38,16 @@ export default function ArenaPlayerPlayPage() {
   const handleSelectAnswer = async (choiceId: string) => {
     if (hasSubmitted || !pin) return;
     setHasSubmitted(true);
+    playPop();
+
+    // Haptic feedback for tactile handheld feel
+    if (typeof navigator !== 'undefined' && typeof navigator.vibrate === 'function') {
+      try {
+        navigator.vibrate(40);
+      } catch {
+        // Ignore vibration errors if unsupported or denied
+      }
+    }
 
     const res = await submitAnswer(pin, choiceId);
     if (res.success && res.isCorrect !== undefined) {

@@ -4,13 +4,12 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { UserPlus, AlertCircle } from 'lucide-react';
-import { Card } from '../../../components/ui/card';
-import { Button } from '../../../components/ui/button';
-import { useAuthStore } from '../../../stores/auth.store';
-import { useAudioStore } from '../../../stores/audio.store';
-import { fireVictoryConfetti } from '../../../lib/confetti';
-import { api } from '../../../lib/api';
-import type { User } from '../../../types/api.types';
+import { Card, Button } from '@/components/ui';
+import { useAuthStore } from '@/stores/auth.store';
+import { useAudioStore } from '@/stores/audio.store';
+import { fireVictoryConfetti } from '@/lib/confetti';
+import { api } from '@/lib/api';
+import type { User } from '@/types/api.types';
 
 export default function RegisterPage() {
   const router = useRouter();

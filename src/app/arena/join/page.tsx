@@ -4,11 +4,9 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowRight, ShieldCheck, Gamepad2, Tv } from 'lucide-react';
-import { Card } from '../../../components/ui/card';
-import { Button } from '../../../components/ui/button';
-import { Badge } from '../../../components/ui/badge';
-import { useArenaSocket } from '../../../features/arena/hooks/use-arena-socket';
-import { useAudioStore } from '../../../stores/audio.store';
+import { Card, Button, Badge } from '@/components/ui';
+import { useArenaSocket } from '@/features/arena/hooks/use-arena-socket';
+import { useAudioStore } from '@/stores/audio.store';
 
 const EMOJI_AVATARS = ['⚡', '🌸', '🔥', '🌊', '🐱', '🚀', '🦊', '⭐'];
 

@@ -64,6 +64,27 @@ export const SAMPLE_JAPANESE_COURSE: Course = {
               answer: 'Dou itashimashite (You are welcome)',
               hint: 'Means "Do not mention it" or "You are welcome".',
             },
+            {
+              id: 'ex-1-5',
+              type: 'match-pairs',
+              prompt: 'Match each Japanese greeting with its English meaning',
+              options: [
+                'Konnichiwa : Hello',
+                'Arigatou : Thank you',
+                'Sayounara : Goodbye',
+                'Ohayou : Good morning',
+              ],
+              answer: 'all_matched',
+              hint: 'Tap a Japanese word and then its English counterpart.',
+            },
+            {
+              id: 'ex-1-6',
+              type: 'listen',
+              prompt: 'Konnichiwa',
+              options: ['Konnichiwa', 'Arigatou', 'Sayounara', 'Hai'],
+              answer: 'Konnichiwa',
+              hint: 'Listen to the audio pronunciation.',
+            },
           ],
         },
         {

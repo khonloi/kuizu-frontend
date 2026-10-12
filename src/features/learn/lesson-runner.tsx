@@ -5,21 +5,20 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { X, Heart, Zap, Flame, ArrowRight, RotateCcw } from 'lucide-react';
 import styles from './lesson-runner.module.css';
-import { ProgressBar } from '../../components/ui/progress-bar';
-import { Button } from '../../components/ui/button';
-import { Drawer } from '../../components/ui/drawer';
-import { Modal } from '../../components/ui/modal';
-import { Card } from '../../components/ui/card';
+import { ProgressBar, Button, Drawer, Modal, Card } from '@/components/ui';
 import {
   MultipleChoiceExercise,
   TranslateExercise,
   FillBlankExercise,
+  MatchPairsExercise,
+  ListenExercise,
 } from './exercises';
-import { useAuthStore } from '../../stores/auth.store';
-import { useAudioStore } from '../../stores/audio.store';
-import { fireVictoryConfetti, fireStreakFireworks } from '../../lib/confetti';
-import { api } from '../../lib/api';
-import type { Lesson, LessonCompletionResult } from '../../types/api.types';
+import { useAuthStore } from '@/stores/auth.store';
+import { useAudioStore } from '@/stores/audio.store';
+import { fireVictoryConfetti, fireStreakFireworks } from '@/lib/confetti';
+import { api } from '@/lib/api';
+import { saveCompletedLesson } from '@/mock/mock-handler';
+import type { Lesson, LessonCompletionResult } from '@/types/api.types';
 
 interface LessonRunnerProps {
   lesson: Lesson;
@@ -93,6 +92,7 @@ export function LessonRunner({ lesson, courseSlug }: LessonRunnerProps) {
       } catch {
         // Fallback for offline / demo mode
       } finally {
+        saveCompletedLesson(lesson.id);
         updateXp(lesson.xpReward);
         setIsSubmitting(false);
         setStatus('completed');
@@ -130,6 +130,22 @@ export function LessonRunner({ lesson, courseSlug }: LessonRunnerProps) {
           <FillBlankExercise
             exercise={currentExercise}
             selectedAnswer={selectedAnswer}
+            onSelect={setSelectedAnswer}
+            disabled={isChecked}
+          />
+        );
+      case 'match-pairs':
+        return (
+          <MatchPairsExercise
+            exercise={currentExercise}
+            onSelect={setSelectedAnswer}
+            disabled={isChecked}
+          />
+        );
+      case 'listen':
+        return (
+          <ListenExercise
+            exercise={currentExercise}
             onSelect={setSelectedAnswer}
             disabled={isChecked}
           />

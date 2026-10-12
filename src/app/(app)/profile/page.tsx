@@ -4,12 +4,9 @@ import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Flame, Trophy, Zap, Heart, LogOut, ShieldCheck, Gem } from 'lucide-react';
-import { Card } from '../../../components/ui/card';
-import { Button } from '../../../components/ui/button';
-import { Avatar } from '../../../components/ui/avatar';
-import { Badge } from '../../../components/ui/badge';
-import { useAuthStore } from '../../../stores/auth.store';
-import { useAudioStore } from '../../../stores/audio.store';
+import { Card, Button, Avatar, Badge } from '@/components/ui';
+import { useAuthStore } from '@/stores/auth.store';
+import { useAudioStore } from '@/stores/audio.store';
 
 export default function ProfilePage() {
   const router = useRouter();

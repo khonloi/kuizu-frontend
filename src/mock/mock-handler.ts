@@ -5,6 +5,33 @@ import type { LeaderboardEntry } from '../types/gamification.types';
 
 // In-memory / LocalStorage persistent store for offline demo mode
 const STORAGE_KEY = 'kuizu_offline_demo_user';
+const COMPLETED_LESSONS_KEY = 'kuizu_completed_lessons';
+
+export function getCompletedLessons(): string[] {
+  if (typeof window !== 'undefined') {
+    const saved = localStorage.getItem(COMPLETED_LESSONS_KEY);
+    if (saved) {
+      try {
+        return JSON.parse(saved) as string[];
+      } catch {
+        // Fallback
+      }
+    }
+  }
+  return ['lesson-1']; // Default: Lesson 1 is completed so Lesson 2 is active!
+}
+
+export function saveCompletedLesson(lessonId: string): string[] {
+  const current = getCompletedLessons();
+  if (!current.includes(lessonId)) {
+    const updated = [...current, lessonId];
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(COMPLETED_LESSONS_KEY, JSON.stringify(updated));
+    }
+    return updated;
+  }
+  return current;
+}
 
 function getInitialUser(): User {
   if (typeof window !== 'undefined') {
@@ -69,7 +96,7 @@ export async function handleMockApiRequest<T = unknown>(
   const cleanUrl = url.toLowerCase();
 
   // 1. Current User
-  if (cleanUrl.includes('/users/me') && method === 'GET') {
+  if (cleanUrl.includes('/users/me') && !cleanUrl.includes('/streak') && !cleanUrl.includes('/hearts') && !cleanUrl.includes('/progress') && method === 'GET') {
     return mockUser as unknown as T;
   }
 
@@ -119,6 +146,13 @@ export async function handleMockApiRequest<T = unknown>(
     };
     saveUser(updatedUser);
 
+    // Extract lesson id from url: /api/v1/courses/:slug/lessons/:id/complete
+    const parts = url.split('/');
+    const lessonIdx = parts.indexOf('lessons');
+    if (lessonIdx !== -1 && parts[lessonIdx + 1]) {
+      saveCompletedLesson(parts[lessonIdx + 1]);
+    }
+
     const result: LessonCompletionResult = {
       success: true,
       xpEarned: xpGained,
@@ -146,12 +180,48 @@ export async function handleMockApiRequest<T = unknown>(
     return { hearts: 5, gems: nextGems } as unknown as T;
   }
 
-  // 9. Leaderboard
+  // 9. Streak Freeze (Shop purchase)
+  if (cleanUrl.includes('/streak/freeze') && method === 'POST') {
+    const cost = 200;
+    const nextGems = Math.max(0, mockUser.gems - cost);
+    const nextFreezes = mockUser.streakFreezes + 1;
+    const updated = { ...mockUser, gems: nextGems, streakFreezes: nextFreezes };
+    saveUser(updated);
+    return {
+      success: true,
+      gemsRemaining: nextGems,
+      streakFreezesRemaining: nextFreezes,
+      message: 'Streak Freeze activated!',
+    } as unknown as T;
+  }
+
+  // 10. Double or Nothing Wager (Shop purchase)
+  if (cleanUrl.includes('/wager/double') && method === 'POST') {
+    const cost = 50;
+    const nextGems = Math.max(0, mockUser.gems - cost);
+    const updated = { ...mockUser, gems: nextGems };
+    saveUser(updated);
+    return {
+      success: true,
+      gemsRemaining: nextGems,
+      message: 'Double or Nothing wager placed! Maintain a 7-day streak to win 100 gems.',
+    } as unknown as T;
+  }
+
+  // 11. User Progress
+  if (cleanUrl.includes('/users/me/progress') && method === 'GET') {
+    return {
+      completedLessons: getCompletedLessons(),
+      currentLessonId: 'lesson-2',
+    } as unknown as T;
+  }
+
+  // 12. Leaderboard
   if (cleanUrl.includes('/leaderboard') && method === 'GET') {
     return SAMPLE_LEADERBOARD as unknown as T;
   }
 
-  // 10. Quizzes
+  // 13. Quizzes
   if (cleanUrl.includes('/quizzes') && method === 'GET') {
     return SAMPLE_QUIZZES as unknown as T;
   }

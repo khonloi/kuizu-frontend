@@ -14,9 +14,9 @@ import {
   VolumeX,
 } from 'lucide-react';
 import styles from './sidebar.module.css';
-import { useAudioStore } from '../../stores/audio.store';
-import { useAuthStore } from '../../stores/auth.store';
-import { Avatar } from '../ui/avatar';
+import { useAudioStore } from '@/stores/audio.store';
+import { useAuthStore } from '@/stores/auth.store';
+import { Avatar } from '@/components/ui';
 
 interface NavLink {
   href: string;
