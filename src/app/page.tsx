@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import {
   Flame,
   Heart,
@@ -183,13 +184,13 @@ export default function HomePage() {
         </p>
 
         <div className={styles.ctaGroup}>
-          <button
-            onClick={triggerCelebration}
+          <Link
+            href="/learn"
             className="btn-3d btn-duo"
           >
             <BookOpen size={20} />
             <span>Start Learning Path</span>
-          </button>
+          </Link>
 
           <a
             href="#live-arena"

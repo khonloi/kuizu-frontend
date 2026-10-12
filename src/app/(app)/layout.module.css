@@ -1,0 +1,34 @@
+.appLayout {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.mainWrapper {
+  flex: 1;
+  margin-left: 256px;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 100vh;
+}
+
+.contentContainer {
+  flex: 1;
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 5rem;
+}
+
+@media (max-width: 768px) {
+  .mainWrapper {
+    margin-left: 0;
+    padding-bottom: 64px; /* for MobileNav */
+  }
+
+  .contentContainer {
+    padding: 1.25rem 1rem 4.5rem;
+  }
+}
