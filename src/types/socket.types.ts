@@ -31,8 +31,9 @@ export interface AnswerCountPayload {
 }
 
 export interface QuestionRevealPayload {
-  correctChoiceId: string;
-  answersDistribution: Record<string, number>;
+  correctChoiceId?: string;
+  correctChoiceText?: string;
+  answersDistribution?: Record<string, number>;
   leaderboard: PlayerScore[];
 }
 

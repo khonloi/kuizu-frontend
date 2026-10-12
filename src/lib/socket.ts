@@ -8,7 +8,7 @@ export function getGameSocket(token?: string): Socket {
       process.env.NEXT_PUBLIC_SOCKET_URL ||
       (typeof window !== 'undefined' ? `${window.location.protocol}//${window.location.hostname}:4000` : 'http://localhost:4000');
 
-    socket = io(`${socketUrl}/game`, {
+    socket = io(socketUrl, {
       autoConnect: false,
       withCredentials: true,
       auth: token ? { token } : undefined,

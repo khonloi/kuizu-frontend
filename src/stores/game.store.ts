@@ -95,7 +95,7 @@ export const useGameStore = create<GameState>((set) => ({
     set({ answeredCount, totalPlayers }),
   setRevealResult: (payload) =>
     set({
-      correctChoiceId: payload.correctChoiceId,
+      correctChoiceId: payload.correctChoiceId ?? null,
       answersDistribution: payload.answersDistribution || {},
       players: payload.leaderboard || [],
       status: 'reveal',

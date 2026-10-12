@@ -1,0 +1,344 @@
+/* Realtime Multiplayer Arena Styles (Kahoot Aesthetics + Modern Glass) */
+
+.arenaRoot {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-primary);
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(226, 27, 60, 0.12) 0%, transparent 40%),
+    radial-gradient(circle at 90% 20%, rgba(19, 104, 206, 0.12) 0%, transparent 40%),
+    radial-gradient(circle at 50% 90%, rgba(38, 137, 12, 0.08) 0%, transparent 50%);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Header bar */
+.arenaHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border-subtle);
+  z-index: 20;
+}
+
+.pinDisplay {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1.5px solid var(--border-subtle);
+  padding: 0.5rem 1.25rem;
+  border-radius: 9999px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.pinText {
+  font-size: 1.5rem;
+  font-weight: 900;
+  letter-spacing: 0.15em;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Lobby Stage */
+.lobbyStage {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 1.5rem;
+  max-width: 960px;
+  margin: 0 auto;
+  width: 100%;
+  text-align: center;
+}
+
+.playerGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin: 2.5rem 0;
+  max-height: 380px;
+  overflow-y: auto;
+  width: 100%;
+  padding: 1rem;
+}
+
+.playerTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.65rem 1.25rem;
+  background: rgba(23, 32, 54, 0.9);
+  border: 1.5px solid rgba(255, 255, 255, 0.12);
+  border-radius: 9999px;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  animation: scale-in 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Question Stage: Host Screen */
+.hostQuestionStage {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.questionHeaderBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.questionCard {
+  background: rgba(23, 32, 54, 0.85);
+  border: 2px solid var(--border-subtle);
+  border-radius: 24px;
+  padding: 2.5rem 2rem;
+  text-align: center;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(16px);
+  margin-bottom: 2rem;
+}
+
+.questionTitle {
+  font-size: 2.25rem;
+  font-weight: 900;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+}
+
+/* 4-Tile Grid for Host View */
+.hostChoicesGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+  width: 100%;
+}
+
+.hostChoiceItem {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.5rem 2rem;
+  border-radius: 18px;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #ffffff;
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.35);
+  transition: transform 0.15s ease, opacity 0.2s ease;
+}
+
+.tileRed {
+  background: var(--kahoot-red);
+  box-shadow: 0 6px 0 var(--kahoot-red-shadow), 0 8px 24px rgba(226, 27, 60, 0.3);
+}
+
+.tileBlue {
+  background: var(--kahoot-blue);
+  box-shadow: 0 6px 0 var(--kahoot-blue-shadow), 0 8px 24px rgba(19, 104, 206, 0.3);
+}
+
+.tileYellow {
+  background: var(--kahoot-yellow);
+  box-shadow: 0 6px 0 var(--kahoot-yellow-shadow), 0 8px 24px rgba(255, 166, 2, 0.3);
+}
+
+.tileGreen {
+  background: var(--kahoot-green);
+  box-shadow: 0 6px 0 var(--kahoot-green-shadow), 0 8px 24px rgba(38, 137, 12, 0.3);
+}
+
+.tileShape {
+  font-size: 2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+}
+
+/* Player Handheld Controller Gamepad */
+.playerControllerStage {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  height: calc(100vh - 65px);
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.playerPadGrid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.gamepadBtn {
+  position: relative;
+  border: none;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: #ffffff;
+  cursor: pointer;
+  transition: transform 0.08s ease, filter 0.15s ease;
+  user-select: none;
+  padding: 1.5rem;
+}
+
+.gamepadBtn:active:not(:disabled) {
+  transform: translateY(4px);
+}
+
+.gamepadBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.gamepadBtnSelected {
+  outline: 4px solid #ffffff;
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.6) !important;
+  transform: scale(0.98);
+}
+
+/* Locked-in confirmation screen */
+.lockedInBanner {
+  background: rgba(23, 32, 54, 0.95);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  padding: 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin: auto 0;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5);
+}
+
+/* Result Reveal Feedback Screens */
+.feedbackScreenCorrect {
+  background: linear-gradient(135deg, rgba(38, 137, 12, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%);
+  border: 2px solid var(--kahoot-green);
+  border-radius: 24px;
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  margin: auto 0;
+  box-shadow: 0 16px 40px rgba(38, 137, 12, 0.35);
+}
+
+.feedbackScreenWrong {
+  background: linear-gradient(135deg, rgba(226, 27, 60, 0.9) 0%, rgba(15, 23, 42, 0.95) 100%);
+  border: 2px solid var(--kahoot-red);
+  border-radius: 24px;
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  margin: auto 0;
+  box-shadow: 0 16px 40px rgba(226, 27, 60, 0.35);
+}
+
+/* Olympic Podium Styles */
+.podiumContainer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 1.5rem;
+  margin: 3rem 0;
+  width: 100%;
+  max-width: 720px;
+}
+
+.podiumPillar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  position: relative;
+}
+
+.podiumBlock {
+  width: 100%;
+  border-radius: 16px 16px 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-bottom: none;
+}
+
+.podiumFirst {
+  height: 240px;
+  background: linear-gradient(180deg, #ffc800 0%, #b38600 100%);
+  color: #1a1a1a;
+}
+
+.podiumSecond {
+  height: 180px;
+  background: linear-gradient(180deg, #e2e8f0 0%, #94a3b8 100%);
+  color: #0f172a;
+}
+
+.podiumThird {
+  height: 140px;
+  background: linear-gradient(180deg, #d97706 0%, #78350f 100%);
+  color: #ffffff;
+}
+
+.podiumPlayerInfo {
+  margin-bottom: 0.75rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+@media (max-width: 768px) {
+  .hostChoicesGrid {
+    grid-template-columns: 1fr;
+  }
+  .questionTitle {
+    font-size: 1.6rem;
+  }
+  .podiumContainer {
+    gap: 0.75rem;
+  }
+}
