@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { LogIn, AlertCircle } from 'lucide-react';
-import { Card, Button } from '@/components/ui';
+import { Card, Button, Input } from '@/components/ui';
 import { useAuthStore } from '@/stores/auth.store';
 import { useAudioStore } from '@/stores/audio.store';
 import { api } from '@/lib/api';
@@ -86,63 +86,27 @@ export default function LoginPage() {
       )}
 
       <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-        <div>
-          <label
-            htmlFor="emailOrUsername"
-            style={{ display: 'block', fontSize: '0.85rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-secondary)', marginBottom: '0.4rem' }}
-          >
-            Email or Username
-          </label>
-          <input
-            id="emailOrUsername"
-            type="text"
-            required
-            autoComplete="username"
-            value={emailOrUsername}
-            onChange={(e) => setEmailOrUsername(e.target.value)}
-            placeholder="e.g. learner@kuizu.app or kuizu_hero"
-            style={{
-              width: '100%',
-              padding: '0.85rem 1rem',
-              backgroundColor: 'var(--bg-input)',
-              border: '2px solid var(--border-subtle)',
-              borderRadius: '12px',
-              color: 'var(--text-primary)',
-              fontSize: '1rem',
-              outline: 'none',
-              transition: 'border-color var(--transition-fast)',
-            }}
-          />
-        </div>
+        <Input
+          id="emailOrUsername"
+          label="Email or Username"
+          type="text"
+          required
+          autoComplete="username"
+          value={emailOrUsername}
+          onChange={(e) => setEmailOrUsername(e.target.value)}
+          placeholder="e.g. learner@kuizu.app or kuizu_hero"
+        />
 
-        <div>
-          <label
-            htmlFor="password"
-            style={{ display: 'block', fontSize: '0.85rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-secondary)', marginBottom: '0.4rem' }}
-          >
-            Password
-          </label>
-          <input
-            id="password"
-            type="password"
-            required
-            autoComplete="current-password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="••••••••"
-            style={{
-              width: '100%',
-              padding: '0.85rem 1rem',
-              backgroundColor: 'var(--bg-input)',
-              border: '2px solid var(--border-subtle)',
-              borderRadius: '12px',
-              color: 'var(--text-primary)',
-              fontSize: '1rem',
-              outline: 'none',
-              transition: 'border-color var(--transition-fast)',
-            }}
-          />
-        </div>
+        <Input
+          id="password"
+          label="Password"
+          type="password"
+          required
+          autoComplete="current-password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="••••••••"
+        />
 
         <Button
           type="submit"

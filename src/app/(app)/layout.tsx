@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './layout.module.css';
-import { Sidebar, MobileNav, StatsBar } from '../../components/layout';
-import { HeartRefillModal } from '../../features/gamification/heart-refill-modal';
+import { Sidebar, MobileNav, StatsBar } from '@/components/layout';
+import { HeartRefillModal } from '@/features/gamification/heart-refill-modal';
 
 export default function AppLayout({
   children,

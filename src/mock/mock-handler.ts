@@ -1,7 +1,7 @@
 import { SAMPLE_JAPANESE_COURSE } from './sample-courses';
 import { SAMPLE_QUIZZES } from './sample-quizzes';
-import type { User, LessonCompletionResult } from '../types/api.types';
-import type { LeaderboardEntry } from '../types/gamification.types';
+import type { User, LessonCompletionResult } from '@/types/api.types';
+import type { LeaderboardEntry } from '@/types/gamification.types';
 
 // In-memory / LocalStorage persistent store for offline demo mode
 const STORAGE_KEY = 'kuizu_offline_demo_user';

@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { handleMockApiRequest } from '../mock-handler';
-import type { User, Course } from '../../types/api.types';
-import type { LeaderboardEntry } from '../../types/gamification.types';
+import type { User, Course } from '@/types/api.types';
+import type { LeaderboardEntry } from '@/types/gamification.types';
 
 describe('Offline Mock API Handler', () => {
   it('returns default active learner profile for /api/v1/users/me', async () => {

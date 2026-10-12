@@ -3,6 +3,7 @@
 import { useEffect, useCallback, useState, useRef } from 'react';
 import { getGameSocket, disconnectGameSocket } from '@/lib/socket';
 import { useGameStore } from '@/stores/game.store';
+import { toast } from '@/stores/toast.store';
 import { SAMPLE_QUIZZES } from '@/mock/sample-quizzes';
 import type {
   PlayerJoinedPayload,
@@ -79,7 +80,7 @@ export function useArenaSocket() {
     };
 
     const onGameCancelled = (data: GameCancelledPayload) => {
-      alert(`Game ended: ${data.message}`);
+      toast.error('Game Ended', data.message);
       gameStore.resetGame();
     };
 

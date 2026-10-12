@@ -1,4 +1,4 @@
-import type { Course, Lesson } from '../types/api.types';
+import type { Course, Lesson } from '@/types/api.types';
 
 export const SAMPLE_JAPANESE_COURSE: Course = {
   id: 'course-japanese-1',

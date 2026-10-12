@@ -37,3 +37,20 @@ export function useCourseQuery(slug: string) {
     staleTime: 5 * 60 * 1000,
   });
 }
+
+export const COMPLETED_LESSONS_QUERY_KEY = ['user', 'completed-lessons'] as const;
+
+export function useCompletedLessonsQuery() {
+  return useQuery<string[]>({
+    queryKey: COMPLETED_LESSONS_QUERY_KEY,
+    queryFn: async () => {
+      try {
+        const res = await api.get<{ completedLessonIds: string[] }>('/api/v1/users/me/progress');
+        return res?.completedLessonIds ?? ['lesson-1'];
+      } catch {
+        return ['lesson-1'];
+      }
+    },
+    staleTime: 60 * 1000,
+  });
+}

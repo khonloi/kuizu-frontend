@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { UserPlus, AlertCircle } from 'lucide-react';
-import { Card, Button } from '@/components/ui';
+import { Card, Button, Input } from '@/components/ui';
 import { useAuthStore } from '@/stores/auth.store';
 import { useAudioStore } from '@/stores/audio.store';
 import { fireVictoryConfetti } from '@/lib/confetti';
@@ -100,92 +100,38 @@ export default function RegisterPage() {
       )}
 
       <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-        <div>
-          <label
-            htmlFor="username"
-            style={{ display: 'block', fontSize: '0.85rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-secondary)', marginBottom: '0.4rem' }}
-          >
-            Username
-          </label>
-          <input
-            id="username"
-            type="text"
-            required
-            autoComplete="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            placeholder="e.g. kuizu_champion"
-            style={{
-              width: '100%',
-              padding: '0.85rem 1rem',
-              backgroundColor: 'var(--bg-input)',
-              border: '2px solid var(--border-subtle)',
-              borderRadius: '12px',
-              color: 'var(--text-primary)',
-              fontSize: '1rem',
-              outline: 'none',
-              transition: 'border-color var(--transition-fast)',
-            }}
-          />
-        </div>
+        <Input
+          id="username"
+          label="Username"
+          type="text"
+          required
+          autoComplete="username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          placeholder="e.g. kuizu_champion"
+        />
 
-        <div>
-          <label
-            htmlFor="email"
-            style={{ display: 'block', fontSize: '0.85rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-secondary)', marginBottom: '0.4rem' }}
-          >
-            Email Address
-          </label>
-          <input
-            id="email"
-            type="email"
-            required
-            autoComplete="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="learner@kuizu.app"
-            style={{
-              width: '100%',
-              padding: '0.85rem 1rem',
-              backgroundColor: 'var(--bg-input)',
-              border: '2px solid var(--border-subtle)',
-              borderRadius: '12px',
-              color: 'var(--text-primary)',
-              fontSize: '1rem',
-              outline: 'none',
-              transition: 'border-color var(--transition-fast)',
-            }}
-          />
-        </div>
+        <Input
+          id="email"
+          label="Email Address"
+          type="email"
+          required
+          autoComplete="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="learner@kuizu.app"
+        />
 
-        <div>
-          <label
-            htmlFor="password"
-            style={{ display: 'block', fontSize: '0.85rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-secondary)', marginBottom: '0.4rem' }}
-          >
-            Password (Min 8 characters)
-          </label>
-          <input
-            id="password"
-            type="password"
-            required
-            autoComplete="new-password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="••••••••"
-            style={{
-              width: '100%',
-              padding: '0.85rem 1rem',
-              backgroundColor: 'var(--bg-input)',
-              border: '2px solid var(--border-subtle)',
-              borderRadius: '12px',
-              color: 'var(--text-primary)',
-              fontSize: '1rem',
-              outline: 'none',
-              transition: 'border-color var(--transition-fast)',
-            }}
-          />
-        </div>
+        <Input
+          id="password"
+          label="Password (Min 8 characters)"
+          type="password"
+          required
+          autoComplete="new-password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="••••••••"
+        />
 
         <Button
           type="submit"

@@ -16,6 +16,7 @@ import {
 import { useAuthStore } from '@/stores/auth.store';
 import { useAudioStore } from '@/stores/audio.store';
 import { fireVictoryConfetti, fireStreakFireworks } from '@/lib/confetti';
+import { useQueryClient } from '@tanstack/react-query';
 import { api } from '@/lib/api';
 import { saveCompletedLesson } from '@/mock/mock-handler';
 import type { Lesson, LessonCompletionResult } from '@/types/api.types';
@@ -34,6 +35,7 @@ type RunnerStatus =
 
 export function LessonRunner({ lesson, courseSlug }: LessonRunnerProps) {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const { user, updateHearts, updateXp } = useAuthStore();
   const { playSuccess, playError, playPop, playFanfare } = useAudioStore();
 
@@ -94,6 +96,8 @@ export function LessonRunner({ lesson, courseSlug }: LessonRunnerProps) {
       } finally {
         saveCompletedLesson(lesson.id);
         updateXp(lesson.xpReward);
+        void queryClient.invalidateQueries({ queryKey: ['user', 'completed-lessons'] });
+        void queryClient.invalidateQueries({ queryKey: ['courses'] });
         setIsSubmitting(false);
         setStatus('completed');
         playFanfare();

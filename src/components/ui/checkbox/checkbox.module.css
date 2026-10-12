@@ -1,0 +1,61 @@
+.checkboxWrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkboxWrapperDisabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.box {
+  position: relative;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  background-color: var(--bg-input);
+  border: 2px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+  box-shadow: 0 2px 0 var(--border-subtle);
+}
+
+.box:hover:not(:disabled) {
+  border-color: var(--duo-green);
+}
+
+.checked .box {
+  background-color: var(--duo-green);
+  border-color: var(--duo-green-shadow);
+  box-shadow: 0 2px 0 var(--duo-green-shadow);
+  color: #ffffff;
+}
+
+.icon {
+  width: 14px;
+  height: 14px;
+  stroke-width: 3;
+  animation: checkPop var(--transition-bounce);
+}
+
+.label {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+@keyframes checkPop {
+  0% {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

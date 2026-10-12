@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { audioEngine } from '../lib/audio-engine';
+import { audioEngine } from '@/lib/audio-engine';
 
 interface AudioState {
   isMuted: boolean;

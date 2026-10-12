@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
 import { BookOpen, Trophy, ShoppingBag, Gamepad2, User } from 'lucide-react';
 import styles from './mobile-nav.module.css';
-import { useAudioStore } from '../../stores/audio.store';
+import { useAudioStore } from '@/stores/audio.store';
 
 const MOBILE_ITEMS = [
   { href: '/learn', label: 'Learn', icon: BookOpen, theme: 'learn' },
@@ -31,6 +31,7 @@ export function MobileNav() {
             key={item.href}
             href={item.href}
             onClick={playPop}
+            aria-current={isActive ? 'page' : undefined}
             className={clsx(styles.item, {
               [styles.itemActive]: isActive,
               [styles[item.theme]]: isActive,

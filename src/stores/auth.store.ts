@@ -1,6 +1,6 @@
 import { create } from 'zustand';
-import { api } from '../lib/api';
-import type { User } from '../types/api.types';
+import { api } from '@/lib/api';
+import type { User } from '@/types/api.types';
 
 export type { User };
 

@@ -4,7 +4,7 @@ import type {
   QuestionStartPayload,
   QuestionRevealPayload,
   GameEndedPayload,
-} from '../types/socket.types';
+} from '@/types/socket.types';
 
 export type GameStatus =
   | 'idle'

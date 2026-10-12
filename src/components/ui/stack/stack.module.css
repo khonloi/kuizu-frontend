@@ -1,0 +1,31 @@
+.stack {
+  display: flex;
+}
+
+.horizontal {
+  flex-direction: row;
+}
+
+.vertical {
+  flex-direction: column;
+}
+
+.wrap {
+  flex-wrap: wrap;
+}
+
+.gapXs { gap: 0.25rem; }
+.gapSm { gap: 0.5rem; }
+.gapMd { gap: 1rem; }
+.gapLg { gap: 1.5rem; }
+.gapXl { gap: 2rem; }
+
+.alignStart { align-items: flex-start; }
+.alignCenter { align-items: center; }
+.alignEnd { align-items: flex-end; }
+.alignStretch { align-items: stretch; }
+
+.justifyStart { justify-content: flex-start; }
+.justifyCenter { justify-content: center; }
+.justifyEnd { justify-content: flex-end; }
+.justifyBetween { justify-content: space-between; }
