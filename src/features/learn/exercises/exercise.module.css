@@ -1,0 +1,184 @@
+/* Exercises Styling */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.promptCard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.5rem 1.75rem;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--card-radius);
+}
+
+.promptHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.promptSpeaker {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background-color: var(--duo-blue-subtle);
+  border: 1px solid rgba(28, 176, 246, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--duo-blue);
+  transition: all var(--transition-fast);
+}
+
+.promptSpeaker:hover {
+  background-color: rgba(28, 176, 246, 0.25);
+  transform: scale(1.05);
+}
+
+.promptText {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1.4;
+}
+
+.hintText {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* Multiple Choice Grid */
+.choicesGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.choiceBtn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  border-radius: 16px;
+  background-color: var(--bg-card);
+  border: 2px solid var(--border-card);
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.4);
+  color: var(--text-primary);
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: left;
+  user-select: none;
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast),
+    border-color var(--transition-fast),
+    background-color var(--transition-fast);
+}
+
+.choiceBtn:hover:not(:disabled) {
+  background-color: var(--bg-card-hover);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.choiceBtn:active:not(:disabled) {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+}
+
+.choiceBtnSelected {
+  border-color: var(--duo-blue) !important;
+  background-color: var(--duo-blue-subtle) !important;
+  box-shadow: 0 4px 0 var(--duo-blue-shadow) !important;
+  color: #ffffff !important;
+}
+
+.choiceKey {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  border: 1px solid var(--border-subtle);
+  background-color: rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+.choiceBtnSelected .choiceKey {
+  background-color: var(--duo-blue);
+  color: #ffffff;
+  border-color: var(--duo-blue);
+}
+
+/* Word Bank Chips */
+.wordSlotArea {
+  min-height: 72px;
+  padding: 1rem;
+  border-radius: 16px;
+  background-color: rgba(15, 23, 42, 0.6);
+  border: 2px dashed var(--border-subtle);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.wordSlotAreaActive {
+  border-color: rgba(28, 176, 246, 0.4);
+  background-color: rgba(28, 176, 246, 0.05);
+}
+
+.wordBank {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  padding: 1rem 0;
+}
+
+.wordChip {
+  padding: 0.65rem 1.15rem;
+  border-radius: 12px;
+  background-color: var(--bg-card);
+  border: 2px solid var(--border-card);
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.35);
+  color: var(--text-primary);
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  user-select: none;
+  transition: all var(--transition-fast);
+}
+
+.wordChip:hover {
+  background-color: var(--bg-card-hover);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+.wordChip:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.35);
+}
+
+.wordChipPlaced {
+  opacity: 0.25;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}

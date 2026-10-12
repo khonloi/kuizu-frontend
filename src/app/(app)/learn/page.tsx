@@ -8,15 +8,9 @@ import { Button } from '../../../components/ui/button';
 import { ProgressBar } from '../../../components/ui/progress-bar';
 import { Badge } from '../../../components/ui/badge';
 import { useAudioStore } from '../../../stores/audio.store';
-import { fireVictoryConfetti } from '../../../lib/confetti';
 
 export default function LearnPage() {
-  const { playSuccess, playPop } = useAudioStore();
-
-  const handlePractice = () => {
-    playSuccess();
-    fireVictoryConfetti();
-  };
+  const playPop = useAudioStore((s) => s.playPop);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
@@ -59,14 +53,15 @@ export default function LearnPage() {
         </div>
 
         <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-          <Button
-            variant="duo"
-            size="lg"
-            onClick={handlePractice}
-            leftIcon={<Play size={20} />}
-          >
-            Practice Next Lesson (+20 XP)
-          </Button>
+          <Link href="/lesson/japanese-foundations/lesson-2" onClick={playPop}>
+            <Button
+              variant="duo"
+              size="lg"
+              leftIcon={<Play size={20} />}
+            >
+              Practice Next Lesson (+20 XP)
+            </Button>
+          </Link>
 
           <Link href="/arena/join" onClick={playPop}>
             <Button variant="kahoot" size="lg" leftIcon={<Sparkles size={20} />}>
@@ -84,9 +79,9 @@ export default function LearnPage() {
 
         {/* Stepping node 1 (Completed) */}
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
-          <button
-            type="button"
-            onClick={() => { playPop(); fireVictoryConfetti(); }}
+          <Link
+            href="/lesson/japanese-foundations/lesson-1"
+            onClick={playPop}
             className="btn-3d btn-duo"
             style={{
               width: '76px',
@@ -98,18 +93,18 @@ export default function LearnPage() {
               justifyContent: 'center',
               fontSize: '1.75rem',
             }}
-            title="Lesson 1: Hiragana Basics (Completed)"
+            title="Lesson 1: Greetings (Practice Again)"
           >
             <CheckCircle2 size={36} color="#ffffff" />
-          </button>
+          </Link>
           <span style={{ fontSize: '0.95rem', fontWeight: 800 }}>1. Greetings</span>
         </div>
 
         {/* Stepping node 2 (Active Current) */}
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem', transform: 'translateX(30px)' }}>
-          <button
-            type="button"
-            onClick={handlePractice}
+          <Link
+            href="/lesson/japanese-foundations/lesson-2"
+            onClick={playPop}
             className="btn-3d btn-duo animate-pulse-ring"
             style={{
               width: '84px',
@@ -125,7 +120,7 @@ export default function LearnPage() {
             title="Lesson 2: Introductions (Ready to Start)"
           >
             <BookOpen size={36} color="#ffffff" />
-          </button>
+          </Link>
           <Badge variant="duo" size="sm">START</Badge>
           <span style={{ fontSize: '0.95rem', fontWeight: 800 }}>2. Introductions</span>
         </div>
