@@ -1,46 +1,95 @@
 :root {
   /* Duolingo Theme Tokens */
   --duo-green: #58cc02;
+  --duo-green-hover: #61de02;
   --duo-green-shadow: #46a302;
   --duo-green-light: #d7ffb8;
+  --duo-green-subtle: rgba(88, 204, 2, 0.12);
+
   --duo-blue: #1cb0f6;
+  --duo-blue-hover: #38bdf8;
   --duo-blue-shadow: #1899d6;
+  --duo-blue-subtle: rgba(28, 176, 246, 0.12);
+
   --duo-red: #ff4b4b;
+  --duo-red-hover: #ff5e5e;
   --duo-red-shadow: #ea2b2b;
+  --duo-red-subtle: rgba(255, 75, 75, 0.15);
+
   --duo-yellow: #ffc800;
+  --duo-yellow-hover: #ffd226;
   --duo-yellow-shadow: #e5a400;
+  --duo-yellow-subtle: rgba(255, 200, 0, 0.15);
+
   --duo-orange: #ff9600;
+  --duo-orange-hover: #ffa726;
   --duo-orange-shadow: #e08200;
+  --duo-orange-subtle: rgba(255, 150, 0, 0.15);
+
   --duo-purple: #ce82ff;
+  --duo-purple-hover: #d799ff;
   --duo-purple-shadow: #a546e8;
+  --duo-purple-subtle: rgba(206, 130, 255, 0.15);
 
   /* Kahoot 4-Tile Answer Colors */
   --kahoot-red: #e21b3c;
+  --kahoot-red-hover: #f02547;
   --kahoot-red-shadow: #b8122d;
+
   --kahoot-blue: #1368ce;
+  --kahoot-blue-hover: #1e78e6;
   --kahoot-blue-shadow: #0c4ea3;
+
   --kahoot-yellow: #ffa602;
+  --kahoot-yellow-hover: #ffb426;
   --kahoot-yellow-shadow: #d88700;
+
   --kahoot-green: #26890c;
+  --kahoot-green-hover: #2fa310;
   --kahoot-green-shadow: #1b6807;
 
-  /* Surfaces & Backgrounds */
+  /* Surfaces & Dark Theme */
   --bg-primary: #0b0f19;
+  --bg-secondary: #111827;
   --bg-card: rgba(23, 32, 54, 0.75);
   --bg-card-hover: rgba(30, 41, 69, 0.9);
+  --bg-card-active: rgba(37, 50, 82, 0.95);
+  --bg-input: rgba(15, 23, 42, 0.85);
+
+  /* Borders & Focus */
   --border-subtle: rgba(255, 255, 255, 0.08);
-  --border-focus: rgba(88, 204, 2, 0.4);
+  --border-card: rgba(255, 255, 255, 0.12);
+  --border-focus: rgba(88, 204, 2, 0.45);
+  --border-error: rgba(255, 75, 75, 0.5);
 
   /* Typography Colors */
   --text-primary: #f8fafc;
   --text-secondary: #94a3b8;
   --text-muted: #64748b;
+  --text-inverse: #0b0f19;
 
-  /* Elevation & 3D Depth */
+  /* Elevation & Tactile Depth */
   --btn-radius: 16px;
   --card-radius: 20px;
+  --pill-radius: 9999px;
+
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
   --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.5);
   --shadow-glow-duo: 0 0 20px rgba(88, 204, 2, 0.35);
   --shadow-glow-kahoot: 0 0 25px rgba(226, 27, 60, 0.3);
+  --shadow-glow-blue: 0 0 20px rgba(28, 176, 246, 0.3);
+
+  /* Transitions */
+  --transition-fast: 0.1s ease;
+  --transition-normal: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-bounce: 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Z-Index Hierarchy */
+  --z-base: 1;
+  --z-sticky: 100;
+  --z-drawer: 200;
+  --z-modal-backdrop: 300;
+  --z-modal: 310;
+  --z-toast: 400;
 }

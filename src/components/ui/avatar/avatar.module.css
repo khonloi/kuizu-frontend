@@ -1,0 +1,98 @@
+.avatarContainer {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  user-select: none;
+  flex-shrink: 0;
+  background-color: var(--bg-card);
+  overflow: visible;
+}
+
+.inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.03) 100%);
+  border: 2px solid var(--border-card);
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.initials {
+  font-family: inherit;
+  font-weight: 800;
+  color: var(--text-primary);
+  text-transform: uppercase;
+}
+
+/* Sizes */
+.sizeSm {
+  width: 32px;
+  height: 32px;
+  font-size: 0.75rem;
+}
+
+.sizeMd {
+  width: 44px;
+  height: 44px;
+  font-size: 0.95rem;
+}
+
+.sizeLg {
+  width: 64px;
+  height: 64px;
+  font-size: 1.35rem;
+}
+
+.sizeXl {
+  width: 96px;
+  height: 96px;
+  font-size: 2rem;
+}
+
+/* Border Ring Colors */
+.ringDuo .inner {
+  border-color: var(--duo-green);
+  box-shadow: 0 0 10px rgba(88, 204, 2, 0.35);
+}
+
+.ringBlue .inner {
+  border-color: var(--duo-blue);
+  box-shadow: 0 0 10px rgba(28, 176, 246, 0.35);
+}
+
+.ringKahoot .inner {
+  border-color: var(--kahoot-red);
+  box-shadow: 0 0 10px rgba(226, 27, 60, 0.35);
+}
+
+.ringGold .inner {
+  border-color: var(--duo-yellow);
+  box-shadow: 0 0 12px rgba(255, 200, 0, 0.4);
+}
+
+/* Online indicator dot */
+.statusDot {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 28%;
+  height: 28%;
+  min-width: 8px;
+  min-height: 8px;
+  max-width: 18px;
+  max-height: 18px;
+  border-radius: 50%;
+  border: 2px solid var(--bg-primary);
+  background-color: var(--duo-green);
+}

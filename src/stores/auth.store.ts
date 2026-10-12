@@ -1,18 +1,8 @@
 import { create } from 'zustand';
 import { api } from '../lib/api';
+import type { User } from '../types/api.types';
 
-export interface User {
-  id: string;
-  email: string;
-  username: string;
-  role: string;
-  avatarUrl?: string;
-  xp: number;
-  streak: { count: number; lastActiveDate: string | null };
-  hearts: number;
-  gems: number;
-  league: string;
-}
+export type { User };
 
 interface AuthState {
   user: User | null;
@@ -21,6 +11,9 @@ interface AuthState {
   setUser: (user: User | null) => void;
   checkAuth: () => Promise<void>;
   logout: () => Promise<void>;
+  updateHearts: (hearts: number) => void;
+  updateGems: (gems: number) => void;
+  updateXp: (deltaXp: number) => void;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
@@ -33,7 +26,7 @@ export const useAuthStore = create<AuthState>((set) => ({
   checkAuth: async () => {
     try {
       set({ isLoading: true });
-      const user = await api.get<User>('/api/auth/me');
+      const user = await api.get<User>('/api/v1/users/me');
       set({ user, isAuthenticated: true, isLoading: false });
     } catch {
       set({ user: null, isAuthenticated: false, isLoading: false });
@@ -42,9 +35,22 @@ export const useAuthStore = create<AuthState>((set) => ({
 
   logout: async () => {
     try {
-      await api.post('/api/auth/logout');
+      await api.post('/api/v1/auth/logout');
     } finally {
-      set({ user: null, isAuthenticated: false });
+      set({ user: null, isAuthenticated: false, isLoading: false });
     }
   },
+
+  updateHearts: (hearts) =>
+    set((state) => (state.user ? { user: { ...state.user, hearts } } : state)),
+
+  updateGems: (gems) =>
+    set((state) => (state.user ? { user: { ...state.user, gems } } : state)),
+
+  updateXp: (deltaXp) =>
+    set((state) =>
+      state.user
+        ? { user: { ...state.user, xp: state.user.xp + deltaXp } }
+        : state,
+    ),
 }));

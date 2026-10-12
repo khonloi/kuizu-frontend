@@ -1,0 +1,65 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  font-family: inherit;
+  font-weight: 800;
+  border-radius: var(--pill-radius);
+  user-select: none;
+  white-space: nowrap;
+  line-height: 1;
+}
+
+.sizeSm {
+  padding: 0.25rem 0.6rem;
+  font-size: 0.75rem;
+}
+
+.sizeMd {
+  padding: 0.35rem 0.85rem;
+  font-size: 0.85rem;
+}
+
+/* Variants */
+.duo {
+  background-color: var(--duo-green-subtle);
+  color: var(--duo-green);
+  border: 1px solid rgba(88, 204, 2, 0.3);
+}
+
+.blue {
+  background-color: var(--duo-blue-subtle);
+  color: var(--duo-blue);
+  border: 1px solid rgba(28, 176, 246, 0.3);
+}
+
+.orange {
+  background-color: var(--duo-orange-subtle);
+  color: var(--duo-orange);
+  border: 1px solid rgba(255, 150, 0, 0.3);
+}
+
+.red {
+  background-color: var(--duo-red-subtle);
+  color: var(--duo-red);
+  border: 1px solid rgba(255, 75, 75, 0.3);
+}
+
+.yellow {
+  background-color: var(--duo-yellow-subtle);
+  color: var(--duo-yellow);
+  border: 1px solid rgba(255, 200, 0, 0.3);
+}
+
+.purple {
+  background-color: var(--duo-purple-subtle);
+  color: var(--duo-purple);
+  border: 1px solid rgba(206, 130, 255, 0.3);
+}
+
+.neutral {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-subtle);
+}

@@ -1,0 +1,177 @@
+.button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  font-family: inherit;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border: none;
+  border-radius: var(--btn-radius);
+  cursor: pointer;
+  user-select: none;
+  text-decoration: none;
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast),
+    background-color var(--transition-fast),
+    filter var(--transition-fast);
+  white-space: nowrap;
+}
+
+/* 3D Pressed physics */
+.button:active:not(:disabled) {
+  transform: translateY(3px);
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+  filter: grayscale(0.4);
+  transform: none !important;
+}
+
+/* Sizes */
+.sizeSm {
+  padding: 0.55rem 1.1rem;
+  font-size: 0.825rem;
+  border-radius: 12px;
+}
+
+.sizeMd {
+  padding: 0.85rem 1.75rem;
+  font-size: 0.95rem;
+  border-radius: var(--btn-radius);
+}
+
+.sizeLg {
+  padding: 1.1rem 2.25rem;
+  font-size: 1.1rem;
+  border-radius: 20px;
+}
+
+/* Variants */
+.duo {
+  background-color: var(--duo-green);
+  color: #ffffff;
+  box-shadow: 0 4px 0 var(--duo-green-shadow), 0 8px 16px rgba(88, 204, 2, 0.25);
+}
+.duo:hover:not(:disabled) {
+  background-color: var(--duo-green-hover);
+}
+.duo:active:not(:disabled) {
+  box-shadow: 0 1px 0 var(--duo-green-shadow), 0 2px 6px rgba(88, 204, 2, 0.25);
+}
+
+.kahoot {
+  background-color: var(--kahoot-red);
+  color: #ffffff;
+  box-shadow: 0 4px 0 var(--kahoot-red-shadow), 0 8px 16px rgba(226, 27, 60, 0.25);
+}
+.kahoot:hover:not(:disabled) {
+  background-color: var(--kahoot-red-hover);
+}
+.kahoot:active:not(:disabled) {
+  box-shadow: 0 1px 0 var(--kahoot-red-shadow), 0 2px 6px rgba(226, 27, 60, 0.25);
+}
+
+.blue {
+  background-color: var(--duo-blue);
+  color: #ffffff;
+  box-shadow: 0 4px 0 var(--duo-blue-shadow), 0 8px 16px rgba(28, 176, 246, 0.25);
+}
+.blue:hover:not(:disabled) {
+  background-color: var(--duo-blue-hover);
+}
+.blue:active:not(:disabled) {
+  box-shadow: 0 1px 0 var(--duo-blue-shadow), 0 2px 6px rgba(28, 176, 246, 0.25);
+}
+
+.yellow {
+  background-color: var(--duo-yellow);
+  color: #2b1f00;
+  box-shadow: 0 4px 0 var(--duo-yellow-shadow), 0 8px 16px rgba(255, 200, 0, 0.25);
+}
+.yellow:hover:not(:disabled) {
+  background-color: var(--duo-yellow-hover);
+}
+.yellow:active:not(:disabled) {
+  box-shadow: 0 1px 0 var(--duo-yellow-shadow), 0 2px 6px rgba(255, 200, 0, 0.25);
+}
+
+.secondary {
+  background-color: rgba(255, 255, 255, 0.07);
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.45);
+}
+.secondary:hover:not(:disabled) {
+  background-color: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+.secondary:active:not(:disabled) {
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.45);
+}
+
+.danger {
+  background-color: var(--duo-red);
+  color: #ffffff;
+  box-shadow: 0 4px 0 var(--duo-red-shadow), 0 8px 16px rgba(255, 75, 75, 0.25);
+}
+.danger:hover:not(:disabled) {
+  background-color: var(--duo-red-hover);
+}
+.danger:active:not(:disabled) {
+  box-shadow: 0 1px 0 var(--duo-red-shadow);
+}
+
+.ghost {
+  background-color: transparent;
+  color: var(--text-secondary);
+  box-shadow: none;
+}
+.ghost:hover:not(:disabled) {
+  background-color: rgba(255, 255, 255, 0.06);
+  color: var(--text-primary);
+}
+.ghost:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.outline {
+  background-color: transparent;
+  color: var(--text-primary);
+  border: 2px solid var(--border-card);
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.35);
+}
+.outline:hover:not(:disabled) {
+  border-color: var(--duo-green);
+  color: var(--duo-green);
+  background-color: var(--duo-green-subtle);
+}
+.outline:active:not(:disabled) {
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.35);
+}
+
+/* Modifiers */
+.fullWidth {
+  width: 100%;
+}
+
+.iconSlot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.spinner {
+  width: 1.1em;
+  height: 1.1em;
+  border: 2.5px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #ffffff;
+  animation: spin 0.75s linear infinite;
+}

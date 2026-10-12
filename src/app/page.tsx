@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import confetti from 'canvas-confetti';
 import {
   Flame,
   Heart,
@@ -11,7 +10,6 @@ import {
   BookOpen,
   Sparkles,
   Server,
-  Activity,
   ExternalLink,
   Triangle,
   Diamond,
@@ -22,13 +20,32 @@ import {
 } from 'lucide-react';
 import styles from './page.module.css';
 import { getGameSocket } from '../lib/socket';
+import { audioEngine } from '../lib/audio-engine';
+import { fireVictoryConfetti } from '../lib/confetti';
+
+interface HealthResponse {
+  status: string;
+  timestamp?: string;
+  uptime?: number;
+  message?: string;
+  services?: {
+    database?: {
+      status: string;
+      readyState?: number;
+    };
+    api?: {
+      status: string;
+      nodeVersion?: string;
+    };
+  };
+}
 
 export default function HomePage() {
   const [pin, setPin] = useState('');
   const [nickname, setNickname] = useState('');
-  const [healthData, setHealthData] = useState<any>(null);
+  const [healthData, setHealthData] = useState<HealthResponse | null>(null);
   const [isHealthLoading, setIsHealthLoading] = useState(false);
-  const [socketStatus, setSocketStatus] = useState<'disconnected' | 'connecting' | 'connected'>('disconnected');
+  const [socketStatus, setSocketStatus] = useState<'disconnected' | 'connecting' | 'connected'>('connecting');
   const [selectedTile, setSelectedTile] = useState<string | null>(null);
 
   // Check backend health
@@ -37,7 +54,7 @@ export default function HomePage() {
     try {
       const res = await fetch('/api/health');
       if (res.ok) {
-        const data = await res.json();
+        const data = (await res.json()) as HealthResponse;
         setHealthData(data);
       } else {
         setHealthData({ status: 'error', message: `HTTP ${res.status}` });
@@ -50,42 +67,58 @@ export default function HomePage() {
   };
 
   useEffect(() => {
-    checkHealth();
+    let isMounted = true;
+
+    const loadInitialHealth = async () => {
+      setIsHealthLoading(true);
+      try {
+        const res = await fetch('/api/health');
+        if (res.ok) {
+          const data = (await res.json()) as HealthResponse;
+          if (isMounted) setHealthData(data);
+        } else {
+          if (isMounted) setHealthData({ status: 'error', message: `HTTP ${res.status}` });
+        }
+      } catch (err) {
+        if (isMounted) setHealthData({ status: 'offline', message: (err as Error).message });
+      } finally {
+        if (isMounted) setIsHealthLoading(false);
+      }
+    };
+
+    void loadInitialHealth();
 
     // Test socket connection
     const socket = getGameSocket();
-    setSocketStatus('connecting');
 
     socket.connect();
 
     socket.on('connect', () => {
-      setSocketStatus('connected');
+      if (isMounted) setSocketStatus('connected');
     });
 
     socket.on('disconnect', () => {
-      setSocketStatus('disconnected');
+      if (isMounted) setSocketStatus('disconnected');
     });
 
     socket.on('connect_error', () => {
-      setSocketStatus('disconnected');
+      if (isMounted) setSocketStatus('disconnected');
     });
 
     return () => {
+      isMounted = false;
       socket.disconnect();
     };
   }, []);
 
   const triggerCelebration = () => {
-    confetti({
-      particleCount: 80,
-      spread: 70,
-      origin: { y: 0.6 },
-      colors: ['#58cc02', '#e21b3c', '#1368ce', '#ffa602'],
-    });
+    audioEngine.playSuccess();
+    fireVictoryConfetti();
   };
 
   const handleTileClick = (color: string) => {
     setSelectedTile(color);
+    audioEngine.playPop();
     triggerCelebration();
   };
 
@@ -256,6 +289,12 @@ export default function HomePage() {
               style={{ width: '180px', letterSpacing: 'normal', textAlign: 'left' }}
             />
           </div>
+
+          {selectedTile && (
+            <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', textAlign: 'center', marginBottom: '0.5rem' }}>
+              Selected Tile: <strong style={{ color: 'var(--text-primary)', textTransform: 'capitalize' }}>{selectedTile}</strong>
+            </div>
+          )}
 
           <div className={styles.kahootTiles}>
             <div
