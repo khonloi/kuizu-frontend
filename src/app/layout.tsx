@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import { Outfit, Nunito } from 'next/font/google';
 import './globals.css';
-import { QueryProvider } from '../providers/query-provider';
-import { AuthProvider } from '../providers/auth-provider';
+import { QueryProvider } from '@/providers/query-provider';
+import { AuthProvider } from '@/providers/auth-provider';
 
 const outfit = Outfit({
   subsets: ['latin'],

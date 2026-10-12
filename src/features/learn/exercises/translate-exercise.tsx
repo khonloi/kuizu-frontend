@@ -4,8 +4,8 @@ import React, { useState } from 'react';
 import clsx from 'clsx';
 import { Volume2 } from 'lucide-react';
 import styles from './exercise.module.css';
-import { useAudioStore } from '../../../stores/audio.store';
-import type { Exercise } from '../../../types/api.types';
+import { useAudioStore } from '@/stores/audio.store';
+import type { Exercise } from '@/types/api.types';
 
 interface TranslateProps {
   exercise: Exercise;

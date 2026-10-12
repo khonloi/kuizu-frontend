@@ -2,7 +2,7 @@
 
 import React, { forwardRef, ButtonHTMLAttributes } from 'react';
 import clsx from 'clsx';
-import { audioEngine } from '../../../lib/audio-engine';
+import { useAudioStore } from '@/stores/audio.store';
 import styles from './button.module.css';
 
 export type ButtonVariant =
@@ -49,7 +49,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
       if (disabled || isLoading) return;
       if (playSoundOnClick) {
-        audioEngine.playPop();
+        useAudioStore.getState().playPop();
       }
       if (onClick) onClick(e);
     };

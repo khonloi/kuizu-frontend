@@ -31,6 +31,8 @@ export function AnswerBarChart({
 
   return (
     <div
+      role="region"
+      aria-label="Poll result distribution chart"
       style={{
         display: 'flex',
         alignItems: 'flex-end',
@@ -49,12 +51,17 @@ export function AnswerBarChart({
         const colorConfig = COLOR_MAP[choice.color] || COLOR_MAP.red;
         const isCorrect = correctChoiceId === choice.id;
 
-        // Bar height between 24px and 180px
+        // Bar height between 28px and 170px
         const barHeight = Math.max(28, (count / totalVotes) * 170);
 
         return (
           <div
             key={choice.id}
+            role="progressbar"
+            aria-label={`${choice.text}: ${count} votes (${percent}%)${isCorrect ? ' - Correct answer' : ''}`}
+            aria-valuenow={percent}
+            aria-valuemin={0}
+            aria-valuemax={100}
             style={{
               display: 'flex',
               flexDirection: 'column',
@@ -91,7 +98,7 @@ export function AnswerBarChart({
               }}
               className="animate-slide-up"
             >
-              <span style={{ fontSize: '1.5rem', color: '#ffffff' }}>
+              <span style={{ fontSize: '1.5rem', color: '#ffffff' }} aria-hidden="true">
                 {colorConfig.symbol}
               </span>
             </div>

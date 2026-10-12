@@ -3,8 +3,8 @@
 import React from 'react';
 import clsx from 'clsx';
 import styles from './exercise.module.css';
-import { useAudioStore } from '../../../stores/audio.store';
-import type { Exercise } from '../../../types/api.types';
+import { useAudioStore } from '@/stores/audio.store';
+import type { Exercise } from '@/types/api.types';
 
 interface FillBlankProps {
   exercise: Exercise;

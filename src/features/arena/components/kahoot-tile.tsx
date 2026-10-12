@@ -3,7 +3,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import styles from '../arena.module.css';
-import { useAudioStore } from '../../../stores/audio.store';
+import { useAudioStore } from '@/stores/audio.store';
 
 export type KahootColor = 'red' | 'blue' | 'yellow' | 'green';
 

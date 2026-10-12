@@ -2,11 +2,10 @@
 
 import React, { useEffect } from 'react';
 import styles from '../arena.module.css';
-import { Card } from '../../../components/ui/card';
-import { Badge } from '../../../components/ui/badge';
-import { fireVictoryConfetti, fireStreakFireworks } from '../../../lib/confetti';
-import { useAudioStore } from '../../../stores/audio.store';
-import type { PlayerScore } from '../../../types/socket.types';
+import { Card, Badge } from '@/components/ui';
+import { fireVictoryConfetti, fireStreakFireworks } from '@/lib/confetti';
+import { useAudioStore } from '@/stores/audio.store';
+import type { PlayerScore } from '@/types/socket.types';
 
 interface PodiumCeremonyProps {
   podium: PlayerScore[];
@@ -30,7 +29,11 @@ export function PodiumCeremony({ podium, fullLeaderboard }: PodiumCeremonyProps)
   const third = podium[2];
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
+    <div
+      role="region"
+      aria-label="Grand Finale Podium"
+      style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}
+    >
       <Badge variant="yellow" size="md" style={{ marginBottom: '1rem' }}>
         🏆 GRAND FINALE PODIUM
       </Badge>
@@ -40,9 +43,16 @@ export function PodiumCeremony({ podium, fullLeaderboard }: PodiumCeremonyProps)
       </h1>
 
       {/* 3-Tier Olympic Podium */}
-      <div className={styles.podiumContainer}>
+      <ol
+        className={styles.podiumContainer}
+        aria-label="Quiz competition winners podium"
+        style={{ listStyle: 'none', padding: 0, margin: 0 }}
+      >
         {/* 2nd Place (Left) */}
-        <div className={styles.podiumPillar}>
+        <li
+          className={styles.podiumPillar}
+          aria-label={second ? `Second place: ${second.nickname} with ${second.score} points` : 'Second place empty'}
+        >
           {second ? (
             <div className={styles.podiumPlayerInfo}>
               <span style={{ fontSize: '2.5rem' }}>🥈</span>
@@ -57,10 +67,13 @@ export function PodiumCeremony({ podium, fullLeaderboard }: PodiumCeremonyProps)
           <div className={`${styles.podiumBlock} ${styles.podiumSecond}`}>
             <span style={{ fontSize: '2.5rem', fontWeight: 900 }}>2</span>
           </div>
-        </div>
+        </li>
 
         {/* 1st Place (Center - Tallest) */}
-        <div className={styles.podiumPillar}>
+        <li
+          className={styles.podiumPillar}
+          aria-label={first ? `First place winner: ${first.nickname} with ${first.score} points` : 'First place empty'}
+        >
           {first ? (
             <div className={styles.podiumPlayerInfo}>
               <span style={{ fontSize: '3.5rem' }} className="animate-pop">
@@ -79,10 +92,13 @@ export function PodiumCeremony({ podium, fullLeaderboard }: PodiumCeremonyProps)
           <div className={`${styles.podiumBlock} ${styles.podiumFirst}`}>
             <span style={{ fontSize: '3.5rem', fontWeight: 900 }}>1</span>
           </div>
-        </div>
+        </li>
 
         {/* 3rd Place (Right) */}
-        <div className={styles.podiumPillar}>
+        <li
+          className={styles.podiumPillar}
+          aria-label={third ? `Third place: ${third.nickname} with ${third.score} points` : 'Third place empty'}
+        >
           {third ? (
             <div className={styles.podiumPlayerInfo}>
               <span style={{ fontSize: '2.5rem' }}>🥉</span>
@@ -97,8 +113,8 @@ export function PodiumCeremony({ podium, fullLeaderboard }: PodiumCeremonyProps)
           <div className={`${styles.podiumBlock} ${styles.podiumThird}`}>
             <span style={{ fontSize: '2.5rem', fontWeight: 900 }}>3</span>
           </div>
-        </div>
-      </div>
+        </li>
+      </ol>
 
       {/* Full Leaderboard Table (if available) */}
       {fullLeaderboard && fullLeaderboard.length > 0 && (

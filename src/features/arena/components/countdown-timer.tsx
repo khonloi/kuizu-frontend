@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState, useRef } from 'react';
-import { useAudioStore } from '../../../stores/audio.store';
+import { useAudioStore } from '@/stores/audio.store';
 
 interface CountdownTimerProps {
   timeLimit: number;
@@ -67,6 +67,9 @@ export function CountdownTimer({
 
   return (
     <div
+      role="timer"
+      aria-label="Remaining question time"
+      aria-live="polite"
       style={{
         position: 'relative',
         width: size,
@@ -77,7 +80,12 @@ export function CountdownTimer({
       }}
       title={`${timeLeft} seconds left`}
     >
-      <svg width={size} height={size} style={{ transform: 'rotate(-90deg)' }}>
+      <svg
+        width={size}
+        height={size}
+        style={{ transform: 'rotate(-90deg)' }}
+        aria-hidden="true"
+      >
         {/* Track circle */}
         <circle
           cx={size / 2}

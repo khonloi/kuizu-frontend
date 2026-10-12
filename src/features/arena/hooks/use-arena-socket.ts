@@ -1,9 +1,9 @@
 'use client';
 
 import { useEffect, useCallback, useState, useRef } from 'react';
-import { getGameSocket, disconnectGameSocket } from '../../../lib/socket';
-import { useGameStore } from '../../../stores/game.store';
-import { SAMPLE_QUIZZES } from '../../../mock/sample-quizzes';
+import { getGameSocket, disconnectGameSocket } from '@/lib/socket';
+import { useGameStore } from '@/stores/game.store';
+import { SAMPLE_QUIZZES } from '@/mock/sample-quizzes';
 import type {
   PlayerJoinedPayload,
   PlayerLeftPayload,
@@ -15,7 +15,7 @@ import type {
   HostCreateResponse,
   PlayerJoinResponse,
   PlayerAnswerResponse,
-} from '../../../types/socket.types';
+} from '@/types/socket.types';
 
 export function useArenaSocket() {
   const gameStore = useGameStore();

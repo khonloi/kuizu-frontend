@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import React, { useState, Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowRight, ShieldCheck, Gamepad2, Tv } from 'lucide-react';
 import { Card, Button, Badge } from '@/components/ui';
@@ -10,12 +10,14 @@ import { useAudioStore } from '@/stores/audio.store';
 
 const EMOJI_AVATARS = ['⚡', '🌸', '🔥', '🌊', '🐱', '🚀', '🦊', '⭐'];
 
-export default function ArenaJoinPage() {
+function ArenaJoinForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { joinGame, isConnected } = useArenaSocket();
   const { playPop, playSuccess, playError } = useAudioStore();
 
-  const [pin, setPin] = useState('');
+  const queryPin = searchParams?.get('pin') || '';
+  const [pin, setPin] = useState(() => queryPin.replace(/\D/g, '').slice(0, 6));
   const [nickname, setNickname] = useState('');
   const [selectedEmoji, setSelectedEmoji] = useState('⚡');
   const [isLoading, setIsLoading] = useState(false);
@@ -262,5 +264,28 @@ export default function ArenaJoinPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function ArenaJoinPage() {
+  return (
+    <Suspense
+      fallback={
+        <div
+          style={{
+            minHeight: '100vh',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: 'var(--text-secondary)',
+            fontWeight: 800,
+          }}
+        >
+          Loading Arena...
+        </div>
+      }
+    >
+      <ArenaJoinForm />
+    </Suspense>
   );
 }

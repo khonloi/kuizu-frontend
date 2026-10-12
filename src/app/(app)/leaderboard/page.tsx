@@ -1,35 +1,14 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Trophy, Zap, TrendingUp, Flame } from 'lucide-react';
 import { Card, Badge, Avatar } from '@/components/ui';
 import { useAuthStore } from '@/stores/auth.store';
-import { api } from '@/lib/api';
-import type { LeaderboardEntry } from '@/types/gamification.types';
+import { useLeaderboardQuery } from '@/hooks/queries';
 
 export default function LeaderboardPage() {
   const user = useAuthStore((s) => s.user);
-  const [entries, setEntries] = useState<LeaderboardEntry[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    let isMounted = true;
-    api
-      .get<LeaderboardEntry[]>('/api/v1/leaderboard')
-      .then((data) => {
-        if (isMounted && Array.isArray(data)) {
-          setEntries(data);
-        }
-      })
-      .catch(() => {})
-      .finally(() => {
-        if (isMounted) setIsLoading(false);
-      });
-
-    return () => {
-      isMounted = false;
-    };
-  }, []);
+  const { data: entries = [], isLoading } = useLeaderboardQuery();
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem' }}>

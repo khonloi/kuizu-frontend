@@ -5,18 +5,14 @@ import { Heart, Gem, Sparkles } from 'lucide-react';
 import { Modal, Button } from '@/components/ui';
 import { useUiStore } from '@/stores/ui.store';
 import { useAuthStore } from '@/stores/auth.store';
-import { useAudioStore } from '@/stores/audio.store';
-import { fireHeartRefillConfetti } from '@/lib/confetti';
-import { api } from '@/lib/api';
-import type { HeartRefillResult } from '@/types/gamification.types';
+import { useHeartRefillMutation } from '@/hooks/queries';
 
 const REFILL_GEM_COST = 350;
 
 export function HeartRefillModal() {
   const { isHeartModalOpen, closeHeartModal } = useUiStore();
-  const { user, updateHearts, updateGems } = useAuthStore();
-  const { playSuccess, playError } = useAudioStore();
-  const [isLoading, setIsLoading] = useState(false);
+  const user = useAuthStore((s) => s.user);
+  const refillMutation = useHeartRefillMutation();
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const currentHearts = user?.hearts ?? 5;
@@ -27,26 +23,12 @@ export function HeartRefillModal() {
   const handleRefill = async () => {
     if (isFull) return;
     setErrorMsg(null);
-    setIsLoading(true);
 
     try {
-      if (user) {
-        const res = await api.post<HeartRefillResult>('/api/v1/users/me/hearts/refill');
-        updateHearts(res.hearts ?? 5);
-        updateGems(res.gemsRemaining ?? Math.max(0, currentGems - REFILL_GEM_COST));
-      } else {
-        // Guest mode fallback
-        updateHearts(5);
-      }
-
-      playSuccess();
-      fireHeartRefillConfetti();
+      await refillMutation.mutateAsync();
       closeHeartModal();
     } catch (err) {
-      playError();
       setErrorMsg((err as Error).message || 'Failed to refill hearts');
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -68,8 +50,8 @@ export function HeartRefillModal() {
           <Button
             variant="duo"
             size="md"
-            disabled={isFull || (!canAfford && !!user) || isLoading}
-            isLoading={isLoading}
+            disabled={isFull || (!canAfford && !!user) || refillMutation.isPending}
+            isLoading={refillMutation.isPending}
             onClick={handleRefill}
             leftIcon={<Sparkles size={18} />}
           >

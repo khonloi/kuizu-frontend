@@ -4,60 +4,35 @@ import React, { useState } from 'react';
 import { Heart, Flame, Gem, Sparkles, Snowflake, Zap } from 'lucide-react';
 import { Card, Button, Badge } from '@/components/ui';
 import { useAuthStore } from '@/stores/auth.store';
-import { useAudioStore } from '@/stores/audio.store';
 import { useUiStore } from '@/stores/ui.store';
-import { api } from '@/lib/api';
-import { fireVictoryConfetti } from '@/lib/confetti';
-import type { StreakFreezePurchaseResult } from '@/types/gamification.types';
+import { useStreakFreezeMutation, useDoubleWagerMutation } from '@/hooks/queries';
 
 export default function ShopPage() {
-  const { user, updateGems } = useAuthStore();
-  const { playSuccess, playError } = useAudioStore();
+  const user = useAuthStore((s) => s.user);
   const openHeartModal = useUiStore((s) => s.openHeartModal);
-  const [isFreezeLoading, setIsFreezeLoading] = useState(false);
-  const [isWagerLoading, setIsWagerLoading] = useState(false);
+  const streakFreezeMutation = useStreakFreezeMutation();
+  const doubleWagerMutation = useDoubleWagerMutation();
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
 
   const currentGems = user?.gems ?? 100;
 
   const handleBuyStreakFreeze = async () => {
-    setIsFreezeLoading(true);
     setSuccessMsg(null);
     try {
-      if (user) {
-        const res = await api.post<StreakFreezePurchaseResult>('/api/v1/users/me/streak/freeze');
-        updateGems(res.gemsRemaining ?? Math.max(0, currentGems - 200));
-      } else {
-        updateGems(Math.max(0, currentGems - 200));
-      }
-
-      playSuccess();
-      fireVictoryConfetti();
+      await streakFreezeMutation.mutateAsync();
       setSuccessMsg('Streak Freeze equipped! Your streak is protected if you miss a day.');
     } catch (err) {
-      playError();
       setSuccessMsg((err as Error).message || 'Unable to purchase Streak Freeze.');
-    } finally {
-      setIsFreezeLoading(false);
     }
   };
 
   const handleBuyWager = async () => {
-    setIsWagerLoading(true);
     setSuccessMsg(null);
     try {
-      const res = await api.post<{ success: boolean; gemsRemaining?: number; message?: string }>(
-        '/api/v1/users/me/wager/double'
-      );
-      updateGems(res.gemsRemaining ?? Math.max(0, currentGems - 50));
-      playSuccess();
-      fireVictoryConfetti();
+      const res = await doubleWagerMutation.mutateAsync();
       setSuccessMsg(res.message || 'Double or Nothing wager placed! Maintain 7-day streak to win 100 gems.');
     } catch (err) {
-      playError();
       setSuccessMsg((err as Error).message || 'Unable to place wager.');
-    } finally {
-      setIsWagerLoading(false);
     }
   };
 
@@ -188,8 +163,8 @@ export default function ShopPage() {
             variant="blue"
             size="md"
             fullWidth
-            isLoading={isFreezeLoading}
-            disabled={isFreezeLoading || currentGems < 200}
+            isLoading={streakFreezeMutation.isPending}
+            disabled={streakFreezeMutation.isPending || currentGems < 200}
             onClick={handleBuyStreakFreeze}
             leftIcon={<Flame size={18} />}
           >
@@ -227,8 +202,8 @@ export default function ShopPage() {
             variant="yellow"
             size="md"
             fullWidth
-            isLoading={isWagerLoading}
-            disabled={isWagerLoading || currentGems < 50}
+            isLoading={doubleWagerMutation.isPending}
+            disabled={doubleWagerMutation.isPending || currentGems < 50}
             onClick={handleBuyWager}
             leftIcon={<Sparkles size={18} />}
           >
