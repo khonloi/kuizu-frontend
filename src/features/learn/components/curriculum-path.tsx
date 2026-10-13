@@ -37,29 +37,25 @@ export function CurriculumPath({ course, completedLessonIds }: CurriculumPathPro
             <Card
               padding="lg"
               glow="duo"
-              style={{
-                width: '100%',
-                background: `linear-gradient(135deg, rgba(88, 204, 2, 0.12) 0%, rgba(23, 32, 54, 0.95) 100%)`,
-                borderColor: 'rgba(88, 204, 2, 0.3)',
-              }}
+              className={styles.unitCard}
             >
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1rem', marginBottom: '1rem' }}>
+              <div className={styles.unitHeader}>
                 <div>
                   <Badge variant="duo" size="sm" icon={<Sparkles size={14} />}>
                     UNIT {unit.order || unitIdx + 1}
                   </Badge>
-                  <h2 style={{ fontSize: '1.75rem', fontWeight: 900, marginTop: '0.35rem', letterSpacing: '-0.02em' }}>
+                  <h2 className={styles.unitTitle}>
                     {unit.title}
                   </h2>
                   {unit.description && (
-                    <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', marginTop: '0.25rem', maxWidth: '520px' }}>
+                    <p className={styles.unitDescription}>
                       {unit.description}
                     </p>
                   )}
                 </div>
 
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <span style={{ fontSize: '0.9rem', fontWeight: 800, color: 'var(--duo-green)' }}>
+                <div className={styles.unitProgress}>
+                  <span className={styles.unitProgressText}>
                     {completedCount} / {totalCount} Done
                   </span>
                 </div>
@@ -135,10 +131,9 @@ export function CurriculumPath({ course, completedLessonIds }: CurriculumPathPro
 
                     {/* Lesson Label */}
                     <span
-                      className={styles.lessonLabel}
-                      style={{
-                        color: isLocked ? 'var(--text-muted)' : 'var(--text-primary)',
-                      }}
+                      className={clsx(styles.lessonLabel, {
+                        [styles.lessonLabelLocked]: isLocked,
+                      })}
                     >
                       {lessonIdx + 1}. {lesson.title}
                     </span>
@@ -148,14 +143,14 @@ export function CurriculumPath({ course, completedLessonIds }: CurriculumPathPro
 
               {/* Unit Completion Milestone Chest */}
               <div className={styles.milestoneChest}>
-                <div style={{ fontSize: '2.5rem' }}>
+                <div className={styles.milestoneEmoji}>
                   {isUnitCompleted ? '🏆' : '🎁'}
                 </div>
-                <div style={{ textAlign: 'center' }}>
-                  <span style={{ fontSize: '0.95rem', fontWeight: 800 }}>
+                <div className={styles.milestoneInfo}>
+                  <span className={styles.milestoneTitle}>
                     {isUnitCompleted ? 'Unit Mastered!' : 'Unit Reward Chest'}
                   </span>
-                  <span style={{ display: 'block', fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '0.2rem' }}>
+                  <span className={styles.milestoneSubtitle}>
                     {isUnitCompleted ? '+50 Bonus Gems Claimed' : 'Complete all lessons to unlock'}
                   </span>
                 </div>

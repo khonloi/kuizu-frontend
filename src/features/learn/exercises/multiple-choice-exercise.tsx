@@ -63,7 +63,7 @@ export function MultipleChoiceExercise({
           >
             <Volume2 size={24} />
           </button>
-          <span style={{ fontSize: '0.85rem', fontWeight: 800, color: 'var(--duo-blue)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+          <span className={styles.badgeBlue}>
             SELECT THE CORRECT TRANSLATION
           </span>
         </div>
@@ -93,7 +93,7 @@ export function MultipleChoiceExercise({
               role="radio"
             >
               <span className={styles.choiceKey}>{idx + 1}</span>
-              <span style={{ flex: 1 }}>{option}</span>
+              <span className={styles.flex1}>{option}</span>
             </button>
           );
         })}

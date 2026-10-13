@@ -1,0 +1,179 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: radial-gradient(circle at 50% 30%, rgba(226, 27, 60, 0.15) 0%, rgba(15, 23, 42, 0.95) 100%);
+}
+
+.wrapper {
+  width: 100%;
+  max-width: 440px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.brandHeader {
+  text-align: center;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 900;
+  margin-top: 0.5rem;
+  letter-spacing: -0.03em;
+}
+
+.subtitle {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.joinCard {
+  background: rgba(23, 32, 54, 0.88);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.4rem;
+}
+
+.pinInput {
+  width: 100%;
+  padding: 1rem;
+  font-size: 2rem;
+  font-weight: 900;
+  text-align: center;
+  letter-spacing: 0.25em;
+  border-radius: var(--radius-lg, 16px);
+  background-color: rgba(15, 23, 42, 0.8);
+  border: 2px solid var(--border-subtle);
+  color: var(--text-primary);
+  outline: none;
+  font-variant-numeric: tabular-nums;
+  transition: border-color var(--transition-fast);
+}
+
+.pinInput:focus {
+  border-color: var(--kahoot-red);
+}
+
+.emojiGrid {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.emojiBtn {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid var(--border-subtle);
+  background-color: rgba(255, 255, 255, 0.05);
+  font-size: 1.25rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--transition-fast), border-color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.emojiBtn:hover {
+  transform: scale(1.08);
+}
+
+.emojiBtnSelected {
+  border: 2px solid var(--kahoot-red);
+  background-color: rgba(226, 27, 60, 0.2);
+}
+
+.nicknameInput {
+  width: 100%;
+  padding: 0.85rem 1.1rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border-radius: 14px;
+  background-color: rgba(15, 23, 42, 0.8);
+  border: 2px solid var(--border-subtle);
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color var(--transition-fast);
+}
+
+.nicknameInput:focus {
+  border-color: var(--duo-blue);
+}
+
+.errorMessage {
+  padding: 0.75rem;
+  border-radius: var(--radius-md, 12px);
+  background-color: rgba(226, 27, 60, 0.15);
+  border: 1px solid var(--kahoot-red);
+  color: var(--kahoot-red);
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.statusFooter {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.statusConnected {
+  color: var(--duo-green);
+}
+
+.statusDisconnected {
+  color: var(--text-muted);
+}
+
+.hostSwitch {
+  text-align: center;
+}
+
+.hostLink {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: color var(--transition-fast);
+}
+
+.hostLink:hover {
+  color: var(--text-primary);
+}
+
+.suspenseLoading {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  font-weight: 800;
+}

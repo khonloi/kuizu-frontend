@@ -8,6 +8,8 @@ import { Card, Button, Badge } from '@/components/ui';
 import { useArenaSocket } from '@/features/arena/hooks/use-arena-socket';
 import { useAudioStore } from '@/stores/audio.store';
 
+import styles from './join.module.css';
+
 const EMOJI_AVATARS = ['⚡', '🌸', '🔥', '🌊', '🐱', '🚀', '🦊', '⭐'];
 
 function ArenaJoinForm() {
@@ -55,48 +57,27 @@ function ArenaJoinForm() {
   };
 
   return (
-    <div
-      style={{
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '1.5rem',
-        background: 'radial-gradient(circle at 50% 30%, rgba(226, 27, 60, 0.15) 0%, rgba(15, 23, 42, 0.95) 100%)',
-      }}
-    >
-      <div style={{ width: '100%', maxWidth: '440px', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+    <div className={styles.container}>
+      <div className={styles.wrapper}>
         {/* Brand Header */}
-        <div style={{ textAlign: 'center' }}>
+        <div className={styles.brandHeader}>
           <Badge variant="red" size="sm" icon={<Gamepad2 size={16} />}>
             LIVE MULTIPLAYER ARENA
           </Badge>
-          <h1 style={{ fontSize: '2.5rem', fontWeight: 900, marginTop: '0.5rem', letterSpacing: '-0.03em' }}>
+          <h1 className={styles.title}>
             Enter Game PIN
           </h1>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
+          <p className={styles.subtitle}>
             Look up at the host&apos;s big screen to find the 6-digit PIN code.
           </p>
         </div>
 
         {/* Join Card */}
-        <Card padding="lg" glow="kahoot" style={{ background: 'rgba(23, 32, 54, 0.88)' }}>
-          <form onSubmit={handleJoin} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+        <Card padding="lg" glow="kahoot" className={styles.joinCard}>
+          <form onSubmit={handleJoin} className={styles.form}>
             {/* 6-Digit PIN Field */}
             <div>
-              <label
-                htmlFor="game-pin-input"
-                style={{
-                  display: 'block',
-                  fontSize: '0.85rem',
-                  fontWeight: 800,
-                  color: 'var(--text-secondary)',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.05em',
-                  marginBottom: '0.4rem',
-                }}
-              >
+              <label htmlFor="game-pin-input" className={styles.label}>
                 Game PIN
               </label>
               <input
@@ -110,62 +91,28 @@ function ArenaJoinForm() {
                   setPin(val);
                 }}
                 placeholder="000 000"
-                style={{
-                  width: '100%',
-                  padding: '1rem',
-                  fontSize: '2rem',
-                  fontWeight: 900,
-                  textAlign: 'center',
-                  letterSpacing: '0.25em',
-                  borderRadius: '16px',
-                  backgroundColor: 'rgba(15, 23, 42, 0.8)',
-                  border: '2px solid var(--border-subtle)',
-                  color: 'var(--text-primary)',
-                  outline: 'none',
-                  fontVariantNumeric: 'tabular-nums',
-                }}
+                className={styles.pinInput}
               />
             </div>
 
             {/* Nickname Field */}
             <div>
-              <label
-                htmlFor="nickname-input"
-                style={{
-                  display: 'block',
-                  fontSize: '0.85rem',
-                  fontWeight: 800,
-                  color: 'var(--text-secondary)',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.05em',
-                  marginBottom: '0.4rem',
-                }}
-              >
+              <label htmlFor="nickname-input" className={styles.label}>
                 Choose Nickname & Avatar
               </label>
 
               {/* Emoji quick picker */}
-              <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.6rem', flexWrap: 'wrap' }}>
+              <div className={styles.emojiGrid}>
                 {EMOJI_AVATARS.map((emoji) => (
                   <button
                     key={emoji}
                     type="button"
+                    aria-label={`Select avatar ${emoji}`}
                     onClick={() => {
                       playPop();
                       setSelectedEmoji(emoji);
                     }}
-                    style={{
-                      width: '40px',
-                      height: '40px',
-                      borderRadius: '10px',
-                      border: selectedEmoji === emoji ? '2px solid var(--kahoot-red)' : '1px solid var(--border-subtle)',
-                      backgroundColor: selectedEmoji === emoji ? 'rgba(226, 27, 60, 0.2)' : 'rgba(255, 255, 255, 0.05)',
-                      fontSize: '1.25rem',
-                      cursor: 'pointer',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}
+                    className={`${styles.emojiBtn} ${selectedEmoji === emoji ? styles.emojiBtnSelected : ''}`}
                   >
                     {emoji}
                   </button>
@@ -179,34 +126,12 @@ function ArenaJoinForm() {
                 value={nickname}
                 onChange={(e) => setNickname(e.target.value)}
                 placeholder="Your cool name"
-                style={{
-                  width: '100%',
-                  padding: '0.85rem 1.1rem',
-                  fontSize: '1.1rem',
-                  fontWeight: 700,
-                  borderRadius: '14px',
-                  backgroundColor: 'rgba(15, 23, 42, 0.8)',
-                  border: '2px solid var(--border-subtle)',
-                  color: 'var(--text-primary)',
-                  outline: 'none',
-                }}
+                className={styles.nicknameInput}
               />
             </div>
 
             {errorMessage && (
-              <div
-                style={{
-                  padding: '0.75rem',
-                  borderRadius: '12px',
-                  backgroundColor: 'rgba(226, 27, 60, 0.15)',
-                  border: '1px solid var(--kahoot-red)',
-                  color: 'var(--kahoot-red)',
-                  fontSize: '0.9rem',
-                  fontWeight: 700,
-                  textAlign: 'center',
-                }}
-                className="animate-shake"
-              >
+              <div className={`${styles.errorMessage} animate-shake`}>
                 {errorMessage}
               </div>
             )}
@@ -225,18 +150,7 @@ function ArenaJoinForm() {
 
           {/* Offline / connection status footnote */}
           <div
-            style={{
-              marginTop: '1.25rem',
-              paddingTop: '1rem',
-              borderTop: '1px solid var(--border-subtle)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '0.5rem',
-              fontSize: '0.8rem',
-              color: isConnected ? 'var(--duo-green)' : 'var(--text-muted)',
-              fontWeight: 700,
-            }}
+            className={`${styles.statusFooter} ${isConnected ? styles.statusConnected : styles.statusDisconnected}`}
           >
             <ShieldCheck size={16} />
             <span>{isConnected ? 'Connected to live arena gateway' : 'Ready (Offline Demo Mode supported)'}</span>
@@ -244,19 +158,9 @@ function ArenaJoinForm() {
         </Card>
 
         {/* Switch to Host View */}
-        <div style={{ textAlign: 'center' }}>
+        <div className={styles.hostSwitch}>
           <Link href="/arena/host" onClick={playPop}>
-            <span
-              style={{
-                fontSize: '0.9rem',
-                color: 'var(--text-secondary)',
-                fontWeight: 700,
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-                cursor: 'pointer',
-              }}
-            >
+            <span className={styles.hostLink}>
               <Tv size={16} color="var(--duo-blue)" />
               Want to host a live game on the projector? Click here
             </span>
@@ -271,16 +175,7 @@ export default function ArenaJoinPage() {
   return (
     <Suspense
       fallback={
-        <div
-          style={{
-            minHeight: '100vh',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            color: 'var(--text-secondary)',
-            fontWeight: 800,
-          }}
-        >
+        <div className={styles.suspenseLoading}>
           Loading Arena...
         </div>
       }

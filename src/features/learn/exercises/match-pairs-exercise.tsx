@@ -107,7 +107,7 @@ export function MatchPairsExercise({
     <div className={styles.container}>
       {/* Prompt Card */}
       <div className={styles.promptCard}>
-        <span style={{ fontSize: '0.85rem', fontWeight: 800, color: 'var(--duo-blue)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+        <span className={styles.badgeBlue}>
           TAP THE MATCHING PAIRS
         </span>
         <h2 className={styles.promptText}>{exercise.prompt || 'Match the words with their meanings'}</h2>
@@ -135,7 +135,7 @@ export function MatchPairsExercise({
                 })}
               >
                 {term}
-                {isMatched && <span style={{ marginLeft: '0.5rem' }}>✓</span>}
+                {isMatched && <span className={styles.matchedCheckmark}>✓</span>}
               </button>
             );
           })}
@@ -163,7 +163,7 @@ export function MatchPairsExercise({
                 })}
               >
                 {def}
-                {isMatched && <span style={{ marginLeft: '0.5rem' }}>✓</span>}
+                {isMatched && <span className={styles.matchedCheckmark}>✓</span>}
               </button>
             );
           })}

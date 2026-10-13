@@ -1,0 +1,26 @@
+.qrPlaceholder {
+  width: var(--qr-size, 140px);
+  height: var(--qr-size, 140px);
+  border-radius: var(--radius-md, 12px);
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.qrPlaceholderText {
+  font-size: 0.75rem;
+  color: var(--text-muted, #888888);
+}
+
+.qrContainer {
+  width: var(--qr-size, 140px);
+  height: var(--qr-size, 140px);
+  background-color: var(--qr-bg, #ffffff);
+  border-radius: var(--radius-md, 12px);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}

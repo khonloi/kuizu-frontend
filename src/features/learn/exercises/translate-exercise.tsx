@@ -59,7 +59,7 @@ export function TranslateExercise({
           >
             <Volume2 size={24} />
           </button>
-          <span style={{ fontSize: '0.85rem', fontWeight: 800, color: 'var(--duo-green)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+          <span className={styles.badgeGreen}>
             TRANSLATE THIS PHRASE
           </span>
         </div>
@@ -75,7 +75,7 @@ export function TranslateExercise({
         })}
       >
         {selectedTokens.length === 0 ? (
-          <span style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}>
+          <span className={styles.emptyPlaceholder}>
             Tap the word chips below to build your answer...
           </span>
         ) : (
@@ -85,12 +85,7 @@ export function TranslateExercise({
               type="button"
               disabled={disabled}
               onClick={() => handleRemoveToken(token)}
-              className={clsx(styles.wordChip, 'animate-pop')}
-              style={{
-                backgroundColor: 'var(--duo-blue-subtle)',
-                borderColor: 'var(--duo-blue)',
-                color: '#ffffff',
-              }}
+              className={clsx(styles.wordChip, styles.wordChipSelected, 'animate-pop')}
             >
               {token}
             </button>

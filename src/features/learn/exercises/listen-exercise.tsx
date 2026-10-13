@@ -50,8 +50,8 @@ export function ListenExercise({
   return (
     <div className={styles.container}>
       {/* Title */}
-      <div style={{ textAlign: 'center' }}>
-        <span style={{ fontSize: '0.85rem', fontWeight: 800, color: 'var(--duo-blue)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+      <div className={styles.centeredBlock}>
+        <span className={styles.badgeBlue}>
           TAP WHAT YOU HEAR
         </span>
       </div>
@@ -86,7 +86,7 @@ export function ListenExercise({
         })}
       >
         {selectedTokens.length === 0 ? (
-          <span style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}>
+          <span className={styles.emptyPlaceholder}>
             Tap the words below to reconstruct what you heard...
           </span>
         ) : (
@@ -96,12 +96,7 @@ export function ListenExercise({
               type="button"
               disabled={disabled}
               onClick={() => handleRemoveToken(token)}
-              className={clsx(styles.wordChip, 'animate-pop')}
-              style={{
-                backgroundColor: 'var(--duo-blue-subtle)',
-                borderColor: 'var(--duo-blue)',
-                color: '#ffffff',
-              }}
+              className={clsx(styles.wordChip, styles.wordChipSelected, 'animate-pop')}
             >
               {token}
             </button>

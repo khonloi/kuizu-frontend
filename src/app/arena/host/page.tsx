@@ -122,12 +122,12 @@ export default function ArenaHostPage() {
     return (
       <div className={styles.arenaRoot}>
         <header className={styles.arenaHeader}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+          <div className={styles.flexRow}>
             <Badge variant="red" size="md" icon={<Tv size={18} />}>
               PROJECTOR BIG-SCREEN MODE
             </Badge>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+          <div className={styles.flexRow}>
             <Button
               variant="secondary"
               size="sm"
@@ -145,41 +145,36 @@ export default function ArenaHostPage() {
           </div>
         </header>
 
-        <main style={{ maxWidth: '960px', margin: '3rem auto', padding: '0 1.5rem', width: '100%' }}>
-          <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
+        <main className={styles.quizSelectMain}>
+          <div className={styles.quizSelectHeader}>
             <Badge variant="yellow" size="sm">
               HOST A LIVE BATTLE
             </Badge>
-            <h1 style={{ fontSize: '3rem', fontWeight: 900, marginTop: '0.5rem', letterSpacing: '-0.03em' }}>
+            <h1 className={styles.quizSelectTitle}>
               Select Quiz for Multiplayer Arena
             </h1>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem', marginTop: '0.5rem' }}>
+            <p className={styles.quizSelectSubtitle}>
               Choose a competitive deck to host on your classroom projector or shared screen.
             </p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1.5rem' }}>
+          <div className={styles.quizSelectGrid}>
             {SAMPLE_QUIZZES.map((quiz) => (
               <Card
                 key={quiz.id}
                 padding="lg"
                 glow="kahoot"
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between',
-                  gap: '1.5rem',
-                }}
+                className={styles.quizCard}
               >
                 <div>
-                  <div style={{ fontSize: '3rem', marginBottom: '0.5rem' }}>{quiz.icon}</div>
+                  <div className={styles.quizCardIcon}>{quiz.icon}</div>
                   <Badge variant="blue" size="sm">
                     {quiz.category} • {quiz.questions.length} Questions
                   </Badge>
-                  <h2 style={{ fontSize: '1.5rem', fontWeight: 800, marginTop: '0.75rem' }}>
+                  <h2 className={styles.quizCardTitle}>
                     {quiz.title}
                   </h2>
-                  <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', marginTop: '0.4rem', lineHeight: 1.5 }}>
+                  <p className={styles.quizCardDescription}>
                     {quiz.description}
                   </p>
                 </div>
@@ -207,16 +202,16 @@ export default function ArenaHostPage() {
     return (
       <div className={styles.arenaRoot}>
         <header className={styles.arenaHeader}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <div className={styles.flexRowLg}>
             <Badge variant="red" size="md">
               {quizTitle || 'Arena Quiz'}
             </Badge>
-            <span style={{ color: 'var(--text-secondary)', fontWeight: 700 }}>
+            <span className={styles.joinInstructions}>
               Join at <strong>/arena/join</strong>
             </span>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+          <div className={styles.flexRow}>
             <Button
               variant="secondary"
               size="sm"
@@ -234,15 +229,15 @@ export default function ArenaHostPage() {
 
         <main className={styles.lobbyStage}>
           {/* Giant PIN & QR Code Display */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '3rem', flexWrap: 'wrap', marginBottom: '2rem' }}>
+          <div className={styles.lobbyPinRow}>
             <div>
-              <span style={{ fontSize: '1rem', fontWeight: 800, textTransform: 'uppercase', color: 'var(--text-secondary)', letterSpacing: '0.1em' }}>
+              <span className={styles.lobbyPinLabel}>
                 Game Room PIN
               </span>
-              <div style={{ fontSize: '5.5rem', fontWeight: 900, letterSpacing: '0.15em', color: '#ffffff', margin: '0.25rem 0', textShadow: '0 4px 20px rgba(255,255,255,0.2)' }}>
+              <div className={styles.lobbyGiantPin}>
                 {pin}
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.6rem' }}>
+              <div className={styles.flexRowSm}>
                 <Badge variant="duo" size="md" icon={<Users size={16} />}>
                   {players.length} Players Connected
                 </Badge>
@@ -250,9 +245,9 @@ export default function ArenaHostPage() {
             </div>
 
             {pin && (
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.6rem', padding: '1.25rem', background: 'rgba(255,255,255,0.06)', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.12)' }}>
+              <div className={styles.lobbyQrCard}>
                 <QRCodeSvg value={joinUrl} size={140} />
-                <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', fontWeight: 700 }}>
+                <span className={styles.lobbyQrText}>
                   Scan with Camera to Join
                 </span>
               </div>
@@ -262,7 +257,7 @@ export default function ArenaHostPage() {
           {/* Connected Players Grid */}
           <div className={styles.playerGrid}>
             {players.length === 0 ? (
-              <span style={{ color: 'var(--text-muted)', fontSize: '1.2rem', fontWeight: 700 }}>
+              <span className={styles.lobbyWaitingText}>
                 Waiting for players to join with PIN: {pin}...
               </span>
             ) : (
@@ -280,7 +275,7 @@ export default function ArenaHostPage() {
             size="lg"
             onClick={handleStart}
             leftIcon={<Play size={22} />}
-            style={{ minWidth: '240px', fontSize: '1.2rem', padding: '1.1rem 2.5rem' }}
+            className={styles.lobbyStartBtn}
           >
             Start Game ({players.length} ready)
           </Button>
@@ -296,14 +291,14 @@ export default function ArenaHostPage() {
     return (
       <div className={styles.arenaRoot}>
         <header className={styles.arenaHeader}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <div className={styles.flexRowLg}>
             <Badge variant="blue" size="md">
               Question {currentQuestion.questionIndex + 1} of {currentQuestion.totalQuestions}
             </Badge>
-            <span style={{ fontWeight: 800 }}>{quizTitle}</span>
+            <span className={styles.fontWeight800}>{quizTitle}</span>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <div className={styles.flexRowLg}>
             <Badge variant="yellow" size="md" icon={<Users size={16} />}>
               {answeredCount} / {totalPlayers || players.length} Answered
             </Badge>
@@ -326,13 +321,13 @@ export default function ArenaHostPage() {
         <main className={styles.hostQuestionStage}>
           {/* Question Banner & Countdown Clock */}
           <div className={styles.questionHeaderBar}>
-            <div style={{ flex: 1 }}>
+            <div className={styles.flex1}>
               <div className={styles.questionCard}>
                 <h1 className={styles.questionTitle}>{currentQuestion.questionText}</h1>
               </div>
             </div>
 
-            <div style={{ marginLeft: '2rem' }}>
+            <div className={styles.timerWrapper}>
               <CountdownTimer
                 timeLimit={currentQuestion.timeLimit}
                 size={110}
@@ -354,7 +349,7 @@ export default function ArenaHostPage() {
           </div>
 
           {isAllAnswered && (
-            <div style={{ textAlign: 'center', marginTop: '1.5rem' }}>
+            <div className={styles.allAnsweredBanner}>
               <Button variant="kahoot" size="lg" onClick={handleReveal} leftIcon={<Eye size={20} />}>
                 All Players Answered — Reveal Results Now
               </Button>
@@ -377,7 +372,7 @@ export default function ArenaHostPage() {
             Question {currentQuestion.questionIndex + 1} Results
           </Badge>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+          <div className={styles.flexRow}>
             <Button
               variant="secondary"
               size="sm"
@@ -399,8 +394,8 @@ export default function ArenaHostPage() {
 
         <main className={styles.hostQuestionStage}>
           {/* Question Text */}
-          <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
-            <h2 style={{ fontSize: '1.8rem', fontWeight: 800 }}>
+          <div className={styles.revealTitleWrapper}>
+            <h2 className={styles.revealQuestionTitle}>
               {currentQuestion.questionText}
             </h2>
           </div>
@@ -438,7 +433,7 @@ export default function ArenaHostPage() {
             GRAND FINALE
           </Badge>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+          <div className={styles.flexRow}>
             <Button
               variant="secondary"
               size="sm"

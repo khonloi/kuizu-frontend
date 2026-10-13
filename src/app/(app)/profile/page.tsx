@@ -23,10 +23,10 @@ export default function ProfilePage() {
   if (!user) {
     return (
       <Card padding="lg" className={styles.guestCard}>
-        <h2 style={{ fontSize: '1.5rem', fontWeight: 900, marginBottom: '0.75rem' }}>
+        <h2 className={styles.guestTitle}>
           Create an Account
         </h2>
-        <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem', lineHeight: 1.6 }}>
+        <p className={styles.guestDescription}>
           Sign in or create a Kuizu profile to save your learning progress, earn league trophies, and climb the leaderboard.
         </p>
         <div className={styles.guestActions}>

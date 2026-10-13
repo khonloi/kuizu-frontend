@@ -26,6 +26,12 @@
   transform: translateY(3px);
 }
 
+/* Accessible Keyboard Focus Ring */
+.button:focus-visible {
+  outline: 3px solid var(--border-focus);
+  outline-offset: 3px;
+}
+
 .button:disabled {
   cursor: not-allowed;
   opacity: 0.55;

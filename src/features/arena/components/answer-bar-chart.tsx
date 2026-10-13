@@ -1,6 +1,4 @@
-'use client';
-
-import React from 'react';
+import styles from '@/features/arena/arena.module.css';
 
 interface AnswerDistributionProps {
   distribution: Record<string, number>; // { choiceId: count }
@@ -33,17 +31,7 @@ export function AnswerBarChart({
     <div
       role="region"
       aria-label="Poll result distribution chart"
-      style={{
-        display: 'flex',
-        alignItems: 'flex-end',
-        justifyContent: 'center',
-        gap: '2rem',
-        height: '220px',
-        width: '100%',
-        maxWidth: '720px',
-        margin: '2rem auto',
-        padding: '1rem',
-      }}
+      className={styles.chartContainer}
     >
       {choices.map((choice) => {
         const count = distribution[choice.id] || 0;
@@ -54,6 +42,12 @@ export function AnswerBarChart({
         // Bar height between 28px and 170px
         const barHeight = Math.max(28, (count / totalVotes) * 170);
 
+        const barCustomStyle = {
+          '--bar-height': `${barHeight}px`,
+          '--bar-bg': colorConfig.bg,
+          '--bar-shadow': colorConfig.shadow,
+        } as React.CSSProperties;
+
         return (
           <div
             key={choice.id}
@@ -62,55 +56,27 @@ export function AnswerBarChart({
             aria-valuenow={percent}
             aria-valuemin={0}
             aria-valuemax={100}
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              flex: 1,
-              gap: '0.5rem',
-            }}
+            className={styles.chartColumn}
           >
             {/* Number of voters */}
             <span
-              style={{
-                fontSize: '1.25rem',
-                fontWeight: 900,
-                color: isCorrect ? '#ffffff' : 'var(--text-secondary)',
-              }}
+              className={`${styles.chartVoteCount} ${isCorrect ? styles.chartVoteCountCorrect : ''}`}
             >
               {count}
             </span>
 
             {/* Distribution Bar */}
             <div
-              style={{
-                width: '100%',
-                height: `${barHeight}px`,
-                backgroundColor: colorConfig.bg,
-                boxShadow: `0 4px 0 ${colorConfig.shadow}`,
-                borderRadius: '12px 12px 4px 4px',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                border: isCorrect ? '3px solid #ffffff' : 'none',
-                transition: 'height 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
-              }}
-              className="animate-slide-up"
+              style={barCustomStyle}
+              className={`${styles.chartBar} ${isCorrect ? styles.chartBarCorrect : ''} animate-slide-up`}
             >
-              <span style={{ fontSize: '1.5rem', color: '#ffffff' }} aria-hidden="true">
+              <span className={styles.chartSymbol} aria-hidden="true">
                 {colorConfig.symbol}
               </span>
             </div>
 
             {/* Percentage Badge */}
-            <span
-              style={{
-                fontSize: '0.85rem',
-                fontWeight: 800,
-                color: 'var(--text-muted)',
-              }}
-            >
+            <span className={styles.chartPercent}>
               {percent}%
             </span>
           </div>

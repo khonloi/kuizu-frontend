@@ -1,4 +1,9 @@
-/* Realtime Multiplayer Arena Styles (Kahoot Aesthetics + Modern Glass) */
+.arenaLayout {
+  min-height: 100vh;
+  width: 100%;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
 
 .arenaRoot {
   min-height: 100vh;
@@ -217,6 +222,11 @@
   transform: translateY(4px);
 }
 
+.gamepadBtn:focus-visible {
+  outline: 4px solid #ffffff;
+  outline-offset: 4px;
+}
+
 .gamepadBtn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
@@ -342,3 +352,521 @@
     gap: 0.75rem;
   }
 }
+
+/* Flex & Alignment Utility Classes */
+.flexRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.flexRowLg {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.flexRowSm {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.flex1 {
+  flex: 1;
+}
+
+.fontWeight800 {
+  font-weight: 800;
+}
+
+.fontWeight900 {
+  font-weight: 900;
+}
+
+.textSecondary {
+  color: var(--text-secondary);
+}
+
+/* Host Screen: Select Quiz */
+.quizSelectMain {
+  max-width: 960px;
+  margin: 3rem auto;
+  padding: 0 1.5rem;
+  width: 100%;
+}
+
+.quizSelectHeader {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.quizSelectTitle {
+  font-size: 3rem;
+  font-weight: 900;
+  margin-top: 0.5rem;
+  letter-spacing: -0.03em;
+}
+
+.quizSelectSubtitle {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  margin-top: 0.5rem;
+}
+
+.quizSelectGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.quizCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.quizCardIcon {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+}
+
+.quizCardTitle {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-top: 0.75rem;
+}
+
+.quizCardDescription {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  margin-top: 0.4rem;
+  line-height: 1.5;
+}
+
+/* Host Screen: Lobby Stage */
+.joinInstructions {
+  color: var(--text-secondary);
+  font-weight: 700;
+}
+
+.lobbyPinRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.lobbyPinLabel {
+  font-size: 1rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  letter-spacing: 0.1em;
+}
+
+.lobbyGiantPin {
+  font-size: 5.5rem;
+  font-weight: 900;
+  letter-spacing: 0.15em;
+  color: #ffffff;
+  margin: 0.25rem 0;
+  text-shadow: 0 4px 20px rgba(255, 255, 255, 0.2);
+}
+
+.lobbyQrCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 1.25rem;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-lg, 16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.lobbyQrText {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-weight: 700;
+}
+
+.lobbyWaitingText {
+  color: var(--text-muted);
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.lobbyStartBtn {
+  min-width: 240px;
+  font-size: 1.2rem;
+  padding: 1.1rem 2.5rem;
+}
+
+/* Host Screen: Question & Reveal */
+.timerWrapper {
+  margin-left: 2rem;
+}
+
+.allAnsweredBanner {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+.revealTitleWrapper {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.revealQuestionTitle {
+  font-size: 1.8rem;
+  font-weight: 800;
+}
+
+/* Player Handheld Screen */
+.playerBigEmoji {
+  font-size: 4.5rem;
+}
+
+.playerTitle {
+  font-size: 2.5rem;
+  font-weight: 900;
+  margin-top: 1rem;
+}
+
+.playerSubtitle {
+  color: var(--text-secondary);
+  font-size: 1.2rem;
+  margin-top: 0.5rem;
+  max-width: 480px;
+}
+
+.waitingPill {
+  margin-top: 2.5rem;
+  padding: 1.25rem 2rem;
+  border-radius: 9999px;
+  background-color: rgba(255, 255, 255, 0.06);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 800;
+}
+
+.pulsingDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: var(--duo-green);
+}
+
+.timerCenter {
+  display: flex;
+  justify-content: center;
+  margin: 0.5rem 0;
+}
+
+.statItemOrange {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: var(--duo-orange);
+  font-weight: 800;
+}
+
+.statItemYellow {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: var(--duo-yellow);
+  font-weight: 900;
+}
+
+.lockEmoji {
+  font-size: 3.5rem;
+}
+
+.lockedInTitle {
+  font-size: 1.75rem;
+  font-weight: 900;
+}
+
+.lockedInSubtitle {
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+.totalScoreText {
+  font-weight: 900;
+  color: var(--duo-yellow);
+}
+
+.feedbackTitle {
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: #ffffff;
+}
+
+.pointsEarnedRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #ffffff;
+}
+
+.streakRow {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 1.1rem;
+}
+
+.wrongTitle {
+  font-size: 2.25rem;
+  font-weight: 900;
+  color: #ffffff;
+}
+
+.wrongSubtitle {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 700;
+}
+
+.podiumBigMedal {
+  font-size: 4.5rem;
+}
+
+.scoreCardWrapper {
+  margin: 1.5rem 0;
+}
+
+.scoreCardLabel {
+  font-size: 1rem;
+  color: var(--text-secondary);
+}
+
+.finalScoreValue {
+  font-size: 2.25rem;
+  font-weight: 900;
+  color: var(--duo-yellow), #ffc800;
+  margin-top: 0.25rem;
+}
+
+/* Kahoot Tile Additional Classes */
+.hostChoiceItemCorrect {
+  opacity: 1 !important;
+  border: 3px solid #ffffff !important;
+  transform: scale(1.02) !important;
+}
+
+.hostChoiceItemWrong {
+  opacity: 0.35 !important;
+}
+
+.hostChoiceLabel {
+  flex: 1;
+  letter-spacing: -0.01em;
+}
+
+.hostChoiceCheckmark {
+  font-size: 1.5rem;
+  font-weight: 900;
+}
+
+.gamepadShapeSymbol {
+  font-size: 3.5rem;
+  line-height: 1;
+}
+
+.gamepadLabel {
+  font-size: 1.1rem;
+  font-weight: 800;
+  text-align: center;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Podium Ceremony Additional Classes */
+.podiumWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.podiumBadge {
+  margin-bottom: 1rem;
+}
+
+.podiumHeading {
+  font-size: 3rem;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  text-align: center;
+}
+
+.podiumList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.podiumMedalSm {
+  font-size: 2.5rem;
+}
+
+.podiumMedalLg {
+  font-size: 3.5rem;
+}
+
+.podiumNicknameSm {
+  font-size: 1.25rem;
+  font-weight: 900;
+}
+
+.podiumNicknameLg {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--duo-yellow);
+}
+
+.podiumScoreSm {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-weight: 700;
+}
+
+.podiumScoreLg {
+  font-size: 1rem;
+  color: #ffffff;
+  font-weight: 800;
+}
+
+.podiumRankNumberSm {
+  font-size: 2.5rem;
+  font-weight: 900;
+}
+
+.podiumRankNumberLg {
+  font-size: 3.5rem;
+  font-weight: 900;
+}
+
+.podiumEmptySlot {
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+.podiumLeaderboardCard {
+  width: 100%;
+  max-width: 640px;
+  margin-top: 1.5rem;
+}
+
+.podiumLeaderboardTitle {
+  font-size: 1.1rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+
+.podiumLeaderboardList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.podiumLeaderboardRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+.podiumLeaderboardRowTop {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.podiumRankTag {
+  font-weight: 900;
+  width: 24px;
+  color: var(--text-secondary);
+}
+
+.podiumRankTagFirst {
+  color: var(--duo-yellow);
+}
+
+.podiumScoreTag {
+  font-weight: 800;
+  color: var(--duo-blue);
+}
+
+/* Answer Bar Chart Classes */
+.chartContainer {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 2rem;
+  height: 220px;
+  width: 100%;
+  max-width: 720px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+.chartColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  gap: 0.5rem;
+}
+
+.chartVoteCount {
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: var(--text-secondary);
+}
+
+.chartVoteCountCorrect {
+  color: #ffffff;
+}
+
+.chartBar {
+  width: 100%;
+  height: var(--bar-height, 28px);
+  background-color: var(--bar-bg, var(--kahoot-red));
+  box-shadow: 0 4px 0 var(--bar-shadow, var(--kahoot-red-shadow));
+  border-radius: 12px 12px 4px 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.chartBarCorrect {
+  border: 3px solid #ffffff;
+}
+
+.chartSymbol {
+  font-size: 1.5rem;
+  color: #ffffff;
+}
+
+.chartPercent {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--text-muted);
+}
+
+

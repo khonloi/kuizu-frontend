@@ -120,6 +120,58 @@
   color: var(--text-primary);
 }
 
+.userProfileLink {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0.25rem;
+  text-decoration: none;
+  color: inherit;
+  border-radius: var(--radius-sm, 8px);
+  transition: opacity var(--transition-fast);
+}
+
+.userProfileLink:hover {
+  opacity: 0.85;
+}
+
+.userProfileInfo {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.userProfileName {
+  font-size: 0.9rem;
+  font-weight: 800;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.userProfileLeague {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.loginButton {
+  display: block;
+  text-align: center;
+  padding: 0.65rem;
+  border-radius: var(--radius-md, 12px);
+  background-color: var(--duo-green-subtle);
+  color: var(--duo-green);
+  font-weight: 800;
+  font-size: 0.85rem;
+  text-decoration: none;
+  transition: background-color var(--transition-fast);
+}
+
+.loginButton:hover {
+  background-color: rgba(88, 204, 2, 0.25);
+}
+
+
 @media (max-width: 768px) {
   .sidebar {
     display: none;

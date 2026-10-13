@@ -4,6 +4,8 @@ import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/stores/auth.store';
 
+import styles from './auth-guard.module.css';
+
 export function useRequireAuth(redirectTo = '/login') {
   const router = useRouter();
   const { user, isAuthenticated, isLoading } = useAuthStore();
@@ -28,17 +30,8 @@ export function AuthGuard({
 
   if (isLoading) {
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '50vh' }}>
-        <div
-          style={{
-            width: '36px',
-            height: '36px',
-            borderRadius: '50%',
-            border: '3px solid rgba(88, 204, 2, 0.2)',
-            borderTopColor: 'var(--duo-green)',
-          }}
-          className="animate-spin"
-        />
+      <div className={styles.guardLoadingContainer}>
+        <div className={`${styles.guardSpinner} animate-spin`} />
       </div>
     );
   }

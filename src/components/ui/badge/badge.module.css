@@ -63,3 +63,9 @@
   color: var(--text-secondary);
   border: 1px solid var(--border-subtle);
 }
+
+.iconSlot {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+

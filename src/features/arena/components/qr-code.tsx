@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import QRCode from 'qrcode';
+
+import styles from './qr-code.module.css';
 
 interface QRCodeProps {
   value: string;
@@ -23,14 +24,19 @@ export function QRCodeSvg({
   useEffect(() => {
     let isCancelled = false;
 
-    QRCode.toString(value, {
-      type: 'svg',
-      margin: 1,
-      color: {
-        dark: darkColor,
-        light: lightColor,
-      },
-    })
+    // Dynamically load qrcode to avoid bloating initial shared bundle
+    import('qrcode')
+      .then((mod) => {
+        const QRCode = mod.default || mod;
+        return QRCode.toString(value, {
+          type: 'svg',
+          margin: 1,
+          color: {
+            dark: darkColor,
+            light: lightColor,
+          },
+        });
+      })
       .then((svg) => {
         if (!isCancelled) {
           setSvgContent(svg);
@@ -45,39 +51,26 @@ export function QRCodeSvg({
     };
   }, [value, darkColor, lightColor]);
 
+  const customStyle = {
+    '--qr-size': `${size}px`,
+    '--qr-bg': lightColor,
+  } as React.CSSProperties;
+
   if (!svgContent) {
     return (
       <div
-        className={className}
-        style={{
-          width: size,
-          height: size,
-          borderRadius: '12px',
-          backgroundColor: '#ffffff',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
+        className={`${styles.qrPlaceholder} ${className || ''}`}
+        style={{ '--qr-size': `${size}px` } as React.CSSProperties}
       >
-        <span style={{ fontSize: '0.75rem', color: '#888888' }}>Generating...</span>
+        <span className={styles.qrPlaceholderText}>Generating...</span>
       </div>
     );
   }
 
   return (
     <div
-      className={className}
-      style={{
-        width: size,
-        height: size,
-        borderRadius: '12px',
-        overflow: 'hidden',
-        backgroundColor: lightColor,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        boxShadow: '0 8px 24px rgba(0, 0, 0, 0.25)',
-      }}
+      className={`${styles.qrContainer} ${className || ''}`}
+      style={customStyle}
       dangerouslySetInnerHTML={{ __html: svgContent }}
     />
   );

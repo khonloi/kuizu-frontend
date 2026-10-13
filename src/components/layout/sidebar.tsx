@@ -87,21 +87,14 @@ export function Sidebar() {
           <Link
             href="/profile"
             onClick={playPop}
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.75rem',
-              padding: '0.5rem 0.25rem',
-              textDecoration: 'none',
-              color: 'inherit',
-            }}
+            className={styles.userProfileLink}
           >
             <Avatar name={user.username} src={user.avatarUrl} size="sm" ring="duo" />
-            <div style={{ display: 'flex', flexDirection: 'column', minWidth: 0 }}>
-              <span style={{ fontSize: '0.9rem', fontWeight: 800, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+            <div className={styles.userProfileInfo}>
+              <span className={styles.userProfileName}>
                 {user.username}
               </span>
-              <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+              <span className={styles.userProfileLeague}>
                 {user.league || 'Bronze'} League
               </span>
             </div>
@@ -110,17 +103,7 @@ export function Sidebar() {
           <Link
             href="/login"
             onClick={playPop}
-            style={{
-              display: 'block',
-              textAlign: 'center',
-              padding: '0.65rem',
-              borderRadius: '12px',
-              backgroundColor: 'var(--duo-green-subtle)',
-              color: 'var(--duo-green)',
-              fontWeight: 800,
-              fontSize: '0.85rem',
-              textDecoration: 'none',
-            }}
+            className={styles.loginButton}
           >
             Sign In
           </Link>

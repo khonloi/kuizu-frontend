@@ -64,6 +64,20 @@
 .swatchColor {
   height: 64px;
   width: 100%;
+  background-color: var(--swatch-color);
+}
+
+.flex1 {
+  flex: 1;
+}
+
+.modalText {
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.modalActions {
+  margin-top: 1.25rem;
 }
 
 .swatchInfo {

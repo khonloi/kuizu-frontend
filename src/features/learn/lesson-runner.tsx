@@ -175,33 +175,33 @@ export function LessonRunner({ lesson, courseSlug }: LessonRunnerProps) {
           <div className={`${styles.crownIcon} animate-pop`}>👑</div>
 
           <div>
-            <h1 style={{ fontSize: '2.5rem', fontWeight: 900, letterSpacing: '-0.02em' }}>
+            <h1 className={styles.completionTitle}>
               Lesson Complete!
             </h1>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem', marginTop: '0.4rem' }}>
-              You mastered <strong style={{ color: 'var(--text-primary)' }}>{lesson.title}</strong>
+            <p className={styles.completionSubtitle}>
+              You mastered <strong className={styles.lessonHighlight}>{lesson.title}</strong>
             </p>
           </div>
 
           <div className={styles.statsRow}>
             <Card padding="md" glow="duo">
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.6rem', color: 'var(--duo-yellow)', fontWeight: 900, fontSize: '1.5rem' }}>
+              <div className={styles.xpStatValue}>
                 <Zap size={24} fill="var(--duo-yellow)" />
                 <span>+{lesson.xpReward} XP</span>
               </div>
-              <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Experience Earned</span>
+              <span className={styles.statLabel}>Experience Earned</span>
             </Card>
 
             <Card padding="md" glow="blue">
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.6rem', color: 'var(--duo-orange)', fontWeight: 900, fontSize: '1.5rem' }}>
+              <div className={styles.streakStatValue}>
                 <Flame size={24} fill="var(--duo-orange)" />
                 <span>Streak Maintained</span>
               </div>
-              <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Daily Practice Goal</span>
+              <span className={styles.statLabel}>Daily Practice Goal</span>
             </Card>
           </div>
 
-          <Link href="/learn" style={{ width: '100%' }}>
+          <Link href="/learn" className={styles.fullWidthLink}>
             <Button variant="duo" size="lg" fullWidth leftIcon={<ArrowRight size={20} />}>
               Continue to Quest Path
             </Button>
@@ -216,19 +216,19 @@ export function LessonRunner({ lesson, courseSlug }: LessonRunnerProps) {
     return (
       <div className={styles.runnerWrapper}>
         <div className={styles.completionScreen}>
-          <div style={{ fontSize: '4rem' }} className="animate-shake">💔</div>
+          <div className={`${styles.brokenHeartIcon} animate-shake`}>💔</div>
 
           <div>
-            <h1 style={{ fontSize: '2rem', fontWeight: 900, color: 'var(--duo-red)' }}>
+            <h1 className={styles.outOfHeartsTitle}>
               Out of Hearts!
             </h1>
-            <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', marginTop: '0.4rem', lineHeight: 1.6 }}>
+            <p className={styles.outOfHeartsSubtitle}>
               You ran out of quest hearts. Refill them in the shop or restart practice to keep learning.
             </p>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem', width: '100%' }}>
-            <Link href="/shop" style={{ width: '100%' }}>
+          <div className={styles.outOfHeartsActions}>
+            <Link href="/shop" className={styles.fullWidthLink}>
               <Button variant="duo" size="lg" fullWidth leftIcon={<Heart size={20} fill="#ffffff" />}>
                 Refill Hearts in Shop
               </Button>
@@ -329,7 +329,7 @@ export function LessonRunner({ lesson, courseSlug }: LessonRunnerProps) {
         onClose={() => setIsQuitModalOpen(false)}
         title="Quit Lesson?"
         footer={
-          <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'flex-end', width: '100%' }}>
+          <div className={styles.modalFooter}>
             <Button variant="ghost" size="md" onClick={() => setIsQuitModalOpen(false)}>
               Keep Learning
             </Button>
@@ -346,7 +346,7 @@ export function LessonRunner({ lesson, courseSlug }: LessonRunnerProps) {
           </div>
         }
       >
-        <p style={{ color: 'var(--text-secondary)', lineHeight: 1.6 }}>
+        <p className={styles.modalBodyText}>
           Are you sure you want to exit? Your progress in this lesson session will be lost and no XP will be awarded.
         </p>
       </Modal>

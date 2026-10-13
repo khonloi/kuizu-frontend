@@ -9,6 +9,7 @@ import { useAuthStore } from '@/stores/auth.store';
 import { useAudioStore } from '@/stores/audio.store';
 import { api } from '@/lib/api';
 import type { User } from '@/types/api.types';
+import styles from '../auth.module.css';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -56,9 +57,9 @@ export default function LoginPage() {
 
   return (
     <Card padding="lg" glow="duo">
-      <div style={{ textAlign: 'center', marginBottom: '1.75rem' }}>
-        <h1 style={{ fontSize: '1.75rem', fontWeight: 900 }}>Welcome Back</h1>
-        <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', marginTop: '0.25rem' }}>
+      <div className={styles.header}>
+        <h1 className={styles.title}>Welcome Back</h1>
+        <p className={styles.subtitle}>
           Sign in to resume your learning quests & battles
         </p>
       </div>
@@ -66,26 +67,14 @@ export default function LoginPage() {
       {errorMsg && (
         <div
           role="alert"
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.6rem',
-            padding: '0.85rem 1rem',
-            borderRadius: '12px',
-            backgroundColor: 'var(--duo-red-subtle)',
-            border: '1px solid rgba(255, 75, 75, 0.4)',
-            color: 'var(--duo-red)',
-            fontSize: '0.9rem',
-            fontWeight: 700,
-            marginBottom: '1.25rem',
-          }}
+          className={styles.alert}
         >
-          <AlertCircle size={18} style={{ flexShrink: 0 }} />
+          <AlertCircle size={18} className={styles.alertIcon} />
           <span>{errorMsg}</span>
         </div>
       )}
 
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+      <form onSubmit={handleSubmit} className={styles.form}>
         <Input
           id="emailOrUsername"
           label="Email or Username"
@@ -115,18 +104,18 @@ export default function LoginPage() {
           fullWidth
           isLoading={isLoading}
           leftIcon={<LogIn size={20} />}
-          style={{ marginTop: '0.5rem' }}
+          className={styles.submitBtn}
         >
           Sign In
         </Button>
       </form>
 
-      <div style={{ textAlign: 'center', marginTop: '1.5rem', fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
+      <div className={styles.footer}>
         Don&apos;t have an account?{' '}
         <Link
           href="/register"
           onClick={playPop}
-          style={{ color: 'var(--duo-green)', fontWeight: 800, textDecoration: 'none' }}
+          className={styles.footerLink}
         >
           Sign up for free
         </Link>

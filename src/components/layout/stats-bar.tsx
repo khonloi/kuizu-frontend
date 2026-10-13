@@ -51,6 +51,7 @@ export function StatsBar() {
           onClick={handleHeartClick}
           className={clsx(styles.statBadge, styles.hearts)}
           title="Hearts Remaining (Click to Refill)"
+          aria-label={`Hearts remaining: ${hearts}. Click to refill`}
         >
           <Heart size={18} color="#ff4b4b" fill="#ff4b4b" />
           <span>{hearts}</span>
@@ -97,12 +98,7 @@ export function StatsBar() {
         <Link
           href="/login"
           onClick={playPop}
-          style={{
-            fontSize: '0.85rem',
-            fontWeight: 800,
-            color: 'var(--duo-green)',
-            textDecoration: 'none',
-          }}
+          className={styles.loginLink}
         >
           Sign In
         </Link>

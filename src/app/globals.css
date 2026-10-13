@@ -23,90 +23,6 @@ a {
   text-decoration: none;
 }
 
-/* 3D Push Button Styles (Duolingo / Kahoot feel) */
-.btn-3d {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.85rem 1.75rem;
-  font-size: 1rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  border: none;
-  border-radius: var(--btn-radius);
-  cursor: pointer;
-  transition: all 0.1s ease;
-  user-select: none;
-}
-
-.btn-3d:active {
-  transform: translateY(3px);
-}
-
-.btn-duo {
-  background: var(--duo-green);
-  color: #ffffff;
-  box-shadow: 0 4px 0 var(--duo-green-shadow), 0 8px 16px rgba(88, 204, 2, 0.25);
-}
-
-.btn-duo:hover {
-  background: #61de02;
-}
-
-.btn-duo:active {
-  box-shadow: 0 1px 0 var(--duo-green-shadow);
-}
-
-.btn-kahoot {
-  background: var(--kahoot-red);
-  color: #ffffff;
-  box-shadow: 0 4px 0 var(--kahoot-red-shadow), 0 8px 16px rgba(226, 27, 60, 0.25);
-}
-
-.btn-kahoot:hover {
-  background: #f02547;
-}
-
-.btn-kahoot:active {
-  box-shadow: 0 1px 0 var(--kahoot-red-shadow);
-}
-
-.btn-blue {
-  background: var(--duo-blue);
-  color: #ffffff;
-  box-shadow: 0 4px 0 var(--duo-blue-shadow);
-}
-
-.btn-secondary {
-  background: rgba(255, 255, 255, 0.06);
-  color: var(--text-primary);
-  border: 1px solid var(--border-subtle);
-  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.4);
-}
-
-.btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.1);
-}
-
-/* Glass Card */
-.glass-card {
-  background: var(--bg-card);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--card-radius);
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.glass-card:hover {
-  background: var(--bg-card-hover);
-  border-color: rgba(255, 255, 255, 0.16);
-  transform: translateY(-2px);
-}
-
 /* Subtle background glowing radial gradients */
 .bg-gradient-glow {
   background:
@@ -116,16 +32,3 @@ a {
     var(--bg-primary);
 }
 
-/* Keyframe animations */
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-8px);
-  }
-}
-
-.animate-float {
-  animation: float 4s ease-in-out infinite;
-}

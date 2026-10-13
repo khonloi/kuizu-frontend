@@ -6,6 +6,7 @@ import { Modal, Button } from '@/components/ui';
 import { useUiStore } from '@/stores/ui.store';
 import { useAuthStore } from '@/stores/auth.store';
 import { useHeartRefillMutation } from '@/hooks/queries';
+import styles from './heart-refill-modal.module.css';
 
 const REFILL_GEM_COST = 350;
 
@@ -37,13 +38,13 @@ export function HeartRefillModal() {
       isOpen={isHeartModalOpen}
       onClose={closeHeartModal}
       title={
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+        <div className={styles.modalTitle}>
           <Heart size={24} color="var(--duo-red)" fill="var(--duo-red)" />
           <span>Hearts & Health</span>
         </div>
       }
       footer={
-        <div style={{ display: 'flex', gap: '0.75rem', width: '100%', justifyContent: 'flex-end' }}>
+        <div className={styles.modalFooter}>
           <Button variant="ghost" size="md" onClick={closeHeartModal}>
             Cancel
           </Button>
@@ -62,25 +63,15 @@ export function HeartRefillModal() {
         </div>
       }
     >
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: '1.25rem', padding: '0.5rem 0' }}>
+      <div className={styles.modalContent}>
         {/* Heart visual counter */}
-        <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center' }}>
+        <div className={styles.heartsRow}>
           {[1, 2, 3, 4, 5].map((idx) => {
             const hasHeart = idx <= currentHearts;
             return (
               <div
                 key={idx}
-                className={hasHeart ? 'animate-heart-beat' : undefined}
-                style={{
-                  width: '44px',
-                  height: '44px',
-                  borderRadius: '12px',
-                  backgroundColor: hasHeart ? 'var(--duo-red-subtle)' : 'rgba(255, 255, 255, 0.05)',
-                  border: `2px solid ${hasHeart ? 'rgba(255, 75, 75, 0.4)' : 'var(--border-subtle)'}`,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
+                className={`${styles.heartSlot} ${hasHeart ? `${styles.heartSlotActive} animate-heart-beat` : ''}`}
               >
                 <Heart
                   size={24}
@@ -92,32 +83,21 @@ export function HeartRefillModal() {
           })}
         </div>
 
-        <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', lineHeight: 1.6, maxWidth: '380px' }}>
+        <p className={styles.description}>
           Hearts keep you in the quest! Whenever you make a mistake in a practice lesson, you lose a heart. Refill them instantly with gems.
         </p>
 
         {/* Balance status */}
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            width: '100%',
-            padding: '0.85rem 1.25rem',
-            borderRadius: '14px',
-            backgroundColor: 'rgba(255, 255, 255, 0.04)',
-            border: '1px solid var(--border-subtle)',
-          }}
-        >
-          <span style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>Your Gems Balance:</span>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontWeight: 800, color: 'var(--duo-blue)' }}>
+        <div className={styles.balanceCard}>
+          <span className={styles.balanceLabel}>Your Gems Balance:</span>
+          <div className={styles.balanceValue}>
             <Gem size={18} fill="#1cb0f6" />
             <span>{currentGems}</span>
           </div>
         </div>
 
         {errorMsg && (
-          <div style={{ color: 'var(--duo-red)', fontSize: '0.85rem', fontWeight: 700 }}>
+          <div className={styles.errorMessage}>
             {errorMsg}
           </div>
         )}

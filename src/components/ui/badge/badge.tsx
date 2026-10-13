@@ -39,7 +39,7 @@ export function Badge({
       className={clsx(styles.badge, sizeClass, variantClass, className)}
       {...rest}
     >
-      {icon && <span style={{ display: 'inline-flex', flexShrink: 0 }}>{icon}</span>}
+      {icon && <span className={styles.iconSlot}>{icon}</span>}
       <span>{children}</span>
     </span>
   );

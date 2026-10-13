@@ -1,5 +1,6 @@
 import React from 'react';
 import type { Metadata } from 'next';
+import styles from '@/features/arena/arena.module.css';
 
 export const metadata: Metadata = {
   title: 'Multiplayer Arena | Kuizu',
@@ -12,14 +13,7 @@ export default function ArenaLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div
-      style={{
-        minHeight: '100vh',
-        width: '100%',
-        backgroundColor: 'var(--bg-primary)',
-        color: 'var(--text-primary)',
-      }}
-    >
+    <div className={styles.arenaLayout}>
       {children}
     </div>
   );

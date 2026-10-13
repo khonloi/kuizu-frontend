@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { RotateCcw, Home, AlertTriangle } from 'lucide-react';
 import { Button, Card, Badge } from '@/components/ui';
 
+import styles from './status-pages.module.css';
+
 export default function ErrorBoundary({
   error,
   reset,
@@ -17,40 +19,13 @@ export default function ErrorBoundary({
   }, [error]);
 
   return (
-    <div
-      style={{
-        minHeight: '80vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '2rem 1rem',
-      }}
-    >
+    <div className={styles.statusContainer}>
       <Card
         padding="lg"
         glow="kahoot"
-        style={{
-          maxWidth: '520px',
-          width: '100%',
-          textAlign: 'center',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: '1.25rem',
-        }}
+        className={styles.statusCard}
       >
-        <div
-          style={{
-            width: '64px',
-            height: '64px',
-            borderRadius: '20px',
-            backgroundColor: 'var(--duo-red-subtle)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-          className="animate-shake"
-        >
+        <div className={`${styles.errorIconWrapper} animate-shake`}>
           <AlertTriangle size={36} color="var(--duo-red)" />
         </div>
 
@@ -58,15 +33,15 @@ export default function ErrorBoundary({
           <Badge variant="red" size="sm">
             UNEXPECTED OBSTACLE
           </Badge>
-          <h1 style={{ fontSize: '2rem', fontWeight: 900, marginTop: '0.5rem', letterSpacing: '-0.02em' }}>
+          <h1 className={styles.statusTitle}>
             Something went wrong!
           </h1>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', marginTop: '0.5rem', lineHeight: 1.6 }}>
+          <p className={styles.statusDescription}>
             {error.message || 'An unexpected error occurred while loading this quest.'}
           </p>
         </div>
 
-        <div style={{ display: 'flex', gap: '1rem', width: '100%', justifyContent: 'center', flexWrap: 'wrap' }}>
+        <div className={styles.statusActions}>
           <Button
             variant="duo"
             size="md"

@@ -3,6 +3,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useAudioStore } from '@/stores/audio.store';
 
+import styles from './countdown-timer.module.css';
+
 interface CountdownTimerProps {
   timeLimit: number;
   onExpire?: () => void;
@@ -65,25 +67,25 @@ export function CountdownTimer({
     strokeColor = 'var(--duo-yellow)';
   }
 
+  const timerVars = {
+    '--timer-size': `${size}px`,
+    '--timer-font-size': `${size * 0.36}px`,
+    '--timer-color': strokeColor,
+  } as React.CSSProperties;
+
   return (
     <div
       role="timer"
       aria-label="Remaining question time"
       aria-live="polite"
-      style={{
-        position: 'relative',
-        width: size,
-        height: size,
-        display: 'inline-flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
+      className={styles.timerWrapper}
+      style={timerVars}
       title={`${timeLeft} seconds left`}
     >
       <svg
         width={size}
         height={size}
-        style={{ transform: 'rotate(-90deg)' }}
+        className={styles.timerSvg}
         aria-hidden="true"
       >
         {/* Track circle */}
@@ -106,21 +108,12 @@ export function CountdownTimer({
           strokeDasharray={circumference}
           strokeDashoffset={strokeDashoffset}
           strokeLinecap="round"
-          style={{
-            transition: 'stroke-dashoffset 1s linear, stroke 0.3s ease',
-          }}
+          className={styles.timerProgressCircle}
         />
       </svg>
 
       <span
-        style={{
-          position: 'absolute',
-          fontSize: size * 0.36,
-          fontWeight: 900,
-          color: strokeColor,
-          fontVariantNumeric: 'tabular-nums',
-        }}
-        className={timeLeft <= 3 ? 'animate-heart-beat' : undefined}
+        className={`${styles.timerNumber} ${timeLeft <= 3 ? 'animate-heart-beat' : ''}`}
       >
         {timeLeft}
       </span>

@@ -55,19 +55,16 @@ export function KahootTile({
       <div
         className={clsx(styles.hostChoiceItem, colorClass, {
           'animate-pop': isCorrect === true,
+          [styles.hostChoiceItemCorrect]: isCorrect === true,
+          [styles.hostChoiceItemWrong]: isCorrect === false,
         })}
-        style={{
-          opacity: isCorrect === false ? 0.35 : 1,
-          border: isCorrect === true ? '3px solid #ffffff' : undefined,
-          transform: isCorrect === true ? 'scale(1.02)' : undefined,
-        }}
       >
         <span className={styles.tileShape} aria-label={shape.label}>
           {shape.symbol}
         </span>
-        <span style={{ flex: 1, letterSpacing: '-0.01em' }}>{label}</span>
+        <span className={styles.hostChoiceLabel}>{label}</span>
         {isCorrect === true && (
-          <span style={{ fontSize: '1.5rem', fontWeight: 900 }}>✓</span>
+          <span className={styles.hostChoiceCheckmark}>✓</span>
         )}
       </div>
     );
@@ -84,18 +81,11 @@ export function KahootTile({
       })}
       aria-label={`${shape.label}: ${label || color}`}
     >
-      <span style={{ fontSize: '3.5rem', lineHeight: 1 }} aria-hidden="true">
+      <span className={styles.gamepadShapeSymbol} aria-hidden="true">
         {shape.symbol}
       </span>
       {label && (
-        <span
-          style={{
-            fontSize: '1.1rem',
-            fontWeight: 800,
-            textAlign: 'center',
-            textShadow: '0 2px 4px rgba(0,0,0,0.5)',
-          }}
-        >
+        <span className={styles.gamepadLabel}>
           {label}
         </span>
       )}

@@ -155,3 +155,69 @@
   border: 2px dashed rgba(255, 255, 255, 0.15);
   margin-top: 1rem;
 }
+
+.unitCard {
+  width: 100%;
+  background: linear-gradient(135deg, rgba(88, 204, 2, 0.12) 0%, rgba(23, 32, 54, 0.95) 100%);
+  border-color: rgba(88, 204, 2, 0.3);
+}
+
+.unitHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.unitTitle {
+  font-size: 1.75rem;
+  font-weight: 900;
+  margin-top: 0.35rem;
+  letter-spacing: -0.02em;
+}
+
+.unitDescription {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  margin-top: 0.25rem;
+  max-width: 520px;
+}
+
+.unitProgress {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.unitProgressText {
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: var(--duo-green);
+}
+
+.lessonLabelLocked {
+  color: var(--text-muted) !important;
+}
+
+.milestoneEmoji {
+  font-size: 2.5rem;
+}
+
+.milestoneInfo {
+  text-align: center;
+}
+
+.milestoneTitle {
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+
+.milestoneSubtitle {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 0.2rem;
+}
+

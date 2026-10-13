@@ -73,7 +73,10 @@ export default function DesignSystemPage() {
         <div className={styles.swatchGrid}>
           {COLOR_SWATCHES.map((swatch) => (
             <div key={swatch.varName} className={styles.swatchCard}>
-              <div className={styles.swatchColor} style={{ backgroundColor: swatch.color }} />
+              <div
+                className={styles.swatchColor}
+                style={{ '--swatch-color': swatch.color } as React.CSSProperties}
+              />
               <div className={styles.swatchInfo}>
                 <span className={styles.swatchName}>{swatch.name}</span>
                 <span className={styles.swatchVar}>{swatch.varName}</span>
@@ -204,7 +207,7 @@ export default function DesignSystemPage() {
           <ProgressBar value={40} max={100} color="yellow" size="sm" />
           <Stack direction="horizontal" gap="sm" align="center">
             <Skeleton variant="circle" width={40} height={40} />
-            <Stack gap="xs" style={{ flex: 1 }}>
+            <Stack gap="xs" className={styles.flex1}>
               <Skeleton variant="text" width="60%" />
               <Skeleton variant="text" width="40%" height="0.8rem" />
             </Stack>
@@ -348,10 +351,10 @@ export default function DesignSystemPage() {
         onClose={() => setIsModalOpen(false)}
         title="Kuizu UI Modal"
       >
-        <p style={{ color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+        <p className={styles.modalText}>
           This accessible modal traps focus, manages ARIA dialog roles, and can be dismissed via backdrop click or Escape.
         </p>
-        <Stack direction="horizontal" justify="end" gap="sm" style={{ marginTop: '1.25rem' }}>
+        <Stack direction="horizontal" justify="end" gap="sm" className={styles.modalActions}>
           <Button variant="ghost" onClick={() => setIsModalOpen(false)}>Cancel</Button>
           <Button variant="duo" onClick={() => setIsModalOpen(false)}>Confirm Action</Button>
         </Stack>

@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import clsx from 'clsx';
 import {
   Sparkles,
   BookOpen,
@@ -55,20 +56,20 @@ export default function HomePage() {
           <span className={styles.logoText}>KUIZU</span>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', flexWrap: 'wrap' }}>
+        <div className={styles.headerActions}>
           {/* Stats Bar */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: 'var(--duo-orange)', fontWeight: 800 }}>
+          <div className={styles.headerStats}>
+            <div className={clsx(styles.statItem, styles.statStreak)}>
               <Flame size={20} fill="var(--duo-orange)" />
               <span>{user?.streak.count ?? 7}</span>
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: 'var(--duo-red)', fontWeight: 800 }}>
+            <div className={clsx(styles.statItem, styles.statHearts)}>
               <Heart size={20} fill="var(--duo-red)" />
               <span>{user?.hearts ?? 5}</span>
             </div>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: 'var(--duo-yellow)', fontWeight: 900 }}>
+            <div className={clsx(styles.statItem, styles.statXp)}>
               <Zap size={20} fill="var(--duo-yellow)" />
               <span>{user?.xp ?? 450} XP</span>
             </div>
@@ -123,14 +124,14 @@ export default function HomePage() {
       <section className={styles.showcaseGrid}>
         {/* Feature 1: Duolingo Quest Path */}
         <Card padding="lg" glow="duo">
-          <div className={styles.cardIcon} style={{ background: 'rgba(88, 204, 2, 0.15)' }}>
+          <div className={clsx(styles.cardIcon, styles.iconDuo)}>
             🗾
           </div>
           <Badge variant="duo" size="sm">SELF-PACED MASTERY</Badge>
-          <h2 style={{ fontSize: '1.5rem', fontWeight: 900, marginTop: '0.5rem' }}>
+          <h2 className={styles.cardTitle}>
             Sine-Wave Curriculum Tree
           </h2>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', margin: '0.5rem 0 1.5rem', lineHeight: 1.6 }}>
+          <p className={styles.cardDescription}>
             Meandering skill nodes, persistent progress unlocking, XP rewards, and lesson completion crown badges.
           </p>
           <Link href="/learn" onClick={playPop}>
@@ -142,17 +143,17 @@ export default function HomePage() {
 
         {/* Feature 2: Multiplayer Live Arena */}
         <Card padding="lg" glow="kahoot">
-          <div className={styles.cardIcon} style={{ background: 'rgba(226, 27, 60, 0.15)' }}>
+          <div className={clsx(styles.cardIcon, styles.iconKahoot)}>
             🎮
           </div>
           <Badge variant="red" size="sm">REAL-TIME MULTIPLAYER</Badge>
-          <h2 style={{ fontSize: '1.5rem', fontWeight: 900, marginTop: '0.5rem' }}>
+          <h2 className={styles.cardTitle}>
             Kahoot Projector Arena
           </h2>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', margin: '0.5rem 0 1.5rem', lineHeight: 1.6 }}>
+          <p className={styles.cardDescription}>
             Host quizzes on classroom screens with instant QR code join, speed bonus formulas, and Olympic podium ceremonies.
           </p>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
+          <div className={styles.arenaButtonsGrid}>
             <Link href="/arena/host" onClick={playPop}>
               <Button variant="kahoot" size="md" fullWidth leftIcon={<Play size={16} />}>
                 Host Game
@@ -168,14 +169,14 @@ export default function HomePage() {
 
         {/* Feature 3: Economy & Shop */}
         <Card padding="lg" glow="blue">
-          <div className={styles.cardIcon} style={{ background: 'rgba(28, 176, 246, 0.15)' }}>
+          <div className={clsx(styles.cardIcon, styles.iconBlue)}>
             💎
           </div>
           <Badge variant="blue" size="sm">GAMIFIED ECONOMY</Badge>
-          <h2 style={{ fontSize: '1.5rem', fontWeight: 900, marginTop: '0.5rem' }}>
+          <h2 className={styles.cardTitle}>
             Power-Ups & Streak Stash
           </h2>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', margin: '0.5rem 0 1.5rem', lineHeight: 1.6 }}>
+          <p className={styles.cardDescription}>
             Replenish hearts, equip streak freezes, or wager gems in double-or-nothing streak challenges.
           </p>
           <Link href="/shop" onClick={playPop}>
@@ -187,14 +188,14 @@ export default function HomePage() {
 
         {/* Feature 4: Competitive Leagues */}
         <Card padding="lg" glow="none">
-          <div className={styles.cardIcon} style={{ background: 'rgba(255, 200, 0, 0.15)' }}>
+          <div className={clsx(styles.cardIcon, styles.iconYellow)}>
             🏆
           </div>
           <Badge variant="yellow" size="sm">LEAGUES & RANKS</Badge>
-          <h2 style={{ fontSize: '1.5rem', fontWeight: 900, marginTop: '0.5rem' }}>
+          <h2 className={styles.cardTitle}>
             Weekly Leaderboard
           </h2>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', margin: '0.5rem 0 1.5rem', lineHeight: 1.6 }}>
+          <p className={styles.cardDescription}>
             Climb from Bronze to Diamond league. Earn top XP to earn promotions and exclusive avatar flair.
           </p>
           <Link href="/leaderboard" onClick={playPop}>
@@ -210,10 +211,10 @@ export default function HomePage() {
         <Badge variant="duo" size="sm" icon={<Volume2 size={16} />}>
           AUDIO & SENSORY ENGINE PREVIEW
         </Badge>
-        <h2 style={{ fontSize: '2rem', fontWeight: 900, marginTop: '0.75rem' }}>
+        <h2 className={styles.soundboardTitle}>
           Feel Every Tap with Tactile Sound & Motion
         </h2>
-        <p style={{ color: 'var(--text-secondary)', fontSize: '1.05rem', maxWidth: '640px', margin: '0.5rem auto 0', lineHeight: 1.6 }}>
+        <p className={styles.soundboardSubtitle}>
           Test the procedural Web Audio synthesizer and confetti engine directly in your browser.
         </p>
 
@@ -258,12 +259,12 @@ export default function HomePage() {
 
       {/* Clean System Architecture Status Footer */}
       <footer className={styles.statusFooter}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-          <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: 'var(--duo-green)', boxShadow: '0 0 10px var(--duo-green)' }} />
-          <span style={{ fontSize: '0.95rem', fontWeight: 800 }}>Kuizu v2 Architecture Operational</span>
+        <div className={styles.statusIndicatorGroup}>
+          <span className={styles.statusDot} />
+          <span className={styles.statusTitle}>Kuizu v2 Architecture Operational</span>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+        <div className={styles.statusMeta}>
           <span>Next.js 16 App Router</span>
           <span>NestJS Realtime Socket.IO</span>
           <span>Custom CSS Modules</span>
@@ -271,7 +272,7 @@ export default function HomePage() {
             href="http://localhost:4000/api/docs"
             target="_blank"
             rel="noreferrer"
-            style={{ color: 'var(--duo-blue)', fontWeight: 700 }}
+            className={styles.apiDocsLink}
           >
             API Docs ↗
           </a>

@@ -25,7 +25,7 @@ export function FillBlankExercise({
     <div className={styles.container}>
       {/* Prompt Card */}
       <div className={styles.promptCard}>
-        <span style={{ fontSize: '0.85rem', fontWeight: 800, color: 'var(--duo-yellow)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+        <span className={styles.badgeYellow}>
           FILL IN THE MISSING BLANK
         </span>
         <h2 className={styles.promptText}>{exercise.prompt}</h2>
@@ -33,18 +33,12 @@ export function FillBlankExercise({
       </div>
 
       {/* Selected word slot preview */}
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '1.25rem',
-          borderRadius: '16px',
-          backgroundColor: 'rgba(15, 23, 42, 0.7)',
-          border: '2px solid var(--border-subtle)',
-        }}
-      >
-        <span style={{ fontSize: '1.25rem', fontWeight: 800, color: selectedAnswer ? 'var(--duo-green)' : 'var(--text-muted)' }}>
+      <div className={styles.blankSlotPreview}>
+        <span
+          className={clsx(styles.blankAnswerText, {
+            [styles.blankAnswerTextFilled]: !!selectedAnswer,
+          })}
+        >
           {selectedAnswer ? `[ ${selectedAnswer} ]` : '[ Tap an option below ]'}
         </span>
       </div>
@@ -64,17 +58,8 @@ export function FillBlankExercise({
                 onSelect(option);
               }}
               className={clsx(styles.wordChip, {
-                [styles.choiceBtnSelected]: isSelected,
+                [styles.wordChipSelectedGreen]: isSelected,
               })}
-              style={
-                isSelected
-                  ? {
-                      backgroundColor: 'var(--duo-green-subtle)',
-                      borderColor: 'var(--duo-green)',
-                      color: '#ffffff',
-                    }
-                  : undefined
-              }
             >
               {option}
             </button>

@@ -183,6 +183,12 @@
   box-shadow: none !important;
 }
 
+.wordChipSelected {
+  background-color: var(--duo-blue-subtle);
+  border-color: var(--duo-blue);
+  color: #ffffff;
+}
+
 /* Pair Matching Exercise Styles */
 .matchGrid {
   display: grid;
@@ -304,3 +310,88 @@
   transform: translateY(2px);
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.3);
 }
+
+/* Exercise Badges & Typography Utilities */
+.badgeGreen {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--duo-green);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.badgeBlue {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--duo-blue);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.badgeYellow {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--duo-yellow);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.emptyPlaceholder {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.wordBankPlaceholder {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex1 {
+  flex: 1;
+}
+
+.matchedCheckmark {
+  margin-left: 0.5rem;
+}
+
+.centeredBlock {
+  text-align: center;
+}
+
+.blankSlotCard {
+  padding: 2rem;
+  border-radius: var(--radius-lg, 20px);
+  background-color: var(--bg-card);
+  border: 2px dashed var(--border-subtle);
+  text-align: center;
+}
+
+.blankSlotPreview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  border-radius: var(--radius-lg, 16px);
+  background-color: rgba(15, 23, 42, 0.7);
+  border: 2px solid var(--border-subtle);
+}
+
+.blankAnswerText {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text-muted);
+}
+
+.blankAnswerTextFilled {
+  color: var(--duo-green);
+}
+
+.wordChipSelectedGreen {
+  background-color: var(--duo-green-subtle) !important;
+  border-color: var(--duo-green) !important;
+  color: #ffffff !important;
+}
+
+

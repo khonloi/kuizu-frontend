@@ -17,9 +17,44 @@ const nunito = Nunito({
   display: 'swap',
 });
 
+const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3001';
+
 export const metadata: Metadata = {
-  title: 'Kuizu | Gamified Learning & Live Arena',
-  description: 'Duolingo-style bite-sized interactive courses meets Kahoot-style real-time multiplayer quiz battles.',
+  metadataBase: new URL(appUrl),
+  title: {
+    default: 'Kuizu | Gamified Learning & Live Arena',
+    template: '%s | Kuizu',
+  },
+  description:
+    'Duolingo-style bite-sized interactive courses meets Kahoot-style real-time multiplayer quiz battles.',
+  keywords: [
+    'gamified learning',
+    'quiz battle',
+    'interactive courses',
+    'kahoot multiplayer',
+    'duolingo quests',
+  ],
+  authors: [{ name: 'Kuizu Team' }],
+  creator: 'Kuizu',
+  openGraph: {
+    title: 'Kuizu | Gamified Learning & Live Arena',
+    description:
+      'Master skills in quests and clash in multiplayer arena battles with 3D tactile physics and real-time WebSockets.',
+    url: appUrl,
+    siteName: 'Kuizu',
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Kuizu | Gamified Learning & Live Arena',
+    description:
+      'Master skills in quests and clash in multiplayer arena battles with 3D tactile physics and real-time WebSockets.',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({

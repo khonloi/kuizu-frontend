@@ -1,0 +1,14 @@
+.guardLoadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+}
+
+.guardSpinner {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 3px solid rgba(88, 204, 2, 0.2);
+  border-top-color: var(--duo-green);
+}

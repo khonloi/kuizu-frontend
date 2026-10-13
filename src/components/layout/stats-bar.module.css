@@ -99,3 +99,16 @@
     display: none;
   }
 }
+
+.loginLink {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: var(--duo-green);
+  text-decoration: none;
+  transition: opacity var(--transition-fast);
+}
+
+.loginLink:hover {
+  opacity: 0.85;
+}
+

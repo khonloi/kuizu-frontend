@@ -16,11 +16,10 @@ export default function ArenaPlayerPlayPage() {
   const { submitAnswer } = useArenaSocket();
   const { playSuccess, playError, playPop } = useAudioStore();
 
-  const [hasSubmitted, setHasSubmitted] = useState(false);
-  const [lastResult, setLastResult] = useState<{
-    isCorrect: boolean;
-    pointsEarned: number;
-  } | null>(null);
+  const [submittedQuestionIndex, setSubmittedQuestionIndex] = useState<number | null>(null);
+  const [resultByQuestion, setResultByQuestion] = useState<
+    Record<number, { isCorrect: boolean; pointsEarned: number }>
+  >({});
 
   const {
     pin,
@@ -34,10 +33,16 @@ export default function ArenaPlayerPlayPage() {
     podium,
   } = gameStore;
 
+  const currentQIndex = currentQuestion?.questionIndex;
+  const hasSubmitted =
+    currentQIndex !== undefined && submittedQuestionIndex === currentQIndex;
+  const lastResult =
+    currentQIndex !== undefined ? resultByQuestion[currentQIndex] ?? null : null;
+
   // Answer Submission Handler
   const handleSelectAnswer = async (choiceId: string) => {
-    if (hasSubmitted || !pin) return;
-    setHasSubmitted(true);
+    if (hasSubmitted || !pin || currentQIndex === undefined) return;
+    setSubmittedQuestionIndex(currentQIndex);
     playPop();
 
     // Haptic feedback for tactile handheld feel
@@ -51,10 +56,13 @@ export default function ArenaPlayerPlayPage() {
 
     const res = await submitAnswer(pin, choiceId);
     if (res.success && res.isCorrect !== undefined) {
-      setLastResult({
-        isCorrect: res.isCorrect,
-        pointsEarned: res.pointsEarned ?? 0,
-      });
+      setResultByQuestion((prev) => ({
+        ...prev,
+        [currentQIndex]: {
+          isCorrect: res.isCorrect!,
+          pointsEarned: res.pointsEarned ?? 0,
+        },
+      }));
 
       if (res.isCorrect) {
         playSuccess();
@@ -64,27 +72,16 @@ export default function ArenaPlayerPlayPage() {
     }
   };
 
-  // Reset local submission state when a new question arrives
-  const [activeQuestionIndex, setActiveQuestionIndex] = useState(
-    currentQuestion?.questionIndex
-  );
-
-  if (currentQuestion?.questionIndex !== activeQuestionIndex) {
-    setActiveQuestionIndex(currentQuestion?.questionIndex);
-    setHasSubmitted(false);
-    setLastResult(null);
-  }
-
   // 1. Lobby Waiting State
   if (status === 'idle' || status === 'lobby') {
     return (
       <div className={styles.arenaRoot}>
         <header className={styles.arenaHeader}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+          <div className={styles.flexRow}>
             <Badge variant="red" size="sm">
               PIN: {pin || '000000'}
             </Badge>
-            <span style={{ fontWeight: 800 }}>{nickname || 'Player'}</span>
+            <span className={styles.fontWeight800}>{nickname || 'Player'}</span>
           </div>
           <Link href="/arena/join" onClick={playPop}>
             <Button variant="ghost" size="sm" leftIcon={<ArrowLeft size={16} />}>
@@ -94,31 +91,18 @@ export default function ArenaPlayerPlayPage() {
         </header>
 
         <main className={styles.lobbyStage}>
-          <div style={{ fontSize: '4.5rem' }} className="animate-pop">
+          <div className={`${styles.playerBigEmoji} animate-pop`}>
             🎮
           </div>
-          <h1 style={{ fontSize: '2.5rem', fontWeight: 900, marginTop: '1rem' }}>
+          <h1 className={styles.playerTitle}>
             You&apos;re in the Game!
           </h1>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '1.2rem', marginTop: '0.5rem', maxWidth: '480px' }}>
+          <p className={styles.playerSubtitle}>
             See your nickname on the host&apos;s big screen? The host will start the quiz shortly.
           </p>
 
-          <div
-            style={{
-              marginTop: '2.5rem',
-              padding: '1.25rem 2rem',
-              borderRadius: '9999px',
-              backgroundColor: 'rgba(255, 255, 255, 0.06)',
-              border: '2px solid rgba(255, 255, 255, 0.15)',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '0.75rem',
-              fontWeight: 800,
-            }}
-            className="animate-pulse-ring"
-          >
-            <span style={{ width: '12px', height: '12px', borderRadius: '50%', backgroundColor: 'var(--duo-green)' }} />
+          <div className={`${styles.waitingPill} animate-pulse-ring`}>
+            <span className={styles.pulsingDot} />
             <span>Ready & Waiting for Host to Start...</span>
           </div>
         </main>
@@ -132,19 +116,19 @@ export default function ArenaPlayerPlayPage() {
       <div className={styles.arenaRoot}>
         {/* Top Mini Bar */}
         <header className={styles.arenaHeader}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <span style={{ fontWeight: 900, color: 'var(--text-secondary)' }}>
+          <div className={styles.flexRow}>
+            <span className={`${styles.fontWeight900} ${styles.textSecondary}`}>
               Q{currentQuestion.questionIndex + 1}/{currentQuestion.totalQuestions}
             </span>
-            <span style={{ fontWeight: 800 }}>{nickname}</span>
+            <span className={styles.fontWeight800}>{nickname}</span>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', color: 'var(--duo-orange)', fontWeight: 800 }}>
+          <div className={styles.flexRowLg}>
+            <div className={styles.statItemOrange}>
               <Flame size={18} fill="var(--duo-orange)" />
               <span>{streak}</span>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', color: 'var(--duo-yellow)', fontWeight: 900 }}>
+            <div className={styles.statItemYellow}>
               <Zap size={18} fill="var(--duo-yellow)" />
               <span>{score} pts</span>
             </div>
@@ -153,18 +137,18 @@ export default function ArenaPlayerPlayPage() {
 
         <main className={styles.playerControllerStage}>
           {/* Top Timer Indicator */}
-          <div style={{ display: 'flex', justifyContent: 'center', margin: '0.5rem 0' }}>
+          <div className={styles.timerCenter}>
             <CountdownTimer timeLimit={currentQuestion.timeLimit} size={64} />
           </div>
 
           {/* If already submitted, show locked-in indicator */}
           {hasSubmitted ? (
             <div className={`${styles.lockedInBanner} animate-pop`}>
-              <div style={{ fontSize: '3.5rem' }}>🔒</div>
-              <h2 style={{ fontSize: '1.75rem', fontWeight: 900 }}>
+              <div className={styles.lockEmoji}>🔒</div>
+              <h2 className={styles.lockedInTitle}>
                 Answer Locked In!
               </h2>
-              <p style={{ color: 'var(--text-secondary)', fontSize: '1rem' }}>
+              <p className={styles.lockedInSubtitle}>
                 Look up at the screen to see how other competitors answered.
               </p>
             </div>
@@ -198,8 +182,8 @@ export default function ArenaPlayerPlayPage() {
     return (
       <div className={styles.arenaRoot}>
         <header className={styles.arenaHeader}>
-          <span style={{ fontWeight: 800 }}>{nickname}</span>
-          <span style={{ fontWeight: 900, color: 'var(--duo-yellow)' }}>
+          <span className={styles.fontWeight800}>{nickname}</span>
+          <span className={styles.totalScoreText}>
             Total: {score} pts
           </span>
         </header>
@@ -208,14 +192,14 @@ export default function ArenaPlayerPlayPage() {
           {isPlayerCorrect ? (
             <div className={`${styles.feedbackScreenCorrect} animate-pop`}>
               <CheckCircle2 size={64} color="#ffffff" />
-              <h1 style={{ fontSize: '2.5rem', fontWeight: 900, color: '#ffffff' }}>
+              <h1 className={styles.feedbackTitle}>
                 CORRECT!
               </h1>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1.5rem', fontWeight: 900, color: '#ffffff' }}>
+              <div className={styles.pointsEarnedRow}>
                 <Zap size={28} fill="#ffffff" />
                 <span>+{pointsEarned} Points</span>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: '#ffffff', fontWeight: 800, fontSize: '1.1rem' }}>
+              <div className={styles.streakRow}>
                 <Flame size={22} fill="var(--duo-orange)" color="var(--duo-orange)" />
                 <span>Answer Streak Active!</span>
               </div>
@@ -223,10 +207,10 @@ export default function ArenaPlayerPlayPage() {
           ) : (
             <div className={`${styles.feedbackScreenWrong} animate-shake`}>
               <XCircle size={64} color="#ffffff" />
-              <h1 style={{ fontSize: '2.25rem', fontWeight: 900, color: '#ffffff' }}>
+              <h1 className={styles.wrongTitle}>
                 INCORRECT
               </h1>
-              <p style={{ fontSize: '1.1rem', color: 'rgba(255, 255, 255, 0.9)', fontWeight: 700 }}>
+              <p className={styles.wrongSubtitle}>
                 Don&apos;t give up! More questions coming up next.
               </p>
             </div>
@@ -243,18 +227,18 @@ export default function ArenaPlayerPlayPage() {
     return (
       <div className={styles.arenaRoot}>
         <main className={styles.lobbyStage}>
-          <div style={{ fontSize: '4.5rem' }}>
+          <div className={styles.podiumBigMedal}>
             {myRank === 1 ? '🥇' : myRank === 2 ? '🥈' : myRank === 3 ? '🥉' : '🎖️'}
           </div>
 
-          <h1 style={{ fontSize: '2.5rem', fontWeight: 900, marginTop: '1rem' }}>
+          <h1 className={styles.playerTitle}>
             {myRank > 0 ? `You Finished #${myRank} Place!` : 'Match Complete!'}
           </h1>
 
-          <div style={{ margin: '1.5rem 0' }}>
+          <div className={styles.scoreCardWrapper}>
             <Card padding="md" glow="kahoot">
-              <span style={{ fontSize: '1rem', color: 'var(--text-secondary)' }}>Final Score</span>
-              <div style={{ fontSize: '2.25rem', fontWeight: 900, color: 'var(--duo-yellow)', marginTop: '0.25rem' }}>
+              <span className={styles.scoreCardLabel}>Final Score</span>
+              <div className={styles.finalScoreValue}>
                 {score.toLocaleString()} Points
               </div>
             </Card>

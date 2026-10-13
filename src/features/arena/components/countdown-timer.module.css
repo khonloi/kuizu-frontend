@@ -1,0 +1,24 @@
+.timerWrapper {
+  position: relative;
+  width: var(--timer-size, 72px);
+  height: var(--timer-size, 72px);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.timerSvg {
+  transform: rotate(-90deg);
+}
+
+.timerProgressCircle {
+  transition: stroke-dashoffset 1s linear, stroke 0.3s ease;
+}
+
+.timerNumber {
+  position: absolute;
+  font-size: var(--timer-font-size, 1.6rem);
+  font-weight: 900;
+  color: var(--timer-color, var(--duo-blue));
+  font-variant-numeric: tabular-nums;
+}

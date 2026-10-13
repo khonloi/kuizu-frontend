@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect } from 'react';
+import clsx from 'clsx';
 import styles from '../arena.module.css';
 import { Card, Badge } from '@/components/ui';
 import { fireVictoryConfetti, fireStreakFireworks } from '@/lib/confetti';
@@ -32,21 +33,20 @@ export function PodiumCeremony({ podium, fullLeaderboard }: PodiumCeremonyProps)
     <div
       role="region"
       aria-label="Grand Finale Podium"
-      style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}
+      className={styles.podiumWrapper}
     >
-      <Badge variant="yellow" size="md" style={{ marginBottom: '1rem' }}>
+      <Badge variant="yellow" size="md" className={styles.podiumBadge}>
         🏆 GRAND FINALE PODIUM
       </Badge>
 
-      <h1 style={{ fontSize: '3rem', fontWeight: 900, letterSpacing: '-0.02em', textAlign: 'center' }}>
+      <h1 className={styles.podiumHeading}>
         Game Over! Champions Crowned
       </h1>
 
       {/* 3-Tier Olympic Podium */}
       <ol
-        className={styles.podiumContainer}
+        className={clsx(styles.podiumContainer, styles.podiumList)}
         aria-label="Quiz competition winners podium"
-        style={{ listStyle: 'none', padding: 0, margin: 0 }}
       >
         {/* 2nd Place (Left) */}
         <li
@@ -55,17 +55,17 @@ export function PodiumCeremony({ podium, fullLeaderboard }: PodiumCeremonyProps)
         >
           {second ? (
             <div className={styles.podiumPlayerInfo}>
-              <span style={{ fontSize: '2.5rem' }}>🥈</span>
-              <span style={{ fontSize: '1.25rem', fontWeight: 900 }}>{second.nickname}</span>
-              <span style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', fontWeight: 700 }}>
+              <span className={styles.podiumMedalSm}>🥈</span>
+              <span className={styles.podiumNicknameSm}>{second.nickname}</span>
+              <span className={styles.podiumScoreSm}>
                 {second.score.toLocaleString()} pts
               </span>
             </div>
           ) : (
-            <span style={{ color: 'var(--text-muted)', marginBottom: '1rem' }}>-</span>
+            <span className={styles.podiumEmptySlot}>-</span>
           )}
           <div className={`${styles.podiumBlock} ${styles.podiumSecond}`}>
-            <span style={{ fontSize: '2.5rem', fontWeight: 900 }}>2</span>
+            <span className={styles.podiumRankNumberSm}>2</span>
           </div>
         </li>
 
@@ -76,21 +76,21 @@ export function PodiumCeremony({ podium, fullLeaderboard }: PodiumCeremonyProps)
         >
           {first ? (
             <div className={styles.podiumPlayerInfo}>
-              <span style={{ fontSize: '3.5rem' }} className="animate-pop">
+              <span className={`${styles.podiumMedalLg} animate-pop`}>
                 👑
               </span>
-              <span style={{ fontSize: '1.5rem', fontWeight: 900, color: 'var(--duo-yellow)' }}>
+              <span className={styles.podiumNicknameLg}>
                 {first.nickname}
               </span>
-              <span style={{ fontSize: '1rem', color: '#ffffff', fontWeight: 800 }}>
+              <span className={styles.podiumScoreLg}>
                 {first.score.toLocaleString()} pts
               </span>
             </div>
           ) : (
-            <span style={{ color: 'var(--text-muted)', marginBottom: '1rem' }}>-</span>
+            <span className={styles.podiumEmptySlot}>-</span>
           )}
           <div className={`${styles.podiumBlock} ${styles.podiumFirst}`}>
-            <span style={{ fontSize: '3.5rem', fontWeight: 900 }}>1</span>
+            <span className={styles.podiumRankNumberLg}>1</span>
           </div>
         </li>
 
@@ -101,47 +101,46 @@ export function PodiumCeremony({ podium, fullLeaderboard }: PodiumCeremonyProps)
         >
           {third ? (
             <div className={styles.podiumPlayerInfo}>
-              <span style={{ fontSize: '2.5rem' }}>🥉</span>
-              <span style={{ fontSize: '1.25rem', fontWeight: 900 }}>{third.nickname}</span>
-              <span style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', fontWeight: 700 }}>
+              <span className={styles.podiumMedalSm}>🥉</span>
+              <span className={styles.podiumNicknameSm}>{third.nickname}</span>
+              <span className={styles.podiumScoreSm}>
                 {third.score.toLocaleString()} pts
               </span>
             </div>
           ) : (
-            <span style={{ color: 'var(--text-muted)', marginBottom: '1rem' }}>-</span>
+            <span className={styles.podiumEmptySlot}>-</span>
           )}
           <div className={`${styles.podiumBlock} ${styles.podiumThird}`}>
-            <span style={{ fontSize: '2.5rem', fontWeight: 900 }}>3</span>
+            <span className={styles.podiumRankNumberSm}>3</span>
           </div>
         </li>
       </ol>
 
       {/* Full Leaderboard Table (if available) */}
       {fullLeaderboard && fullLeaderboard.length > 0 && (
-        <Card padding="md" style={{ width: '100%', maxWidth: '640px', marginTop: '1.5rem' }}>
-          <h3 style={{ fontSize: '1.1rem', fontWeight: 800, marginBottom: '1rem' }}>
+        <Card padding="md" className={styles.podiumLeaderboardCard}>
+          <h3 className={styles.podiumLeaderboardTitle}>
             Final Leaderboard Standings
           </h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+          <div className={styles.podiumLeaderboardList}>
             {fullLeaderboard.map((entry, idx) => (
               <div
                 key={entry.socketId || `${entry.nickname}-${idx}`}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  padding: '0.75rem 1rem',
-                  borderRadius: '12px',
-                  backgroundColor: idx < 3 ? 'rgba(255, 255, 255, 0.08)' : 'rgba(255, 255, 255, 0.03)',
-                }}
+                className={clsx(styles.podiumLeaderboardRow, {
+                  [styles.podiumLeaderboardRowTop]: idx < 3,
+                })}
               >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                  <span style={{ fontWeight: 900, width: '24px', color: idx === 0 ? 'var(--duo-yellow)' : 'var(--text-secondary)' }}>
+                <div className={styles.flexRow}>
+                  <span
+                    className={clsx(styles.podiumRankTag, {
+                      [styles.podiumRankTagFirst]: idx === 0,
+                    })}
+                  >
                     #{idx + 1}
                   </span>
-                  <span style={{ fontWeight: 800 }}>{entry.nickname}</span>
+                  <span className={styles.fontWeight800}>{entry.nickname}</span>
                 </div>
-                <span style={{ fontWeight: 800, color: 'var(--duo-blue)' }}>
+                <span className={styles.podiumScoreTag}>
                   {entry.score.toLocaleString()} pts
                 </span>
               </div>

@@ -46,7 +46,7 @@ export function ProgressBar({
     >
       <div
         className={clsx(styles.bar, colorClass)}
-        style={{ width: `${percentage}%` }}
+        style={{ '--progress-width': `${percentage}%` } as React.CSSProperties}
       >
         {showHighlight && percentage > 3 && (
           <span className={styles.highlight} />
