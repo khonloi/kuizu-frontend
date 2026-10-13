@@ -1,283 +1,110 @@
 'use client';
 
-import React from 'react';
-import Link from 'next/link';
-import clsx from 'clsx';
-import {
-  Sparkles,
-  BookOpen,
-  Play,
-  Users,
-  ShoppingBag,
-  Trophy,
-  Volume2,
-  Heart,
-  Zap,
-  Flame,
-  ArrowRight,
-  Radio,
-  Gamepad2,
-  Sparkle,
-} from 'lucide-react';
+import React, { useRef } from 'react';
 import styles from './page.module.css';
-import { Button, Card, Badge } from '@/components/ui';
-import { useAudioStore } from '@/stores/audio.store';
-import { useAuthStore } from '@/stores/auth.store';
-import { fireVictoryConfetti, fireStreakFireworks } from '@/lib/confetti';
+import {
+  LandingNavbar,
+  LandingHero,
+  SubjectRibbon,
+  FeatureSection,
+  FreeFunIllustration,
+  ScienceIllustration,
+  MotivationIllustration,
+  PersonalizedIllustration,
+  AnytimeSection,
+  SuperSection,
+  ProgramsSection,
+  BottomCtaSection,
+  LandingFooter,
+  useScrollPast,
+} from '@/features/landing';
 
 export default function HomePage() {
-  const { user } = useAuthStore();
-  const { playSuccess, playError, playPop, playFanfare } = useAudioStore();
-
-  const handleTestSuccess = () => {
-    playSuccess();
-    fireVictoryConfetti();
-  };
-
-  const handleTestFanfare = () => {
-    playFanfare();
-    fireStreakFireworks();
-  };
-
-  const handleTestPop = () => {
-    playPop();
-  };
-
-  const handleTestError = () => {
-    playError();
-  };
+  const heroRef = useRef<HTMLDivElement>(null);
+  const isPastHero = useScrollPast({ thresholdRef: heroRef, offset: 350 });
 
   return (
-    <main className={styles.container}>
-      {/* Top Navigation Bar */}
-      <header className={styles.header}>
-        <div className={styles.brand}>
-          <div className={styles.logoIcon}>⚡</div>
-          <span className={styles.logoText}>KUIZU</span>
-        </div>
+    <div className={styles.pageWrapper}>
+      {/* 1. Header with sticky conversion button when scrolled */}
+      <LandingNavbar isScrolledPastHero={isPastHero} />
 
-        <div className={styles.headerActions}>
-          {/* Stats Bar */}
-          <div className={styles.headerStats}>
-            <div className={clsx(styles.statItem, styles.statStreak)}>
-              <Flame size={20} fill="var(--duo-orange)" />
-              <span>{user?.streak.count ?? 7}</span>
-            </div>
+      <main id="main-content" className={styles.mainContent}>
+        {/* 2. Hero Section */}
+        <LandingHero heroRef={heroRef} />
 
-            <div className={clsx(styles.statItem, styles.statHearts)}>
-              <Heart size={20} fill="var(--duo-red)" />
-              <span>{user?.hearts ?? 5}</span>
-            </div>
+        {/* 3. Subject Ribbon */}
+        <SubjectRibbon />
 
-            <div className={clsx(styles.statItem, styles.statXp)}>
-              <Zap size={20} fill="var(--duo-yellow)" />
-              <span>{user?.xp ?? 450} XP</span>
-            </div>
-          </div>
+        {/* 4. Alternating Feature Sections */}
+        {/* Section 1: free. fun. effective. */}
+        <FeatureSection
+          id="free-fun-effective"
+          title="free. fun. effective."
+          description={
+            <p>
+              Learning with Kuizu is fun, and{' '}
+              <a href="#research" className={styles.researchLink}>
+                research shows that it works
+              </a>
+              ! With quick, bite-sized lessons, you’ll earn points and unlock new levels while gaining real-world communication skills.
+            </p>
+          }
+          visual={<FreeFunIllustration />}
+        />
 
-          <Link href="/learn" onClick={playPop}>
-            <Button variant="duo" size="sm" rightIcon={<ArrowRight size={16} />}>
-              Open Learning Hub
-            </Button>
-          </Link>
-        </div>
-      </header>
+        {/* Section 2: backed by science (Reversed) */}
+        <FeatureSection
+          id="backed-by-science"
+          title="backed by science"
+          description={
+            <p>
+              We use a combination of research-backed teaching methods and delightful content to create courses that effectively teach reading, writing, listening, and speaking skills!
+            </p>
+          }
+          visual={<ScienceIllustration />}
+          reversed
+        />
 
-      {/* Hero Section */}
-      <section className={styles.hero}>
-        <div className={styles.badge}>
-          <Sparkles size={16} />
-          <span>Next-Gen Gamified Learning Engine</span>
-        </div>
+        {/* Section 3: stay motivated */}
+        <FeatureSection
+          id="stay-motivated"
+          title="stay motivated"
+          description={
+            <p>
+              We make it easy to form a habit of language learning with game-like features, fun challenges, and reminders from our friendly mascot, Kuizu the owl.
+            </p>
+          }
+          visual={<MotivationIllustration />}
+        />
 
-        <h1 className={styles.title}>
-          Master Skills in <span className={styles.highlightDuo}>Duolingo</span> Quests.<br />
-          Clash in <span className={styles.highlightKahoot}>Kahoot</span> Arenas.
-        </h1>
+        {/* Section 4: personalized learning (Reversed) */}
+        <FeatureSection
+          id="personalized-learning"
+          title="personalized learning"
+          description={
+            <p>
+              Combining the best of AI and language science, lessons are tailored to help you learn at just the right level and pace.
+            </p>
+          }
+          visual={<PersonalizedIllustration />}
+          reversed
+        />
 
-        <p className={styles.subtitle}>
-          The unified gamification platform uniting self-paced mastery with intense multiplayer projector battles. Powered by real-time WebSockets, 3D tactile physics, and rich sensory feedback.
-        </p>
+        {/* 5. learn anytime, anywhere */}
+        <AnytimeSection />
 
-        <div className={styles.ctaGroup}>
-          <Link href="/learn" onClick={playPop}>
-            <Button variant="duo" size="lg" leftIcon={<BookOpen size={20} />}>
-              Explore Quest Path
-            </Button>
-          </Link>
+        {/* 6. Power up with Super Kuizu */}
+        <SuperSection />
 
-          <Link href="/arena/join" onClick={playPop}>
-            <Button variant="kahoot" size="lg" leftIcon={<Gamepad2 size={20} />}>
-              Join Live Battle
-            </Button>
-          </Link>
+        {/* 7. Kuizu English Test & Kuizu for Schools */}
+        <ProgramsSection />
 
-          <Link href="/arena/host" onClick={playPop}>
-            <Button variant="secondary" size="lg" leftIcon={<Radio size={20} />}>
-              Host Projector Game
-            </Button>
-          </Link>
-        </div>
-      </section>
+        {/* 8. learn a language with kuizu */}
+        <BottomCtaSection />
+      </main>
 
-      {/* 4 Feature Showcases */}
-      <section className={styles.showcaseGrid}>
-        {/* Feature 1: Duolingo Quest Path */}
-        <Card padding="lg" glow="duo">
-          <div className={clsx(styles.cardIcon, styles.iconDuo)}>
-            🗾
-          </div>
-          <Badge variant="duo" size="sm">SELF-PACED MASTERY</Badge>
-          <h2 className={styles.cardTitle}>
-            Sine-Wave Curriculum Tree
-          </h2>
-          <p className={styles.cardDescription}>
-            Meandering skill nodes, persistent progress unlocking, XP rewards, and lesson completion crown badges.
-          </p>
-          <Link href="/learn" onClick={playPop}>
-            <Button variant="duo" size="md" fullWidth rightIcon={<ArrowRight size={16} />}>
-              Start Japanese Lesson
-            </Button>
-          </Link>
-        </Card>
-
-        {/* Feature 2: Multiplayer Live Arena */}
-        <Card padding="lg" glow="kahoot">
-          <div className={clsx(styles.cardIcon, styles.iconKahoot)}>
-            🎮
-          </div>
-          <Badge variant="red" size="sm">REAL-TIME MULTIPLAYER</Badge>
-          <h2 className={styles.cardTitle}>
-            Kahoot Projector Arena
-          </h2>
-          <p className={styles.cardDescription}>
-            Host quizzes on classroom screens with instant QR code join, speed bonus formulas, and Olympic podium ceremonies.
-          </p>
-          <div className={styles.arenaButtonsGrid}>
-            <Link href="/arena/host" onClick={playPop}>
-              <Button variant="kahoot" size="md" fullWidth leftIcon={<Play size={16} />}>
-                Host Game
-              </Button>
-            </Link>
-            <Link href="/arena/join" onClick={playPop}>
-              <Button variant="secondary" size="md" fullWidth leftIcon={<Users size={16} />}>
-                Join PIN
-              </Button>
-            </Link>
-          </div>
-        </Card>
-
-        {/* Feature 3: Economy & Shop */}
-        <Card padding="lg" glow="blue">
-          <div className={clsx(styles.cardIcon, styles.iconBlue)}>
-            💎
-          </div>
-          <Badge variant="blue" size="sm">GAMIFIED ECONOMY</Badge>
-          <h2 className={styles.cardTitle}>
-            Power-Ups & Streak Stash
-          </h2>
-          <p className={styles.cardDescription}>
-            Replenish hearts, equip streak freezes, or wager gems in double-or-nothing streak challenges.
-          </p>
-          <Link href="/shop" onClick={playPop}>
-            <Button variant="secondary" size="md" fullWidth leftIcon={<ShoppingBag size={16} />}>
-              Visit Kuizu Shop
-            </Button>
-          </Link>
-        </Card>
-
-        {/* Feature 4: Competitive Leagues */}
-        <Card padding="lg" glow="none">
-          <div className={clsx(styles.cardIcon, styles.iconYellow)}>
-            🏆
-          </div>
-          <Badge variant="yellow" size="sm">LEAGUES & RANKS</Badge>
-          <h2 className={styles.cardTitle}>
-            Weekly Leaderboard
-          </h2>
-          <p className={styles.cardDescription}>
-            Climb from Bronze to Diamond league. Earn top XP to earn promotions and exclusive avatar flair.
-          </p>
-          <Link href="/leaderboard" onClick={playPop}>
-            <Button variant="secondary" size="md" fullWidth leftIcon={<Trophy size={16} />}>
-              View Standings
-            </Button>
-          </Link>
-        </Card>
-      </section>
-
-      {/* Interactive Sensory Soundboard Section */}
-      <section className={styles.soundboardSection}>
-        <Badge variant="duo" size="sm" icon={<Volume2 size={16} />}>
-          AUDIO & SENSORY ENGINE PREVIEW
-        </Badge>
-        <h2 className={styles.soundboardTitle}>
-          Feel Every Tap with Tactile Sound & Motion
-        </h2>
-        <p className={styles.soundboardSubtitle}>
-          Test the procedural Web Audio synthesizer and confetti engine directly in your browser.
-        </p>
-
-        <div className={styles.soundGrid}>
-          <Button
-            variant="duo"
-            size="lg"
-            onClick={handleTestSuccess}
-            leftIcon={<Sparkle size={18} />}
-          >
-            Correct Answer
-          </Button>
-
-          <Button
-            variant="kahoot"
-            size="lg"
-            onClick={handleTestFanfare}
-            leftIcon={<Trophy size={18} />}
-          >
-            Victory Fanfare
-          </Button>
-
-          <Button
-            variant="secondary"
-            size="lg"
-            onClick={handleTestPop}
-            leftIcon={<Volume2 size={18} />}
-          >
-            Tactile Pop
-          </Button>
-
-          <Button
-            variant="danger"
-            size="lg"
-            onClick={handleTestError}
-            leftIcon={<Heart size={18} />}
-          >
-            Mistake / Heart Lost
-          </Button>
-        </div>
-      </section>
-
-      {/* Clean System Architecture Status Footer */}
-      <footer className={styles.statusFooter}>
-        <div className={styles.statusIndicatorGroup}>
-          <span className={styles.statusDot} />
-          <span className={styles.statusTitle}>Kuizu v2 Architecture Operational</span>
-        </div>
-
-        <div className={styles.statusMeta}>
-          <span>Next.js 16 App Router</span>
-          <span>NestJS Realtime Socket.IO</span>
-          <span>Custom CSS Modules</span>
-          <a
-            href="http://localhost:4000/api/docs"
-            target="_blank"
-            rel="noreferrer"
-            className={styles.apiDocsLink}
-          >
-            API Docs ↗
-          </a>
-        </div>
-      </footer>
-    </main>
+      {/* 9. Iconic Kuizu Teal Footer */}
+      <LandingFooter />
+    </div>
   );
 }

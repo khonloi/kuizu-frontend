@@ -1,0 +1,125 @@
+.heroContainer {
+  width: 100%;
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 4.5rem 1.5rem 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3.5rem;
+}
+
+.visualCol {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.contentCol {
+  flex: 1.1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.headline {
+  font-size: 2.35rem;
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: #4b4b4b;
+  margin-bottom: 2.25rem;
+  max-width: 440px;
+  text-align: center;
+}
+
+.buttonGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  width: 100%;
+  max-width: 330px;
+}
+
+.buttonGroup a {
+  width: 100%;
+  display: block;
+}
+
+.primaryCta {
+  width: 100%;
+  background: #00cd9c;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 1.1rem 1.5rem;
+  border-radius: 16px;
+  border: none;
+  box-shadow: 0 4px 0 #00a87e;
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.primaryCta:hover {
+  background: #0fd9a6;
+}
+
+.primaryCta:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #00a87e;
+}
+
+.secondaryCta {
+  width: 100%;
+  background: #ffffff;
+  color: #1cb0f6;
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 1rem 1.5rem;
+  border-radius: 16px;
+  border: 2px solid #e5e5e5;
+  box-shadow: 0 4px 0 #e5e5e5;
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.secondaryCta:hover {
+  background: #f7f7f7;
+}
+
+.secondaryCta:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #e5e5e5;
+}
+
+@media (max-width: 860px) {
+  .heroContainer {
+    flex-direction: column;
+    text-align: center;
+    padding: 3rem 1.5rem 3.5rem;
+    gap: 3rem;
+  }
+
+  .contentCol {
+    align-items: center;
+    text-align: center;
+  }
+
+  .headline {
+    font-size: 2.15rem;
+    max-width: 100%;
+    margin-bottom: 2rem;
+  }
+}

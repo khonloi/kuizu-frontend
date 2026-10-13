@@ -1,0 +1,22 @@
+.illusWrapper {
+  width: 100%;
+  max-width: 440px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  user-select: none;
+}
+
+.illusSvg {
+  width: 100%;
+  height: auto;
+  max-height: 380px;
+  filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.08));
+}
+
+@media (max-width: 768px) {
+  .illusWrapper {
+    max-width: 320px;
+  }
+}

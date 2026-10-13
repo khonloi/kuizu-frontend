@@ -5,11 +5,11 @@ export default function manifest(): MetadataRoute.Manifest {
     name: 'Kuizu - Gamified Learning & Live Arena',
     short_name: 'Kuizu',
     description:
-      'Duolingo-style bite-sized quests meets Kahoot-style real-time multiplayer quiz battles.',
-    start_url: '/learn',
+      'Kuizu gamified learning with bite-sized quests and real-time multiplayer quiz battles.',
+    start_url: '/',
     display: 'standalone',
     background_color: '#0b0f19',
-    theme_color: '#58cc02',
+    theme_color: '#00cd9c',
     icons: [
       {
         src: '/favicon.ico',

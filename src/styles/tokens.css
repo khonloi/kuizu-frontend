@@ -1,10 +1,17 @@
 :root {
-  /* Duolingo Theme Tokens */
-  --duo-green: #58cc02;
-  --duo-green-hover: #61de02;
-  --duo-green-shadow: #46a302;
-  --duo-green-light: #d7ffb8;
-  --duo-green-subtle: rgba(88, 204, 2, 0.12);
+  /* Kuizu Teal Tokens (Duolingo Green equivalent) */
+  --kuizu-teal: #00cd9c;
+  --kuizu-teal-hover: #0fd9a6;
+  --kuizu-teal-shadow: #00a87e;
+  --kuizu-teal-light: #d7fff4;
+  --kuizu-teal-subtle: rgba(0, 205, 156, 0.12);
+
+  /* Duolingo Theme Tokens (Mapped to Kuizu Teal) */
+  --duo-green: var(--kuizu-teal);
+  --duo-green-hover: var(--kuizu-teal-hover);
+  --duo-green-shadow: var(--kuizu-teal-shadow);
+  --duo-green-light: var(--kuizu-teal-light);
+  --duo-green-subtle: var(--kuizu-teal-subtle);
 
   --duo-blue: #1cb0f6;
   --duo-blue-hover: #38bdf8;

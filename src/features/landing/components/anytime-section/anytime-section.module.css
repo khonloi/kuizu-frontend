@@ -1,0 +1,100 @@
+.anytimeWrapper {
+  width: 100%;
+  background: #dcf2ff;
+  padding: 6rem 1.5rem 8rem;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+.inner {
+  max-width: 960px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 5;
+}
+
+.title {
+  font-size: 3.25rem;
+  font-weight: 800;
+  line-height: 1.15;
+  color: #042c60;
+  margin-bottom: 2.5rem;
+  letter-spacing: -0.03em;
+}
+
+.badgeGroup {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+}
+
+.storeBadge {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  background: #ffffff;
+  border: 2px solid #e5e5e5;
+  border-radius: 16px;
+  padding: 0.75rem 1.25rem;
+  box-shadow: 0 4px 0 #e5e5e5;
+  text-decoration: none;
+  color: #3c3c3c;
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.15s ease;
+}
+
+.storeBadge:hover {
+  background: #f7f7f7;
+}
+
+.storeBadge:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #e5e5e5;
+}
+
+.badgeText {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.badgeSubtitle {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #777777;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.badgeTitle {
+  font-size: 0.95rem;
+  font-weight: 900;
+  color: #3c3c3c;
+}
+
+/* Floating Elements Canvas */
+.floatingContainer {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  height: 260px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .anytimeWrapper {
+    padding: 4rem 1.5rem 5rem;
+  }
+  .title {
+    font-size: 2.25rem;
+    margin-bottom: 1.75rem;
+  }
+  .floatingContainer {
+    height: 180px;
+  }
+}

@@ -1,0 +1,85 @@
+.mascotWrapper {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+.phonePerspective {
+  width: 250px;
+  height: 380px;
+  position: relative;
+  transform: rotate(-12deg);
+  transition: transform var(--transition-bounce);
+}
+
+.mascotWrapper:hover .phonePerspective {
+  transform: rotate(-8deg) scale(1.03);
+}
+
+/* 3D Teal Silicone Phone Case */
+.phoneCase {
+  width: 100%;
+  height: 100%;
+  border-radius: 46px;
+  background: #00cd9c;
+  box-shadow: -14px 18px 0 #00a87e, 0 24px 48px rgba(0, 0, 0, 0.12);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.phoneScreen {
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  border-radius: 36px;
+  border: 2.5px solid #dcf2ff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.appIconWidget {
+  width: 140px;
+  height: 140px;
+  border-radius: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 12px 24px rgba(0, 205, 156, 0.3));
+  animation: widgetFloat 3.5s ease-in-out infinite;
+}
+
+@keyframes widgetFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .appIconWidget {
+    animation: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .phonePerspective {
+    width: 200px;
+    height: 310px;
+  }
+  .appIconWidget {
+    width: 110px;
+    height: 110px;
+  }
+}

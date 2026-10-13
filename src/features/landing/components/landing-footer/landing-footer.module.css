@@ -1,0 +1,102 @@
+.footer {
+  width: 100%;
+  background: #00cd9c;
+  padding: 5rem 1.5rem 4rem;
+  color: #ffffff;
+  font-size: 0.95rem;
+}
+
+.inner {
+  max-width: 1040px;
+  margin: 0 auto;
+}
+
+.linksGrid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 2.5rem;
+  margin-bottom: 3.5rem;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.columnTitle {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 0.4rem;
+}
+
+.socialSubGroup {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.footerLink {
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.95rem;
+  transition: color var(--transition-fast);
+}
+
+.footerLink:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+.divider {
+  height: 2px;
+  background: rgba(255, 255, 255, 0.25);
+  margin-bottom: 2rem;
+}
+
+.langSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.langTitle {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.langList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 1.75rem;
+}
+
+.langItem {
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 700;
+  transition: color var(--transition-fast);
+}
+
+.langItem:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+@media (max-width: 900px) {
+  .linksGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .linksGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+}

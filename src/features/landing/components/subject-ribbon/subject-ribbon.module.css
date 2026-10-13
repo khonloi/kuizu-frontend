@@ -1,0 +1,136 @@
+.ribbonContainer {
+  width: 100%;
+  border-top: 2px solid #e5e5e5;
+  border-bottom: 2px solid #e5e5e5;
+  background: #ffffff;
+  position: relative;
+  padding: 0.9rem 0;
+}
+
+.inner {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.scrollArea {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 0.25rem 0.5rem;
+  width: 100%;
+}
+
+.scrollArea::-webkit-scrollbar {
+  display: none;
+}
+
+.subjectCard {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  color: #777777;
+  cursor: pointer;
+  user-select: none;
+  transition: color var(--transition-fast);
+}
+
+.subjectCard:hover {
+  color: #3c3c3c;
+}
+
+.flagWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform var(--transition-fast);
+}
+
+.subjectCard:hover .flagWrapper {
+  transform: scale(1.08);
+}
+
+.flag {
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.customIconTeal {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: #00cd9c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 900;
+}
+
+.customIconBlue {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: #1cb0f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 0.8rem;
+  font-weight: 900;
+}
+
+.subjectName {
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.scrollButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: none;
+  color: #afafaf;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 5;
+  transition: color var(--transition-fast);
+}
+
+.scrollButton:hover {
+  color: #3c3c3c;
+}
+
+.scrollLeft {
+  left: 0.25rem;
+}
+
+.scrollRight {
+  right: 0.25rem;
+}
+
+@media (max-width: 768px) {
+  .scrollButton {
+    display: none;
+  }
+}

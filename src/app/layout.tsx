@@ -26,13 +26,13 @@ export const metadata: Metadata = {
     template: '%s | Kuizu',
   },
   description:
-    'Duolingo-style bite-sized interactive courses meets Kahoot-style real-time multiplayer quiz battles.',
+    'Kuizu gamified learning with bite-sized interactive courses and real-time multiplayer arena battles.',
   keywords: [
     'gamified learning',
     'quiz battle',
     'interactive courses',
     'kahoot multiplayer',
-    'duolingo quests',
+    'kuizu quests',
   ],
   authors: [{ name: 'Kuizu Team' }],
   creator: 'Kuizu',

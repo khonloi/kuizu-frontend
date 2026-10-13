@@ -1,0 +1,93 @@
+.superWrapper {
+  width: 100%;
+  background: #080e2d;
+  padding: 6rem 1.5rem;
+  color: #ffffff;
+}
+
+.inner {
+  max-width: 1040px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4rem;
+}
+
+.visualCol {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.superDuoVector {
+  width: 100%;
+  max-width: 380px;
+  filter: drop-shadow(0 0 35px rgba(28, 176, 246, 0.45));
+}
+
+.contentCol {
+  flex: 1.1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.title {
+  font-size: 2.75rem;
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.25rem;
+  font-style: italic;
+  background: linear-gradient(135deg, #ffffff 30%, #38bdf8 70%, #a855f7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+  font-size: 1.15rem;
+  line-height: 1.6;
+  color: #94a3b8;
+  margin-bottom: 2.25rem;
+  max-width: 480px;
+}
+
+.ctaButton {
+  background: #ffffff;
+  color: #080e2d;
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 1.1rem 2rem;
+  border-radius: 16px;
+  border: none;
+  box-shadow: 0 4px 0 #cbd5e1;
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.ctaButton:hover {
+  background: #f8fafc;
+}
+
+.ctaButton:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #cbd5e1;
+}
+
+@media (max-width: 860px) {
+  .inner {
+    flex-direction: column;
+    text-align: center;
+    gap: 3rem;
+  }
+  .contentCol {
+    align-items: center;
+  }
+  .title {
+    font-size: 2.2rem;
+  }
+}

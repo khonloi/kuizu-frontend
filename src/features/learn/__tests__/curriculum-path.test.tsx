@@ -43,7 +43,7 @@ const mockCourse: Course = {
   ],
 };
 
-describe('CurriculumPath Component (Duolingo Sine-Wave Path)', () => {
+describe('CurriculumPath Component (Kuizu Sine-Wave Path)', () => {
   it('renders unit header and progress details', () => {
     render(<CurriculumPath course={mockCourse} completedLessonIds={[]} />);
 

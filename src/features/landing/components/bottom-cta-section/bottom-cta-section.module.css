@@ -1,0 +1,99 @@
+.bottomCtaWrapper {
+  width: 100%;
+  background: #ffffff;
+  padding: 6rem 0 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.inner {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  position: relative;
+  z-index: 5;
+  width: 100%;
+}
+
+.title {
+  font-size: 3.25rem;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  color: #00cd9c;
+  margin-bottom: 2.5rem;
+}
+
+.ctaButton {
+  background: #00cd9c;
+  color: #ffffff;
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 1.15rem 2.5rem;
+  border-radius: 16px;
+  border: none;
+  box-shadow: 0 4px 0 #00a87e;
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2.5rem;
+}
+
+.ctaButton:hover {
+  background: #0fd9a6;
+}
+
+.ctaButton:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #00a87e;
+}
+
+.collectiblesWrapper {
+  width: 100%;
+  max-width: 680px;
+  height: 140px;
+  margin: 0 auto -20px;
+  display: block;
+  position: relative;
+  z-index: 4;
+}
+
+.hillsDivider {
+  width: 100%;
+  line-height: 0;
+  position: relative;
+  z-index: 2;
+  margin-top: -30px;
+  background: transparent;
+}
+
+.hillsSvg {
+  display: block;
+  width: 100%;
+  height: 90px;
+  margin-bottom: -1px;
+}
+
+@media (max-width: 768px) {
+  .bottomCtaWrapper {
+    padding: 4rem 0 0;
+  }
+  .title {
+    font-size: 2.25rem;
+    margin-bottom: 1.75rem;
+  }
+  .collectiblesWrapper {
+    height: 100px;
+    margin-bottom: -15px;
+  }
+  .hillsSvg {
+    height: 60px;
+  }
+}
