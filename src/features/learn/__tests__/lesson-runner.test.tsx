@@ -159,4 +159,26 @@ describe('LessonRunner Component (Quest Engine)', () => {
 
     expect(screen.queryByRole('dialog')).toBeNull();
   });
+
+  it('supports power-learner keyboard shortcuts (number keys and Enter)', async () => {
+    renderWithProviders(<LessonRunner lesson={mockLesson} courseSlug="test-course" />);
+
+    // Press '1' to select first option ('Konnichiwa')
+    fireEvent.keyDown(window, { key: '1' });
+
+    const option1 = screen.getByRole('radio', { name: /Konnichiwa/i });
+    expect(option1).toBeChecked();
+
+    // Press 'Enter' to check answer
+    fireEvent.keyDown(window, { key: 'Enter' });
+
+    await waitFor(() => {
+      expect(screen.getByText('Nicely done!')).toBeInTheDocument();
+    });
+
+    // Press 'Enter' to advance to next exercise
+    fireEvent.keyDown(window, { key: 'Enter' });
+
+    expect(screen.getByText('How do you say Thank you in Japanese?')).toBeInTheDocument();
+  });
 });

@@ -2,6 +2,7 @@
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '@/lib/api';
+import { queryKeys } from '@/lib/query-keys';
 import { useAuthStore } from '@/stores/auth.store';
 import { useAudioStore } from '@/stores/audio.store';
 import { fireVictoryConfetti, fireHeartRefillConfetti } from '@/lib/confetti';
@@ -29,6 +30,7 @@ export function useHeartRefillMutation() {
       } else if (user) {
         updateGems(Math.max(0, user.gems - 350));
       }
+      void queryClient.invalidateQueries({ queryKey: queryKeys.auth.all });
       void queryClient.invalidateQueries({ queryKey: ['user'] });
     },
     onError: () => {
@@ -57,6 +59,7 @@ export function useStreakFreezeMutation() {
       } else if (user) {
         updateGems(Math.max(0, user.gems - 200));
       }
+      void queryClient.invalidateQueries({ queryKey: queryKeys.auth.all });
       void queryClient.invalidateQueries({ queryKey: ['user'] });
     },
     onError: () => {
@@ -84,6 +87,7 @@ export function useDoubleWagerMutation() {
       } else if (user) {
         updateGems(Math.max(0, user.gems - 50));
       }
+      void queryClient.invalidateQueries({ queryKey: queryKeys.auth.all });
       void queryClient.invalidateQueries({ queryKey: ['user'] });
     },
     onError: () => {

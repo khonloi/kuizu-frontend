@@ -1,10 +1,10 @@
 'use client';
 
-import { useEffect, useCallback, useState, useRef } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 import { getGameSocket, disconnectGameSocket } from '@/lib/socket';
 import { useGameStore } from '@/stores/game.store';
 import { toast } from '@/stores/toast.store';
-import { SAMPLE_QUIZZES } from '@/mock/sample-quizzes';
+import { arenaSimulator } from '../services/arena-simulator';
 import type {
   PlayerJoinedPayload,
   PlayerLeftPayload,
@@ -26,10 +26,6 @@ export function useArenaSocket() {
     return false;
   });
   const [connectionError, setConnectionError] = useState<string | null>(null);
-
-  // Demo simulation mode state
-  const isDemoRef = useRef(false);
-  const demoIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const socket = getGameSocket();
@@ -110,15 +106,7 @@ export function useArenaSocket() {
       socket.off('question:reveal', onQuestionReveal);
       socket.off('game:ended', onGameEnded);
       socket.off('game:cancelled', onGameCancelled);
-    };
-  }, []);
-
-  // Clean up demo simulation interval on unmount
-  useEffect(() => {
-    return () => {
-      if (demoIntervalRef.current) {
-        clearInterval(demoIntervalRef.current);
-      }
+      arenaSimulator.reset();
     };
   }, []);
 
@@ -128,7 +116,6 @@ export function useArenaSocket() {
       const socket = getGameSocket();
       const store = useGameStore.getState();
 
-      // If connected to live server, emit host:create
       if (socket.connected) {
         return new Promise((resolve) => {
           socket.emit('host:create', { quizId }, (res: HostCreateResponse) => {
@@ -143,34 +130,9 @@ export function useArenaSocket() {
         });
       }
 
-      // Offline / Demo Mode Fallback
-      isDemoRef.current = true;
-      const demoQuiz = SAMPLE_QUIZZES.find((q) => q.id === quizId) || SAMPLE_QUIZZES[0];
-      const demoPin = Math.floor(100000 + Math.random() * 900000).toString();
-
-      store.setPin(demoPin);
-      store.setIsHost(true);
-      store.setQuizTitle(demoQuiz.title);
-      store.setStatus('lobby');
-
-      // Populate with 4 simulated bot players
-      const demoBots = [
-        { nickname: 'Sakura 🌸', socketId: 'bot-1', score: 0, streak: 0 },
-        { nickname: 'Kenji ⚡', socketId: 'bot-2', score: 0, streak: 0 },
-        { nickname: 'Aoi 🌊', socketId: 'bot-3', score: 0, streak: 0 },
-        { nickname: 'Takeshi 🔥', socketId: 'bot-4', score: 0, streak: 0 },
-      ];
-      store.setPlayers(demoBots);
-      store.setAnswerCount(0, 4);
-
-      return {
-        success: true,
-        pin: demoPin,
-        quizTitle: demoQuiz.title,
-        totalQuestions: demoQuiz.questions.length,
-      };
+      return arenaSimulator.createGame(quizId);
     },
-    []
+    [],
   );
 
   // 2. Player Join Game
@@ -194,30 +156,14 @@ export function useArenaSocket() {
         });
       }
 
-      // Offline / Demo Mode Fallback
-      isDemoRef.current = true;
-      const demoQuiz = SAMPLE_QUIZZES[0];
-      store.setPin(pin);
-      store.setNickname(nickname);
-      store.setIsHost(false);
-      store.setQuizTitle(demoQuiz.title);
-      store.setStatus('lobby');
-
-      return {
-        success: true,
-        pin,
-        nickname,
-        quizTitle: demoQuiz.title,
-        totalQuestions: demoQuiz.questions.length,
-      };
+      return arenaSimulator.joinGame(pin, nickname);
     },
-    []
+    [],
   );
 
   // 3. Host Start Game
   const startGame = useCallback(async () => {
     const socket = getGameSocket();
-    const store = useGameStore.getState();
 
     if (socket.connected) {
       return new Promise<{ success: boolean; questionIndex?: number }>((resolve) => {
@@ -227,34 +173,7 @@ export function useArenaSocket() {
       });
     }
 
-    // Demo simulation start
-    const demoQuiz = SAMPLE_QUIZZES[0];
-    const firstQ = demoQuiz.questions[0];
-
-    store.setCurrentQuestion({
-      questionIndex: 0,
-      totalQuestions: demoQuiz.questions.length,
-      questionText: firstQ.questionText,
-      timeLimit: firstQ.timeLimit,
-      points: firstQ.points,
-      choices: firstQ.choices.map((c) => ({
-        id: c.id,
-        text: c.text,
-        color: c.color,
-      })),
-    });
-
-    // Simulate bots answering
-    let answered = 0;
-    demoIntervalRef.current = setInterval(() => {
-      answered += 1;
-      useGameStore.getState().setAnswerCount(answered, 4);
-      if (answered >= 4 && demoIntervalRef.current) {
-        clearInterval(demoIntervalRef.current);
-      }
-    }, 1500);
-
-    return { success: true, questionIndex: 0 };
+    return arenaSimulator.startGame();
   }, []);
 
   // 4. Player Submit Answer
@@ -271,33 +190,20 @@ export function useArenaSocket() {
             'player:answer',
             { pin, choiceId },
             (res: PlayerAnswerResponse) => {
-              if (res.success && res.newScore !== undefined) {
-                // Update score state in game store
-              }
               resolve(res);
-            }
+            },
           );
         });
       }
 
-      // Demo fallback
-      const isCorrect = choiceId.includes('c1') || choiceId.includes('Totoro');
-      const pts = isCorrect ? 940 : 0;
-      return {
-        success: true,
-        isCorrect,
-        pointsEarned: pts,
-        newScore: (store.score || 0) + pts,
-        streak: isCorrect ? (store.streak || 0) + 1 : 0,
-      };
+      return arenaSimulator.submitAnswer(choiceId);
     },
-    []
+    [],
   );
 
   // 5. Host Reveal Question
   const revealAnswer = useCallback(async () => {
     const socket = getGameSocket();
-    const store = useGameStore.getState();
 
     if (socket.connected) {
       return new Promise<{ success: boolean }>((resolve) => {
@@ -307,35 +213,12 @@ export function useArenaSocket() {
       });
     }
 
-    // Demo reveal
-    const currentQ = store.currentQuestion;
-    const correctId = currentQ?.choices[0]?.id || 'q1-c1';
-
-    const simulatedLeaderboard = [
-      { nickname: 'Sakura 🌸', score: 950, streak: 1 },
-      { nickname: 'Takeshi 🔥', score: 880, streak: 1 },
-      { nickname: 'Kenji ⚡', score: 820, streak: 1 },
-      { nickname: 'Aoi 🌊', score: 710, streak: 1 },
-    ];
-
-    store.setRevealResult({
-      correctChoiceId: correctId,
-      answersDistribution: {
-        [currentQ?.choices[0]?.id || '1']: 3,
-        [currentQ?.choices[1]?.id || '2']: 1,
-        [currentQ?.choices[2]?.id || '3']: 0,
-        [currentQ?.choices[3]?.id || '4']: 0,
-      },
-      leaderboard: simulatedLeaderboard,
-    });
-
-    return { success: true };
+    return arenaSimulator.revealAnswer();
   }, []);
 
   // 6. Host Next Question or Finish
   const nextQuestion = useCallback(async () => {
     const socket = getGameSocket();
-    const store = useGameStore.getState();
 
     if (socket.connected) {
       return new Promise<{ success: boolean; isFinished?: boolean }>((resolve) => {
@@ -345,47 +228,12 @@ export function useArenaSocket() {
       });
     }
 
-    // Demo next: advance or end
-    const currentIdx = store.currentQuestion?.questionIndex ?? 0;
-    const demoQuiz = SAMPLE_QUIZZES[0];
-
-    if (currentIdx + 1 >= demoQuiz.questions.length) {
-      // Game ended
-      const podium = [
-        { nickname: 'Sakura 🌸', score: 4850, streak: 5 },
-        { nickname: 'Takeshi 🔥', score: 4120, streak: 4 },
-        { nickname: 'Kenji ⚡', score: 3790, streak: 3 },
-      ];
-      store.setGameEnded({
-        podium,
-        fullLeaderboard: [
-          ...podium,
-          { nickname: 'Aoi 🌊', score: 2950, streak: 2 },
-        ],
-      });
-      return { success: true, isFinished: true };
-    }
-
-    // Load next question
-    const nextQ = demoQuiz.questions[currentIdx + 1];
-    store.setCurrentQuestion({
-      questionIndex: currentIdx + 1,
-      totalQuestions: demoQuiz.questions.length,
-      questionText: nextQ.questionText,
-      timeLimit: nextQ.timeLimit,
-      points: nextQ.points,
-      choices: nextQ.choices.map((c) => ({
-        id: c.id,
-        text: c.text,
-        color: c.color,
-      })),
-    });
-
-    return { success: true, isFinished: false };
+    return arenaSimulator.nextQuestion();
   }, []);
 
   const disconnect = useCallback(() => {
     disconnectGameSocket();
+    arenaSimulator.reset();
     useGameStore.getState().resetGame();
   }, []);
 

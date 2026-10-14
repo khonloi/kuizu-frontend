@@ -1,24 +1,27 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import clsx from "clsx";
-import { Sparkles, Play, Gamepad2, RotateCcw, AlertCircle } from "lucide-react";
+import { Sparkles, Play, Gamepad2, RotateCcw, AlertCircle, BookOpen } from "lucide-react";
 import styles from "./learn.module.css";
 import { Card, Button, Badge } from "@/components/ui";
 import { CurriculumPath } from "@/features/learn/components/curriculum-path";
 import { useAudioStore } from "@/stores/audio.store";
-import { useCourseQuery, useCompletedLessonsQuery } from "@/hooks/queries";
+import { useCoursesQuery, useCourseQuery, useCompletedLessonsQuery } from "@/hooks/queries";
 import { SAMPLE_JAPANESE_COURSE } from "@/mock/sample-courses";
 
 export default function LearnPage() {
   const playPop = useAudioStore((s) => s.playPop);
+  const [selectedSlug, setSelectedSlug] = useState<string>("japanese-foundations");
+
+  const { data: courses = [] } = useCoursesQuery();
   const {
     data: course = SAMPLE_JAPANESE_COURSE,
     isLoading: isCourseLoading,
     error: courseError,
     refetch: refetchCourse,
-  } = useCourseQuery("japanese-foundations");
+  } = useCourseQuery(selectedSlug);
 
   const {
     data: completedLessonIds = ["lesson-1"],
@@ -67,9 +70,38 @@ export default function LearnPage() {
       <Card padding="lg" className={styles.bannerCard}>
         <div className={styles.bannerHeader}>
           <div>
-            <Badge variant="duo" size="sm" icon={<Sparkles size={14} />} className={styles.bannerBadge}>
-              ACTIVE COURSE • FOUNDATIONS
-            </Badge>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
+              <Badge variant="duo" size="sm" icon={<Sparkles size={14} />} className={styles.bannerBadge}>
+                ACTIVE COURSE • {course.title.toUpperCase()}
+              </Badge>
+              {courses.length > 1 && (
+                <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                  <BookOpen size={16} color="var(--text-secondary)" />
+                  <select
+                    value={selectedSlug}
+                    onChange={(e) => {
+                      playPop();
+                      setSelectedSlug(e.target.value);
+                    }}
+                    style={{
+                      background: 'var(--bg-input)',
+                      color: 'var(--text-primary)',
+                      border: '1px solid var(--border-card)',
+                      borderRadius: '8px',
+                      padding: '4px 8px',
+                      fontSize: '0.875rem',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    {courses.map((c) => (
+                      <option key={c.slug} value={c.slug}>
+                        {c.title}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
+            </div>
             <h1 className={styles.bannerTitle}>{course.title}</h1>
             <p className={styles.bannerDescription}>{course.description}</p>
           </div>

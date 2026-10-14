@@ -23,7 +23,8 @@ import { QRCodeSvg } from '@/features/arena/components/qr-code';
 import { useGameStore } from '@/stores/game.store';
 import { useArenaSocket } from '@/features/arena/hooks/use-arena-socket';
 import { useAudioStore } from '@/stores/audio.store';
-import { SAMPLE_QUIZZES, type MockQuiz } from '@/mock/sample-quizzes';
+import { SAMPLE_QUIZZES } from '@/mock/sample-quizzes';
+import { useQuizzesQuery } from '@/hooks/queries';
 
 export default function ArenaHostPage() {
   const gameStore = useGameStore();
@@ -35,8 +36,9 @@ export default function ArenaHostPage() {
     disconnect,
   } = useArenaSocket();
   const { playPop, playSuccess } = useAudioStore();
+  const { data: availableQuizzes = [] } = useQuizzesQuery();
 
-  const [selectedQuiz, setSelectedQuiz] = useState<MockQuiz>(SAMPLE_QUIZZES[0]);
+  const [selectedQuizId, setSelectedQuizId] = useState<string>('');
   const [isCreating, setIsCreating] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const origin = typeof window !== 'undefined' ? window.location.origin : '';
@@ -88,12 +90,12 @@ export default function ArenaHostPage() {
   };
 
   // 1. Host Create Room Handler
-  const handleCreateRoom = async (quiz: MockQuiz) => {
-    setSelectedQuiz(quiz);
+  const handleCreateRoom = async (quizId: string) => {
+    setSelectedQuizId(quizId);
     setIsCreating(true);
     playPop();
 
-    await createGame(quiz.id);
+    await createGame(quizId);
     setIsCreating(false);
   };
 
@@ -116,6 +118,9 @@ export default function ArenaHostPage() {
   };
 
   const joinUrl = origin ? `${origin}/arena/join?pin=${pin}` : `/arena/join?pin=${pin}`;
+
+  // Combine available quizzes with sample deck fallback
+  const displayQuizzes = availableQuizzes.length > 0 ? availableQuizzes : SAMPLE_QUIZZES;
 
   // ==================== SCREEN 0: SELECT QUIZ TO HOST ====================
   if (status === 'idle') {
@@ -159,37 +164,46 @@ export default function ArenaHostPage() {
           </div>
 
           <div className={styles.quizSelectGrid}>
-            {SAMPLE_QUIZZES.map((quiz) => (
-              <Card
-                key={quiz.id}
-                padding="lg"
-                className={styles.quizCard}
-              >
-                <div>
-                  <div className={styles.quizCardIcon}>{quiz.icon}</div>
-                  <Badge variant="blue" size="sm">
-                    {quiz.category} • {quiz.questions.length} Questions
-                  </Badge>
-                  <h2 className={styles.quizCardTitle}>
-                    {quiz.title}
-                  </h2>
-                  <p className={styles.quizCardDescription}>
-                    {quiz.description}
-                  </p>
-                </div>
-
-                <Button
-                  variant="kahoot"
-                  size="lg"
-                  fullWidth
-                  isLoading={isCreating && selectedQuiz.id === quiz.id}
-                  onClick={() => handleCreateRoom(quiz)}
-                  leftIcon={<Play size={20} />}
+            {displayQuizzes.map((quiz) => {
+              const qCount =
+                ('questionCount' in quiz && typeof quiz.questionCount === 'number'
+                  ? quiz.questionCount
+                  : quiz.questions?.length) || 0;
+              const isSelected = selectedQuizId === quiz.id;
+              return (
+                <Card
+                  key={quiz.id}
+                  padding="lg"
+                  className={styles.quizCard}
                 >
-                  Create Live Room
-                </Button>
-              </Card>
-            ))}
+                  <div>
+                    <div className={styles.quizCardIcon}>⚡</div>
+                    <Badge variant="blue" size="sm">
+                      {qCount} Questions
+                    </Badge>
+                    <h2 className={styles.quizCardTitle}>
+                      {quiz.title}
+                    </h2>
+                    {quiz.description && (
+                      <p className={styles.quizCardDescription}>
+                        {quiz.description}
+                      </p>
+                    )}
+                  </div>
+
+                  <Button
+                    variant="kahoot"
+                    size="lg"
+                    fullWidth
+                    isLoading={isCreating && isSelected}
+                    onClick={() => handleCreateRoom(quiz.id)}
+                    leftIcon={<Play size={20} />}
+                  >
+                    Create Live Room
+                  </Button>
+                </Card>
+              );
+            })}
           </div>
         </main>
       </div>

@@ -141,8 +141,11 @@ export async function handleMockApiRequest<T = unknown>(
     return { message: 'Logged out successfully' } as unknown as T;
   }
 
-  // 5. Courses List
+  // 5. Courses List & Detail
   if (cleanUrl.includes('/courses') && method === 'GET' && !cleanUrl.includes('/lessons')) {
+    if (cleanUrl.includes('/courses/') && !cleanUrl.endsWith('/courses/')) {
+      return SAMPLE_JAPANESE_COURSE as unknown as T;
+    }
     return [SAMPLE_JAPANESE_COURSE] as unknown as T;
   }
 
@@ -230,8 +233,14 @@ export async function handleMockApiRequest<T = unknown>(
     return SAMPLE_LEADERBOARD as unknown as T;
   }
 
-  // 13. Quizzes
+  // 13. Quizzes List & Detail
   if (cleanUrl.includes('/quizzes') && method === 'GET') {
+    if (cleanUrl.includes('/quizzes/') && !cleanUrl.endsWith('/quizzes/')) {
+      const parts = url.split('?')[0].split('/');
+      const quizId = parts[parts.indexOf('quizzes') + 1];
+      const match = SAMPLE_QUIZZES.find((q) => q.id === quizId) || SAMPLE_QUIZZES[0];
+      return match as unknown as T;
+    }
     return SAMPLE_QUIZZES as unknown as T;
   }
 

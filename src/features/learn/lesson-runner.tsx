@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { X, Heart, Zap, Flame, ArrowRight, RotateCcw } from 'lucide-react';
@@ -50,7 +50,7 @@ export function LessonRunner({ lesson, courseSlug }: LessonRunnerProps) {
   const currentExercise = lesson.exercises[currentIndex];
   const progressPercent = Math.round((currentIndex / totalExercises) * 100);
 
-  const handleCheckAnswer = async () => {
+  const handleCheckAnswer = useCallback(async () => {
     if (!selectedAnswer || status !== 'answering') return;
 
     const isMatch =
@@ -75,9 +75,9 @@ export function LessonRunner({ lesson, courseSlug }: LessonRunnerProps) {
         setStatus('checked_wrong');
       }
     }
-  };
+  }, [selectedAnswer, status, currentExercise, playSuccess, playError, hearts, updateHearts]);
 
-  const handleNextExercise = async () => {
+  const handleNextExercise = useCallback(async () => {
     playPop();
     setSelectedAnswer(null);
 
@@ -105,7 +105,63 @@ export function LessonRunner({ lesson, courseSlug }: LessonRunnerProps) {
         fireStreakFireworks();
       }
     }
-  };
+  }, [
+    playPop,
+    currentIndex,
+    totalExercises,
+    courseSlug,
+    lesson.id,
+    lesson.xpReward,
+    updateXp,
+    queryClient,
+    playFanfare,
+  ]);
+
+  // Keyboard navigation shortcuts
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement | null;
+      if (
+        target &&
+        (target.tagName === 'INPUT' ||
+          target.tagName === 'TEXTAREA' ||
+          target.isContentEditable)
+      ) {
+        return;
+      }
+
+      // Keys 1-4 for option selection when answering
+      if (status === 'answering' && currentExercise?.options) {
+        const num = parseInt(e.key, 10);
+        if (!isNaN(num) && num >= 1 && num <= currentExercise.options.length) {
+          e.preventDefault();
+          playPop();
+          setSelectedAnswer(currentExercise.options[num - 1]);
+          return;
+        }
+      }
+
+      // Enter key: check or continue
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        if (status === 'answering' && selectedAnswer) {
+          void handleCheckAnswer();
+        } else if (status === 'checked_correct' || status === 'checked_wrong') {
+          void handleNextExercise();
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [
+    status,
+    selectedAnswer,
+    currentExercise,
+    handleCheckAnswer,
+    handleNextExercise,
+    playPop,
+  ]);
 
   const handleRestart = () => {
     playPop();

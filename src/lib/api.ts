@@ -1,5 +1,9 @@
 import { handleMockApiRequest } from '@/mock/mock-handler';
 
+export interface ApiClientOptions extends RequestInit {
+  timeout?: number;
+}
+
 export class ApiError extends Error {
   constructor(
     public statusCode: number,
@@ -29,9 +33,9 @@ function onRefreshed(success: boolean) {
  */
 export function normalizeEndpoint(endpoint: string): string {
   if (endpoint.startsWith('http')) return endpoint;
-  
+
   const clean = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
-  
+
   // If already starts with /api/v1 or /api/health, keep as-is
   if (clean.startsWith('/api/')) {
     return clean;
@@ -45,14 +49,14 @@ export function normalizeEndpoint(endpoint: string): string {
  * Transport Adapter Interface
  */
 export interface TransportAdapter {
-  execute<T>(url: string, options: RequestInit): Promise<T | null>;
+  execute<T>(url: string, options: ApiClientOptions): Promise<T | null>;
 }
 
 /**
  * Offline & Demo Mode Mock Transport
  */
 export const mockTransportAdapter: TransportAdapter = {
-  async execute<T>(url: string, options: RequestInit): Promise<T | null> {
+  async execute<T>(url: string, options: ApiClientOptions): Promise<T | null> {
     try {
       const parsedBody =
         options.body && typeof options.body === 'string'
@@ -66,17 +70,43 @@ export const mockTransportAdapter: TransportAdapter = {
 };
 
 /**
- * Standard Production HTTP Fetch Transport
+ * Standard Production HTTP Fetch Transport with Timeout and Token Refresh
  */
 export async function executeHttpFetch<T>(
   url: string,
-  options: RequestInit,
-  isRetry = false
+  options: ApiClientOptions,
+  isRetry = false,
 ): Promise<T> {
-  const response = await fetch(url, {
-    ...options,
-    credentials: 'include',
-  });
+  const timeoutMs = options.timeout ?? 15000;
+  const controller = new AbortController();
+  let timerId: ReturnType<typeof setTimeout> | null = null;
+
+  if (timeoutMs > 0) {
+    timerId = setTimeout(() => {
+      controller.abort(new Error(`Request timeout after ${timeoutMs}ms`));
+    }, timeoutMs);
+  }
+
+  // Chain external signal if provided
+  if (options.signal) {
+    options.signal.addEventListener('abort', () => controller.abort());
+  }
+
+  let response: Response;
+  try {
+    response = await fetch(url, {
+      ...options,
+      signal: controller.signal,
+      credentials: 'include',
+    });
+  } catch (err: unknown) {
+    if (controller.signal.aborted) {
+      throw new ApiError(408, `Request timed out after ${timeoutMs}ms`);
+    }
+    throw err;
+  } finally {
+    if (timerId) clearTimeout(timerId);
+  }
 
   // Handle 401 Unauthorized for automatic token refresh (except for auth endpoints)
   const isAuthRoute =
@@ -122,16 +152,20 @@ export async function executeHttpFetch<T>(
   }
 
   if (!response.ok) {
-    let errorData: { message?: string; errors?: unknown } | null = null;
+    let errorData: { message?: string | string[]; error?: string; errors?: unknown } | null = null;
     try {
-      errorData = (await response.json()) as { message?: string; errors?: unknown };
+      errorData = (await response.json()) as { message?: string | string[]; error?: string; errors?: unknown };
     } catch {
       errorData = { message: response.statusText };
     }
 
+    const message = Array.isArray(errorData?.message)
+      ? errorData.message.join(', ')
+      : errorData?.message || `HTTP error ${response.status}`;
+
     throw new ApiError(
       response.status,
-      errorData?.message || `HTTP error ${response.status}`,
+      message,
       errorData?.errors,
     );
   }
@@ -145,7 +179,7 @@ export async function executeHttpFetch<T>(
 
 export async function apiClient<T = unknown>(
   endpoint: string,
-  options: RequestInit = {},
+  options: ApiClientOptions = {},
   isRetry = false,
 ): Promise<T> {
   const url = normalizeEndpoint(endpoint);
@@ -155,7 +189,7 @@ export async function apiClient<T = unknown>(
     headers.set('Content-Type', 'application/json');
   }
 
-  const requestOptions: RequestInit = {
+  const requestOptions: ApiClientOptions = {
     ...options,
     headers,
   };
@@ -187,30 +221,30 @@ export async function apiClient<T = unknown>(
 }
 
 export const api = {
-  get: <T>(endpoint: string, options?: RequestInit) =>
+  get: <T>(endpoint: string, options?: ApiClientOptions) =>
     apiClient<T>(endpoint, { ...options, method: 'GET' }),
 
-  post: <T>(endpoint: string, body?: unknown, options?: RequestInit) =>
+  post: <T>(endpoint: string, body?: unknown, options?: ApiClientOptions) =>
     apiClient<T>(endpoint, {
       ...options,
       method: 'POST',
       body: body instanceof FormData ? body : body !== undefined ? JSON.stringify(body) : undefined,
     }),
 
-  put: <T>(endpoint: string, body?: unknown, options?: RequestInit) =>
+  put: <T>(endpoint: string, body?: unknown, options?: ApiClientOptions) =>
     apiClient<T>(endpoint, {
       ...options,
       method: 'PUT',
       body: body instanceof FormData ? body : body !== undefined ? JSON.stringify(body) : undefined,
     }),
 
-  patch: <T>(endpoint: string, body?: unknown, options?: RequestInit) =>
+  patch: <T>(endpoint: string, body?: unknown, options?: ApiClientOptions) =>
     apiClient<T>(endpoint, {
       ...options,
       method: 'PATCH',
       body: body instanceof FormData ? body : body !== undefined ? JSON.stringify(body) : undefined,
     }),
 
-  delete: <T>(endpoint: string, options?: RequestInit) =>
+  delete: <T>(endpoint: string, options?: ApiClientOptions) =>
     apiClient<T>(endpoint, { ...options, method: 'DELETE' }),
 };

@@ -4,7 +4,7 @@
 [![Next.js](https://img.shields.io/badge/next.js-v16.3-black.svg?style=flat-square&logo=next.js)](https://nextjs.org/)
 [![React](https://img.shields.io/badge/react-v19.2-61DAFB.svg?style=flat-square&logo=react)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/typescript-v5.9-blue.svg?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
-[![Vitest](https://img.shields.io/badge/tests-145%20passed%20%28100%25%29-green.svg?style=flat-square&logo=vitest)](https://vitest.dev/)
+[![Vitest](https://img.shields.io/badge/tests-162%20passed%20%28100%25%29-green.svg?style=flat-square&logo=vitest)](https://vitest.dev/)
 [![Accessibility: WCAG 2.1 AA](https://img.shields.io/badge/accessibility-WCAG%202.1%20AA-purple.svg?style=flat-square)](https://www.w3.org/WAI/WCAG21/quickref/)
 [![Styling: Vanilla CSS](https://img.shields.io/badge/styling-vanilla%20css%20%2B%20modules-blueviolet.svg?style=flat-square)](https://developer.mozilla.org/en-US/docs/Web/CSS)
 [![Code Style: Prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square&logo=prettier)](https://prettier.io)
