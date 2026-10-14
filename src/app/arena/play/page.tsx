@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Flame, Zap, ArrowLeft, CheckCircle2, XCircle } from 'lucide-react';
+import { Flame, Zap, ArrowLeft, CheckCircle2, XCircle, Gamepad2 } from 'lucide-react';
 import styles from '@/features/arena/arena.module.css';
 import { Card, Button, Badge } from '@/components/ui';
 import { CountdownTimer } from '@/features/arena/components/countdown-timer';
@@ -72,14 +72,40 @@ export default function ArenaPlayerPlayPage() {
     }
   };
 
+  // 0. Unjoined / No Active Room State Guard
+  if (!pin || (status === 'idle' && !currentQuestion)) {
+    return (
+      <div className={styles.arenaRoot}>
+        <main className={styles.lobbyStage}>
+          <div className={`${styles.playerBigEmoji} animate-pop`}>
+            🎮
+          </div>
+          <h1 className={styles.playerTitle}>
+            No Active Game Session
+          </h1>
+          <p className={styles.playerSubtitle}>
+            You haven&apos;t joined a game room yet. Enter a 6-digit game PIN to jump into the multiplayer battle.
+          </p>
+          <div style={{ marginTop: '2rem' }}>
+            <Link href="/arena/join" onClick={playPop}>
+              <Button variant="kahoot" size="lg" leftIcon={<Gamepad2 size={20} />}>
+                Join Live Arena
+              </Button>
+            </Link>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
   // 1. Lobby Waiting State
-  if (status === 'idle' || status === 'lobby') {
+  if (status === 'lobby') {
     return (
       <div className={styles.arenaRoot}>
         <header className={styles.arenaHeader}>
           <div className={styles.flexRow}>
             <Badge variant="red" size="sm">
-              PIN: {pin || '000000'}
+              PIN: {pin}
             </Badge>
             <span className={styles.fontWeight800}>{nickname || 'Player'}</span>
           </div>

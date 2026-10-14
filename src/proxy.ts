@@ -3,8 +3,12 @@ import type { NextRequest } from 'next/server';
 
 /**
  * Next.js 16 Edge Proxy for Server-Side Route Guarding
+ *
+ * Routes listed here enforce server-side session cookie checks.
+ * Note: /profile renders a dedicated client-side guest card when unauthenticated,
+ * so it is handled client-side rather than with an immediate hard redirect.
  */
-const PROTECTED_ROUTES = ['/profile'];
+const PROTECTED_ROUTES: string[] = [];
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;

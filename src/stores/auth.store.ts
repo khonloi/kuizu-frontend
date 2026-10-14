@@ -37,6 +37,9 @@ export const useAuthStore = create<AuthState>((set) => ({
     try {
       await api.post('/api/v1/auth/logout');
     } finally {
+      if (typeof document !== 'undefined') {
+        document.cookie = 'kuizu_session=; path=/; max-age=0; SameSite=Lax';
+      }
       set({ user: null, isAuthenticated: false, isLoading: false });
     }
   },

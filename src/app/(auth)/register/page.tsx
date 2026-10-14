@@ -26,8 +26,19 @@ export default function RegisterPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (username.trim().length < 3) {
+    const cleanUsername = username.trim();
+    if (cleanUsername.length < 3) {
       setErrorMsg('Username must be at least 3 characters long.');
+      return;
+    }
+
+    if (cleanUsername.length > 24) {
+      setErrorMsg('Username cannot exceed 24 characters.');
+      return;
+    }
+
+    if (!/^[a-zA-Z0-9_]+$/.test(cleanUsername)) {
+      setErrorMsg('Username can only contain letters, numbers, and underscores.');
       return;
     }
 
@@ -41,12 +52,17 @@ export default function RegisterPage() {
       return;
     }
 
+    if (password.length > 72) {
+      setErrorMsg('Password cannot exceed 72 characters.');
+      return;
+    }
+
     setIsLoading(true);
     setErrorMsg(null);
 
     try {
       const response = await api.post<{ user: User }>('/api/v1/auth/register', {
-        username: username.trim(),
+        username: cleanUsername,
         email: email.trim(),
         password,
       });

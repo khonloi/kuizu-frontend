@@ -109,6 +109,9 @@ export async function handleMockApiRequest<T = unknown>(
       username: payload.username || mockUser.username,
     };
     saveUser(updated);
+    if (typeof document !== 'undefined') {
+      document.cookie = 'kuizu_session=demo-token; path=/; max-age=86400; SameSite=Lax';
+    }
     return { user: updated, message: 'Logged in successfully' } as unknown as T;
   }
 
@@ -124,11 +127,17 @@ export async function handleMockApiRequest<T = unknown>(
       streakFreezes: 2,
     };
     saveUser(updated);
+    if (typeof document !== 'undefined') {
+      document.cookie = 'kuizu_session=demo-token; path=/; max-age=86400; SameSite=Lax';
+    }
     return { user: updated, message: 'Account created successfully' } as unknown as T;
   }
 
   // 4. Auth Logout
   if (cleanUrl.includes('/auth/logout') && method === 'POST') {
+    if (typeof document !== 'undefined') {
+      document.cookie = 'kuizu_session=; path=/; max-age=0; SameSite=Lax';
+    }
     return { message: 'Logged out successfully' } as unknown as T;
   }
 

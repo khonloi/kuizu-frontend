@@ -19,7 +19,6 @@ import type {
 } from '@/types/socket.types';
 
 export function useArenaSocket() {
-  const gameStore = useGameStore();
   const [isConnected, setIsConnected] = useState(() => {
     if (typeof window !== 'undefined') {
       return getGameSocket().connected;
@@ -50,38 +49,39 @@ export function useArenaSocket() {
     };
 
     const onPlayerJoined = (data: PlayerJoinedPayload) => {
-      gameStore.addPlayer({
+      const store = useGameStore.getState();
+      store.addPlayer({
         nickname: data.nickname,
         socketId: data.socketId,
         score: 0,
         streak: 0,
       });
-      gameStore.setAnswerCount(0, data.playerCount);
+      store.setAnswerCount(0, data.playerCount);
     };
 
     const onPlayerLeft = (data: PlayerLeftPayload) => {
-      gameStore.removePlayer(data.socketId);
+      useGameStore.getState().removePlayer(data.socketId);
     };
 
     const onQuestionStart = (data: QuestionStartPayload) => {
-      gameStore.setCurrentQuestion(data);
+      useGameStore.getState().setCurrentQuestion(data);
     };
 
     const onAnswerCount = (data: AnswerCountPayload) => {
-      gameStore.setAnswerCount(data.answeredCount, data.totalPlayers);
+      useGameStore.getState().setAnswerCount(data.answeredCount, data.totalPlayers);
     };
 
     const onQuestionReveal = (data: QuestionRevealPayload) => {
-      gameStore.setRevealResult(data);
+      useGameStore.getState().setRevealResult(data);
     };
 
     const onGameEnded = (data: GameEndedPayload) => {
-      gameStore.setGameEnded(data);
+      useGameStore.getState().setGameEnded(data);
     };
 
     const onGameCancelled = (data: GameCancelledPayload) => {
       toast.error('Game Ended', data.message);
-      gameStore.resetGame();
+      useGameStore.getState().resetGame();
     };
 
     socket.on('connect', onConnect);
@@ -111,7 +111,7 @@ export function useArenaSocket() {
       socket.off('game:ended', onGameEnded);
       socket.off('game:cancelled', onGameCancelled);
     };
-  }, [gameStore]);
+  }, []);
 
   // Clean up demo simulation interval on unmount
   useEffect(() => {
@@ -126,16 +126,17 @@ export function useArenaSocket() {
   const createGame = useCallback(
     async (quizId: string): Promise<HostCreateResponse> => {
       const socket = getGameSocket();
+      const store = useGameStore.getState();
 
       // If connected to live server, emit host:create
       if (socket.connected) {
         return new Promise((resolve) => {
           socket.emit('host:create', { quizId }, (res: HostCreateResponse) => {
             if (res.success && res.pin) {
-              gameStore.setPin(res.pin);
-              gameStore.setIsHost(true);
-              gameStore.setQuizTitle(res.quizTitle || 'Arena Quiz');
-              gameStore.setStatus('lobby');
+              store.setPin(res.pin);
+              store.setIsHost(true);
+              store.setQuizTitle(res.quizTitle || 'Arena Quiz');
+              store.setStatus('lobby');
             }
             resolve(res);
           });
@@ -147,10 +148,10 @@ export function useArenaSocket() {
       const demoQuiz = SAMPLE_QUIZZES.find((q) => q.id === quizId) || SAMPLE_QUIZZES[0];
       const demoPin = Math.floor(100000 + Math.random() * 900000).toString();
 
-      gameStore.setPin(demoPin);
-      gameStore.setIsHost(true);
-      gameStore.setQuizTitle(demoQuiz.title);
-      gameStore.setStatus('lobby');
+      store.setPin(demoPin);
+      store.setIsHost(true);
+      store.setQuizTitle(demoQuiz.title);
+      store.setStatus('lobby');
 
       // Populate with 4 simulated bot players
       const demoBots = [
@@ -159,8 +160,8 @@ export function useArenaSocket() {
         { nickname: 'Aoi 🌊', socketId: 'bot-3', score: 0, streak: 0 },
         { nickname: 'Takeshi 🔥', socketId: 'bot-4', score: 0, streak: 0 },
       ];
-      gameStore.setPlayers(demoBots);
-      gameStore.setAnswerCount(0, 4);
+      store.setPlayers(demoBots);
+      store.setAnswerCount(0, 4);
 
       return {
         success: true,
@@ -169,23 +170,24 @@ export function useArenaSocket() {
         totalQuestions: demoQuiz.questions.length,
       };
     },
-    [gameStore]
+    []
   );
 
   // 2. Player Join Game
   const joinGame = useCallback(
     async (pin: string, nickname: string): Promise<PlayerJoinResponse> => {
       const socket = getGameSocket();
+      const store = useGameStore.getState();
 
       if (socket.connected) {
         return new Promise((resolve) => {
           socket.emit('player:join', { pin, nickname }, (res: PlayerJoinResponse) => {
             if (res.success && res.pin) {
-              gameStore.setPin(res.pin);
-              gameStore.setNickname(nickname);
-              gameStore.setIsHost(false);
-              gameStore.setQuizTitle(res.quizTitle || 'Live Arena');
-              gameStore.setStatus('lobby');
+              store.setPin(res.pin);
+              store.setNickname(nickname);
+              store.setIsHost(false);
+              store.setQuizTitle(res.quizTitle || 'Live Arena');
+              store.setStatus('lobby');
             }
             resolve(res);
           });
@@ -195,11 +197,11 @@ export function useArenaSocket() {
       // Offline / Demo Mode Fallback
       isDemoRef.current = true;
       const demoQuiz = SAMPLE_QUIZZES[0];
-      gameStore.setPin(pin);
-      gameStore.setNickname(nickname);
-      gameStore.setIsHost(false);
-      gameStore.setQuizTitle(demoQuiz.title);
-      gameStore.setStatus('lobby');
+      store.setPin(pin);
+      store.setNickname(nickname);
+      store.setIsHost(false);
+      store.setQuizTitle(demoQuiz.title);
+      store.setStatus('lobby');
 
       return {
         success: true,
@@ -209,12 +211,13 @@ export function useArenaSocket() {
         totalQuestions: demoQuiz.questions.length,
       };
     },
-    [gameStore]
+    []
   );
 
   // 3. Host Start Game
   const startGame = useCallback(async () => {
     const socket = getGameSocket();
+    const store = useGameStore.getState();
 
     if (socket.connected) {
       return new Promise<{ success: boolean; questionIndex?: number }>((resolve) => {
@@ -228,7 +231,7 @@ export function useArenaSocket() {
     const demoQuiz = SAMPLE_QUIZZES[0];
     const firstQ = demoQuiz.questions[0];
 
-    gameStore.setCurrentQuestion({
+    store.setCurrentQuestion({
       questionIndex: 0,
       totalQuestions: demoQuiz.questions.length,
       questionText: firstQ.questionText,
@@ -245,21 +248,22 @@ export function useArenaSocket() {
     let answered = 0;
     demoIntervalRef.current = setInterval(() => {
       answered += 1;
-      gameStore.setAnswerCount(answered, 4);
+      useGameStore.getState().setAnswerCount(answered, 4);
       if (answered >= 4 && demoIntervalRef.current) {
         clearInterval(demoIntervalRef.current);
       }
     }, 1500);
 
     return { success: true, questionIndex: 0 };
-  }, [gameStore]);
+  }, []);
 
   // 4. Player Submit Answer
   const submitAnswer = useCallback(
     async (pin: string, choiceId: string): Promise<PlayerAnswerResponse> => {
       const socket = getGameSocket();
+      const store = useGameStore.getState();
 
-      gameStore.setSelectedChoiceId(choiceId);
+      store.setSelectedChoiceId(choiceId);
 
       if (socket.connected) {
         return new Promise((resolve) => {
@@ -283,16 +287,17 @@ export function useArenaSocket() {
         success: true,
         isCorrect,
         pointsEarned: pts,
-        newScore: (gameStore.score || 0) + pts,
-        streak: isCorrect ? (gameStore.streak || 0) + 1 : 0,
+        newScore: (store.score || 0) + pts,
+        streak: isCorrect ? (store.streak || 0) + 1 : 0,
       };
     },
-    [gameStore]
+    []
   );
 
   // 5. Host Reveal Question
   const revealAnswer = useCallback(async () => {
     const socket = getGameSocket();
+    const store = useGameStore.getState();
 
     if (socket.connected) {
       return new Promise<{ success: boolean }>((resolve) => {
@@ -303,7 +308,7 @@ export function useArenaSocket() {
     }
 
     // Demo reveal
-    const currentQ = gameStore.currentQuestion;
+    const currentQ = store.currentQuestion;
     const correctId = currentQ?.choices[0]?.id || 'q1-c1';
 
     const simulatedLeaderboard = [
@@ -313,7 +318,7 @@ export function useArenaSocket() {
       { nickname: 'Aoi 🌊', score: 710, streak: 1 },
     ];
 
-    gameStore.setRevealResult({
+    store.setRevealResult({
       correctChoiceId: correctId,
       answersDistribution: {
         [currentQ?.choices[0]?.id || '1']: 3,
@@ -325,11 +330,12 @@ export function useArenaSocket() {
     });
 
     return { success: true };
-  }, [gameStore]);
+  }, []);
 
   // 6. Host Next Question or Finish
   const nextQuestion = useCallback(async () => {
     const socket = getGameSocket();
+    const store = useGameStore.getState();
 
     if (socket.connected) {
       return new Promise<{ success: boolean; isFinished?: boolean }>((resolve) => {
@@ -340,7 +346,7 @@ export function useArenaSocket() {
     }
 
     // Demo next: advance or end
-    const currentIdx = gameStore.currentQuestion?.questionIndex ?? 0;
+    const currentIdx = store.currentQuestion?.questionIndex ?? 0;
     const demoQuiz = SAMPLE_QUIZZES[0];
 
     if (currentIdx + 1 >= demoQuiz.questions.length) {
@@ -350,7 +356,7 @@ export function useArenaSocket() {
         { nickname: 'Takeshi 🔥', score: 4120, streak: 4 },
         { nickname: 'Kenji ⚡', score: 3790, streak: 3 },
       ];
-      gameStore.setGameEnded({
+      store.setGameEnded({
         podium,
         fullLeaderboard: [
           ...podium,
@@ -362,7 +368,7 @@ export function useArenaSocket() {
 
     // Load next question
     const nextQ = demoQuiz.questions[currentIdx + 1];
-    gameStore.setCurrentQuestion({
+    store.setCurrentQuestion({
       questionIndex: currentIdx + 1,
       totalQuestions: demoQuiz.questions.length,
       questionText: nextQ.questionText,
@@ -376,12 +382,12 @@ export function useArenaSocket() {
     });
 
     return { success: true, isFinished: false };
-  }, [gameStore]);
+  }, []);
 
   const disconnect = useCallback(() => {
     disconnectGameSocket();
-    gameStore.resetGame();
-  }, [gameStore]);
+    useGameStore.getState().resetGame();
+  }, []);
 
   return {
     isConnected,

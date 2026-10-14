@@ -35,11 +35,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'always',
       priority: 0.9,
     },
-    {
-      url: `${appUrl}/design-system`,
-      lastModified: now,
-      changeFrequency: 'monthly',
-      priority: 0.4,
-    },
   ];
 }

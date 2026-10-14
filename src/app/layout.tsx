@@ -64,7 +64,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${outfit.variable} ${nunito.variable}`}>
-      <body className="min-h-screen flex flex-col">
+      <body>
         <QueryProvider>
           <AuthProvider>
             {children}
