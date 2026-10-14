@@ -11,7 +11,7 @@
 }
 
 .title {
-  font-size: 2.25rem;
+  font-size: 1.85rem;
   font-weight: 900;
   letter-spacing: -0.02em;
   margin-top: 0.5rem;
@@ -19,7 +19,7 @@
 
 .subtitle {
   color: var(--text-secondary);
-  font-size: 1rem;
+  font-size: 0.9rem;
   max-width: 650px;
   line-height: 1.5;
   margin-top: 0.25rem;
@@ -33,7 +33,7 @@
 }
 
 .sectionTitle {
-  font-size: 1.35rem;
+  font-size: 1.15rem;
   font-weight: 900;
   letter-spacing: -0.01em;
   margin-bottom: 0.75rem;
@@ -41,7 +41,7 @@
 
 .sectionDescription {
   color: var(--text-secondary);
-  font-size: 0.9rem;
+  font-size: 0.825rem;
   margin-bottom: 1.25rem;
 }
 
@@ -88,13 +88,13 @@
 }
 
 .swatchName {
-  font-size: 0.85rem;
+  font-size: 0.775rem;
   font-weight: 800;
   color: var(--text-primary);
 }
 
 .swatchVar {
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   color: var(--text-muted);
   font-family: monospace;
 }
@@ -121,7 +121,7 @@
 }
 
 .demoTitle {
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 800;
   color: var(--text-primary);
 }

@@ -4,13 +4,13 @@
 }
 
 .title {
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   font-weight: 900;
 }
 
 .subtitle {
   color: var(--text-secondary);
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   margin-top: 0.25rem;
 }
 
@@ -23,7 +23,7 @@
   background-color: var(--duo-red-subtle);
   border: 1px solid rgba(255, 75, 75, 0.4);
   color: var(--duo-red);
-  font-size: 0.9rem;
+  font-size: 0.825rem;
   font-weight: 700;
   margin-bottom: 1.25rem;
 }
@@ -45,7 +45,7 @@
 .footer {
   text-align: center;
   margin-top: 1.5rem;
-  font-size: 0.9rem;
+  font-size: 0.825rem;
   color: var(--text-secondary);
 }
 

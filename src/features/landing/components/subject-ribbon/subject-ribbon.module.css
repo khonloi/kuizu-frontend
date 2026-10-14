@@ -61,7 +61,7 @@
 }
 
 .flag {
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -76,7 +76,7 @@
   align-items: center;
   justify-content: center;
   color: #ffffff;
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   font-weight: 900;
 }
 
@@ -89,12 +89,12 @@
   align-items: center;
   justify-content: center;
   color: #ffffff;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   font-weight: 900;
 }
 
 .subjectName {
-  font-size: 0.85rem;
+  font-size: 0.775rem;
   font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;

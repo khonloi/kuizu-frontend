@@ -109,7 +109,7 @@
   background-color: #ffffff;
   color: #00cd9c;
   font-weight: 800;
-  font-size: 0.85rem;
+  font-size: 0.775rem;
   letter-spacing: 0.08em;
   border-radius: 9999px;
   border: 2px solid #e5e5e5;
@@ -138,12 +138,12 @@
   position: absolute;
   top: -12px;
   right: -6px;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
 }
 
 .lessonLabel {
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   font-weight: 800;
   color: #4b4b4b;
   text-align: center;
@@ -200,7 +200,7 @@
 }
 
 .unitTitle {
-  font-size: 1.65rem;
+  font-size: 1.4rem;
   font-weight: 800;
   margin-top: 0.4rem;
   letter-spacing: -0.02em;
@@ -209,7 +209,7 @@
 
 .unitDescription {
   color: rgba(255, 255, 255, 0.95);
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   margin-top: 0.25rem;
   max-width: 520px;
   line-height: 1.45;
@@ -222,7 +222,7 @@
 }
 
 .unitProgressText {
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   font-weight: 800;
   color: #ffffff;
 }
@@ -248,7 +248,7 @@
 }
 
 .milestoneEmoji {
-  font-size: 2.75rem;
+  font-size: 2.25rem;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
 }
 
@@ -257,14 +257,14 @@
 }
 
 .milestoneTitle {
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 800;
   color: #4b4b4b;
 }
 
 .milestoneSubtitle {
   display: block;
-  font-size: 0.85rem;
+  font-size: 0.775rem;
   color: #777777;
   margin-top: 0.25rem;
 }

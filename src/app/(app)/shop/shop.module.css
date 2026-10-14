@@ -13,7 +13,7 @@
 }
 
 .headerTitle {
-  font-size: 2.25rem;
+  font-size: 1.85rem;
   font-weight: 800;
   margin-top: 0.35rem;
   letter-spacing: -0.02em;
@@ -22,7 +22,7 @@
 
 .headerDescription {
   color: #777777;
-  font-size: 1rem;
+  font-size: 0.9rem;
 }
 
 .gemPill {
@@ -36,7 +36,7 @@
   box-shadow: 0 4px 0 rgba(28, 176, 246, 0.25);
   color: #1cb0f6;
   font-weight: 800;
-  font-size: 1.25rem;
+  font-size: 1.1rem;
 }
 
 .successNotice {
@@ -46,7 +46,7 @@
   border: 2px solid #00cd9c;
   color: #00a87e;
   font-weight: 800;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
 }
 
 .shopGrid {
@@ -99,20 +99,20 @@
 }
 
 .itemTitle {
-  font-size: 1.25rem;
+  font-size: 1.1rem;
   font-weight: 800;
   color: #4b4b4b;
 }
 
 .itemSubtitle {
-  font-size: 0.85rem;
+  font-size: 0.775rem;
   font-weight: 700;
   color: #777777;
 }
 
 .itemDescription {
   color: #777777;
-  font-size: 0.95rem;
+  font-size: 0.875rem;
   line-height: 1.55;
   flex: 1;
 }

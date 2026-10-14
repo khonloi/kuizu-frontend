@@ -27,6 +27,7 @@
   background-color: #ffffff;
   color: #4b4b4b;
   font-family: var(--font-nunito), 'Nunito', system-ui, -apple-system, sans-serif;
+  font-size: 0.9375rem;
 }
 
 .mainWrapper {

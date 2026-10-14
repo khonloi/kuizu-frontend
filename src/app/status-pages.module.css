@@ -27,14 +27,14 @@
 }
 
 .statusTitle {
-  font-size: 2rem;
+  font-size: 1.65rem;
   font-weight: 900;
   margin-top: 0.5rem;
   letter-spacing: -0.02em;
 }
 
 .statusTitleLg {
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 900;
   margin-top: 0.5rem;
   letter-spacing: -0.02em;
@@ -42,7 +42,7 @@
 
 .statusDescription {
   color: var(--text-secondary);
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   margin-top: 0.5rem;
   line-height: 1.6;
 }
@@ -56,7 +56,7 @@
 }
 
 .emojiBig {
-  font-size: 4.5rem;
+  font-size: 3.5rem;
 }
 
 .loadingContainer {
@@ -77,7 +77,7 @@
 }
 
 .loadingText {
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 800;
   color: var(--text-secondary);
   letter-spacing: 0.05em;

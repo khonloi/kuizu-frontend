@@ -11,20 +11,12 @@ export function SuperSection() {
   return (
     <section className={styles.superWrapper} aria-label="Super Kuizu Membership">
       <div className={styles.inner}>
-        {/* Left Column: Glowing Super Kuizu Graphic */}
+        {/* Left Column: Super Kuizu Graphic */}
         <div className={styles.visualCol}>
           <div className={styles.superDuoVector}>
             <svg viewBox="0 0 340 320" width="100%" height="100%" fill="none" role="img" aria-label="Super Kuizu Mascot">
-              {/* Iridescent Outer Aura */}
-              <ellipse cx="170" cy="160" rx="140" ry="130" fill="url(#superGlow)" opacity="0.3" />
-              
               {/* Dynamic Gradients */}
               <defs>
-                <radialGradient id="superGlow" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" stopColor="#38bdf8" />
-                  <stop offset="60%" stopColor="#818cf8" />
-                  <stop offset="100%" stopColor="#c084fc" stopOpacity="0" />
-                </radialGradient>
                 <linearGradient id="capeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                   <stop offset="0%" stopColor="#38bdf8" />
                   <stop offset="50%" stopColor="#818cf8" />

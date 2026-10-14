@@ -15,7 +15,7 @@
 }
 
 .guestTitle {
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   font-weight: 800;
   color: #4b4b4b;
   margin-bottom: 0.75rem;
@@ -58,19 +58,19 @@
 }
 
 .userName {
-  font-size: 1.85rem;
+  font-size: 1.5rem;
   font-weight: 800;
   color: #4b4b4b;
 }
 
 .userEmail {
   color: #777777;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   margin-top: 0.2rem;
 }
 
 .sectionTitle {
-  font-size: 1.25rem;
+  font-size: 1.1rem;
   font-weight: 800;
   margin-bottom: 1rem;
   color: #4b4b4b;
@@ -96,13 +96,13 @@
 }
 
 .statValue {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: 800;
   color: #4b4b4b;
 }
 
 .statLabel {
-  font-size: 0.85rem;
+  font-size: 0.775rem;
   font-weight: 700;
   color: #777777;
 }
