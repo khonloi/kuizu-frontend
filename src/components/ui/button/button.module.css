@@ -62,69 +62,69 @@
 .duo {
   background-color: var(--duo-green);
   color: #ffffff;
-  box-shadow: 0 4px 0 var(--duo-green-shadow), 0 8px 16px rgba(88, 204, 2, 0.25);
+  box-shadow: 0 4px 0 var(--duo-green-shadow);
 }
 .duo:hover:not(:disabled) {
   background-color: var(--duo-green-hover);
 }
 .duo:active:not(:disabled) {
-  box-shadow: 0 1px 0 var(--duo-green-shadow), 0 2px 6px rgba(88, 204, 2, 0.25);
+  box-shadow: 0 1px 0 var(--duo-green-shadow);
 }
 
 .kahoot {
   background-color: var(--kahoot-red);
   color: #ffffff;
-  box-shadow: 0 4px 0 var(--kahoot-red-shadow), 0 8px 16px rgba(226, 27, 60, 0.25);
+  box-shadow: 0 4px 0 var(--kahoot-red-shadow);
 }
 .kahoot:hover:not(:disabled) {
   background-color: var(--kahoot-red-hover);
 }
 .kahoot:active:not(:disabled) {
-  box-shadow: 0 1px 0 var(--kahoot-red-shadow), 0 2px 6px rgba(226, 27, 60, 0.25);
+  box-shadow: 0 1px 0 var(--kahoot-red-shadow);
 }
 
 .blue {
   background-color: var(--duo-blue);
   color: #ffffff;
-  box-shadow: 0 4px 0 var(--duo-blue-shadow), 0 8px 16px rgba(28, 176, 246, 0.25);
+  box-shadow: 0 4px 0 var(--duo-blue-shadow);
 }
 .blue:hover:not(:disabled) {
   background-color: var(--duo-blue-hover);
 }
 .blue:active:not(:disabled) {
-  box-shadow: 0 1px 0 var(--duo-blue-shadow), 0 2px 6px rgba(28, 176, 246, 0.25);
+  box-shadow: 0 1px 0 var(--duo-blue-shadow);
 }
 
 .yellow {
   background-color: var(--duo-yellow);
   color: #2b1f00;
-  box-shadow: 0 4px 0 var(--duo-yellow-shadow), 0 8px 16px rgba(255, 200, 0, 0.25);
+  box-shadow: 0 4px 0 var(--duo-yellow-shadow);
 }
 .yellow:hover:not(:disabled) {
   background-color: var(--duo-yellow-hover);
 }
 .yellow:active:not(:disabled) {
-  box-shadow: 0 1px 0 var(--duo-yellow-shadow), 0 2px 6px rgba(255, 200, 0, 0.25);
+  box-shadow: 0 1px 0 var(--duo-yellow-shadow);
 }
 
 .secondary {
-  background-color: rgba(255, 255, 255, 0.07);
+  background-color: var(--bg-card, #ffffff);
   color: var(--text-primary);
-  border: 1px solid var(--border-subtle);
-  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.45);
+  border: 2px solid var(--border-subtle);
+  box-shadow: 0 4px 0 var(--border-subtle);
 }
 .secondary:hover:not(:disabled) {
-  background-color: rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.15);
+  background-color: var(--bg-card-hover, #f7f7f7);
+  border-color: #dcdcdc;
 }
 .secondary:active:not(:disabled) {
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.45);
+  box-shadow: 0 1px 0 var(--border-subtle);
 }
 
 .danger {
   background-color: var(--duo-red);
   color: #ffffff;
-  box-shadow: 0 4px 0 var(--duo-red-shadow), 0 8px 16px rgba(255, 75, 75, 0.25);
+  box-shadow: 0 4px 0 var(--duo-red-shadow);
 }
 .danger:hover:not(:disabled) {
   background-color: var(--duo-red-hover);
@@ -139,7 +139,7 @@
   box-shadow: none;
 }
 .ghost:hover:not(:disabled) {
-  background-color: rgba(255, 255, 255, 0.06);
+  background-color: rgba(0, 0, 0, 0.04);
   color: var(--text-primary);
 }
 .ghost:active:not(:disabled) {
@@ -150,7 +150,7 @@
   background-color: transparent;
   color: var(--text-primary);
   border: 2px solid var(--border-card);
-  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.35);
+  box-shadow: 0 4px 0 var(--border-card);
 }
 .outline:hover:not(:disabled) {
   border-color: var(--duo-green);
@@ -158,7 +158,7 @@
   background-color: var(--duo-green-subtle);
 }
 .outline:active:not(:disabled) {
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.35);
+  box-shadow: 0 1px 0 var(--border-card);
 }
 
 /* Modifiers */

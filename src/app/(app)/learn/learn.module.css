@@ -1,29 +1,34 @@
 .container {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 2.5rem;
 }
 
 .loadingCard {
   height: 220px;
-  background: rgba(23, 32, 54, 0.4);
-  border-color: var(--border-subtle);
+  background: #ffffff;
+  border: 2px solid #e5e5e5;
+  border-radius: 20px;
+  box-shadow: 0 4px 0 #e5e5e5;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .loadingSpinner {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  border: 3px solid rgba(88, 204, 2, 0.2);
-  border-top-color: var(--duo-green);
+  border: 4px solid #e5e5e5;
+  border-top-color: #00cd9c;
 }
 
 .errorCard {
   text-align: center;
-  border-color: var(--duo-red);
+  background: #ffffff;
+  border: 2px solid #ff4b4b;
+  border-radius: 20px;
+  box-shadow: 0 4px 0 rgba(255, 75, 75, 0.2);
 }
 
 .errorContent {
@@ -35,16 +40,20 @@
 
 .errorTitle {
   font-size: 1.5rem;
-  font-weight: 900;
+  font-weight: 800;
+  color: #4b4b4b;
 }
 
 .errorSubtitle {
-  color: var(--text-secondary);
+  color: #777777;
 }
 
 .bannerCard {
-  background: linear-gradient(135deg, rgba(88, 204, 2, 0.15) 0%, rgba(23, 32, 54, 0.9) 100%);
-  border-color: rgba(88, 204, 2, 0.35);
+  background: #ffffff;
+  border: 2px solid #e5e5e5;
+  border-radius: 20px;
+  box-shadow: 0 4px 0 #e5e5e5;
+  padding: 2rem;
 }
 
 .bannerHeader {
@@ -52,21 +61,29 @@
   justify-content: space-between;
   align-items: flex-start;
   flex-wrap: wrap;
-  gap: 1rem;
-  margin-bottom: 1.25rem;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.bannerBadge {
+  background: rgba(0, 205, 156, 0.12);
+  color: #00a87e;
+  border: 1px solid #00cd9c;
+  font-weight: 800;
 }
 
 .bannerTitle {
   font-size: 2.25rem;
-  font-weight: 900;
-  margin-top: 0.4rem;
+  font-weight: 800;
+  margin-top: 0.5rem;
   letter-spacing: -0.02em;
+  color: #4b4b4b;
 }
 
 .bannerDescription {
-  color: var(--text-secondary);
-  font-size: 1rem;
-  margin-top: 0.25rem;
+  color: #777777;
+  font-size: 1.05rem;
+  margin-top: 0.35rem;
   max-width: 580px;
   line-height: 1.5;
 }

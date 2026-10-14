@@ -69,7 +69,7 @@ export default function ShopPage() {
       {/* Shop Grid */}
       <div className={styles.shopGrid}>
         {/* Heart Refill Card */}
-        <Card padding="lg" glow="duo" className={styles.itemCard}>
+        <Card padding="lg" className={styles.itemCard}>
           <div className={styles.itemHeader}>
             <div className={clsx(styles.iconBox, styles.iconHeart)}>
               <Heart size={32} color="var(--duo-red)" fill="var(--duo-red)" />
@@ -96,7 +96,7 @@ export default function ShopPage() {
         </Card>
 
         {/* Streak Freeze Card */}
-        <Card padding="lg" glow="blue" className={styles.itemCard}>
+        <Card padding="lg" className={styles.itemCard}>
           <div className={styles.itemHeader}>
             <div className={clsx(styles.iconBox, styles.iconFreeze)}>
               <Snowflake size={32} color="var(--duo-blue)" />

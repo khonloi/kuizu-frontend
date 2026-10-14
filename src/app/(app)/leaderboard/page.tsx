@@ -17,7 +17,6 @@ export default function LeaderboardPage() {
       {/* League Header */}
       <Card
         padding="lg"
-        glow="blue"
         className={styles.leagueBanner}
       >
         <div className={styles.bannerFlex}>

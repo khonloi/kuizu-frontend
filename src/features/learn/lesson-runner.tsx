@@ -184,7 +184,7 @@ export function LessonRunner({ lesson, courseSlug }: LessonRunnerProps) {
           </div>
 
           <div className={styles.statsRow}>
-            <Card padding="md" glow="duo">
+            <Card padding="md">
               <div className={styles.xpStatValue}>
                 <Zap size={24} fill="var(--duo-yellow)" />
                 <span>+{lesson.xpReward} XP</span>
@@ -192,7 +192,7 @@ export function LessonRunner({ lesson, courseSlug }: LessonRunnerProps) {
               <span className={styles.statLabel}>Experience Earned</span>
             </Card>
 
-            <Card padding="md" glow="blue">
+            <Card padding="md">
               <div className={styles.streakStatValue}>
                 <Flame size={24} fill="var(--duo-orange)" />
                 <span>Streak Maintained</span>

@@ -5,8 +5,10 @@
 }
 
 .leagueBanner {
-  background: linear-gradient(135deg, rgba(28, 176, 246, 0.15) 0%, rgba(23, 32, 54, 0.9) 100%);
-  border-color: rgba(28, 176, 246, 0.35);
+  background: #ffffff;
+  border: 2px solid #e5e5e5;
+  border-radius: 20px;
+  box-shadow: 0 4px 0 #e5e5e5;
 }
 
 .bannerFlex {
@@ -14,7 +16,7 @@
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 1.25rem;
 }
 
 .trophySlot {
@@ -27,7 +29,7 @@
   width: 64px;
   height: 64px;
   border-radius: 16px;
-  background-color: var(--duo-yellow-subtle);
+  background-color: rgba(255, 200, 0, 0.15);
   border: 2px solid rgba(255, 200, 0, 0.4);
   display: flex;
   align-items: center;
@@ -43,17 +45,19 @@
 
 .leagueEndsText {
   font-size: 0.85rem;
-  color: var(--text-secondary);
+  font-weight: 700;
+  color: #777777;
 }
 
 .leagueHeading {
   font-size: 2rem;
-  font-weight: 900;
+  font-weight: 800;
   margin-top: 0.35rem;
+  color: #4b4b4b;
 }
 
 .leagueSubtext {
-  color: var(--text-secondary);
+  color: #777777;
   font-size: 0.95rem;
 }
 
@@ -66,13 +70,14 @@
 .tableList {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 0.5rem;
 }
 
 .loadingNotice {
   text-align: center;
   padding: 2rem;
-  color: var(--text-secondary);
+  color: #777777;
+  font-weight: 700;
 }
 
 .row {
@@ -82,17 +87,17 @@
   padding: 0.85rem 1.25rem;
   border-radius: 16px;
   background-color: transparent;
-  border: 1px solid transparent;
+  border: 2px solid transparent;
   transition: all 0.15s ease;
 }
 
 .rowCurrentUser {
-  background-color: rgba(88, 204, 2, 0.12);
-  border-color: var(--duo-green);
+  background-color: rgba(0, 205, 156, 0.1);
+  border-color: #00cd9c;
 }
 
 .rowTop3 {
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: #f7f7f7;
 }
 
 .userGroup {
@@ -104,7 +109,7 @@
 .rankSlot {
   width: 32px;
   text-align: center;
-  font-weight: 900;
+  font-weight: 800;
   font-size: 1.1rem;
 }
 
@@ -113,22 +118,23 @@
 }
 
 .rankMuted {
-  color: var(--text-muted);
+  color: #afafaf;
 }
 
 .userName {
   font-weight: 800;
   font-size: 1rem;
+  color: #4b4b4b;
 }
 
 .userNameCurrentUser {
-  color: var(--duo-green);
+  color: #00cd9c;
 }
 
 .youBadge {
   margin-left: 0.5rem;
   font-size: 0.75rem;
-  color: var(--duo-green);
+  color: #00cd9c;
   font-weight: 800;
 }
 
@@ -142,7 +148,7 @@
   display: flex;
   align-items: center;
   gap: 0.3rem;
-  color: var(--duo-orange);
+  color: #ff9600;
   font-weight: 800;
   font-size: 0.9rem;
 }
@@ -151,8 +157,9 @@
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  font-weight: 900;
-  color: var(--duo-yellow);
+  font-weight: 800;
+  color: #d88700;
   min-width: 90px;
   justify-content: flex-end;
 }
+

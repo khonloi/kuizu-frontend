@@ -73,7 +73,7 @@ function ArenaJoinForm() {
         </div>
 
         {/* Join Card */}
-        <Card padding="lg" glow="kahoot" className={styles.joinCard}>
+        <Card padding="lg" className={styles.joinCard}>
           <form onSubmit={handleJoin} className={styles.form}>
             {/* 6-Digit PIN Field */}
             <div>

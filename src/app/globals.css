@@ -23,12 +23,7 @@ a {
   text-decoration: none;
 }
 
-/* Subtle background glowing radial gradients */
 .bg-gradient-glow {
-  background:
-    radial-gradient(circle at 15% 20%, rgba(88, 204, 2, 0.12) 0%, transparent 40%),
-    radial-gradient(circle at 85% 30%, rgba(226, 27, 60, 0.12) 0%, transparent 40%),
-    radial-gradient(circle at 50% 80%, rgba(28, 176, 246, 0.08) 0%, transparent 50%),
-    var(--bg-primary);
+  background: var(--bg-primary);
 }
 

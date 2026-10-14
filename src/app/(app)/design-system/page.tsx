@@ -325,7 +325,7 @@ export default function DesignSystemPage() {
   return (
     <div className={styles.pageContainer}>
       {/* Hero Banner */}
-      <Card padding="lg" glow="duo" className={styles.headerCard}>
+      <Card padding="lg" className={styles.headerCard}>
         <Badge variant="duo" size="sm" icon={<Sparkles size={14} />}>
           KUIZU UI FRAMEWORK • VERSION 2.0
         </Badge>

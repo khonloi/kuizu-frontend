@@ -163,7 +163,6 @@ export default function ArenaHostPage() {
               <Card
                 key={quiz.id}
                 padding="lg"
-                glow="kahoot"
                 className={styles.quizCard}
               >
                 <div>

@@ -268,7 +268,7 @@
   border-radius: 50%;
   background-color: var(--duo-blue);
   border: none;
-  box-shadow: 0 5px 0 var(--duo-blue-shadow), 0 10px 20px rgba(28, 176, 246, 0.35);
+  box-shadow: 0 5px 0 var(--duo-blue-shadow);
   color: #ffffff;
   display: flex;
   align-items: center;

@@ -1,9 +1,7 @@
 .card {
   position: relative;
   background-color: var(--bg-card);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--border-subtle);
+  border: 2px solid var(--border-subtle);
   border-radius: var(--card-radius);
   color: var(--text-primary);
   box-shadow: var(--shadow-sm);
@@ -39,7 +37,7 @@
 
 .interactive:hover {
   background-color: var(--bg-card-hover);
-  border-color: rgba(255, 255, 255, 0.16);
+  border-color: #dcdcdc;
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
 }
@@ -50,16 +48,16 @@
 
 /* Glow Borders */
 .glowDuo {
-  border-color: rgba(88, 204, 2, 0.3);
-  box-shadow: var(--shadow-glow-duo);
+  border-color: var(--duo-green);
+  box-shadow: none;
 }
 
 .glowKahoot {
-  border-color: rgba(226, 27, 60, 0.3);
-  box-shadow: var(--shadow-glow-kahoot);
+  border-color: var(--duo-red);
+  box-shadow: none;
 }
 
 .glowBlue {
-  border-color: rgba(28, 176, 246, 0.3);
-  box-shadow: var(--shadow-glow-blue);
+  border-color: var(--duo-blue);
+  box-shadow: none;
 }

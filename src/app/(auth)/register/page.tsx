@@ -70,7 +70,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <Card padding="lg" glow="duo">
+    <Card padding="lg">
       <div className={styles.header}>
         <h1 className={styles.title}>Create Your Account</h1>
         <p className={styles.subtitle}>
