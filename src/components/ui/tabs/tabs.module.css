@@ -49,7 +49,6 @@
   height: 4px;
   background-color: var(--duo-green);
   border-radius: var(--pill-radius);
-  box-shadow: 0 0 10px rgba(88, 204, 2, 0.4);
 }
 
 .tabTrigger:disabled {

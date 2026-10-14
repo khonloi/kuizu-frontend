@@ -2,10 +2,8 @@
   position: sticky;
   top: 0;
   height: 64px;
-  background-color: rgba(11, 15, 25, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border-subtle);
+  background-color: #ffffff;
+  border-bottom: 2px solid #e5e5e5;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -25,59 +23,61 @@
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-  padding: 0.35rem 0.75rem;
+  padding: 0.35rem 0.85rem;
   border-radius: var(--pill-radius);
-  background-color: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--border-subtle);
-  font-size: 0.9rem;
+  background-color: #ffffff;
+  border: 2px solid #e5e5e5;
+  box-shadow: 0 2px 0 #e5e5e5;
+  font-size: 0.95rem;
   font-weight: 800;
   cursor: pointer;
   text-decoration: none;
-  color: var(--text-primary);
+  color: #4b4b4b;
   transition: all var(--transition-fast);
 }
 
 .statBadge:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  transform: translateY(-1px);
+  background-color: #f7f7f7;
+  border-color: #dcdcdc;
 }
 
 .statBadge:active {
   transform: translateY(1px);
+  box-shadow: 0 1px 0 #e5e5e5;
 }
 
 .streakFlame {
-  color: var(--duo-orange);
+  color: #ff9600;
 }
 
 .hearts {
-  color: var(--duo-red);
+  color: #ff4b4b;
 }
 
 .gems {
-  color: var(--duo-blue);
+  color: #1cb0f6;
 }
 
 .xp {
-  color: var(--duo-yellow);
+  color: #e5a400;
 }
 
 .audioBtn {
   background: transparent;
   border: none;
   cursor: pointer;
-  color: var(--text-secondary);
+  color: #777777;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0.4rem;
-  border-radius: 8px;
+  padding: 0.5rem;
+  border-radius: 10px;
   transition: all var(--transition-fast);
 }
 
 .audioBtn:hover {
-  background: rgba(255, 255, 255, 0.08);
-  color: var(--text-primary);
+  background: #f7f7f7;
+  color: #4b4b4b;
 }
 
 @media (max-width: 640px) {
@@ -85,14 +85,14 @@
     padding: 0 0.75rem;
     gap: 0.5rem;
   }
-  
+
   .statGroup {
     gap: 0.4rem;
   }
 
   .statBadge {
-    padding: 0.25rem 0.5rem;
-    font-size: 0.8rem;
+    padding: 0.25rem 0.6rem;
+    font-size: 0.825rem;
   }
 
   .xpStat {
@@ -103,12 +103,15 @@
 .loginLink {
   font-size: 0.85rem;
   font-weight: 800;
-  color: var(--duo-green);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #00cd9c;
   text-decoration: none;
-  transition: opacity var(--transition-fast);
+  padding: 0.45rem 0.85rem;
+  border-radius: 10px;
+  transition: all var(--transition-fast);
 }
 
 .loginLink:hover {
-  opacity: 0.85;
+  background-color: rgba(0, 205, 156, 0.1);
 }
-

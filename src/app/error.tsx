@@ -22,7 +22,6 @@ export default function ErrorBoundary({
     <div className={styles.statusContainer}>
       <Card
         padding="lg"
-        glow="kahoot"
         className={styles.statusCard}
       >
         <div className={`${styles.errorIconWrapper} animate-shake`}>

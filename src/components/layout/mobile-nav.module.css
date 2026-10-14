@@ -4,10 +4,8 @@
   left: 0;
   right: 0;
   height: calc(64px + env(safe-area-inset-bottom, 0px));
-  background-color: rgba(11, 15, 25, 0.92);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-top: 1px solid var(--border-subtle);
+  background-color: #ffffff;
+  border-top: 2px solid #e5e5e5;
   display: flex;
   align-items: flex-start;
   justify-content: space-around;
@@ -22,34 +20,49 @@
   align-items: center;
   justify-content: center;
   gap: 0.2rem;
-  color: var(--text-muted);
+  color: #afafaf;
   text-decoration: none;
-  font-size: 0.7rem;
-  font-weight: 700;
+  font-size: 0.725rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
   padding: 0.4rem 0.6rem;
-  border-radius: 10px;
+  border-radius: 12px;
   transition: all var(--transition-fast);
 }
 
 .item:hover {
-  color: var(--text-primary);
+  color: #4b4b4b;
 }
 
 .itemActive {
-  color: var(--duo-blue);
-  background: rgba(255, 255, 255, 0.06);
+  color: #00cd9c;
+  background: rgba(0, 205, 156, 0.1);
 }
 
 .itemActive.learn {
-  color: var(--duo-green);
+  color: #00cd9c;
+  background: rgba(0, 205, 156, 0.1);
 }
 
 .itemActive.arena {
-  color: var(--kahoot-red);
+  color: #e21b3c;
+  background: rgba(226, 27, 60, 0.1);
 }
 
 .itemActive.leaderboard {
-  color: var(--duo-yellow);
+  color: #ff9600;
+  background: rgba(255, 200, 0, 0.15);
+}
+
+.itemActive.shop {
+  color: #1cb0f6;
+  background: rgba(28, 176, 246, 0.1);
+}
+
+.itemActive.profile {
+  color: #00cd9c;
+  background: rgba(0, 205, 156, 0.1);
 }
 
 @media (min-width: 769px) {
@@ -57,3 +70,4 @@
     display: none;
   }
 }
+

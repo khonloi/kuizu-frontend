@@ -154,22 +154,22 @@
 
 .tileRed {
   background: var(--kahoot-red);
-  box-shadow: 0 6px 0 var(--kahoot-red-shadow), 0 8px 24px rgba(226, 27, 60, 0.3);
+  box-shadow: 0 6px 0 var(--kahoot-red-shadow);
 }
 
 .tileBlue {
   background: var(--kahoot-blue);
-  box-shadow: 0 6px 0 var(--kahoot-blue-shadow), 0 8px 24px rgba(19, 104, 206, 0.3);
+  box-shadow: 0 6px 0 var(--kahoot-blue-shadow);
 }
 
 .tileYellow {
   background: var(--kahoot-yellow);
-  box-shadow: 0 6px 0 var(--kahoot-yellow-shadow), 0 8px 24px rgba(255, 166, 2, 0.3);
+  box-shadow: 0 6px 0 var(--kahoot-yellow-shadow);
 }
 
 .tileGreen {
   background: var(--kahoot-green);
-  box-shadow: 0 6px 0 var(--kahoot-green-shadow), 0 8px 24px rgba(38, 137, 12, 0.3);
+  box-shadow: 0 6px 0 var(--kahoot-green-shadow);
 }
 
 .tileShape {
@@ -234,7 +234,7 @@
 
 .gamepadBtnSelected {
   outline: 4px solid #ffffff;
-  box-shadow: 0 0 30px rgba(255, 255, 255, 0.6) !important;
+  box-shadow: none !important;
   transform: scale(0.98);
 }
 
@@ -265,7 +265,7 @@
   align-items: center;
   gap: 1.25rem;
   margin: auto 0;
-  box-shadow: 0 16px 40px rgba(38, 137, 12, 0.35);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
 }
 
 .feedbackScreenWrong {
@@ -279,7 +279,7 @@
   align-items: center;
   gap: 1.25rem;
   margin: auto 0;
-  box-shadow: 0 16px 40px rgba(226, 27, 60, 0.35);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
 }
 
 /* Olympic Podium Styles */

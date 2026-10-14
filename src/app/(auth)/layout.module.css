@@ -5,10 +5,7 @@
   align-items: center;
   justify-content: center;
   padding: 2rem 1.5rem;
-  background:
-    radial-gradient(circle at 20% 25%, rgba(88, 204, 2, 0.12) 0%, transparent 45%),
-    radial-gradient(circle at 80% 75%, rgba(28, 176, 246, 0.12) 0%, transparent 45%),
-    var(--bg-primary);
+  background-color: var(--bg-primary);
 }
 
 .brand {

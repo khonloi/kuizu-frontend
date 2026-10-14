@@ -12,7 +12,6 @@ export default function NotFound() {
     <div className={styles.statusContainer}>
       <Card
         padding="lg"
-        glow="duo"
         className={styles.statusCard}
       >
         <div className={`${styles.emojiBig} animate-pop`}>

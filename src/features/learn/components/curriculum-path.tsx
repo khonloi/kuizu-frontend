@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import React from 'react';
-import Link from 'next/link';
-import clsx from 'clsx';
-import { BookOpen, CheckCircle2, Lock, Sparkles } from 'lucide-react';
-import styles from './curriculum-path.module.css';
-import { Badge, Card, ProgressBar } from '@/components/ui';
-import { useAudioStore } from '@/stores/audio.store';
-import type { Course, Unit, Lesson } from '@/types/api.types';
+import React from "react";
+import Link from "next/link";
+import clsx from "clsx";
+import { BookOpen, CheckCircle2, Lock, Sparkles } from "lucide-react";
+import styles from "./curriculum-path.module.css";
+import { Badge, Card, ProgressBar } from "@/components/ui";
+import { useAudioStore } from "@/stores/audio.store";
+import type { Course, Unit, Lesson } from "@/types/api.types";
 
 interface CurriculumPathProps {
   course: Course;
@@ -16,7 +16,10 @@ interface CurriculumPathProps {
 
 const OFFSETS = [0, 52, 70, 42, -42, -70, -52];
 
-export function CurriculumPath({ course, completedLessonIds }: CurriculumPathProps) {
+export function CurriculumPath({
+  course,
+  completedLessonIds,
+}: CurriculumPathProps) {
   const playPop = useAudioStore((s) => s.playPop);
 
   return (
@@ -25,32 +28,30 @@ export function CurriculumPath({ course, completedLessonIds }: CurriculumPathPro
         // Calculate unit progress
         const unitLessons = unit.lessons || [];
         const completedCount = unitLessons.filter((l) =>
-          completedLessonIds.includes(l.id)
+          completedLessonIds.includes(l.id),
         ).length;
         const totalCount = unitLessons.length;
-        const progressPercent = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
+        const progressPercent =
+          totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
         const isUnitCompleted = completedCount === totalCount && totalCount > 0;
+
+        const themeIndex = (unitIdx % 3) + 1;
 
         return (
           <section key={unit.id} className={styles.unitSection}>
             {/* Unit Banner */}
             <Card
               padding="lg"
-              glow="duo"
-              className={styles.unitCard}
+              className={clsx(styles.unitCard, styles[`unitTheme${themeIndex}`])}
             >
               <div className={styles.unitHeader}>
                 <div>
-                  <Badge variant="duo" size="sm" icon={<Sparkles size={14} />}>
+                  <Badge variant="duo" size="sm" icon={<Sparkles size={14} />} className={styles.unitBadge}>
                     UNIT {unit.order || unitIdx + 1}
                   </Badge>
-                  <h2 className={styles.unitTitle}>
-                    {unit.title}
-                  </h2>
+                  <h2 className={styles.unitTitle}>{unit.title}</h2>
                   {unit.description && (
-                    <p className={styles.unitDescription}>
-                      {unit.description}
-                    </p>
+                    <p className={styles.unitDescription}>{unit.description}</p>
                   )}
                 </div>
 
@@ -61,7 +62,14 @@ export function CurriculumPath({ course, completedLessonIds }: CurriculumPathPro
                 </div>
               </div>
 
-              <ProgressBar value={progressPercent} max={100} color="duo" size="sm" />
+              <div className={styles.unitProgressBarWrapper}>
+                <ProgressBar
+                  value={progressPercent}
+                  max={100}
+                  color="yellow"
+                  size="sm"
+                />
+              </div>
             </Card>
 
             {/* Stepping Stones Meandering Flow */}
@@ -70,7 +78,8 @@ export function CurriculumPath({ course, completedLessonIds }: CurriculumPathPro
                 const isCompleted = completedLessonIds.includes(lesson.id);
                 // Active if previous is completed (or it's the very first lesson) and not yet completed itself
                 const prevLesson = unitLessons[lessonIdx - 1];
-                const isPrevCompleted = !prevLesson || completedLessonIds.includes(prevLesson.id);
+                const isPrevCompleted =
+                  !prevLesson || completedLessonIds.includes(prevLesson.id);
                 const isActive = !isCompleted && isPrevCompleted;
                 const isLocked = !isCompleted && !isActive;
 
@@ -94,7 +103,10 @@ export function CurriculumPath({ course, completedLessonIds }: CurriculumPathPro
                       <Link
                         href={`/lesson/${course.slug}/${lesson.id}`}
                         onClick={playPop}
-                        className={clsx(styles.nodeCircle, styles.nodeCompleted)}
+                        className={clsx(
+                          styles.nodeCircle,
+                          styles.nodeCompleted,
+                        )}
                         title={`${lesson.title} (Practice Again)`}
                         aria-label={`Practice ${lesson.title} again, completed`}
                       >
@@ -110,7 +122,11 @@ export function CurriculumPath({ course, completedLessonIds }: CurriculumPathPro
                       <Link
                         href={`/lesson/${course.slug}/${lesson.id}`}
                         onClick={playPop}
-                        className={clsx(styles.nodeCircle, styles.nodeActive, 'animate-pulse-ring')}
+                        className={clsx(
+                          styles.nodeCircle,
+                          styles.nodeActive,
+                          "animate-pulse-ring",
+                        )}
                         title={`${lesson.title} (Ready to Start)`}
                         aria-label={`Start ${lesson.title}`}
                       >
@@ -144,14 +160,16 @@ export function CurriculumPath({ course, completedLessonIds }: CurriculumPathPro
               {/* Unit Completion Milestone Chest */}
               <div className={styles.milestoneChest}>
                 <div className={styles.milestoneEmoji}>
-                  {isUnitCompleted ? '🏆' : '🎁'}
+                  {isUnitCompleted ? "🏆" : "🎁"}
                 </div>
                 <div className={styles.milestoneInfo}>
                   <span className={styles.milestoneTitle}>
-                    {isUnitCompleted ? 'Unit Mastered!' : 'Unit Reward Chest'}
+                    {isUnitCompleted ? "Unit Mastered!" : "Unit Reward Chest"}
                   </span>
                   <span className={styles.milestoneSubtitle}>
-                    {isUnitCompleted ? '+50 Bonus Gems Claimed' : 'Complete all lessons to unlock'}
+                    {isUnitCompleted
+                      ? "+50 Bonus Gems Claimed"
+                      : "Complete all lessons to unlock"}
                   </span>
                 </div>
               </div>

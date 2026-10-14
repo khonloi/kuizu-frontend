@@ -43,9 +43,31 @@ export function Sidebar() {
   return (
     <aside className={styles.sidebar}>
       {/* Brand logo */}
-      <Link href="/learn" className={styles.brand} onClick={playPop}>
-        <div className={styles.logoIcon}>⚡</div>
-        <span className={styles.logoText}>KUIZU</span>
+      <Link href="/learn" className={styles.brand} onClick={playPop} aria-label="Kuizu Home">
+        <div className={styles.logoIcon} aria-hidden="true">
+          <svg viewBox="0 0 130 110" width="38" height="32" fill="none">
+            {/* Kuizu Mascot Head Silhouette with Feather Tufts */}
+            <path
+              d="M 28 85 C 10 75 8 40 26 22 C 38 10 58 10 76 16 C 88 10 102 8 114 16 C 118 20 120 28 116 34 C 122 40 124 50 120 58 C 122 66 118 76 110 82 C 96 96 60 105 38 98 C 32 95 29 90 28 85 Z"
+              fill="#00cd9c"
+            />
+            {/* Lighter Teal Eye Surround Masks */}
+            <ellipse cx="50" cy="52" rx="22" ry="24" fill="#35eec0" />
+            <ellipse cx="88" cy="52" rx="22" ry="24" fill="#35eec0" />
+            {/* Large White Eyes */}
+            <ellipse cx="52" cy="52" rx="16" ry="18" fill="#ffffff" />
+            <ellipse cx="86" cy="52" rx="16" ry="18" fill="#ffffff" />
+            {/* Expressive Pupils */}
+            <circle cx="54" cy="52" r="8" fill="#4b4b4b" />
+            <circle cx="84" cy="52" r="8" fill="#4b4b4b" />
+            {/* Pupil Highlights */}
+            <circle cx="56" cy="50" r="3" fill="#ffffff" />
+            <circle cx="86" cy="50" r="3" fill="#ffffff" />
+            {/* Orange Beak */}
+            <path d="M 69 70 L 61 56 L 77 56 Z" fill="#ff9600" />
+          </svg>
+        </div>
+        <span className={styles.logoText}>kuizu</span>
       </Link>
 
       {/* Nav items */}

@@ -2,7 +2,7 @@ export interface User {
   id: string;
   email: string;
   username: string;
-  role: 'user' | 'teacher' | 'admin';
+  role: "user" | "teacher" | "admin";
   avatarUrl?: string;
   xp: number;
   streak: {
@@ -19,11 +19,11 @@ export interface User {
 }
 
 export type ExerciseType =
-  | 'multiple-choice'
-  | 'translate'
-  | 'match-pairs'
-  | 'fill-blank'
-  | 'listen';
+  | "multiple-choice"
+  | "translate"
+  | "match-pairs"
+  | "fill-blank"
+  | "listen";
 
 export interface Exercise {
   id: string;
@@ -69,14 +69,14 @@ export interface EnrichedLesson extends Lesson {
   isUnlocked: boolean;
 }
 
-export interface EnrichedUnit extends Omit<Unit, 'lessons'> {
+export interface EnrichedUnit extends Omit<Unit, "lessons"> {
   lessons: EnrichedLesson[];
   completedCount: number;
   totalCount: number;
 }
 
 export interface EnrichedCurriculum {
-  course: Omit<Course, 'units'>;
+  course: Omit<Course, "units">;
   units: EnrichedUnit[];
   overallProgress: {
     completedLessons: number;

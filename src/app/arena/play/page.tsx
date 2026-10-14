@@ -236,7 +236,7 @@ export default function ArenaPlayerPlayPage() {
           </h1>
 
           <div className={styles.scoreCardWrapper}>
-            <Card padding="md" glow="kahoot">
+            <Card padding="md">
               <span className={styles.scoreCardLabel}>Final Score</span>
               <div className={styles.finalScoreValue}>
                 {score.toLocaleString()} Points

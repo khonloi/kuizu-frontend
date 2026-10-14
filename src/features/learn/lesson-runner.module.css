@@ -110,7 +110,7 @@
   align-items: center;
   justify-content: center;
   font-size: 3.5rem;
-  box-shadow: 0 8px 0 var(--duo-yellow-shadow), 0 0 40px rgba(255, 200, 0, 0.4);
+  box-shadow: 0 8px 0 var(--duo-yellow-shadow);
 }
 
 .completionTitle {

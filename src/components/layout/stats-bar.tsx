@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import React from 'react';
-import Link from 'next/link';
-import clsx from 'clsx';
-import { Flame, Heart, Gem, Zap, Volume2, VolumeX } from 'lucide-react';
-import styles from './stats-bar.module.css';
-import { useAuthStore } from '@/stores/auth.store';
-import { useAudioStore } from '@/stores/audio.store';
-import { useUiStore } from '@/stores/ui.store';
-import { Avatar } from '@/components/ui';
+import React from "react";
+import Link from "next/link";
+import clsx from "clsx";
+import { Flame, Heart, Gem, Zap, Volume2, VolumeX } from "lucide-react";
+import styles from "./stats-bar.module.css";
+import { useAuthStore } from "@/stores/auth.store";
+import { useAudioStore } from "@/stores/audio.store";
+import { useUiStore } from "@/stores/ui.store";
+import { Avatar } from "@/components/ui";
 
 export function StatsBar() {
   const user = useAuthStore((s) => s.user);
@@ -38,7 +38,7 @@ export function StatsBar() {
         >
           <Flame
             size={18}
-            className={streak > 0 ? 'animate-heart-beat' : undefined}
+            className={streak > 0 ? "animate-heart-beat" : undefined}
             color="#ff9600"
             fill="#ff9600"
           />
@@ -83,23 +83,29 @@ export function StatsBar() {
         type="button"
         onClick={toggleMute}
         className={styles.audioBtn}
-        aria-label={isMuted ? 'Unmute sounds' : 'Mute sounds'}
-        title={isMuted ? 'Unmute SFX' : 'Mute SFX'}
+        aria-label={isMuted ? "Unmute sounds" : "Mute sounds"}
+        title={isMuted ? "Unmute SFX" : "Mute SFX"}
       >
-        {isMuted ? <VolumeX size={20} color="var(--duo-red)" /> : <Volume2 size={20} color="var(--duo-green)" />}
+        {isMuted ? (
+          <VolumeX size={20} color="var(--duo-red)" />
+        ) : (
+          <Volume2 size={20} color="var(--duo-green)" />
+        )}
       </button>
 
       {/* User Avatar */}
       {user ? (
         <Link href="/profile" onClick={playPop} title="My Profile">
-          <Avatar name={user.username} src={user.avatarUrl} size="sm" ring="duo" showStatus />
+          <Avatar
+            name={user.username}
+            src={user.avatarUrl}
+            size="sm"
+            ring="duo"
+            showStatus
+          />
         </Link>
       ) : (
-        <Link
-          href="/login"
-          onClick={playPop}
-          className={styles.loginLink}
-        >
+        <Link href="/login" onClick={playPop} className={styles.loginLink}>
           Sign In
         </Link>
       )}
