@@ -1,94 +1,102 @@
-# Kuizu Frontend ⚡
+# Kuizu Frontend (v2)
 
-> The next-generation unified gamified learning and multiplayer arena platform. Seamlessly combines Duolingo-style self-paced language mastery with Kahoot-style real-time classroom projector battles. Built on **Next.js 16 (App Router)**, **React 19**, **TypeScript**, **Zustand 5**, **TanStack Query 5**, and **Vanilla CSS**.
+[![Node.js Version](https://img.shields.io/badge/node-%3E%3D20.x-brightgreen.svg?style=flat-square&logo=node.js)](https://nodejs.org)
+[![Next.js](https://img.shields.io/badge/next.js-v16.3-black.svg?style=flat-square&logo=next.js)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/react-v19.2-61DAFB.svg?style=flat-square&logo=react)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/typescript-v5.9-blue.svg?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
+[![Vitest](https://img.shields.io/badge/tests-145%20passed%20%28100%25%29-green.svg?style=flat-square&logo=vitest)](https://vitest.dev/)
+[![Accessibility: WCAG 2.1 AA](https://img.shields.io/badge/accessibility-WCAG%202.1%20AA-purple.svg?style=flat-square)](https://www.w3.org/WAI/WCAG21/quickref/)
+[![Styling: Vanilla CSS](https://img.shields.io/badge/styling-vanilla%20css%20%2B%20modules-blueviolet.svg?style=flat-square)](https://developer.mozilla.org/en-US/docs/Web/CSS)
+[![Code Style: Prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square&logo=prettier)](https://prettier.io)
 
-[![CI Status](https://img.shields.io/badge/CI-Passing-brightgreen?style=flat-square&logo=github-actions)](https://github.com/your-username/kuizu-frontend/actions)
-[![Next.js](https://img.shields.io/badge/Next.js-16.3-black?style=flat-square&logo=next.js)](https://nextjs.org/)
-[![React](https://img.shields.io/badge/React-19.2-blue?style=flat-square&logo=react)](https://react.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
-[![Zustand](https://img.shields.io/badge/Zustand-5.0-brown?style=flat-square)](https://github.com/pmndrs/zustand)
-[![TanStack Query](https://img.shields.io/badge/React_Query-5.0-FF4154?style=flat-square&logo=react-query)](https://tanstack.com/query)
-[![Vitest](https://img.shields.io/badge/Vitest-145%20Passed-green?style=flat-square&logo=vitest)](https://vitest.dev/)
-[![Accessibility](https://img.shields.io/badge/Accessibility-WCAG%202.1%20AA-purple?style=flat-square)]()
-[![License](https://img.shields.io/badge/License-UNLICENSED-blue?style=flat-square)]()
+An enterprise-grade, state-of-the-art frontend application uniting **Duolingo-style self-paced gamified curriculum mastery** with **Kahoot-style real-time big-screen multiplayer arena battles**. Engineered with **Next.js 16 (App Router & Turbopack)**, **React 19**, **TypeScript** in strict mode, **Zustand 5**, **TanStack Query 5**, **Socket.IO Client**, and an accessible **Zero-Runtime Vanilla CSS Design System**.
 
 ---
 
 ## Table of Contents
 
 - [Architectural Highlights](#architectural-highlights)
+- [System Architecture & Data Flow](#system-architecture--data-flow)
 - [Tech Stack](#tech-stack)
 - [Project Directory Structure](#project-directory-structure)
 - [Prerequisites](#prerequisites)
 - [Installation & Getting Started](#installation--getting-started)
 - [Environment Configuration](#environment-configuration)
 - [Available Scripts](#available-scripts)
-- [Dual-Tier State Architecture](#dual-tier-state-architecture)
-  - [Client State: Zustand 5 Store Slices](#client-state-zustand-5-store-slices)
-  - [Server State: TanStack React Query 5](#server-state-tanstack-react-query-5)
-  - [Offline Simulator & Resilient Mock Fallback](#offline-simulator--resilient-mock-fallback)
-- [Real-Time Multiplayer Arena Engine](#real-time-multiplayer-arena-engine)
-  - [Big-Screen Projector Mode (`/arena/host`)](#big-screen-projector-mode-arenahost)
-  - [Mobile Player Experience (`/arena/play`)](#mobile-player-experience-arenaplay)
-  - [Audio-Synchronized Timers & Live Bar Charts](#audio-synchronized-timers--live-bar-charts)
-  - [Olympic Podium Ceremony](#olympic-podium-ceremony)
-- [Duolingo-Style Gamified Learning Journey](#duolingo-style-gamified-learning-journey)
-  - [Sine-Wave Curriculum Path](#sine-wave-curriculum-path)
-  - [Interactive Quest Engine (`LessonRunner`)](#interactive-quest-engine-lessonrunner)
-  - [Hearts Economy & Shop Power-Ups](#hearts-economy--shop-power-ups)
-  - [Procedural Web Audio Engine](#procedural-web-audio-engine)
-- [Design System & Aesthetics](#design-system--aesthetics)
-  - [3D Tactile Physics Tokens](#3d-tactile-physics-tokens)
-  - [Accessible Primitive Component Suite](#accessible-primitive-component-suite)
-- [Edge Proxy & Server-Side Security](#edge-proxy--server-side-security)
+- [Core Application Features](#core-application-features)
+  - [1. Duolingo Quest Engine (5 Exercise Types)](#1-duolingo-quest-engine-5-exercise-types)
+  - [2. Multiplayer Arena Battles (Kahoot Architecture)](#2-multiplayer-arena-battles-kahoot-architecture)
+  - [3. Gamification Economy & Weekly Leagues](#3-gamification-economy--weekly-leagues)
+- [Design System & UI Primitives](#design-system--ui-primitives)
+- [State Management & Data Flow Architecture](#state-management--data-flow-architecture)
+- [Sensory Audio & Tactile Engine](#sensory-audio--tactile-engine)
+- [Security, Edge Route Guarding & SEO](#security-edge-route-guarding--seo)
 - [Testing & Quality Assurance](#testing--quality-assurance)
-- [Production Deployment](#production-deployment)
+- [Production Build & Deployment](#production-build--deployment)
 - [License](#license)
 
 ---
 
 ## Architectural Highlights
 
-- **Next.js 16 App Router & React 19 Foundation**:
-  - Full server component optimization (RSC) with streaming and zero layout shifts (CLS < 0.01).
-  - Turbopack compilation engine with pre-rendering of all 17 static and dynamic routes.
-  - Implements the new Next.js 16 [`proxy.ts`](src/proxy.ts) convention for server-side edge route protection without client redirect flashes.
-- **Real-Time Multiplayer Kahoot Arena**:
-  - Live WebSocket communication powered by **Socket.IO Client** with sub-10ms event acknowledgment.
-  - Big-screen projector stage (`/arena/host`) featuring full-screen toggling, dynamic SVG QR codes for instant mobile joining, live answer count telemetry, and real-time distribution bar charts.
-  - Olympic 3-tier victory ceremony (`PodiumCeremony`) with synchronized audio fanfare and celebratory canvas fireworks.
-- **Duolingo-Inspired Sine-Wave Learning Roadmap**:
-  - Procedurally calculated trigonometric curved lesson path (`CurriculumPath`) with unit guidebooks, checkpoint treasure chests, and tactile 3D stepping stones.
-  - Four distinct interactive exercise primitives: **Translate**, **Listen** (with normal and slow turtle-speed speech audio), **Match Pairs** (with tactile selection physics), and **Fill in Blank** (with auto-advancing token slots).
-- **Procedural Web Audio Engine (Zero Asset Downloads)**:
-  - Lightweight synthesizer ([`audio-engine.ts`](src/lib/audio-engine.ts)) built directly on the native **Web Audio API**.
-  - Synthesizes clicks, pops, error thuds, and multi-note major triad fanfare chords procedurally with zero external audio MP3 asset latency or bandwidth overhead.
-- **Zero-Tailwind Pure Vanilla CSS Design System**:
-  - Built strictly on scoped CSS Modules (`*.module.css`) and standardized CSS Custom Properties ([`tokens.css`](src/styles/tokens.css)).
-  - Signature 3D tactile buttons with physical depth offset (`box-shadow: 0 4px 0 var(--border-color)`), active translation depression (`translateY(3px)`), and WCAG 2.1 AA accessible contrast ratios.
-- **Dual-Tier State Management**:
-  - **Client State**: Zustand 5 slices managing live game session state, audio preferences, and persistent offline demo data.
-  - **Server State**: TanStack React Query 5 providing background revalidation, stale-while-revalidate caching, and optimistic mutations.
+- **Next.js 16 App Router & Turbopack**: High-performance compilation and streaming SSR leveraging React 19 server/client components and React Compiler optimizations.
+- **Server-Side Edge Route Guard (`proxy.ts`)**: Implements Next.js 16 edge proxy convention for zero-flash server-side session authentication checks without deprecated middleware overhead.
+- **Offline Demo Simulator & Real-time Sockets**: Dual-mode WebSocket architecture. When connected to `kuizu-backend`, it facilitates live multiplayer classroom rounds. When disconnected or in demo mode (`NEXT_PUBLIC_DEMO_MODE=true`), an intelligent in-browser mock simulator handles room generation, simulated player joins, countdown ticks, and round scoring seamlessly.
+- **Procedural Web Audio Synthesis Engine**: Custom Web Audio API synthesizer ([`audio-engine.ts`](src/lib/audio-engine.ts)) producing instant procedural chords, tactile pops, error tones, and victory fanfares without downloading heavy audio asset files.
+- **Accessible Zero-Runtime Design System**: 20 meticulously crafted UI primitives constructed with pure Vanilla CSS, CSS Modules, and custom tokens ([`tokens.css`](src/styles/tokens.css)). Zero Tailwind runtime overhead.
+- **Mathematical Sine-Wave Curriculum**: Dynamic curriculum path algorithm rendering animated sinusoidal learning nodes, checkpoints, and unit headers with responsive SVG connector paths.
+- **Full WCAG 2.1 AA Compliance**: Focus trapping in modal dialogs, visible keyboard `:focus-visible` rings, ARIA live region status announcements, and automatic motion reduction for `prefers-reduced-motion`.
+
+---
+
+## System Architecture & Data Flow
+
+```mermaid
+graph TD
+    User[Learner / Host Browser] --> NextServer[Next.js 16 App Router]
+    NextServer --> EdgeProxy[Edge Proxy Guard (proxy.ts)]
+    
+    subgraph "Client Runtime Architecture"
+        EdgeProxy --> Router[Page Routing & Layouts]
+        Router --> UI[Design System Primitives (20 Components)]
+        
+        Router --> StateLayer[Client State Layer]
+        StateLayer --> ZustandAuth[Zustand: Auth Store]
+        StateLayer --> ZustandGame[Zustand: Arena Game Store]
+        StateLayer --> ZustandAudio[Zustand: Audio Synth Store]
+        StateLayer --> ReactQuery[TanStack React Query Cache]
+        
+        Router --> Engines[Interactive Engines]
+        Engines --> LessonRunner[Duolingo Quest Engine (5 Exercise Types)]
+        Engines --> ArenaSocket[Multiplayer Arena Engine]
+        Engines --> AudioEngine[Procedural Web Audio API Synth]
+        Engines --> Confetti[Canvas Confetti Particles]
+    end
+
+    subgraph "External Backend Services"
+        ReactQuery -->|REST API /api/v1| BackendAPI[Kuizu NestJS Backend]
+        ArenaSocket -->|WebSocket WSS| SocketGateway[Kuizu Socket.IO Gateway]
+        ArenaSocket -.->|Fallback Simulation| MockHandler[In-Browser Offline Simulator]
+    end
+```
 
 ---
 
 ## Tech Stack
 
-| Domain | Technology / Library | Purpose |
+| Layer | Technology | Purpose |
 | :--- | :--- | :--- |
-| **Framework** | [Next.js 16](https://nextjs.org/) (App Router) | Server Components, Turbopack, route optimization, metadata |
-| **UI Library** | [React 19](https://react.dev/) / React DOM | Declarative component tree, Hooks, and Transitions |
-| **Language** | [TypeScript 5](https://www.typescriptlang.org/) | Strict static typing and full-stack API contract alignment |
-| **Client State** | [Zustand 5](https://github.com/pmndrs/zustand) | Global reactive state for audio, game rooms, and auth |
-| **Server State** | [TanStack React Query 5](https://tanstack.com/query) | Async data fetching, caching, and background synchronization |
-| **Realtime WebSockets** | [Socket.IO Client 4](https://socket.io/) | Low-latency bi-directional multiplayer communication |
-| **Styling** | Vanilla CSS & Scoped CSS Modules | Pure CSS custom properties token system (zero runtime overhead) |
-| **Icons** | [Lucide React](https://lucide.dev/) | Crisp, accessible SVG icons |
-| **Typography** | [Outfit](https://fonts.google.com/specimen/Outfit) & [Nunito](https://fonts.google.com/specimen/Nunito) | Clean, geometric sans-serif typography via `next/font` |
-| **Audio** | Native [Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API) | Procedural sound generation for UI feedback and ceremonies |
-| **Visual Effects** | [canvas-confetti](https://github.com/catdad/canvas-confetti) | High-performance particle physics for quest and podium victories |
-| **Testing** | [Vitest 5](https://vitest.dev/) & [React Testing Library](https://testing-library.com/) | Fast component testing with JSDOM environment |
-| **Code Quality** | [ESLint 9](https://eslint.org/) & [Prettier 3](https://prettier.io/) | Automated code linting and formatting compliance |
+| **Framework** | [Next.js](https://nextjs.org/) (16.3) | App Router, Server Components, Turbopack, and Dynamic SEO metadata |
+| **UI Library** | [React](https://react.dev/) (19.2) | Modern component architecture, hooks, and transitions |
+| **Language** | [TypeScript](https://www.typescriptlang.org/) (5.9) | Strict compile-time type-safety across all components, props, and schemas |
+| **Client State** | [Zustand](https://github.com/pmndrs/zustand) (5.x) | Lightweight reactive state slices for auth, soundboard, and game arena |
+| **Server State & Cache**| [TanStack React Query](https://tanstack.com/query) (5.x) | Declarative asynchronous caching, stale-while-revalidate, and prefetching |
+| **Realtime Engine** | [Socket.IO Client](https://socket.io/) (4.8) | Bidirectional WebSocket communication with live room management |
+| **Audio Engine** | Procedural [Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API) | Pure mathematical synth generating low-latency UI sound effects |
+| **Styling** | Vanilla CSS & CSS Modules | Zero-runtime CSS variables token system, glassmorphism, and 3D buttons |
+| **Icons & Visuals** | [Lucide React](https://lucide.dev/) | Consistent, lightweight SVG icon system |
+| **Testing** | [Vitest](https://vitest.dev/) (4.x) & [Testing Library](https://testing-library.com/) | 145 unit and component integration tests with `jsdom` |
+| **Linter & Formatting**| [ESLint 9](https://eslint.org/), [Prettier](https://prettier.io/) | Automated code cleanliness and deterministic formatting |
 
 ---
 
@@ -96,53 +104,80 @@
 
 ```text
 kuizu-frontend/
-├── public/                    # Static assets, favicon, brand graphics
+├── public/                    # Static brand assets, favicon, and demo media
 ├── src/
-│   ├── app/                   # Next.js 16 App Router (pages & server layouts)
-│   │   ├── (app)/             # Authenticated app shell with persistent Sidebar & StatsBar
-│   │   │   ├── design-system/ # Internal interactive component sandbox & kitchen sink
-│   │   │   ├── leaderboard/   # Diamond League weekly podium & standings table
-│   │   │   ├── learn/         # Curriculum dashboard with sine-wave path & unit banners
-│   │   │   ├── profile/       # User profile, statistics matrix, and guest sign-in card
-│   │   │   ├── shop/          # Kuizu item shop (heart refills, streak freeze shields)
-│   │   │   └── layout.tsx     # Responsive desktop 3-column & mobile drawer shell
-│   │   ├── (auth)/            # Auth routes
-│   │   │   ├── login/         # Account login with returnUrl redirection
-│   │   │   └── register/      # Account registration with username regex validation
-│   │   ├── (learn)/           # Focused immersive full-screen learning environment
-│   │   │   └── lesson/[slug]/[id]/ # Quest runner with progress bar and feedback drawer
-│   │   ├── arena/             # Real-time Multiplayer Kahoot Arena
-│   │   │   ├── host/          # Big-screen projector host controller & podium
-│   │   │   ├── join/          # 6-digit PIN entry and player nickname form
-│   │   │   └── play/          # Live player answer controller with unjoined session guard
-│   │   ├── error.tsx          # Root error boundary with audio feedback and reset action
-│   │   ├── globals.css        # CSS resets, root font variables, and body layout rules
-│   │   ├── layout.tsx         # Root HTML layout with font injections and Query/AuthProvider
-│   │   ├── loading.tsx        # Initial load skeleton animation
-│   │   ├── manifest.ts        # Progressive Web App (PWA) manifest generator
-│   │   ├── not-found.tsx      # Custom 404 screen with navigation recovery
-│   │   ├── page.tsx           # High-converting landing page (Hero, Ribbon, 3D Features)
-│   │   ├── robots.ts          # Search engine crawl directives (protecting internal routes)
-│   │   └── sitemap.ts         # Dynamic XML sitemap generator
-│   ├── components/            # Reusable UI component library
-│   │   ├── layout/            # Sidebar, MobileNav bottom dock, and Top StatsBar
-│   │   └── ui/                # 20 accessible primitives (Button, Modal, Drawer, Tabs, etc.)
-│   ├── features/              # Encapsulated domain components & hooks
-│   │   ├── arena/             # Arena components (KahootTile, CountdownTimer, PodiumCeremony)
-│   │   ├── auth/              # Auth guard wrapper
-│   │   ├── gamification/      # HeartRefillModal, StreakDisplay, LeagueTrophies
-│   │   ├── landing/           # LandingHero, SubjectRibbon, FeatureCards, StickyCtaBar
-│   │   └── learn/             # CurriculumPath, Exercise runners (Translate, Listen, Match, Fill)
-│   ├── hooks/                 # Custom React and React Query hooks
-│   ├── lib/                   # Transport, procedural audio, confetti, and Socket.IO client
-│   ├── mock/                  # Offline demo courses, quizzes, and mock API request handler
-│   ├── providers/             # AuthProvider and ReactQueryProvider
-│   ├── stores/                # Zustand stores (useAuthStore, useGameStore, useAudioStore)
-│   ├── styles/                # CSS Custom Properties tokens (tokens.css, animations.css)
-│   └── proxy.ts               # Next.js 16 Edge proxy for server-side route guarding
-├── vitest.config.ts           # Vitest configuration with JSDOM and React testing library
-├── tsconfig.json              # TypeScript strict configuration with path aliases
-└── next.config.ts             # Next.js production build and security headers config
+│   ├── app/                   # Next.js 16 App Router routes
+│   │   ├── (app)/             # Authenticated shell layout (Sidebar + StatsBar)
+│   │   │   ├── design-system/ # Interactive live component library showcase
+│   │   │   ├── leaderboard/   # Diamond League standings with promotion zones
+│   │   │   ├── learn/         # Duolingo curriculum sine-wave quest map
+│   │   │   ├── profile/       # Player showcase matrix & stats / Guest CTA card
+│   │   │   ├── shop/          # Power-up store (Heart refill, Streak freeze)
+│   │   │   └── layout.tsx     # Three-column desktop layout with sticky navigation
+│   │   ├── (auth)/            # Authentication portal layouts
+│   │   │   ├── login/         # Email/username login screen with returnUrl support
+│   │   │   └── register/      # Profile registration with client-side Zod validation
+│   │   ├── (learn)/           # Focused distraction-free quest runner
+│   │   │   └── lesson/        # Dynamic quest route (/lesson/[slug]/[id])
+│   │   ├── arena/             # Multiplayer Kahoot Arena portal
+│   │   │   ├── host/          # Big-screen projector mode (PIN, QR, bar chart, podium)
+│   │   │   ├── join/          # Responsive PIN and nickname entry screen
+│   │   │   └── play/          # Live player gamepad controller with unjoined session guard
+│   │   ├── error.tsx          # Client-side error boundary with recovery action
+│   │   ├── global-error.tsx   # Root layout error boundary
+│   │   ├── globals.css        # Reset, root typography, and viewport heights
+│   │   ├── layout.tsx         # Root HTML layout with Google Outfit/Nunito fonts
+│   │   ├── loading.tsx        # Top-level route transition skeleton
+│   │   ├── manifest.ts        # PWA Web App Manifest
+│   │   ├── not-found.tsx      # Accessible 404 page
+│   │   ├── robots.ts          # Search engine crawler directives
+│   │   └── sitemap.ts         # Automated dynamic XML sitemap generator
+│   ├── components/            # Reusable UI component architecture
+│   │   ├── layout/            # Shell components: Sidebar, MobileNav, StatsBar
+│   │   └── ui/                # 20 standalone accessible UI primitives
+│   │       ├── accordion/     # Accessible expandable disclosure
+│   │       ├── avatar/        # User avatar with status ring indicators
+│   │       ├── badge/         # Visual status pills and tier badges
+│   │       ├── button/        # Duolingo 3D tactile buttons (primary, kahoot, duo)
+│   │       ├── card/          # Elevation-based container card
+│   │       ├── checkbox/      # Accessible custom checkbox control
+│   │       ├── divider/       # Horizontal/vertical semantic separators
+│   │       ├── drawer/        # Lesson feedback bottom slider (success/error)
+│   │       ├── input/         # Floating label accessible text field
+│   │       ├── modal/         # Focus-trapped dialog overlay with ESC dismiss
+│   │       ├── progress-bar/  # Smooth animated progress indicator
+│   │       ├── select/        # Accessible custom dropdown select
+│   │       ├── skeleton/      # Content placeholder loading animation
+│   │       ├── stack/         # Flexbox layout utility component
+│   │       ├── switch/        # Accessible toggle switch
+│   │       ├── tabs/          # Accessible tabbed navigation
+│   │       ├── textarea/      # Multi-line text entry
+│   │       ├── toast/         # Transient alert notification provider
+│   │       └── tooltip/       # Contextual hover/focus micro-tips
+│   ├── features/              # Domain-specific feature modules
+│   │   ├── arena/             # Host dashboard, QR code, countdown clock, Kahoot tiles
+│   │   ├── auth/              # Auth guard wrapper and session listeners
+│   │   ├── gamification/      # Heart refill modals, gem stash, streak counter
+│   │   ├── landing/           # Hero section, curriculum preview, sticky CTA bar
+│   │   └── learn/             # Sine-wave path, exercise runners, feedback drawers
+│   ├── hooks/                 # Custom React hooks & React Query abstractions
+│   ├── lib/                   # Core browser utilities
+│   │   ├── api.ts             # Type-safe Fetch HTTP transport wrapper
+│   │   ├── audio-engine.ts    # Procedural Web Audio API synth soundboard
+│   │   ├── confetti.ts        # Canvas Confetti victory celebration burst
+│   │   └── socket.ts          # Resilient Socket.IO singleton manager
+│   ├── mock/                  # Offline sample courses, quizzes, and local state handler
+│   ├── providers/             # Global Context Providers (QueryProvider, AuthProvider)
+│   ├── stores/                # Zustand global state slices
+│   │   ├── audio.store.ts     # Sound effects volume & mute toggle
+│   │   ├── auth.store.ts      # Authenticated user state, XP, hearts, gems
+│   │   └── game.store.ts      # Real-time room PIN, players, questions, podium
+│   ├── styles/                # CSS variables tokens & micro-animations
+│   │   ├── tokens.css         # Duolingo & Kahoot curated color tokens and radii
+│   │   └── animations.css     # Tactile button push, wiggle, and celebration keyframes
+│   └── proxy.ts               # Next.js 16 Edge Proxy for server route guarding
+├── vitest.config.ts           # Vitest unit test runner configuration
+└── package.json               # NPM package manifest & scripts
 ```
 
 ---
@@ -151,9 +186,9 @@ kuizu-frontend/
 
 Ensure your development environment meets the following specifications:
 
-- **Node.js**: `>= 20.18.0` (`v22.x LTS` recommended)
-- **Package Manager**: `npm` (`>= 10.x`) or `pnpm` (`>= 9.x`)
-- **Backend Service**: `kuizu-backend` running on port `4000` (or enable offline demo mode)
+- **Node.js**: `v20.x` or higher (`v22.x` recommended)
+- **Package Manager**: [pnpm](https://pnpm.io/) (`v9.x+`) or [npm](https://www.npmjs.com/)
+- **Backend Service**: Running instance of `kuizu-backend` on port `4000` (or leave default to run in automatic offline demo simulator mode).
 
 ---
 
@@ -174,224 +209,212 @@ npm install
 
 ### 3. Setup Environment Variables
 
-Copy `.env.example` to create your local `.env.local`:
+Copy `.env.example` to create your local `.env.local` configuration:
 
 ```bash
 cp .env.example .env.local
 ```
 
-### 4. Launch Development Server
+Configure your parameters (see [Environment Configuration](#environment-configuration)).
+
+### 4. Run Development Server with Turbopack
 
 ```bash
 npm run dev
 ```
 
-Open [http://localhost:3001](http://localhost:3001) in your browser.
-
-> [!TIP]
-> **Offline Presentation Mode**: Set `NEXT_PUBLIC_DEMO_MODE=true` in `.env.local` to explore the complete curriculum, lesson quest runner, and live multiplayer arena with zero external backend dependencies.
+Navigate to `http://localhost:3001` in your browser.
 
 ---
 
 ## Environment Configuration
 
-| Variable | Required | Default | Description | Example |
-| :--- | :---: | :---: | :--- | :--- |
-| `NEXT_PUBLIC_API_URL` | Yes | `/api` | Base path for REST API calls (proxied or direct) | `/api` |
-| `NEXT_PUBLIC_SOCKET_URL` | Yes | `http://localhost:4000` | Socket.IO server connection endpoint | `http://localhost:4000` |
-| `BACKEND_INTERNAL_URL` | No | `http://localhost:4000` | Target URL used by Next.js rewrites to proxy backend requests | `http://localhost:4000` |
-| `NEXT_PUBLIC_APP_URL` | No | `http://localhost:3001` | Public canonical URL used for SEO, Open Graph, and sitemap | `http://localhost:3001` |
-| `NEXT_PUBLIC_DEMO_MODE`| No | `false` | Enable offline mock handlers for local demos without backend | `false` |
+| Variable | Type | Default | Description |
+| :--- | :---: | :--- | :--- |
+| `NEXT_PUBLIC_APP_URL` | `string` | `http://localhost:3001` | Canonical public URL for Open Graph and metadata |
+| `NEXT_PUBLIC_API_URL` | `string` | `/api` | Base path for REST API calls (proxied via Next.js) |
+| `NEXT_PUBLIC_SOCKET_URL`| `string` | `http://localhost:4000` | Backend Socket.IO WebSocket gateway server URL |
+| `BACKEND_INTERNAL_URL` | `string` | `http://localhost:4000` | Target URL for server-side API proxying and rewrites |
+| `NEXT_PUBLIC_DEMO_MODE` | `boolean`| `false` | When `true`, enables offline simulator for standalone demos |
 
 ---
 
 ## Available Scripts
 
-| Script | Command | Purpose |
+| Command | Purpose |
+| :--- | :--- |
+| `npm run dev` | Start development server with Turbopack on port `3001` |
+| `npm run build` | Validate types, compile routes, and generate optimized production bundle |
+| `npm run start` | Launch production Next.js server from compiled `.next` output |
+| `npm run lint` | Execute ESLint inspection across all components and pages |
+| `npm test` | Run complete Vitest suite (145 tests across 42 files) in single-run mode |
+| `npm run test:watch` | Run Vitest in interactive watch mode for component TDD |
+| `npm run test:cov` | Generate detailed component code coverage report |
+
+---
+
+## Core Application Features
+
+### 1. Duolingo Quest Engine (5 Exercise Types)
+
+The learning runner ([`lesson-runner.tsx`](src/features/learn/lesson-runner.tsx)) replicates Duolingo's tactile learning loop across 5 exercise templates:
+
+1. **Multiple Choice**: Select from 4 answer options with instant sensory audio feedback.
+2. **Translate Exercise**: Assemble translated sentences from a selectable interactive word bank token pool.
+3. **Fill-in-the-Blank**: Choose the appropriate vocabulary token to complete sentence gaps.
+4. **Match Pairs**: Rapid-fire matching of foreign terms with native definitions with mismatch animations.
+5. **Listen & Type**: Audio pronunciation player (normal and slow turtle speed) with transcription input.
+
+Each exercise features:
+- **Immediate Sensory Feedback**: Green/Red bottom feedback drawer with contextual advice.
+- **Heart System**: Incorrect answers deplete 1 of 5 quest hearts. At 0 hearts, prompts refill via gems.
+- **XP Progression**: Successful lesson completion triggers confetti fireworks and awards experience points.
+
+### 2. Multiplayer Arena Battles (Kahoot Architecture)
+
+The multiplayer arena supports two synchronized viewpoints:
+
+#### Projector Host Screen (`/arena/host`)
+- **Lobby Phase**: Displays a giant 6-digit PIN and dynamic SVG QR code for mobile joining.
+- **Question Phase**: Synchronized radial countdown timer clock with live answered player counter.
+- **Reveal Phase**: Animated 4-color bar chart displaying live answer distribution across the room.
+- **Podium Ceremony**: 3D Olympic podium celebrating 1st, 2nd, and 3rd place winners with confetti bursts.
+
+#### Mobile Gamepad Screen (`/arena/play`)
+- 4 iconic tactile Kahoot buttons (Red Triangle, Blue Diamond, Yellow Circle, Green Square).
+- Speed-decay scoring formula: awards up to 1000 base points + speed bonuses + consecutive streak bonuses.
+- Real-time round results with points earned and personal standing rank.
+
+### 3. Gamification Economy & Weekly Leagues
+
+- **Day Streaks**: Animated flame counter with automated streak freeze protection.
+- **Gems Stash**: Digital currency earned through quests, used to purchase heart refills and streak freezes.
+- **Diamond League Leaderboard**: Weekly tier rankings with visual promotion (top 20%) and demotion (bottom 20%) cutoff thresholds.
+
+---
+
+## Design System & UI Primitives
+
+Kuizu features a custom, zero-dependency Design System built with Vanilla CSS variables and 3D tactile buttons:
+
+| Component | Path | Key Capabilities |
 | :--- | :--- | :--- |
-| **dev** | `npm run dev` | Starts Next.js development server with Turbopack on port 3001. |
-| **build** | `npm run build` | Compiles production bundle and pre-renders static routes with Turbopack. |
-| **start** | `npm run start` | Serves compiled production application. |
-| **test** | `npm test` | Runs all 145 unit and component tests via Vitest. |
-| **test:watch** | `npm run test:watch` | Runs Vitest in interactive watch mode. |
-| **lint** | `npm run lint` | Inspects code quality and accessibility rules using ESLint. |
+| `Button` | [`src/components/ui/button.tsx`](src/components/ui/button.tsx) | 3D push depth, loading spinners, variants (`duo`, `kahoot`, `secondary`, `danger`) |
+| `Card` | [`src/components/ui/card.tsx`](src/components/ui/card.tsx) | Elevation borders, padding variants, interactive hover states |
+| `Modal` | [`src/components/ui/modal.tsx`](src/components/ui/modal.tsx) | Focus trap, body scroll lock, backdrop blur, ESC key dismiss |
+| `Drawer` | [`src/components/ui/drawer.tsx`](src/components/ui/drawer.tsx) | Bottom sliding sheet for exercise evaluation (Success green / Error red) |
+| `ProgressBar` | [`src/components/ui/progress-bar.tsx`](src/components/ui/progress-bar.tsx) | Dual-tone animated filling bar with shimmer highlight |
+| `Badge` | [`src/components/ui/badge.tsx`](src/components/ui/badge.tsx) | Gamification status tags (XP, League tiers, Streak indicators) |
+| `Avatar` | [`src/components/ui/avatar.tsx`](src/components/ui/avatar.tsx) | Fallback initials, image avatars, and league rank rings |
+| `Toast` | [`src/components/ui/toast.tsx`](src/components/ui/toast.tsx) | Floating notification toast stack with auto-dismiss |
 
 ---
 
-## Dual-Tier State Architecture
+## State Management & Data Flow Architecture
 
-Kuizu divides state into clean client and server tiers:
+The application cleanly separates client state, server cache, and real-time multiplayer state:
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                     Client Application                      │
-├──────────────────────────────┬──────────────────────────────┤
-│    Client State (Zustand)    │ Server State (React Query)   │
-│  - useAuthStore (user, token)│  - useCoursesQuery           │
-│  - useGameStore (arena state)│  - useCourseQuery(slug)      │
-│  - useAudioStore (SFX, mute) │  - useCompletedLessonsQuery  │
-│  - useShopStore (inventory)  │  - useQuizzesQuery           │
-├──────────────────────────────┴──────────────────────────────┤
-│                     Transport Layer                         │
-│  - api.get / api.post with automatic offline mock fallback  │
-│  - Socket.IO with auto-reconnection & room channel isolation│
-└─────────────────────────────────────────────────────────────┘
-```
-
-### Client State: Zustand 5 Store Slices
-- **[`useAuthStore`](src/stores/auth.store.ts)**: Manages current user session, hearts balance, gem stash, XP, and syncs session cookies across client and edge proxy boundaries.
-- **[`useGameStore`](src/stores/game.store.ts)**: Tracks live room PIN, player roster, countdown clock, active question, answer distribution, and grand finale podium standings.
-- **[`useAudioStore`](src/stores/audio.store.ts)**: Controls master mute preferences and exposes triggers for UI audio feedback (`playPop`, `playSuccess`, `playError`, `playLevelUp`).
-
-### Server State: TanStack React Query 5
-- Automatic background caching, stale-while-revalidate policies, and optimistic mutations for completed lessons and shop purchases.
-
-### Offline Simulator & Resilient Mock Fallback
-- If the backend is offline or `NEXT_PUBLIC_DEMO_MODE=true`, the client seamlessly falls back to [`mock-handler.ts`](src/mock/mock-handler.ts), ensuring uninterrupted demonstration capability.
+1. **`useAuthStore` ([`auth.store.ts`](src/stores/auth.store.ts))**: Manages the current authenticated profile, quest hearts, gems, streak counter, and synchronized cookies (`kuizu_session`).
+2. **`useGameStore` ([`game.store.ts`](src/stores/game.store.ts))**: Manages multiplayer arena room state (PIN, players list, active question, answer distribution, podium).
+3. **`useAudioStore` ([`audio.store.ts`](src/stores/audio.store.ts))**: Controls global sound effects mute state and audio synthesizer triggers.
+4. **TanStack Query Hooks**: Declarative server-state hooks with automatic caching:
+   - `useCoursesQuery`: Retrieves all available language courses.
+   - `useCourseQuery(slug)`: Fetches curriculum structure for a specific course.
+   - `useCompletedLessonsQuery`: Tracks completed lesson progress.
+   - `useLeaderboardQuery`: Caches competitive league standings.
 
 ---
 
-## Real-Time Multiplayer Arena Engine
+## Sensory Audio & Tactile Engine
 
-### Big-Screen Projector Mode (`/arena/host`)
-- **Deck Selection**: Teachers select an author-created quiz deck or sample Japanese deck.
-- **Giant PIN & QR Join**: Projector display presents a prominent 6-digit room PIN alongside a dynamically generated SVG QR code (`QRCodeSvg`) for zero-friction mobile onboarding.
-- **Fullscreen Capability**: Integrated HTML5 Fullscreen API toggle with projector-optimized typography.
+Rather than forcing users to download heavy audio files over slow connections, Kuizu features an embedded procedural synthesizer using the browser's native **Web Audio API** ([`src/lib/audio-engine.ts`](src/lib/audio-engine.ts)):
 
-### Mobile Player Experience (`/arena/play`)
-- **Tactile Kahoot-Style Controls**: 4 geometric color-coded buttons with 3D physical elevation:
-  - 🔺 **Red** (Triangle)
-  - 🔷 **Blue** (Rhombus)
-  - 🟡 **Yellow** (Circle)
-  - 🟩 **Green** (Square)
-- **Session Guards**: Direct navigation to `/arena/play` without an active PIN or joined session presents an informative guard card with one-click navigation back to [`/arena/join`](src/app/arena/join/page.tsx).
+```typescript
+// Procedural Pop Sound (FM Frequency Sweep)
+osc.frequency.setValueAtTime(600, ctx.currentTime);
+osc.frequency.exponentialRampToValueAtTime(120, ctx.currentTime + 0.08);
 
-### Audio-Synchronized Timers & Live Bar Charts
-- Circular countdown clock rendered via SVG stroke-dashoffset physics with critical-second warning animations.
-- Question results reveal mode renders animated distribution bar charts (`AnswerBarChart`) showing exact player response tallies with correct answer indicators.
-
-### Olympic Podium Ceremony
-- Three-tier physical stage showcasing 1st, 2nd, and 3rd place winners with crown badges, score labels, and celebratory confetti cannons (`canvas-confetti`).
-
----
-
-## Duolingo-Style Gamified Learning Journey
-
-### Sine-Wave Curriculum Path
-- Units and lessons are laid out in a continuous trigonometric sine wave:
-
-$$X(i) = \text{Center} + \sin\left(\frac{i \times \pi}{2}\right) \times \text{Amplitude}$$
-
-- **Visual Milestones**: Pulsing current lesson stone, START callout badge, locked grayscale icons, and unit checkpoint treasure chests.
-
-### Interactive Quest Engine (`LessonRunner`)
-- **Exercise Types**:
-  1. **Translate**: Word bank tokens with tap-to-select and tap-to-return physics.
-  2. **Listen**: Normal speed (1.0x) and turtle speed (0.5x) speech synthesis audio buttons.
-  3. **Match Pairs**: Dual-column term and definition pairing with tactile active states.
-  4. **Fill in Blank**: Sentence prompts with placeholder drop targets.
-- **Feedback Drawer**: Accessible bottom slide-up drawer with success (lime green) and failure (vibrant red) states, displaying audio chords and correct answer hints.
-
-### Hearts Economy & Shop Power-Ups
-- **Hearts**: Learners start with 5 hearts. Mistakes deduct 1 heart. Reaching 0 hearts triggers the refill modal.
-- **Gems**: Earned on lesson completion and spent in [`/shop`](src/app/(app)/shop/page.tsx) on streak freezes or heart refills.
-
-### Procedural Web Audio Engine
-All auditory feedback is generated in real time without external audio files:
-- **`playPop()`**: 440 Hz Sine wave with rapid frequency drop.
-- **`playSuccess()`**: Two-tone ascending chime (C5 → G5).
-- **`playError()`**: Low-frequency sawtooth dissonance.
-- **`playLevelUp()`**: Four-note arpeggiated major chord fanfare.
-
----
-
-## Design System & Aesthetics
-
-### 3D Tactile Physics Tokens
-
-Defined centrally in [`tokens.css`](src/styles/tokens.css):
-
-```css
-:root {
-  /* Duolingo Brand Palette */
-  --duo-green: #58cc02;
-  --duo-green-dark: #46a302;
-  --duo-blue: #1cb0f6;
-  --duo-blue-dark: #1899d6;
-  --duo-yellow: #ffc800;
-  --duo-yellow-dark: #e5a400;
-  --duo-red: #ff4b4b;
-  --duo-red-dark: #ea2b2b;
-
-  /* 3D Button Elevation */
-  --btn-shadow-offset: 4px;
-  --btn-press-offset: 3px;
-  --radius-md: 16px;
-}
+// Procedural Correct Fanfare (Major Triad: C5 - E5 - G5)
+playTone(523.25, 0.1); // C5
+playTone(659.25, 0.1); // E5
+playTone(783.99, 0.25); // G5
 ```
 
-### Accessible Primitive Component Suite
-
-All components are located in [`src/components/ui`](src/components/ui/):
-- **Button**: 3D tactile elevation with variants (`duo`, `secondary`, `danger`, `ghost`, `kahoot`).
-- **Card**: Elevated surface with customizable padding.
-- **Modal & Drawer**: ARIA dialog containers with backdrop blur and focus trapping.
-- **ProgressBar**: Smooth animated gauge for quest progress.
-- **Badge & Avatar**: Status chips and user avatars with tier rings (bronze to diamond).
-- **Tabs, Accordion, Tooltip, Switch, Skeleton**: Fully keyboard-accessible UI primitives.
+- **Zero Asset Latency**: Sound plays with 0ms buffering delay.
+- **Mute Safe**: Automatically respects user mute preferences and system audio policies.
+- **Canvas Fireworks**: Victory events trigger high-performance canvas confetti bursts ([`src/lib/confetti.ts`](src/lib/confetti.ts)).
 
 ---
 
-## Edge Proxy & Server-Side Security
+## Security, Edge Route Guarding & SEO
 
-Kuizu Frontend incorporates Next.js 16 [`proxy.ts`](src/proxy.ts) for route protection:
-- Inspects session cookies (`access_token`, `kuizu_session`, `token`).
-- Allows `/profile` to gracefully render a rich guest-mode call-to-action for unauthenticated visitors while protecting sensitive workflows.
-- Configured with strict HTTP security headers in [`next.config.ts`](next.config.ts) (HSTS, CSP, X-Frame-Options, Referrer-Policy).
+- **Edge Route Proxy Guard ([`src/proxy.ts`](src/proxy.ts))**: Utilizes Next.js 16 Edge Proxy to enforce session validation before rendering protected views.
+- **Guest-First Architecture**: Routes like `/profile` gracefully display guest onboarding cards when logged out, allowing public exploration without jarring redirects.
+- **Enterprise Security Headers**: Strict Content Security Policy, HSTS, frame-ancestors restriction, and anti-MIME sniffing configured in [`next.config.ts`](next.config.ts).
+- **Automated Dynamic SEO**:
+  - Open Graph & Twitter Summary Cards defined in [`src/app/layout.tsx`](src/app/layout.tsx).
+  - Dynamic XML Sitemap generator ([`src/app/sitemap.ts`](src/app/sitemap.ts)) excluding internal tooling.
+  - Search engine directives ([`src/app/robots.ts`](src/app/robots.ts)) disallowing arena gamepads and private paths.
 
 ---
 
 ## Testing & Quality Assurance
 
-Kuizu Frontend maintains **100% test pass rate** with 145 unit and integration tests:
+Kuizu Frontend maintains a **100% test pass rate** with 145 tests across 42 test suites using [Vitest](https://vitest.dev/) and `@testing-library/react`:
 
 ```bash
-# Execute all Vitest unit and component tests
+# Execute full test suite
 npm test
 
 # Run tests in interactive watch mode
 npm run test:watch
 
-# Execute ESLint inspection
-npm run lint
-
-# Validate full production build
-npm run build
+# Generate test coverage report
+npm run test:cov
 ```
+
+### Test Coverage Highlights
+
+- **UI Primitives Suite (`src/components/ui/__tests__/*`)**: Validates accessibility, keyboard interactions, focus management, and rendering across all 20 UI primitives.
+- **Exercise Engine Suite (`src/features/learn/__tests__/*`)**: Validates Multiple Choice, Translate, Match Pairs, Fill-in-Blank, and Listen exercise evaluation logic.
+- **Arena Suite (`src/features/arena/__tests__/*`)**: Tests Kahoot tile clicks, answer distribution bar charts, QR code rendering, and countdown clocks.
+- **Store & Hook Suites (`src/stores/__tests__/*`, `src/features/auth/__tests__/*`)**: Tests Zustand state mutations and auth guards.
 
 ---
 
-## Production Deployment
+## Production Build & Deployment
 
-### Optimized Production Build
-
-Compile with Next.js Turbopack:
+### 1. Compile Optimized Bundle
 
 ```bash
 npm run build
-npm run start
 ```
 
-### Deploying to Vercel
+Next.js compiles all routes with Turbopack, prerendering static pages and establishing server-rendered dynamic endpoints.
+
+### 2. Verify Linting & Types
 
 ```bash
-npx vercel --prod
+npm run lint
 ```
 
-Configure environment variables in the Vercel Project Settings (`NEXT_PUBLIC_SOCKET_URL`, `NEXT_PUBLIC_API_URL`, `BACKEND_INTERNAL_URL`).
+### 3. Start Production Server
+
+```bash
+NODE_ENV=production npm run start
+```
+
+### Docker Deployment
+
+To build a standalone production container:
+
+```bash
+docker build -t kuizu-frontend:latest .
+docker run -p 3001:3001 --env-file .env.local kuizu-frontend:latest
+```
 
 ---
 
 ## License
 
-UNLICENSED © Kuizu Platform. Proprietary and confidential.
+This project is licensed under the [ISC License](LICENSE).
