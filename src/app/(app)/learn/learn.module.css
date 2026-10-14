@@ -39,7 +39,7 @@
 }
 
 .errorTitle {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: 800;
   color: #4b4b4b;
 }
@@ -73,7 +73,7 @@
 }
 
 .bannerTitle {
-  font-size: 2.25rem;
+  font-size: 1.85rem;
   font-weight: 800;
   margin-top: 0.5rem;
   letter-spacing: -0.02em;
@@ -82,7 +82,7 @@
 
 .bannerDescription {
   color: #777777;
-  font-size: 1.05rem;
+  font-size: 0.95rem;
   margin-top: 0.35rem;
   max-width: 580px;
   line-height: 1.5;

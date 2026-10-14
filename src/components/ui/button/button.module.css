@@ -41,20 +41,20 @@
 
 /* Sizes */
 .sizeSm {
-  padding: 0.55rem 1.1rem;
-  font-size: 0.825rem;
+  padding: 0.45rem 1rem;
+  font-size: 0.75rem;
   border-radius: 12px;
 }
 
 .sizeMd {
-  padding: 0.85rem 1.75rem;
-  font-size: 0.95rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.85rem;
   border-radius: var(--btn-radius);
 }
 
 .sizeLg {
-  padding: 1.1rem 2.25rem;
-  font-size: 1.1rem;
+  padding: 0.95rem 2rem;
+  font-size: 0.975rem;
   border-radius: 20px;
 }
 

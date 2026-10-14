@@ -28,7 +28,7 @@
   background-color: #ffffff;
   border: 2px solid #e5e5e5;
   box-shadow: 0 2px 0 #e5e5e5;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   font-weight: 800;
   cursor: pointer;
   text-decoration: none;
@@ -92,7 +92,7 @@
 
   .statBadge {
     padding: 0.25rem 0.6rem;
-    font-size: 0.825rem;
+    font-size: 0.75rem;
   }
 
   .xpStat {
@@ -101,7 +101,7 @@
 }
 
 .loginLink {
-  font-size: 0.85rem;
+  font-size: 0.775rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.06em;

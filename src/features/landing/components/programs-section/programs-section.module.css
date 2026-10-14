@@ -39,7 +39,7 @@
 }
 
 .title {
-  font-size: 2.75rem;
+  font-size: 2.25rem;
   font-weight: 800;
   line-height: 1.15;
   letter-spacing: -0.03em;
@@ -48,7 +48,7 @@
 }
 
 .description {
-  font-size: 1.15rem;
+  font-size: 1rem;
   line-height: 1.65;
   color: #777777;
   margin-bottom: 2rem;
@@ -58,7 +58,7 @@
 .outlineCta {
   background: #ffffff;
   color: #1cb0f6;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -96,9 +96,9 @@
     text-align: center;
   }
   .title {
-    font-size: 2.25rem;
+    font-size: 1.85rem;
   }
   .description {
-    font-size: 1.05rem;
+    font-size: 0.925rem;
   }
 }
