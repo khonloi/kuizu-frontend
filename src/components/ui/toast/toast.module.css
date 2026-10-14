@@ -49,13 +49,13 @@
 }
 
 .title {
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   font-weight: 800;
   letter-spacing: -0.01em;
 }
 
 .description {
-  font-size: 0.85rem;
+  font-size: 0.775rem;
   color: var(--text-secondary);
   line-height: 1.4;
   word-break: break-word;

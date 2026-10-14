@@ -39,25 +39,25 @@
 .sizeSm {
   width: 32px;
   height: 32px;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
 }
 
 .sizeMd {
   width: 44px;
   height: 44px;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
 }
 
 .sizeLg {
   width: 64px;
   height: 64px;
-  font-size: 1.35rem;
+  font-size: 1.2rem;
 }
 
 .sizeXl {
   width: 96px;
   height: 96px;
-  font-size: 2rem;
+  font-size: 1.75rem;
 }
 
 /* Border Ring Colors */

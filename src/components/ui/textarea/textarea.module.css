@@ -15,7 +15,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  font-size: 0.85rem;
+  font-size: 0.775rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -23,7 +23,7 @@
 }
 
 .charCount {
-  font-size: 0.8rem;
+  font-size: 0.725rem;
   color: var(--text-muted);
 }
 
@@ -54,7 +54,7 @@
   border: none;
   border-radius: 14px;
   color: var(--text-primary);
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 600;
   outline: none;
   resize: vertical;
@@ -74,12 +74,12 @@
   display: flex;
   align-items: center;
   gap: 0.35rem;
-  font-size: 0.8rem;
+  font-size: 0.725rem;
   font-weight: 700;
   color: var(--duo-red);
 }
 
 .helperText {
-  font-size: 0.8rem;
+  font-size: 0.725rem;
   color: var(--text-muted);
 }

@@ -44,7 +44,7 @@
 
 .description {
   color: var(--text-secondary);
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   line-height: 1.6;
   max-width: 380px;
 }
@@ -61,7 +61,7 @@
 }
 
 .balanceLabel {
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   color: var(--text-secondary);
 }
 
@@ -75,6 +75,6 @@
 
 .errorMessage {
   color: var(--duo-red);
-  font-size: 0.85rem;
+  font-size: 0.775rem;
   font-weight: 700;
 }

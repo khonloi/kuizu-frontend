@@ -69,7 +69,7 @@ export function CountdownTimer({
 
   const timerVars = {
     '--timer-size': `${size}px`,
-    '--timer-font-size': `${size * 0.36}px`,
+    '--timer-font-size': `${size * 0.32}px`,
     '--timer-color': strokeColor,
   } as React.CSSProperties;
 

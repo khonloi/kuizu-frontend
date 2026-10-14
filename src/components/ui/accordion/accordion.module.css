@@ -30,7 +30,7 @@
   background: transparent;
   border: none;
   color: var(--text-primary);
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 800;
   cursor: pointer;
   text-align: left;
@@ -50,7 +50,7 @@
 .content {
   padding: 0 1.25rem 1.25rem;
   color: var(--text-secondary);
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   line-height: 1.5;
   animation: slideDown 0.2s ease;
 }

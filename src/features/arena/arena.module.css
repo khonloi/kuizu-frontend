@@ -45,7 +45,7 @@
 }
 
 .pinText {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: 900;
   letter-spacing: 0.15em;
   color: var(--text-primary);
@@ -86,7 +86,7 @@
   background: rgba(23, 32, 54, 0.9);
   border: 1.5px solid rgba(255, 255, 255, 0.12);
   border-radius: 9999px;
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 800;
   color: #ffffff;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
@@ -125,7 +125,7 @@
 }
 
 .questionTitle {
-  font-size: 2.25rem;
+  font-size: 1.85rem;
   font-weight: 900;
   line-height: 1.3;
   letter-spacing: -0.02em;
@@ -145,7 +145,7 @@
   gap: 1.25rem;
   padding: 1.5rem 2rem;
   border-radius: 18px;
-  font-size: 1.4rem;
+  font-size: 1.25rem;
   font-weight: 800;
   color: #ffffff;
   box-shadow: 0 6px 0 rgba(0, 0, 0, 0.35);
@@ -173,7 +173,7 @@
 }
 
 .tileShape {
-  font-size: 2rem;
+  font-size: 1.75rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -346,7 +346,7 @@
     grid-template-columns: 1fr;
   }
   .questionTitle {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
   }
   .podiumContainer {
     gap: 0.75rem;
@@ -402,7 +402,7 @@
 }
 
 .quizSelectTitle {
-  font-size: 3rem;
+  font-size: 2.5rem;
   font-weight: 900;
   margin-top: 0.5rem;
   letter-spacing: -0.03em;
@@ -410,7 +410,7 @@
 
 .quizSelectSubtitle {
   color: var(--text-secondary);
-  font-size: 1.1rem;
+  font-size: 1rem;
   margin-top: 0.5rem;
 }
 
@@ -428,19 +428,19 @@
 }
 
 .quizCardIcon {
-  font-size: 3rem;
+  font-size: 2.5rem;
   margin-bottom: 0.5rem;
 }
 
 .quizCardTitle {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: 800;
   margin-top: 0.75rem;
 }
 
 .quizCardDescription {
   color: var(--text-secondary);
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   margin-top: 0.4rem;
   line-height: 1.5;
 }
@@ -461,7 +461,7 @@
 }
 
 .lobbyPinLabel {
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 800;
   text-transform: uppercase;
   color: var(--text-secondary);
@@ -469,7 +469,7 @@
 }
 
 .lobbyGiantPin {
-  font-size: 5.5rem;
+  font-size: 4.5rem;
   font-weight: 900;
   letter-spacing: 0.15em;
   color: #ffffff;
@@ -489,20 +489,20 @@
 }
 
 .lobbyQrText {
-  font-size: 0.85rem;
+  font-size: 0.775rem;
   color: var(--text-secondary);
   font-weight: 700;
 }
 
 .lobbyWaitingText {
   color: var(--text-muted);
-  font-size: 1.2rem;
+  font-size: 1.05rem;
   font-weight: 700;
 }
 
 .lobbyStartBtn {
   min-width: 240px;
-  font-size: 1.2rem;
+  font-size: 1.05rem;
   padding: 1.1rem 2.5rem;
 }
 
@@ -522,24 +522,24 @@
 }
 
 .revealQuestionTitle {
-  font-size: 1.8rem;
+  font-size: 1.55rem;
   font-weight: 800;
 }
 
 /* Player Handheld Screen */
 .playerBigEmoji {
-  font-size: 4.5rem;
+  font-size: 3.75rem;
 }
 
 .playerTitle {
-  font-size: 2.5rem;
+  font-size: 2.15rem;
   font-weight: 900;
   margin-top: 1rem;
 }
 
 .playerSubtitle {
   color: var(--text-secondary);
-  font-size: 1.2rem;
+  font-size: 1.05rem;
   margin-top: 0.5rem;
   max-width: 480px;
 }
@@ -586,17 +586,17 @@
 }
 
 .lockEmoji {
-  font-size: 3.5rem;
+  font-size: 2.85rem;
 }
 
 .lockedInTitle {
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   font-weight: 900;
 }
 
 .lockedInSubtitle {
   color: var(--text-secondary);
-  font-size: 1rem;
+  font-size: 0.9rem;
 }
 
 .totalScoreText {
@@ -605,7 +605,7 @@
 }
 
 .feedbackTitle {
-  font-size: 2.5rem;
+  font-size: 2.15rem;
   font-weight: 900;
   color: #ffffff;
 }
@@ -614,7 +614,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: 900;
   color: #ffffff;
 }
@@ -625,23 +625,23 @@
   gap: 0.4rem;
   color: #ffffff;
   font-weight: 800;
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
 .wrongTitle {
-  font-size: 2.25rem;
+  font-size: 1.85rem;
   font-weight: 900;
   color: #ffffff;
 }
 
 .wrongSubtitle {
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: rgba(255, 255, 255, 0.9);
   font-weight: 700;
 }
 
 .podiumBigMedal {
-  font-size: 4.5rem;
+  font-size: 3.75rem;
 }
 
 .scoreCardWrapper {
@@ -649,12 +649,12 @@
 }
 
 .scoreCardLabel {
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: var(--text-secondary);
 }
 
 .finalScoreValue {
-  font-size: 2.25rem;
+  font-size: 1.85rem;
   font-weight: 900;
   color: var(--duo-yellow), #ffc800;
   margin-top: 0.25rem;
@@ -677,17 +677,17 @@
 }
 
 .hostChoiceCheckmark {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: 900;
 }
 
 .gamepadShapeSymbol {
-  font-size: 3.5rem;
+  font-size: 2.85rem;
   line-height: 1;
 }
 
 .gamepadLabel {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 800;
   text-align: center;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
@@ -706,7 +706,7 @@
 }
 
 .podiumHeading {
-  font-size: 3rem;
+  font-size: 2.5rem;
   font-weight: 900;
   letter-spacing: -0.02em;
   text-align: center;
@@ -719,43 +719,43 @@
 }
 
 .podiumMedalSm {
-  font-size: 2.5rem;
+  font-size: 2.15rem;
 }
 
 .podiumMedalLg {
-  font-size: 3.5rem;
+  font-size: 2.85rem;
 }
 
 .podiumNicknameSm {
-  font-size: 1.25rem;
+  font-size: 1.1rem;
   font-weight: 900;
 }
 
 .podiumNicknameLg {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: 900;
   color: var(--duo-yellow);
 }
 
 .podiumScoreSm {
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   color: var(--text-secondary);
   font-weight: 700;
 }
 
 .podiumScoreLg {
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: #ffffff;
   font-weight: 800;
 }
 
 .podiumRankNumberSm {
-  font-size: 2.5rem;
+  font-size: 2.15rem;
   font-weight: 900;
 }
 
 .podiumRankNumberLg {
-  font-size: 3.5rem;
+  font-size: 2.85rem;
   font-weight: 900;
 }
 
@@ -771,7 +771,7 @@
 }
 
 .podiumLeaderboardTitle {
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 800;
   margin-bottom: 1rem;
 }
@@ -832,7 +832,7 @@
 }
 
 .chartVoteCount {
-  font-size: 1.25rem;
+  font-size: 1.1rem;
   font-weight: 900;
   color: var(--text-secondary);
 }
@@ -859,12 +859,12 @@
 }
 
 .chartSymbol {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   color: #ffffff;
 }
 
 .chartPercent {
-  font-size: 0.85rem;
+  font-size: 0.775rem;
   font-weight: 800;
   color: var(--text-muted);
 }
