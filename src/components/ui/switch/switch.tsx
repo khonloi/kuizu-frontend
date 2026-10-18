@@ -1,9 +1,9 @@
 'use client';
 
-import React, { forwardRef, KeyboardEvent } from 'react';
+import React, { forwardRef } from 'react';
 import clsx from 'clsx';
 import styles from './switch.module.css';
-import { useAudioStore } from '@/stores/audio.store';
+import { useToggleControl } from '@/hooks/use-toggle-control';
 
 export interface SwitchProps {
   checked?: boolean;
@@ -30,21 +30,11 @@ export const Switch = forwardRef<HTMLButtonElement, SwitchProps>(
     },
     ref,
   ) => {
-    const playPop = useAudioStore((s) => s.playPop);
-
-    const handleToggle = () => {
-      if (disabled) return;
-      playPop();
-      onChange?.(!checked);
-    };
-
-    const handleKeyDown = (e: KeyboardEvent<HTMLButtonElement>) => {
-      if (disabled) return;
-      if (e.key === ' ' || e.key === 'Enter') {
-        e.preventDefault();
-        handleToggle();
-      }
-    };
+    const { handleToggle, handleKeyDown } = useToggleControl({
+      checked,
+      onChange,
+      disabled,
+    });
 
     return (
       <div

@@ -2,8 +2,8 @@
 
 import React, { useEffect } from 'react';
 import clsx from 'clsx';
-import { Volume2 } from 'lucide-react';
 import styles from './exercise.module.css';
+import { ExercisePromptCard } from '../components/exercise-prompt-card';
 import { useAudioStore } from '@/stores/audio.store';
 import type { Exercise } from '@/types/api.types';
 
@@ -52,25 +52,14 @@ export function MultipleChoiceExercise({
   return (
     <div className={styles.container}>
       {/* Prompt Card */}
-      <div className={styles.promptCard}>
-        <div className={styles.promptHeader}>
-          <button
-            type="button"
-            onClick={handleSpeaker}
-            className={styles.promptSpeaker}
-            aria-label="Listen to prompt"
-            title="Pronounce prompt"
-          >
-            <Volume2 size={24} />
-          </button>
-          <span className={styles.badgeBlue}>
-            SELECT THE CORRECT TRANSLATION
-          </span>
-        </div>
-
-        <h2 className={styles.promptText}>{exercise.prompt}</h2>
-        {exercise.hint && <p className={styles.hintText}>💡 {exercise.hint}</p>}
-      </div>
+      <ExercisePromptCard
+        prompt={exercise.prompt}
+        hint={exercise.hint}
+        badgeText="SELECT THE CORRECT TRANSLATION"
+        badgeClassName={styles.badgeBlue}
+        onSpeak={handleSpeaker}
+        speakerAriaLabel="Listen to prompt"
+      />
 
       {/* Choices Grid */}
       <div className={styles.choicesGrid} role="radiogroup" aria-label="Answer choices">

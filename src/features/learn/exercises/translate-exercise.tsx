@@ -1,10 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
-import clsx from 'clsx';
-import { Volume2 } from 'lucide-react';
+import React from 'react';
 import styles from './exercise.module.css';
+import { ExercisePromptCard } from '../components/exercise-prompt-card';
 import { useAudioStore } from '@/stores/audio.store';
+import { useWordBank } from '../hooks/use-word-bank';
+import { WordBankAssembly, WordBankTokens } from '../components/word-bank';
 import type { Exercise } from '@/types/api.types';
 
 interface TranslateProps {
@@ -19,7 +20,12 @@ export function TranslateExercise({
   disabled = false,
 }: TranslateProps) {
   const { playPop } = useAudioStore();
-  const [selectedTokens, setSelectedTokens] = useState<string[]>([]);
+  const {
+    selectedTokens,
+    handleAddToken,
+    handleRemoveToken,
+    isTokenPlaced,
+  } = useWordBank({ onSelect, disabled });
 
   const handleSpeaker = () => {
     playPop();
@@ -30,89 +36,33 @@ export function TranslateExercise({
     }
   };
 
-  const handleAddToken = (token: string) => {
-    if (disabled || selectedTokens.includes(token)) return;
-    playPop();
-    const updated = [...selectedTokens, token];
-    setSelectedTokens(updated);
-    onSelect(updated.join(' '));
-  };
-
-  const handleRemoveToken = (token: string) => {
-    if (disabled) return;
-    playPop();
-    const updated = selectedTokens.filter((t) => t !== token);
-    setSelectedTokens(updated);
-    onSelect(updated.join(' '));
-  };
-
   return (
     <div className={styles.container}>
       {/* Prompt Card */}
-      <div className={styles.promptCard}>
-        <div className={styles.promptHeader}>
-          <button
-            type="button"
-            onClick={handleSpeaker}
-            className={styles.promptSpeaker}
-            aria-label="Listen to prompt"
-          >
-            <Volume2 size={24} />
-          </button>
-          <span className={styles.badgeGreen}>
-            TRANSLATE THIS PHRASE
-          </span>
-        </div>
-
-        <h2 className={styles.promptText}>{exercise.prompt}</h2>
-        {exercise.hint && <p className={styles.hintText}>💡 {exercise.hint}</p>}
-      </div>
+      <ExercisePromptCard
+        prompt={exercise.prompt}
+        hint={exercise.hint}
+        badgeText="TRANSLATE THIS PHRASE"
+        badgeClassName={styles.badgeGreen}
+        onSpeak={handleSpeaker}
+      />
 
       {/* Assembly line (placed tokens) */}
-      <div
-        className={clsx(styles.wordSlotArea, {
-          [styles.wordSlotAreaActive]: selectedTokens.length > 0,
-        })}
-      >
-        {selectedTokens.length === 0 ? (
-          <span className={styles.emptyPlaceholder}>
-            Tap the word chips below to build your answer...
-          </span>
-        ) : (
-          selectedTokens.map((token) => (
-            <button
-              key={token}
-              type="button"
-              disabled={disabled}
-              onClick={() => handleRemoveToken(token)}
-              className={clsx(styles.wordChip, styles.wordChipSelected, 'animate-pop')}
-            >
-              {token}
-            </button>
-          ))
-        )}
-      </div>
+      <WordBankAssembly
+        selectedTokens={selectedTokens}
+        onRemoveToken={handleRemoveToken}
+        placeholder="Tap the word chips below to build your answer..."
+        disabled={disabled}
+      />
 
       {/* Available words bank */}
-      <div className={styles.wordBank}>
-        {exercise.options.map((token) => {
-          const isPlaced = selectedTokens.includes(token);
-
-          return (
-            <button
-              key={token}
-              type="button"
-              disabled={disabled || isPlaced}
-              onClick={() => handleAddToken(token)}
-              className={clsx(styles.wordChip, {
-                [styles.wordChipPlaced]: isPlaced,
-              })}
-            >
-              {token}
-            </button>
-          );
-        })}
-      </div>
+      <WordBankTokens
+        options={exercise.options}
+        isPlaced={isTokenPlaced}
+        onAddToken={handleAddToken}
+        disabled={disabled}
+      />
     </div>
   );
 }
+

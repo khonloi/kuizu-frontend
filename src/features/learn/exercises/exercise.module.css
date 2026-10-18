@@ -97,7 +97,8 @@
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
 }
 
-.choiceBtnSelected {
+.choiceBtnSelected,
+.matchCardSelected {
   border-color: var(--duo-blue) !important;
   background-color: var(--duo-blue-subtle) !important;
   box-shadow: 0 4px 0 var(--duo-blue-shadow) !important;
@@ -225,10 +226,6 @@
 }
 
 .matchCardSelected {
-  border-color: var(--duo-blue) !important;
-  background-color: var(--duo-blue-subtle) !important;
-  box-shadow: 0 4px 0 var(--duo-blue-shadow) !important;
-  color: #ffffff !important;
   transform: scale(1.02);
 }
 

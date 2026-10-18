@@ -13,7 +13,7 @@ export type GameStatus =
   | 'reveal'
   | 'ended';
 
-interface GameState {
+export interface GameDataState {
   pin: string | null;
   nickname: string | null;
   quizTitle: string | null;
@@ -31,24 +31,9 @@ interface GameState {
   totalPlayers: number;
   podium: PlayerScore[];
   fullLeaderboard: PlayerScore[];
-
-  setPin: (pin: string | null) => void;
-  setNickname: (nickname: string | null) => void;
-  setQuizTitle: (title: string | null) => void;
-  setIsHost: (isHost: boolean) => void;
-  setStatus: (status: GameStatus) => void;
-  setPlayers: (players: PlayerScore[]) => void;
-  addPlayer: (player: PlayerScore) => void;
-  removePlayer: (socketId: string) => void;
-  setCurrentQuestion: (question: QuestionStartPayload | null) => void;
-  setSelectedChoiceId: (choiceId: string | null) => void;
-  setAnswerCount: (answeredCount: number, totalPlayers: number) => void;
-  setRevealResult: (payload: QuestionRevealPayload) => void;
-  setGameEnded: (payload: GameEndedPayload) => void;
-  resetGame: () => void;
 }
 
-export const useGameStore = create<GameState>((set) => ({
+export const INITIAL_GAME_STATE: GameDataState = {
   pin: null,
   nickname: null,
   quizTitle: null,
@@ -66,6 +51,29 @@ export const useGameStore = create<GameState>((set) => ({
   totalPlayers: 0,
   podium: [],
   fullLeaderboard: [],
+};
+
+interface GameActions {
+  setPin: (pin: string | null) => void;
+  setNickname: (nickname: string | null) => void;
+  setQuizTitle: (title: string | null) => void;
+  setIsHost: (isHost: boolean) => void;
+  setStatus: (status: GameStatus) => void;
+  setPlayers: (players: PlayerScore[]) => void;
+  addPlayer: (player: PlayerScore) => void;
+  removePlayer: (socketId: string) => void;
+  setCurrentQuestion: (question: QuestionStartPayload | null) => void;
+  setSelectedChoiceId: (choiceId: string | null) => void;
+  setAnswerCount: (answeredCount: number, totalPlayers: number) => void;
+  setRevealResult: (payload: QuestionRevealPayload) => void;
+  setGameEnded: (payload: GameEndedPayload) => void;
+  resetGame: () => void;
+}
+
+export type GameState = GameDataState & GameActions;
+
+export const useGameStore = create<GameState>((set) => ({
+  ...INITIAL_GAME_STATE,
 
   setPin: (pin) => set({ pin }),
   setNickname: (nickname) => set({ nickname }),
@@ -106,24 +114,5 @@ export const useGameStore = create<GameState>((set) => ({
       fullLeaderboard: payload.fullLeaderboard || [],
       status: 'ended',
     }),
-  resetGame: () =>
-    set({
-      pin: null,
-      nickname: null,
-      quizTitle: null,
-      isHost: false,
-      status: 'idle',
-      players: [],
-      currentQuestion: null,
-      selectedChoiceId: null,
-      score: 0,
-      streak: 0,
-      lastPointsEarned: 0,
-      correctChoiceId: null,
-      answersDistribution: {},
-      answeredCount: 0,
-      totalPlayers: 0,
-      podium: [],
-      fullLeaderboard: [],
-    }),
+  resetGame: () => set(INITIAL_GAME_STATE),
 }));

@@ -1,9 +1,11 @@
 'use client';
 
-import React, { forwardRef, useId, InputHTMLAttributes } from 'react';
+import React, { forwardRef, InputHTMLAttributes } from 'react';
 import clsx from 'clsx';
-import { AlertCircle } from 'lucide-react';
 import styles from './input.module.css';
+
+import { useFormFieldAria } from '@/hooks/use-form-field-aria';
+import { FieldMessage } from '../field-message/field-message';
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -30,23 +32,17 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     },
     ref,
   ) => {
-    const generatedId = useId();
-    const inputId = id || generatedId;
-    const errorId = `${inputId}-error`;
-    const helperId = `${inputId}-helper`;
-
-    const describedBy = [
-      error ? errorId : null,
-      helperText && !error ? helperId : null,
-      rest['aria-describedby'],
-    ]
-      .filter(Boolean)
-      .join(' ') || undefined;
+    const { fieldId, errorId, helperId, describedBy } = useFormFieldAria({
+      id,
+      error,
+      helperText,
+      ariaDescribedBy: rest['aria-describedby'],
+    });
 
     return (
       <div className={clsx(styles.inputWrapper, wrapperClassName)}>
         {label && (
-          <label htmlFor={inputId} className={styles.label}>
+          <label htmlFor={fieldId} className={styles.label}>
             {label}
           </label>
         )}
@@ -62,7 +58,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 
           <input
             ref={ref}
-            id={inputId}
+            id={fieldId}
             disabled={disabled}
             aria-invalid={!!error}
             aria-describedby={describedBy}
@@ -73,18 +69,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           {rightIcon && <span className={styles.rightIconSlot}>{rightIcon}</span>}
         </div>
 
-        {error && (
-          <span id={errorId} role="alert" className={styles.errorText}>
-            <AlertCircle size={14} />
-            {error}
-          </span>
-        )}
-
-        {!error && helperText && (
-          <span id={helperId} className={styles.helperText}>
-            {helperText}
-          </span>
-        )}
+        <FieldMessage
+          error={error}
+          helperText={helperText}
+          errorId={errorId}
+          helperId={helperId}
+          errorClassName={styles.errorText}
+          helperClassName={styles.helperText}
+        />
       </div>
     );
   },

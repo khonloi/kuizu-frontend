@@ -28,6 +28,26 @@ const SUBJECTS: SubjectItem[] = [
   { id: 'ko', name: 'KOREAN', iconType: 'flag', flag: '🇰🇷', href: '/learn' },
 ];
 
+function renderVerticalTricolor(
+  clipId: string,
+  label: string,
+  leftColor: string,
+  midColor: string,
+  rightColor: string
+) {
+  return (
+    <svg width="32" height="22" viewBox="0 0 32 22" fill="none" role="img" aria-label={label}>
+      <clipPath id={clipId}><rect width="32" height="22" rx="4" /></clipPath>
+      <g clipPath={`url(#${clipId})`}>
+        <rect width="11" height="22" fill={leftColor} />
+        <rect x="11" width="10" height="22" fill={midColor} />
+        <rect x="21" width="11" height="22" fill={rightColor} />
+      </g>
+      <rect width="32" height="22" rx="4" stroke="rgba(0,0,0,0.08)" strokeWidth="1" fill="none" />
+    </svg>
+  );
+}
+
 function FlagIcon({ id }: { id: string }) {
   switch (id) {
     case 'en':
@@ -80,17 +100,7 @@ function FlagIcon({ id }: { id: string }) {
         </svg>
       );
     case 'fr':
-      return (
-        <svg width="32" height="22" viewBox="0 0 32 22" fill="none" role="img" aria-label="French">
-          <clipPath id="flagFrClip"><rect width="32" height="22" rx="4" /></clipPath>
-          <g clipPath="url(#flagFrClip)">
-            <rect width="11" height="22" fill="#1d4ed8" />
-            <rect x="11" width="10" height="22" fill="#ffffff" />
-            <rect x="21" width="11" height="22" fill="#dc2626" />
-          </g>
-          <rect width="32" height="22" rx="4" stroke="rgba(0,0,0,0.08)" strokeWidth="1" fill="none" />
-        </svg>
-      );
+      return renderVerticalTricolor('flagFrClip', 'French', '#1d4ed8', '#ffffff', '#dc2626');
     case 'de':
       return (
         <svg width="32" height="22" viewBox="0 0 32 22" fill="none" role="img" aria-label="German">
@@ -104,17 +114,7 @@ function FlagIcon({ id }: { id: string }) {
         </svg>
       );
     case 'it':
-      return (
-        <svg width="32" height="22" viewBox="0 0 32 22" fill="none" role="img" aria-label="Italian">
-          <clipPath id="flagItClip"><rect width="32" height="22" rx="4" /></clipPath>
-          <g clipPath="url(#flagItClip)">
-            <rect width="11" height="22" fill="#16a34a" />
-            <rect x="11" width="10" height="22" fill="#ffffff" />
-            <rect x="21" width="11" height="22" fill="#dc2626" />
-          </g>
-          <rect width="32" height="22" rx="4" stroke="rgba(0,0,0,0.08)" strokeWidth="1" fill="none" />
-        </svg>
-      );
+      return renderVerticalTricolor('flagItClip', 'Italian', '#16a34a', '#ffffff', '#dc2626');
     case 'pt':
       return (
         <svg width="32" height="22" viewBox="0 0 32 22" fill="none" role="img" aria-label="Portuguese">

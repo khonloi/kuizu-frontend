@@ -91,15 +91,7 @@ export class ArenaSimulator {
     });
 
     // Simulate bot answers incrementally
-    let answered = 0;
-    this.clearTimer();
-    this.timer = setInterval(() => {
-      answered += 1;
-      useGameStore.getState().setAnswerCount(answered, this.bots.length);
-      if (answered >= this.bots.length) {
-        this.clearTimer();
-      }
-    }, 1500);
+    this.simulateBotAnswers();
 
     return { success: true, questionIndex: 0 };
   }
@@ -184,6 +176,13 @@ export class ArenaSimulator {
     });
 
     // Re-simulate bot answering for the next question
+    this.simulateBotAnswers();
+
+    return { success: true, isFinished: false };
+  }
+
+  private simulateBotAnswers(intervalMs: number = 1500): void {
+    this.clearTimer();
     let answered = 0;
     this.timer = setInterval(() => {
       answered += 1;
@@ -191,9 +190,7 @@ export class ArenaSimulator {
       if (answered >= this.bots.length) {
         this.clearTimer();
       }
-    }, 1500);
-
-    return { success: true, isFinished: false };
+    }, intervalMs);
   }
 
   public reset() {

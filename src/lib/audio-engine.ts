@@ -1,5 +1,15 @@
 'use client';
 
+export interface ToneOptions {
+  type?: OscillatorType;
+  frequency: number;
+  endFrequency?: number;
+  duration?: number;
+  volumeMultiplier?: number;
+  delay?: number;
+  envelope?: 'decay' | 'attack-decay';
+}
+
 class AudioEngine {
   private ctx: AudioContext | null = null;
   private isMuted: boolean = false;
@@ -27,14 +37,30 @@ class AudioEngine {
     this.isMuted = muted;
   }
 
+  public getMuted(): boolean {
+    return this.isMuted;
+  }
+
   public setVolume(vol: number) {
     this.volume = Math.max(0, Math.min(1, vol));
   }
 
+  public getVolume(): number {
+    return this.volume;
+  }
+
   /**
-   * Pop click sound when clicking tactile 3D buttons
+   * Unified low-level tone generator that configures Oscillator and Gain envelopes.
    */
-  public playPop() {
+  private playTone({
+    type = 'sine',
+    frequency,
+    endFrequency,
+    duration = 0.05,
+    volumeMultiplier = 0.35,
+    delay = 0,
+    envelope = 'decay',
+  }: ToneOptions): void {
     if (this.isMuted) return;
     const ctx = this.getContext();
     if (!ctx) return;
@@ -43,159 +69,114 @@ class AudioEngine {
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
 
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(600, ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(300, ctx.currentTime + 0.05);
+      const startTime = ctx.currentTime + delay;
+      const endTime = startTime + duration;
+      const targetGain = this.volume * volumeMultiplier;
 
-      gain.gain.setValueAtTime(this.volume * 0.35, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.05);
+      osc.type = type;
+      osc.frequency.setValueAtTime(frequency, startTime);
+      if (endFrequency !== undefined) {
+        osc.frequency.exponentialRampToValueAtTime(Math.max(1, endFrequency), endTime);
+      }
+
+      if (envelope === 'attack-decay') {
+        const attackTime = Math.min(0.04, duration * 0.2);
+        gain.gain.setValueAtTime(0, startTime);
+        gain.gain.linearRampToValueAtTime(targetGain, startTime + attackTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, endTime);
+      } else {
+        gain.gain.setValueAtTime(targetGain, startTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, endTime);
+      }
 
       osc.connect(gain);
       gain.connect(ctx.destination);
 
-      osc.start(ctx.currentTime);
-      osc.stop(ctx.currentTime + 0.06);
+      osc.start(startTime);
+      osc.stop(endTime + 0.02);
     } catch {
       // Audio autoplay policy or device fallback
     }
   }
 
   /**
+   * Pop click sound when clicking tactile 3D buttons
+   */
+  public playPop() {
+    this.playTone({
+      type: 'sine',
+      frequency: 600,
+      endFrequency: 300,
+      duration: 0.05,
+      volumeMultiplier: 0.35,
+    });
+  }
+
+  /**
    * Harmonious ascending chord for correct lesson answer
    */
   public playSuccess() {
-    if (this.isMuted) return;
-    const ctx = this.getContext();
-    if (!ctx) return;
-
-    try {
-      // C5, E5, G5 triad notes
-      const notes = [523.25, 659.25, 783.99];
-
-      notes.forEach((freq, idx) => {
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(freq, ctx.currentTime + idx * 0.08);
-
-        const startTime = ctx.currentTime + idx * 0.08;
-        const endTime = startTime + 0.45;
-
-        gain.gain.setValueAtTime(0, startTime);
-        gain.gain.linearRampToValueAtTime(this.volume * 0.4, startTime + 0.04);
-        gain.gain.exponentialRampToValueAtTime(0.001, endTime);
-
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-
-        osc.start(startTime);
-        osc.stop(endTime + 0.05);
+    const notes = [523.25, 659.25, 783.99];
+    notes.forEach((freq, idx) => {
+      this.playTone({
+        type: 'triangle',
+        frequency: freq,
+        duration: 0.45,
+        volumeMultiplier: 0.4,
+        delay: idx * 0.08,
+        envelope: 'attack-decay',
       });
-    } catch {
-      // Audio fallback
-    }
+    });
   }
 
   /**
    * Soft descending tone for incorrect answer
    */
   public playError() {
-    if (this.isMuted) return;
-    const ctx = this.getContext();
-    if (!ctx) return;
-
-    try {
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-
-      osc.type = 'sawtooth';
-      osc.frequency.setValueAtTime(220, ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(140, ctx.currentTime + 0.35);
-
-      gain.gain.setValueAtTime(this.volume * 0.3, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.35);
-
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-
-      osc.start(ctx.currentTime);
-      osc.stop(ctx.currentTime + 0.36);
-    } catch {
-      // Audio fallback
-    }
+    this.playTone({
+      type: 'sawtooth',
+      frequency: 220,
+      endFrequency: 140,
+      duration: 0.35,
+      volumeMultiplier: 0.3,
+    });
   }
 
   /**
    * Timer tick for multiplayer arena countdown
    */
   public playTick(urgent: boolean = false) {
-    if (this.isMuted) return;
-    const ctx = this.getContext();
-    if (!ctx) return;
-
-    try {
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(urgent ? 1200 : 800, ctx.currentTime);
-
-      gain.gain.setValueAtTime(this.volume * (urgent ? 0.45 : 0.25), ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + (urgent ? 0.06 : 0.04));
-
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-
-      osc.start(ctx.currentTime);
-      osc.stop(ctx.currentTime + (urgent ? 0.07 : 0.05));
-    } catch {
-      // Audio fallback
-    }
+    this.playTone({
+      type: 'sine',
+      frequency: urgent ? 1200 : 800,
+      duration: urgent ? 0.06 : 0.04,
+      volumeMultiplier: urgent ? 0.45 : 0.25,
+    });
   }
 
   /**
    * Victory fanfare for lesson completion or arena podium
    */
   public playFanfare() {
-    if (this.isMuted) return;
-    const ctx = this.getContext();
-    if (!ctx) return;
+    const melody = [
+      { freq: 523.25, time: 0, dur: 0.12 },
+      { freq: 523.25, time: 0.14, dur: 0.12 },
+      { freq: 523.25, time: 0.28, dur: 0.12 },
+      { freq: 659.25, time: 0.42, dur: 0.15 },
+      { freq: 783.99, time: 0.58, dur: 0.2 },
+      { freq: 1046.5, time: 0.8, dur: 0.5 },
+    ];
 
-    try {
-      // Fanfare sequence: C5, C5, C5, G5, A5, C6
-      const melody = [
-        { freq: 523.25, time: 0, dur: 0.12 },
-        { freq: 523.25, time: 0.14, dur: 0.12 },
-        { freq: 523.25, time: 0.28, dur: 0.12 },
-        { freq: 659.25, time: 0.42, dur: 0.15 },
-        { freq: 783.99, time: 0.58, dur: 0.2 },
-        { freq: 1046.5, time: 0.8, dur: 0.5 },
-      ];
-
-      melody.forEach(({ freq, time, dur }) => {
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(freq, ctx.currentTime + time);
-
-        const startTime = ctx.currentTime + time;
-        const endTime = startTime + dur;
-
-        gain.gain.setValueAtTime(0, startTime);
-        gain.gain.linearRampToValueAtTime(this.volume * 0.45, startTime + 0.03);
-        gain.gain.exponentialRampToValueAtTime(0.001, endTime);
-
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-
-        osc.start(startTime);
-        osc.stop(endTime + 0.05);
+    melody.forEach(({ freq, time, dur }) => {
+      this.playTone({
+        type: 'triangle',
+        frequency: freq,
+        duration: dur,
+        volumeMultiplier: 0.45,
+        delay: time,
+        envelope: 'attack-decay',
       });
-    } catch {
-      // Audio fallback
-    }
+    });
   }
 }
 

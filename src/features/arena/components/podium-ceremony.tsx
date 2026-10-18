@@ -13,6 +13,75 @@ interface PodiumCeremonyProps {
   fullLeaderboard?: PlayerScore[];
 }
 
+interface PillarConfig {
+  rank: 1 | 2 | 3;
+  labelPrefix: string;
+  medal: string;
+  isLarge: boolean;
+  blockClass: string;
+}
+
+const PILLAR_CONFIGS: Record<1 | 2 | 3, PillarConfig> = {
+  1: {
+    rank: 1,
+    labelPrefix: 'First place winner',
+    medal: '👑',
+    isLarge: true,
+    blockClass: styles.podiumFirst,
+  },
+  2: {
+    rank: 2,
+    labelPrefix: 'Second place',
+    medal: '🥈',
+    isLarge: false,
+    blockClass: styles.podiumSecond,
+  },
+  3: {
+    rank: 3,
+    labelPrefix: 'Third place',
+    medal: '🥉',
+    isLarge: false,
+    blockClass: styles.podiumThird,
+  },
+};
+
+function PodiumPillar({ rank, player }: { rank: 1 | 2 | 3; player?: PlayerScore }) {
+  const config = PILLAR_CONFIGS[rank];
+  const ariaLabel = player
+    ? `${config.labelPrefix}: ${player.nickname} with ${player.score} points`
+    : `${config.labelPrefix} empty`;
+
+  return (
+    <li className={styles.podiumPillar} aria-label={ariaLabel}>
+      {player ? (
+        <div className={styles.podiumPlayerInfo}>
+          <span
+            className={clsx(
+              config.isLarge ? styles.podiumMedalLg : styles.podiumMedalSm,
+              { 'animate-pop': config.isLarge }
+            )}
+          >
+            {config.medal}
+          </span>
+          <span className={config.isLarge ? styles.podiumNicknameLg : styles.podiumNicknameSm}>
+            {player.nickname}
+          </span>
+          <span className={config.isLarge ? styles.podiumScoreLg : styles.podiumScoreSm}>
+            {player.score.toLocaleString()} pts
+          </span>
+        </div>
+      ) : (
+        <span className={styles.podiumEmptySlot}>-</span>
+      )}
+      <div className={clsx(styles.podiumBlock, config.blockClass)}>
+        <span className={config.isLarge ? styles.podiumRankNumberLg : styles.podiumRankNumberSm}>
+          {rank}
+        </span>
+      </div>
+    </li>
+  );
+}
+
 export function PodiumCeremony({ podium, fullLeaderboard }: PodiumCeremonyProps) {
   const { playFanfare } = useAudioStore();
 
@@ -48,72 +117,9 @@ export function PodiumCeremony({ podium, fullLeaderboard }: PodiumCeremonyProps)
         className={clsx(styles.podiumContainer, styles.podiumList)}
         aria-label="Quiz competition winners podium"
       >
-        {/* 2nd Place (Left) */}
-        <li
-          className={styles.podiumPillar}
-          aria-label={second ? `Second place: ${second.nickname} with ${second.score} points` : 'Second place empty'}
-        >
-          {second ? (
-            <div className={styles.podiumPlayerInfo}>
-              <span className={styles.podiumMedalSm}>🥈</span>
-              <span className={styles.podiumNicknameSm}>{second.nickname}</span>
-              <span className={styles.podiumScoreSm}>
-                {second.score.toLocaleString()} pts
-              </span>
-            </div>
-          ) : (
-            <span className={styles.podiumEmptySlot}>-</span>
-          )}
-          <div className={`${styles.podiumBlock} ${styles.podiumSecond}`}>
-            <span className={styles.podiumRankNumberSm}>2</span>
-          </div>
-        </li>
-
-        {/* 1st Place (Center - Tallest) */}
-        <li
-          className={styles.podiumPillar}
-          aria-label={first ? `First place winner: ${first.nickname} with ${first.score} points` : 'First place empty'}
-        >
-          {first ? (
-            <div className={styles.podiumPlayerInfo}>
-              <span className={`${styles.podiumMedalLg} animate-pop`}>
-                👑
-              </span>
-              <span className={styles.podiumNicknameLg}>
-                {first.nickname}
-              </span>
-              <span className={styles.podiumScoreLg}>
-                {first.score.toLocaleString()} pts
-              </span>
-            </div>
-          ) : (
-            <span className={styles.podiumEmptySlot}>-</span>
-          )}
-          <div className={`${styles.podiumBlock} ${styles.podiumFirst}`}>
-            <span className={styles.podiumRankNumberLg}>1</span>
-          </div>
-        </li>
-
-        {/* 3rd Place (Right) */}
-        <li
-          className={styles.podiumPillar}
-          aria-label={third ? `Third place: ${third.nickname} with ${third.score} points` : 'Third place empty'}
-        >
-          {third ? (
-            <div className={styles.podiumPlayerInfo}>
-              <span className={styles.podiumMedalSm}>🥉</span>
-              <span className={styles.podiumNicknameSm}>{third.nickname}</span>
-              <span className={styles.podiumScoreSm}>
-                {third.score.toLocaleString()} pts
-              </span>
-            </div>
-          ) : (
-            <span className={styles.podiumEmptySlot}>-</span>
-          )}
-          <div className={`${styles.podiumBlock} ${styles.podiumThird}`}>
-            <span className={styles.podiumRankNumberSm}>3</span>
-          </div>
-        </li>
+        <PodiumPillar rank={2} player={second} />
+        <PodiumPillar rank={1} player={first} />
+        <PodiumPillar rank={3} player={third} />
       </ol>
 
       {/* Full Leaderboard Table (if available) */}

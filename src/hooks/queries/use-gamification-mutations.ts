@@ -8,10 +8,40 @@ import { useAudioStore } from '@/stores/audio.store';
 import { fireVictoryConfetti, fireHeartRefillConfetti } from '@/lib/confetti';
 import type { HeartRefillResult, StreakFreezePurchaseResult } from '@/types/gamification.types';
 
-export function useHeartRefillMutation() {
+function useGamificationContext() {
   const queryClient = useQueryClient();
   const { user, updateHearts, updateGems } = useAuthStore();
   const { playSuccess, playError } = useAudioStore();
+
+  const handleSuccess = (
+    gemsRemaining: number | undefined,
+    fallbackCost: number,
+    confettiFn: () => void = fireVictoryConfetti,
+    customAction?: () => void
+  ) => {
+    playSuccess();
+    confettiFn();
+    customAction?.();
+    if (gemsRemaining !== undefined) {
+      updateGems(gemsRemaining);
+    } else if (user) {
+      updateGems(Math.max(0, user.gems - fallbackCost));
+    }
+    void queryClient.invalidateQueries({ queryKey: queryKeys.auth.all });
+    void queryClient.invalidateQueries({ queryKey: ['user'] });
+  };
+
+  return {
+    user,
+    updateHearts,
+    updateGems,
+    playError,
+    handleSuccess,
+  };
+}
+
+export function useHeartRefillMutation() {
+  const { user, updateHearts, playError, handleSuccess } = useGamificationContext();
 
   return useMutation({
     mutationFn: async () => {
@@ -22,16 +52,9 @@ export function useHeartRefillMutation() {
       return api.post<HeartRefillResult>('/api/v1/users/me/hearts/refill');
     },
     onSuccess: (data) => {
-      playSuccess();
-      fireHeartRefillConfetti();
-      updateHearts(data.hearts ?? 5);
-      if (data.gemsRemaining !== undefined) {
-        updateGems(data.gemsRemaining);
-      } else if (user) {
-        updateGems(Math.max(0, user.gems - 350));
-      }
-      void queryClient.invalidateQueries({ queryKey: queryKeys.auth.all });
-      void queryClient.invalidateQueries({ queryKey: ['user'] });
+      handleSuccess(data.gemsRemaining, 350, fireHeartRefillConfetti, () => {
+        updateHearts(data.hearts ?? 5);
+      });
     },
     onError: () => {
       playError();
@@ -40,9 +63,7 @@ export function useHeartRefillMutation() {
 }
 
 export function useStreakFreezeMutation() {
-  const queryClient = useQueryClient();
-  const { user, updateGems } = useAuthStore();
-  const { playSuccess, playError } = useAudioStore();
+  const { user, playError, handleSuccess } = useGamificationContext();
 
   return useMutation({
     mutationFn: async () => {
@@ -52,15 +73,7 @@ export function useStreakFreezeMutation() {
       return api.post<StreakFreezePurchaseResult>('/api/v1/users/me/streak/freeze');
     },
     onSuccess: (data) => {
-      playSuccess();
-      fireVictoryConfetti();
-      if (data.gemsRemaining !== undefined) {
-        updateGems(data.gemsRemaining);
-      } else if (user) {
-        updateGems(Math.max(0, user.gems - 200));
-      }
-      void queryClient.invalidateQueries({ queryKey: queryKeys.auth.all });
-      void queryClient.invalidateQueries({ queryKey: ['user'] });
+      handleSuccess(data.gemsRemaining, 200, fireVictoryConfetti);
     },
     onError: () => {
       playError();
@@ -69,9 +82,7 @@ export function useStreakFreezeMutation() {
 }
 
 export function useDoubleWagerMutation() {
-  const queryClient = useQueryClient();
-  const { user, updateGems } = useAuthStore();
-  const { playSuccess, playError } = useAudioStore();
+  const { playError, handleSuccess } = useGamificationContext();
 
   return useMutation({
     mutationFn: async () => {
@@ -80,15 +91,7 @@ export function useDoubleWagerMutation() {
       );
     },
     onSuccess: (data) => {
-      playSuccess();
-      fireVictoryConfetti();
-      if (data.gemsRemaining !== undefined) {
-        updateGems(data.gemsRemaining);
-      } else if (user) {
-        updateGems(Math.max(0, user.gems - 50));
-      }
-      void queryClient.invalidateQueries({ queryKey: queryKeys.auth.all });
-      void queryClient.invalidateQueries({ queryKey: ['user'] });
+      handleSuccess(data.gemsRemaining, 50, fireVictoryConfetti);
     },
     onError: () => {
       playError();

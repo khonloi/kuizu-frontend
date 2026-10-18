@@ -3,6 +3,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import styles from './exercise.module.css';
+import { ExercisePromptCard } from '../components/exercise-prompt-card';
 import { useAudioStore } from '@/stores/audio.store';
 import type { Exercise } from '@/types/api.types';
 
@@ -24,13 +25,12 @@ export function FillBlankExercise({
   return (
     <div className={styles.container}>
       {/* Prompt Card */}
-      <div className={styles.promptCard}>
-        <span className={styles.badgeYellow}>
-          FILL IN THE MISSING BLANK
-        </span>
-        <h2 className={styles.promptText}>{exercise.prompt}</h2>
-        {exercise.hint && <p className={styles.hintText}>💡 {exercise.hint}</p>}
-      </div>
+      <ExercisePromptCard
+        prompt={exercise.prompt}
+        hint={exercise.hint}
+        badgeText="FILL IN THE MISSING BLANK"
+        badgeClassName={styles.badgeYellow}
+      />
 
       {/* Selected word slot preview */}
       <div className={styles.blankSlotPreview}>

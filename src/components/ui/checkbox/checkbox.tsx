@@ -1,10 +1,10 @@
 'use client';
 
-import React, { forwardRef, KeyboardEvent } from 'react';
+import React, { forwardRef } from 'react';
 import clsx from 'clsx';
 import { Check, Minus } from 'lucide-react';
 import styles from './checkbox.module.css';
-import { useAudioStore } from '@/stores/audio.store';
+import { useToggleControl } from '@/hooks/use-toggle-control';
 
 export interface CheckboxProps {
   checked?: boolean;
@@ -31,21 +31,11 @@ export const Checkbox = forwardRef<HTMLButtonElement, CheckboxProps>(
     },
     ref,
   ) => {
-    const playPop = useAudioStore((s) => s.playPop);
-
-    const handleToggle = () => {
-      if (disabled) return;
-      playPop();
-      onChange?.(!checked);
-    };
-
-    const handleKeyDown = (e: KeyboardEvent<HTMLButtonElement>) => {
-      if (disabled) return;
-      if (e.key === ' ' || e.key === 'Enter') {
-        e.preventDefault();
-        handleToggle();
-      }
-    };
+    const { handleToggle, handleKeyDown } = useToggleControl({
+      checked,
+      onChange,
+      disabled,
+    });
 
     return (
       <div
