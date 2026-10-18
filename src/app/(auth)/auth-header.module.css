@@ -1,0 +1,106 @@
+.header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 72px;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+}
+
+.headerInner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .headerInner {
+    padding: 0 2.5rem;
+  }
+}
+
+.closeBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  color: var(--text-muted);
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.closeBtn:hover {
+  background-color: var(--border-subtle);
+  color: var(--text-primary);
+}
+
+.closeBtn:active {
+  transform: scale(0.92);
+}
+
+.closeBtn:focus-visible {
+  outline: 3px solid var(--duo-blue);
+  outline-offset: 2px;
+}
+
+.closeIcon {
+  flex-shrink: 0;
+}
+
+.actionSlot {
+  display: flex;
+  align-items: center;
+}
+
+.switchBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 1.35rem;
+  min-height: 44px;
+  background-color: var(--bg-card);
+  color: var(--duo-blue);
+  border: 2px solid var(--border-subtle);
+  border-bottom: 4px solid var(--border-subtle);
+  border-radius: var(--btn-radius, 16px);
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  user-select: none;
+  cursor: pointer;
+  transition:
+    transform var(--transition-fast),
+    border-color var(--transition-fast),
+    background-color var(--transition-fast);
+}
+
+.switchBtn:hover {
+  background-color: var(--bg-card-hover);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.switchBtn:active {
+  transform: translateY(2px);
+  border-bottom-width: 2px;
+}
+
+.switchBtn:focus-visible {
+  outline: 3px solid var(--duo-blue);
+  outline-offset: 2px;
+}

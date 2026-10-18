@@ -1,0 +1,30 @@
+.legalNoticeContainer {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+.disclaimer {
+  font-size: 0.725rem;
+  line-height: 1.45;
+  color: var(--text-muted);
+}
+
+.disclaimerLink {
+  color: var(--text-secondary);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color var(--transition-fast);
+}
+
+.disclaimerLink:hover {
+  color: var(--duo-blue);
+}
+
+.recaptcha {
+  margin-top: 0.85rem;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+  opacity: 0.85;
+}

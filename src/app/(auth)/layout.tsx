@@ -1,5 +1,5 @@
 import React from 'react';
-import Link from 'next/link';
+import { AuthHeader } from './auth-header';
 import styles from './layout.module.css';
 
 export default function AuthLayout({
@@ -9,12 +9,10 @@ export default function AuthLayout({
 }) {
   return (
     <div className={styles.authContainer}>
-      <Link href="/learn" className={styles.brand}>
-        <div className={styles.logoIcon}>⚡</div>
-        <span className={styles.logoText}>KUIZU</span>
-      </Link>
-
-      <div className={styles.cardWrapper}>{children}</div>
+      <AuthHeader />
+      <main className={styles.mainContent}>
+        <div className={styles.cardWrapper}>{children}</div>
+      </main>
     </div>
   );
 }

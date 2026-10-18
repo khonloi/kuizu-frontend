@@ -3,8 +3,15 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { LogIn, AlertCircle } from 'lucide-react';
-import { Card, Button, Input } from '@/components/ui';
+import { Button, Input, Divider } from '@/components/ui';
+import {
+  AuthAlert,
+  AuthLegalNotice,
+  ForgotPasswordModal,
+  SocialAuthButtons,
+  useSocialAuth,
+  validateLoginForm,
+} from '@/features/auth';
 import { useAuthStore } from '@/stores/auth.store';
 import { useAudioStore } from '@/stores/audio.store';
 import { api } from '@/lib/api';
@@ -20,11 +27,19 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [isForgotModalOpen, setIsForgotModalOpen] = useState(false);
+
+  const { handleSocialAuth, isLoading: isSocialLoading } = useSocialAuth({
+    mode: 'login',
+    onError: (err) => setErrorMsg(err),
+  });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!emailOrUsername.trim() || !password) {
-      setErrorMsg('Please enter both your email/username and password.');
+
+    const validationError = validateLoginForm(emailOrUsername, password);
+    if (validationError) {
+      setErrorMsg(validationError);
       return;
     }
 
@@ -40,7 +55,6 @@ export default function LoginPage() {
       if (response.user) {
         setUser(response.user);
       } else {
-        // Fetch fresh profile if only tokens are in cookies
         const profile = await api.get<User>('/api/v1/users/me');
         setUser(profile);
       }
@@ -55,71 +69,99 @@ export default function LoginPage() {
     }
   };
 
+  const handleOpenForgot = () => {
+    playPop();
+    setIsForgotModalOpen(true);
+  };
+
+  const isFormSubmitting = isLoading || isSocialLoading;
+
   return (
-    <Card padding="lg">
-      <div className={styles.header}>
-        <h1 className={styles.title}>Welcome Back</h1>
-        <p className={styles.subtitle}>
-          Sign in to resume your learning quests & battles
-        </p>
-      </div>
+    <div className={styles.authFormWrapper}>
+      <header className={styles.header}>
+        <h1 className={styles.title}>Log in</h1>
+      </header>
 
-      {errorMsg && (
-        <div
-          role="alert"
-          className={styles.alert}
-        >
-          <AlertCircle size={18} className={styles.alertIcon} />
-          <span>{errorMsg}</span>
-        </div>
-      )}
+      <AuthAlert message={errorMsg} />
 
-      <form onSubmit={handleSubmit} className={styles.form}>
+      <form onSubmit={handleSubmit} noValidate className={styles.form}>
         <Input
           id="emailOrUsername"
-          label="Email or Username"
+          name="emailOrUsername"
           type="text"
           required
           autoComplete="username"
           value={emailOrUsername}
           onChange={(e) => setEmailOrUsername(e.target.value)}
-          placeholder="e.g. learner@kuizu.app or kuizu_hero"
+          placeholder="Email or username"
+          aria-label="Email or username"
+          wrapperClassName={styles.inputItem}
+          disabled={isFormSubmitting}
         />
 
         <Input
           id="password"
-          label="Password"
+          name="password"
           type="password"
           required
           autoComplete="current-password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          placeholder="••••••••"
+          placeholder="Password"
+          aria-label="Password"
+          wrapperClassName={styles.inputItem}
+          className={styles.passwordInput}
+          disabled={isFormSubmitting}
+          rightIcon={
+            <button
+              type="button"
+              onClick={handleOpenForgot}
+              className={styles.forgotBtn}
+            >
+              Forgot?
+            </button>
+          }
         />
 
         <Button
           type="submit"
-          variant="duo"
+          variant="blue"
           size="lg"
           fullWidth
           isLoading={isLoading}
-          leftIcon={<LogIn size={20} />}
+          disabled={isFormSubmitting}
           className={styles.submitBtn}
         >
-          Sign In
+          Log In
         </Button>
       </form>
 
-      <div className={styles.footer}>
+      <Divider label="or" className={styles.divider} />
+
+      <SocialAuthButtons
+        mode="login"
+        disabled={isFormSubmitting}
+        onSocialLogin={handleSocialAuth}
+      />
+
+      <AuthLegalNotice action="signing in" styles={styles} />
+
+      <footer className={styles.footer}>
         Don&apos;t have an account?{' '}
         <Link
           href="/register"
           onClick={playPop}
           className={styles.footerLink}
         >
-          Sign up for free
+          Sign up
         </Link>
-      </div>
-    </Card>
+      </footer>
+
+      <ForgotPasswordModal
+        isOpen={isForgotModalOpen}
+        onClose={() => setIsForgotModalOpen(false)}
+        defaultEmail={emailOrUsername.includes('@') ? emailOrUsername : ''}
+      />
+    </div>
   );
 }

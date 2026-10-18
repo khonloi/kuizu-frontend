@@ -1,0 +1,17 @@
+.alert {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.85rem 1rem;
+  border-radius: 12px;
+  background-color: var(--duo-red-subtle);
+  border: 1px solid rgba(255, 75, 75, 0.4);
+  color: var(--duo-red);
+  font-size: 0.825rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.alertIcon {
+  flex-shrink: 0;
+}

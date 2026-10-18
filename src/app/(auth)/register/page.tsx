@@ -3,8 +3,14 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { UserPlus, AlertCircle } from 'lucide-react';
-import { Card, Button, Input } from '@/components/ui';
+import { Button, Input, Divider } from '@/components/ui';
+import {
+  AuthAlert,
+  AuthLegalNotice,
+  SocialAuthButtons,
+  useSocialAuth,
+  validateRegistrationForm,
+} from '@/features/auth';
 import { useAuthStore } from '@/stores/auth.store';
 import { useAudioStore } from '@/stores/audio.store';
 import { fireVictoryConfetti } from '@/lib/confetti';
@@ -23,37 +29,23 @@ export default function RegisterPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
+  const { handleSocialAuth, isLoading: isSocialLoading } = useSocialAuth({
+    mode: 'register',
+    onSuccess: () => fireVictoryConfetti(),
+    onError: (err) => setErrorMsg(err),
+  });
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const cleanUsername = username.trim();
-    if (cleanUsername.length < 3) {
-      setErrorMsg('Username must be at least 3 characters long.');
-      return;
-    }
+    const validationError = validateRegistrationForm({
+      username,
+      email,
+      password,
+    });
 
-    if (cleanUsername.length > 24) {
-      setErrorMsg('Username cannot exceed 24 characters.');
-      return;
-    }
-
-    if (!/^[a-zA-Z0-9_]+$/.test(cleanUsername)) {
-      setErrorMsg('Username can only contain letters, numbers, and underscores.');
-      return;
-    }
-
-    if (!email.includes('@')) {
-      setErrorMsg('Please enter a valid email address.');
-      return;
-    }
-
-    if (password.length < 8) {
-      setErrorMsg('Password must be at least 8 characters long.');
-      return;
-    }
-
-    if (password.length > 72) {
-      setErrorMsg('Password cannot exceed 72 characters.');
+    if (validationError) {
+      setErrorMsg(validationError);
       return;
     }
 
@@ -62,7 +54,7 @@ export default function RegisterPage() {
 
     try {
       const response = await api.post<{ user: User }>('/api/v1/auth/register', {
-        username: cleanUsername,
+        username: username.trim(),
         email: email.trim(),
         password,
       });
@@ -79,88 +71,101 @@ export default function RegisterPage() {
       router.push('/learn');
     } catch (err) {
       playError();
-      setErrorMsg((err as Error).message || 'Registration failed. Please try a different username/email.');
+      setErrorMsg(
+        (err as Error).message ||
+          'Registration failed. Please try a different username/email.',
+      );
     } finally {
       setIsLoading(false);
     }
   };
 
+  const isFormSubmitting = isLoading || isSocialLoading;
+
   return (
-    <Card padding="lg">
-      <div className={styles.header}>
-        <h1 className={styles.title}>Create Your Account</h1>
-        <p className={styles.subtitle}>
-          Join thousands of learners mastering skills and clashing in live arenas
-        </p>
-      </div>
+    <div className={styles.authFormWrapper}>
+      <header className={styles.header}>
+        <h1 className={styles.title}>Create your profile</h1>
+      </header>
 
-      {errorMsg && (
-        <div
-          role="alert"
-          className={styles.alert}
-        >
-          <AlertCircle size={18} className={styles.alertIcon} />
-          <span>{errorMsg}</span>
-        </div>
-      )}
+      <AuthAlert message={errorMsg} />
 
-      <form onSubmit={handleSubmit} className={styles.form}>
+      <form onSubmit={handleSubmit} noValidate className={styles.form}>
         <Input
           id="username"
-          label="Username"
+          name="username"
           type="text"
           required
           autoComplete="username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          placeholder="e.g. kuizu_champion"
+          placeholder="Username"
+          aria-label="Username"
+          wrapperClassName={styles.inputItem}
+          disabled={isFormSubmitting}
         />
 
         <Input
           id="email"
-          label="Email Address"
+          name="email"
           type="email"
           required
           autoComplete="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder="learner@kuizu.app"
+          placeholder="Email"
+          aria-label="Email"
+          wrapperClassName={styles.inputItem}
+          disabled={isFormSubmitting}
         />
 
         <Input
           id="password"
-          label="Password (Min 8 characters)"
+          name="password"
           type="password"
           required
           autoComplete="new-password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          placeholder="••••••••"
+          placeholder="Password"
+          aria-label="Password"
+          wrapperClassName={styles.inputItem}
+          disabled={isFormSubmitting}
         />
 
         <Button
           type="submit"
-          variant="duo"
+          variant="blue"
           size="lg"
           fullWidth
           isLoading={isLoading}
-          leftIcon={<UserPlus size={20} />}
+          disabled={isFormSubmitting}
           className={styles.submitBtn}
         >
-          Create Profile
+          Create Account
         </Button>
       </form>
 
-      <div className={styles.footer}>
+      <Divider label="or" className={styles.divider} />
+
+      <SocialAuthButtons
+        mode="register"
+        disabled={isFormSubmitting}
+        onSocialLogin={handleSocialAuth}
+      />
+
+      <AuthLegalNotice action="signing up" styles={styles} />
+
+      <footer className={styles.footer}>
         Already have an account?{' '}
         <Link
           href="/login"
           onClick={playPop}
           className={styles.footerLink}
         >
-          Sign In
+          Log in
         </Link>
-      </div>
-    </Card>
+      </footer>
+    </div>
   );
 }

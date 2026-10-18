@@ -1,31 +1,40 @@
+.authFormWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 .header {
   text-align: center;
-  margin-bottom: 1.75rem;
+  margin-bottom: 1.5rem;
 }
 
 .title {
-  font-size: 1.5rem;
-  font-weight: 900;
+  font-size: 1.75rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
 }
 
 .subtitle {
   color: var(--text-secondary);
-  font-size: 0.85rem;
+  font-size: 0.875rem;
   margin-top: 0.25rem;
 }
 
 .alert {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.65rem;
   padding: 0.85rem 1rem;
-  border-radius: var(--radius-md, 12px);
+  border-radius: 12px;
   background-color: var(--duo-red-subtle);
   border: 1px solid rgba(255, 75, 75, 0.4);
   color: var(--duo-red);
   font-size: 0.825rem;
   font-weight: 700;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1rem;
 }
 
 .alertIcon {
@@ -35,27 +44,97 @@
 .form {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.inputItem {
+  width: 100%;
+}
+
+.passwordInput {
+  padding-right: 5.5rem !important;
+}
+
+.forgotBtn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: 0.775rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 0.25rem 0.4rem;
+  border-radius: 6px;
+  user-select: none;
+  transition: color var(--transition-fast);
+}
+
+.forgotBtn:hover {
+  color: var(--duo-blue);
+}
+
+.forgotBtn:focus-visible {
+  outline: 2px solid var(--duo-blue);
+  outline-offset: 1px;
 }
 
 .submitBtn {
-  margin-top: 0.5rem;
+  margin-top: 0.35rem;
+}
+
+.divider {
+  margin: 1.25rem 0;
+}
+
+/* Legal disclaimers & reCAPTCHA styling */
+.legalNoticeContainer {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+.disclaimer {
+  font-size: 0.725rem;
+  line-height: 1.45;
+  color: var(--text-muted);
+}
+
+.disclaimerLink {
+  color: var(--text-secondary);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color var(--transition-fast);
+}
+
+.disclaimerLink:hover {
+  color: var(--duo-blue);
+}
+
+.recaptcha {
+  margin-top: 0.85rem;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+  opacity: 0.85;
 }
 
 .footer {
   text-align: center;
-  margin-top: 1.5rem;
+  margin-top: 1.25rem;
   font-size: 0.825rem;
   color: var(--text-secondary);
 }
 
 .footerLink {
-  color: var(--duo-green);
+  color: var(--duo-blue);
   font-weight: 800;
   text-decoration: none;
   transition: opacity var(--transition-fast);
 }
 
 .footerLink:hover {
-  opacity: 0.85;
+  text-decoration: underline;
 }
