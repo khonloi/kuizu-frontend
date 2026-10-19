@@ -46,18 +46,20 @@
   transform: translateY(0);
 }
 
-/* Glow Borders */
-.glowDuo {
+/* Tactile Accent Borders (Crisp, no blurry glow) */
+.accentDuo {
   border-color: var(--duo-green);
-  box-shadow: none;
 }
 
-.glowKahoot {
+.accentRed,
+.accentKahoot {
   border-color: var(--duo-red);
-  box-shadow: none;
 }
 
-.glowBlue {
+.accentBlue {
   border-color: var(--duo-blue);
-  box-shadow: none;
+}
+
+.accentYellow {
+  border-color: var(--duo-yellow);
 }

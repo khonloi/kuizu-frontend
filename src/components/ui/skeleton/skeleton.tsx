@@ -2,7 +2,7 @@ import React, { HTMLAttributes } from 'react';
 import clsx from 'clsx';
 import styles from './skeleton.module.css';
 
-export type SkeletonVariant = 'text' | 'circle' | 'rect';
+export type SkeletonVariant = 'text' | 'circle' | 'rect' | 'button';
 
 export interface SkeletonProps extends HTMLAttributes<HTMLDivElement> {
   variant?: SkeletonVariant;

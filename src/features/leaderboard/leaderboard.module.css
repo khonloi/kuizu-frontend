@@ -163,3 +163,48 @@
   min-width: 90px;
   justify-content: flex-end;
 }
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.skeletonList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.skeletonRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 1.25rem;
+  border-radius: 16px;
+  background-color: var(--bg-card);
+}
+
+.skeletonUserGroup {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.skeletonTextGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.skeletonStatsGroup {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}

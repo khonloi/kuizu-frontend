@@ -2,11 +2,11 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import clsx from 'clsx';
 import { Sparkles, Play, Gamepad2, RotateCcw, AlertCircle, BookOpen } from 'lucide-react';
 import styles from './learn.module.css';
 import { Card, Button, Badge } from '@/components/ui';
 import { CurriculumPath } from './components/curriculum-path';
+import { LearnSkeleton } from './components/learn-skeleton';
 import { useAudioStore } from '@/stores/audio.store';
 import { useCoursesQuery, useCourseQuery, useCompletedLessonsQuery } from '@/hooks/queries';
 import { SAMPLE_JAPANESE_COURSE } from '@/mock/sample-courses';
@@ -29,13 +29,7 @@ export function LearnView() {
   } = useCompletedLessonsQuery();
 
   if (isCourseLoading || isLessonsLoading) {
-    return (
-      <div className={styles.container}>
-        <Card padding="lg" className={styles.loadingCard}>
-          <div className={clsx(styles.loadingSpinner, 'animate-spin')} />
-        </Card>
-      </div>
-    );
+    return <LearnSkeleton />;
   }
 
   if (courseError && !course) {

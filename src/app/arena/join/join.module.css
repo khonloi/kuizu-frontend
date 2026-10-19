@@ -5,7 +5,7 @@
   align-items: center;
   justify-content: center;
   padding: 1.5rem;
-  background: radial-gradient(circle at 50% 30%, rgba(226, 27, 60, 0.15) 0%, rgba(15, 23, 42, 0.95) 100%);
+  background-color: var(--bg-canvas);
 }
 
 .wrapper {

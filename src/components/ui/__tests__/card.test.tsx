@@ -16,16 +16,16 @@ describe('Card Primitive', () => {
     expect(screen.getByText('Card description text')).toBeInTheDocument();
   });
 
-  it('renders with padding and glow styles', () => {
+  it('renders with padding and border accent styles', () => {
     const { container } = render(
-      <Card padding="lg" glow="duo" className="test-card">
-        <span>Glow Card</span>
+      <Card padding="lg" borderAccent="duo" className="test-card">
+        <span>Accent Card</span>
       </Card>
     );
 
     const card = container.querySelector('.test-card');
     expect(card).toBeInTheDocument();
-    expect(screen.getByText('Glow Card')).toBeInTheDocument();
+    expect(screen.getByText('Accent Card')).toBeInTheDocument();
   });
 
   it('renders interactive state and forwards ref', () => {

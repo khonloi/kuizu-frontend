@@ -1,8 +1,8 @@
 .skeleton {
   position: relative;
   overflow: hidden;
-  background-color: rgba(255, 255, 255, 0.08);
-  border-radius: 8px;
+  background-color: var(--border-subtle, #e5e5e5);
+  border-radius: var(--btn-radius, 14px);
 }
 
 .skeleton::after {
@@ -14,13 +14,27 @@
   transform: translateX(-100%);
   background-image: linear-gradient(
     90deg,
-    rgba(255, 255, 255, 0) 0,
-    rgba(255, 255, 255, 0.06) 20%,
-    rgba(255, 255, 255, 0.12) 60%,
-    rgba(255, 255, 255, 0)
+    transparent 0%,
+    rgba(255, 255, 255, 0.5) 50%,
+    transparent 100%
   );
-  animation: shimmer 1.8s infinite;
+  animation: shimmer 1.6s infinite ease-in-out;
   content: '';
+}
+
+[data-theme="stadium"] .skeleton,
+.theme-stadium .skeleton {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="stadium"] .skeleton::after,
+.theme-stadium .skeleton::after {
+  background-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.12) 50%,
+    transparent 100%
+  );
 }
 
 .text {
@@ -37,13 +51,26 @@
 }
 
 .rect {
-  border-radius: 14px;
+  border-radius: var(--card-radius, 18px);
   width: 100%;
   height: 120px;
+}
+
+.button {
+  border-radius: var(--btn-radius, 16px);
+  width: 100%;
+  height: 48px;
 }
 
 @keyframes shimmer {
   100% {
     transform: translateX(100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton::after {
+    animation: none;
+    display: none;
   }
 }

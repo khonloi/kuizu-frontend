@@ -29,10 +29,6 @@ a {
   text-decoration: none;
 }
 
-.bg-gradient-glow {
-  background: var(--bg-primary);
-}
-
 /* WCAG 2.1 AA Reduced Motion accessibility preference */
 @media (prefers-reduced-motion: reduce) {
   *,

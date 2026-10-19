@@ -22,17 +22,17 @@ describe('AuthGuard Component', () => {
     });
   });
 
-  it('renders loading spinner when auth is checking state', () => {
+  it('renders loading skeleton when auth is checking state', () => {
     useAuthStore.setState({ isLoading: true });
 
-    const { container } = render(
+    render(
       <AuthGuard>
         <div>Secret Learning Material</div>
       </AuthGuard>
     );
 
     expect(screen.queryByText('Secret Learning Material')).toBeNull();
-    expect(container.querySelector('.animate-spin')).toBeInTheDocument();
+    expect(screen.getByTestId('auth-guard-loading')).toBeInTheDocument();
   });
 
   it('redirects unauthenticated user to login and renders fallback', () => {

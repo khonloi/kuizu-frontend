@@ -3,12 +3,16 @@ import clsx from 'clsx';
 import styles from './card.module.css';
 
 export type CardPadding = 'none' | 'sm' | 'md' | 'lg';
-export type CardGlow = 'none' | 'duo' | 'kahoot' | 'blue';
+export type CardBorderAccent = 'none' | 'duo' | 'kahoot' | 'blue' | 'red' | 'yellow';
+/** @deprecated Use CardBorderAccent instead of CardGlow */
+export type CardGlow = CardBorderAccent;
 
 export interface CardProps extends HTMLAttributes<HTMLDivElement> {
   padding?: CardPadding;
   interactive?: boolean;
-  glow?: CardGlow;
+  borderAccent?: CardBorderAccent;
+  /** @deprecated Use borderAccent instead */
+  glow?: CardBorderAccent;
 }
 
 export const Card = forwardRef<HTMLDivElement, CardProps>(
@@ -18,7 +22,8 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
       className,
       padding = 'md',
       interactive = false,
-      glow = 'none',
+      borderAccent = 'none',
+      glow,
       ...rest
     },
     ref,
@@ -30,12 +35,15 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
       lg: styles.pLg,
     }[padding];
 
-    const glowClass = {
+    const activeAccent = glow ?? borderAccent;
+    const accentClass = {
       none: '',
-      duo: styles.glowDuo,
-      kahoot: styles.glowKahoot,
-      blue: styles.glowBlue,
-    }[glow];
+      duo: styles.accentDuo,
+      kahoot: styles.accentKahoot,
+      red: styles.accentRed,
+      blue: styles.accentBlue,
+      yellow: styles.accentYellow,
+    }[activeAccent];
 
     return (
       <div
@@ -43,7 +51,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
         className={clsx(
           styles.card,
           paddingClass,
-          glowClass,
+          accentClass,
           {
             [styles.interactive]: interactive,
           },

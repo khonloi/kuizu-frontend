@@ -60,25 +60,29 @@
   font-size: 1.75rem;
 }
 
-/* Border Ring Colors */
+/* Border Ring Colors (Crisp Tactile Duolingo Style) */
 .ringDuo .inner {
   border-color: var(--duo-green);
-  box-shadow: 0 0 10px rgba(88, 204, 2, 0.35);
+  border-width: 3px;
+  box-shadow: none;
 }
 
 .ringBlue .inner {
   border-color: var(--duo-blue);
-  box-shadow: 0 0 10px rgba(28, 176, 246, 0.35);
+  border-width: 3px;
+  box-shadow: none;
 }
 
 .ringKahoot .inner {
   border-color: var(--kahoot-red);
-  box-shadow: 0 0 10px rgba(226, 27, 60, 0.35);
+  border-width: 3px;
+  box-shadow: none;
 }
 
 .ringGold .inner {
   border-color: var(--duo-yellow);
-  box-shadow: 0 0 12px rgba(255, 200, 0, 0.4);
+  border-width: 3px;
+  box-shadow: none;
 }
 
 /* Online indicator dot */

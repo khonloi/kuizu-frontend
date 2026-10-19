@@ -14,10 +14,19 @@ vi.mock('next/navigation', () => ({
 describe('ProfileView Component', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    useAuthStore.setState({ user: null, isAuthenticated: false, isLoading: false });
+  });
+
+  it('renders profile skeleton when auth status is loading', () => {
+    useAuthStore.setState({ isLoading: true });
+
+    render(<ProfileView />);
+
+    expect(screen.getByTestId('profile-skeleton')).toBeInTheDocument();
   });
 
   it('renders guest card when user is not authenticated', () => {
-    useAuthStore.setState({ user: null, isAuthenticated: false });
+    useAuthStore.setState({ user: null, isAuthenticated: false, isLoading: false });
 
     render(<ProfileView />);
 

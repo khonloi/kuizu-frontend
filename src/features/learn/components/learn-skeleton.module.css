@@ -1,0 +1,58 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  width: 100%;
+}
+
+.heroCard {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  background: var(--bg-card);
+  border: 2px solid var(--border-tactile);
+  border-radius: var(--card-radius);
+  box-shadow: var(--shadow-tactile-md);
+  padding: 2rem;
+}
+
+.unitCard {
+  background: var(--bg-card);
+  border: 2px solid var(--border-tactile);
+  border-radius: var(--card-radius);
+  box-shadow: var(--shadow-tactile-md);
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.pathContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+  padding: 2rem 0;
+  width: 100%;
+}
+
+.nodeWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.nodeShiftLeft {
+  transform: translateX(-40px);
+}
+
+.nodeShiftRight {
+  transform: translateX(40px);
+}
+
+.nodeCircle {
+  width: 68px !important;
+  height: 68px !important;
+  border-radius: 50% !important;
+}

@@ -25,4 +25,11 @@ describe('Skeleton Primitive', () => {
     const skeleton = container.firstChild as HTMLElement;
     expect(skeleton).toHaveStyle({ width: '100%', height: '150px' });
   });
+
+  it('renders button variant with button dimensions', () => {
+    const { container } = render(<Skeleton variant="button" width={200} height={48} />);
+
+    const skeleton = container.firstChild as HTMLElement;
+    expect(skeleton).toHaveStyle({ width: '200px', height: '48px' });
+  });
 });

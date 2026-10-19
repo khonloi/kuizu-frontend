@@ -1,8 +1,10 @@
 .heroContainer {
+  flex: 1;
+  min-height: 0;
   width: 100%;
   max-width: 1040px;
   margin: 0 auto;
-  padding: 4.5rem 1.5rem 5rem;
+  padding: 1.5rem 1.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -107,9 +109,10 @@
 @media (max-width: 860px) {
   .heroContainer {
     flex-direction: column;
+    justify-content: center;
     text-align: center;
-    padding: 3rem 1.5rem 3.5rem;
-    gap: 3rem;
+    padding: 2rem 1.5rem;
+    gap: 2rem;
   }
 
   .contentCol {
@@ -120,6 +123,6 @@
   .headline {
     font-size: 1.75rem;
     max-width: 100%;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
   }
 }

@@ -4,25 +4,6 @@
   gap: 2.5rem;
 }
 
-.loadingCard {
-  height: 220px;
-  background: var(--bg-card);
-  border: 2px solid var(--border-tactile);
-  border-radius: var(--card-radius);
-  box-shadow: var(--shadow-tactile-md);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.loadingSpinner {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  border: 4px solid var(--border-subtle);
-  border-top-color: var(--kuizu-teal);
-}
-
 .errorCard {
   text-align: center;
   background: var(--bg-card);

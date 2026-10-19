@@ -88,9 +88,6 @@
   --shadow-tactile-sm: 0 2px 0 #e5e5e5;
   --shadow-tactile-md: 0 4px 0 #e5e5e5;
   --shadow-tactile-lg: 0 8px 0 #e5e5e5;
-  --shadow-glow-duo: none;
-  --shadow-glow-kahoot: none;
-  --shadow-glow-blue: none;
 
   /* Transitions */
   --transition-fast: 0.1s ease;

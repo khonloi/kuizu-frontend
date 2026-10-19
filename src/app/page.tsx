@@ -29,11 +29,11 @@ export default function HomePage() {
       <LandingNavbar isScrolledPastHero={isPastHero} />
 
       <main id="main-content" className={styles.mainContent}>
-        {/* 2. Hero Section */}
-        <LandingHero heroRef={heroRef} />
-
-        {/* 3. Subject Ribbon */}
-        <SubjectRibbon />
+        {/* 2. Hero & Subject Ribbon Viewport Section */}
+        <div className={styles.heroViewportSection}>
+          <LandingHero heroRef={heroRef} />
+          <SubjectRibbon />
+        </div>
 
         {/* 4. Alternating Feature Sections */}
         {/* Section 1: free. fun. effective. */}

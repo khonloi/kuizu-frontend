@@ -7,25 +7,6 @@
   overflow-x: hidden;
 }
 
-/* Subtle Duolingo-styled soft ambient backdrop */
-.authContainer::before {
-  content: '';
-  position: absolute;
-  top: 15%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(
-    circle,
-    rgba(28, 176, 246, 0.05) 0%,
-    rgba(0, 205, 156, 0.03) 40%,
-    transparent 70%
-  );
-  pointer-events: none;
-  z-index: 0;
-}
-
 .mainContent {
   position: relative;
   z-index: 1;

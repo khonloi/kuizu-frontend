@@ -3,6 +3,7 @@
 import React from 'react';
 import { Card } from '@/components/ui';
 import { LeaderboardRow } from './leaderboard-row';
+import { LeaderboardSkeleton } from './leaderboard-skeleton';
 import type { LeaderboardEntry } from '@/types/gamification.types';
 import styles from '../leaderboard.module.css';
 
@@ -17,15 +18,18 @@ export function LeaderboardTable({
   isLoading,
   currentUsername,
 }: LeaderboardTableProps) {
+  if (isLoading && entries.length === 0) {
+    return (
+      <Card padding="md">
+        <LeaderboardSkeleton />
+      </Card>
+    );
+  }
+
   return (
     <Card padding="md">
       <div className={styles.tableList} data-testid="leaderboard-table">
-        {isLoading && entries.length === 0 ? (
-          <div className={styles.loadingNotice} data-testid="leaderboard-loading">
-            Loading league rankings...
-          </div>
-        ) : (
-          entries.map((entry) => {
+        {entries.map((entry) => {
             const isCurrentUser =
               entry.isCurrentUser ||
               (currentUsername ? entry.username.includes(currentUsername) : false);
@@ -37,8 +41,7 @@ export function LeaderboardTable({
                 isCurrentUser={Boolean(isCurrentUser)}
               />
             );
-          })
-        )}
+          })}
       </div>
     </Card>
   );
