@@ -2,8 +2,8 @@
   position: sticky;
   top: 0;
   height: 64px;
-  background-color: #ffffff;
-  border-bottom: 2px solid #e5e5e5;
+  background-color: var(--bg-card);
+  border-bottom: 2px solid var(--border-tactile);
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -25,48 +25,48 @@
   gap: 0.45rem;
   padding: 0.35rem 0.85rem;
   border-radius: var(--pill-radius);
-  background-color: #ffffff;
-  border: 2px solid #e5e5e5;
-  box-shadow: 0 2px 0 #e5e5e5;
+  background-color: var(--bg-card);
+  border: 2px solid var(--border-tactile);
+  box-shadow: var(--shadow-tactile-sm);
   font-size: 0.85rem;
   font-weight: 800;
   cursor: pointer;
   text-decoration: none;
-  color: #4b4b4b;
+  color: var(--text-primary);
   transition: all var(--transition-fast);
 }
 
 .statBadge:hover {
-  background-color: #f7f7f7;
+  background-color: var(--bg-secondary);
   border-color: #dcdcdc;
 }
 
 .statBadge:active {
   transform: translateY(1px);
-  box-shadow: 0 1px 0 #e5e5e5;
+  box-shadow: 0 1px 0 var(--border-tactile);
 }
 
 .streakFlame {
-  color: #ff9600;
+  color: var(--duo-orange);
 }
 
 .hearts {
-  color: #ff4b4b;
+  color: var(--duo-red);
 }
 
 .gems {
-  color: #1cb0f6;
+  color: var(--duo-blue);
 }
 
 .xp {
-  color: #e5a400;
+  color: var(--duo-yellow-shadow);
 }
 
 .audioBtn {
   background: transparent;
   border: none;
   cursor: pointer;
-  color: #777777;
+  color: var(--text-secondary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -76,8 +76,8 @@
 }
 
 .audioBtn:hover {
-  background: #f7f7f7;
-  color: #4b4b4b;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
 }
 
 @media (max-width: 640px) {
@@ -105,7 +105,7 @@
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: #00cd9c;
+  color: var(--kuizu-teal);
   text-decoration: none;
   padding: 0.45rem 0.85rem;
   border-radius: 10px;
@@ -113,5 +113,5 @@
 }
 
 .loginLink:hover {
-  background-color: rgba(0, 205, 156, 0.1);
+  background-color: var(--kuizu-teal-subtle);
 }

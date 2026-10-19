@@ -2,11 +2,11 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-color: #ffffff;
-  color: #3c3c3c;
+  background-color: var(--bg-canvas);
+  color: var(--text-primary);
   position: relative;
   overflow-x: hidden;
-  font-family: var(--font-nunito), 'Nunito', system-ui, -apple-system, sans-serif;
+  font-family: inherit;
 }
 
 .mainContent {
@@ -17,14 +17,14 @@
 }
 
 .researchLink {
-  color: #1cb0f6;
+  color: var(--duo-blue);
   font-weight: 700;
   text-decoration: underline;
   text-underline-offset: 3px;
   cursor: pointer;
-  transition: color 0.15s ease;
+  transition: color var(--transition-fast);
 }
 
 .researchLink:hover {
-  color: #0c9be0;
+  color: var(--duo-blue-shadow);
 }

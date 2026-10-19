@@ -17,11 +17,11 @@
   font-weight: 800;
   margin-top: 0.35rem;
   letter-spacing: -0.02em;
-  color: #4b4b4b;
+  color: var(--text-primary);
 }
 
 .headerDescription {
-  color: #777777;
+  color: var(--text-secondary);
   font-size: 0.9rem;
 }
 
@@ -30,11 +30,11 @@
   align-items: center;
   gap: 0.6rem;
   padding: 0.6rem 1.25rem;
-  border-radius: 16px;
-  background-color: #ffffff;
-  border: 2px solid #1cb0f6;
-  box-shadow: 0 4px 0 rgba(28, 176, 246, 0.25);
-  color: #1cb0f6;
+  border-radius: var(--btn-radius);
+  background-color: var(--bg-card);
+  border: 2px solid var(--duo-blue);
+  box-shadow: 0 4px 0 var(--duo-blue-subtle);
+  color: var(--duo-blue);
   font-weight: 800;
   font-size: 1.1rem;
 }
@@ -42,9 +42,9 @@
 .successNotice {
   padding: 1rem 1.25rem;
   border-radius: 14px;
-  background-color: rgba(0, 205, 156, 0.1);
-  border: 2px solid #00cd9c;
-  color: #00a87e;
+  background-color: var(--kuizu-teal-subtle);
+  border: 2px solid var(--kuizu-teal);
+  color: var(--kuizu-teal-shadow);
   font-weight: 800;
   font-size: 0.85rem;
 }
@@ -59,10 +59,10 @@
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
-  background-color: #ffffff;
-  border: 2px solid #e5e5e5;
-  border-radius: 20px;
-  box-shadow: 0 4px 0 #e5e5e5;
+  background-color: var(--bg-card);
+  border: 2px solid var(--border-tactile);
+  border-radius: var(--card-radius);
+  box-shadow: var(--shadow-tactile-md);
   padding: 1.5rem;
 }
 
@@ -75,43 +75,43 @@
 .iconBox {
   width: 56px;
   height: 56px;
-  border-radius: 16px;
+  border-radius: var(--btn-radius);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  border: 2px solid #e5e5e5;
+  border: 2px solid var(--border-subtle);
 }
 
 .iconHeart {
-  background-color: rgba(255, 75, 75, 0.12);
+  background-color: var(--duo-red-subtle);
   border-color: rgba(255, 75, 75, 0.3);
 }
 
 .iconFreeze {
-  background-color: rgba(28, 176, 246, 0.12);
+  background-color: var(--duo-blue-subtle);
   border-color: rgba(28, 176, 246, 0.3);
 }
 
 .iconWager {
-  background-color: rgba(255, 200, 0, 0.15);
+  background-color: var(--duo-yellow-subtle);
   border-color: rgba(255, 200, 0, 0.35);
 }
 
 .itemTitle {
   font-size: 1.1rem;
   font-weight: 800;
-  color: #4b4b4b;
+  color: var(--text-primary);
 }
 
 .itemSubtitle {
   font-size: 0.775rem;
   font-weight: 700;
-  color: #777777;
+  color: var(--text-secondary);
 }
 
 .itemDescription {
-  color: #777777;
+  color: var(--text-secondary);
   font-size: 0.875rem;
   line-height: 1.55;
   flex: 1;

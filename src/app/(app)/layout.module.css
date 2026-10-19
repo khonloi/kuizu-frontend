@@ -1,32 +1,9 @@
 .appLayout {
-  --bg-primary: #ffffff;
-  --bg-secondary: #f7f7f7;
-  --bg-card: #ffffff;
-  --bg-card-hover: #f7f7f7;
-  --bg-card-active: #f0f0f0;
-  --bg-input: #ffffff;
-
-  --border-subtle: #e5e5e5;
-  --border-card: #e5e5e5;
-  --border-focus: #00cd9c;
-
-  --text-primary: #4b4b4b;
-  --text-secondary: #777777;
-  --text-muted: #afafaf;
-  --text-inverse: #ffffff;
-
-  --shadow-sm: 0 2px 0 #e5e5e5;
-  --shadow-md: 0 4px 0 #e5e5e5;
-  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.08);
-  --shadow-glow-duo: none;
-  --shadow-glow-kahoot: none;
-  --shadow-glow-blue: none;
-
   display: flex;
   min-height: 100vh;
-  background-color: #ffffff;
-  color: #4b4b4b;
-  font-family: var(--font-nunito), 'Nunito', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-canvas);
+  color: var(--text-primary);
+  font-family: inherit;
   font-size: 0.9375rem;
 }
 

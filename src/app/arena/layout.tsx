@@ -13,7 +13,7 @@ export default function ArenaLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className={styles.arenaLayout}>
+    <div data-theme="stadium" className={styles.arenaLayout}>
       {children}
     </div>
   );

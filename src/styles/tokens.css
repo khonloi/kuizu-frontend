@@ -55,34 +55,39 @@
   --kahoot-green-hover: #2fa310;
   --kahoot-green-shadow: #1b6807;
 
-  /* Surfaces & Dark Theme */
-  --bg-primary: #0b0f19;
-  --bg-secondary: #111827;
-  --bg-card: rgba(23, 32, 54, 0.75);
-  --bg-card-hover: rgba(30, 41, 69, 0.9);
-  --bg-card-active: rgba(37, 50, 82, 0.95);
-  --bg-input: rgba(15, 23, 42, 0.85);
+  /* Surfaces & Default Light Theme (Kuizu / Duolingo Standard) */
+  --bg-canvas: #ffffff;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f7f7f7;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f7f7f7;
+  --bg-card-active: #f0f0f0;
+  --bg-input: #ffffff;
 
   /* Borders & Focus */
-  --border-subtle: rgba(255, 255, 255, 0.08);
-  --border-card: rgba(255, 255, 255, 0.12);
-  --border-focus: rgba(88, 204, 2, 0.45);
-  --border-error: rgba(255, 75, 75, 0.5);
+  --border-subtle: #e5e5e5;
+  --border-card: #e5e5e5;
+  --border-tactile: #e5e5e5;
+  --border-focus: #00cd9c;
+  --border-error: #ff4b4b;
 
   /* Typography Colors */
-  --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
-  --text-muted: #64748b;
-  --text-inverse: #0b0f19;
+  --text-primary: #4b4b4b;
+  --text-secondary: #777777;
+  --text-muted: #afafaf;
+  --text-inverse: #ffffff;
 
   /* Elevation & Tactile Depth */
   --btn-radius: 16px;
   --card-radius: 20px;
   --pill-radius: 9999px;
 
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.5);
+  --shadow-sm: 0 2px 0 #e5e5e5;
+  --shadow-md: 0 4px 0 #e5e5e5;
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.08);
+  --shadow-tactile-sm: 0 2px 0 #e5e5e5;
+  --shadow-tactile-md: 0 4px 0 #e5e5e5;
+  --shadow-tactile-lg: 0 8px 0 #e5e5e5;
   --shadow-glow-duo: none;
   --shadow-glow-kahoot: none;
   --shadow-glow-blue: none;
@@ -99,4 +104,34 @@
   --z-modal-backdrop: 300;
   --z-modal: 310;
   --z-toast: 400;
+}
+
+/* Stadium Dark Theme (Multiplayer Arena) */
+[data-theme="stadium"],
+.theme-stadium {
+  --bg-canvas: #0b0f19;
+  --bg-primary: #0b0f19;
+  --bg-secondary: #111827;
+  --bg-card: rgba(23, 32, 54, 0.75);
+  --bg-card-hover: rgba(30, 41, 69, 0.9);
+  --bg-card-active: rgba(37, 50, 82, 0.95);
+  --bg-input: rgba(15, 23, 42, 0.85);
+
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-card: rgba(255, 255, 255, 0.12);
+  --border-tactile: rgba(255, 255, 255, 0.18);
+  --border-focus: rgba(0, 205, 156, 0.5);
+  --border-error: rgba(255, 75, 75, 0.5);
+
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --text-inverse: #0b0f19;
+
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.5);
+  --shadow-tactile-sm: 0 2px 0 rgba(0, 0, 0, 0.4);
+  --shadow-tactile-md: 0 4px 0 rgba(0, 0, 0, 0.5);
+  --shadow-tactile-lg: 0 8px 0 rgba(0, 0, 0, 0.6);
 }
