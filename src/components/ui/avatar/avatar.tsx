@@ -1,11 +1,19 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import clsx from 'clsx';
 import styles from './avatar.module.css';
 
 export type AvatarSize = 'sm' | 'md' | 'lg' | 'xl';
 export type AvatarRing = 'none' | 'duo' | 'blue' | 'kahoot' | 'gold';
+
+const pixelSizes: Record<AvatarSize, number> = {
+  sm: 32,
+  md: 44,
+  lg: 64,
+  xl: 96,
+};
 
 export interface AvatarProps {
   src?: string | null;
@@ -15,6 +23,7 @@ export interface AvatarProps {
   ring?: AvatarRing;
   showStatus?: boolean;
   className?: string;
+  unoptimized?: boolean;
 }
 
 export function Avatar({
@@ -25,6 +34,7 @@ export function Avatar({
   ring = 'none',
   showStatus = false,
   className,
+  unoptimized,
 }: AvatarProps) {
   const [hasError, setHasError] = useState(false);
 
@@ -51,16 +61,21 @@ export function Avatar({
     gold: styles.ringGold,
   }[ring];
 
+  const dimension = pixelSizes[size];
+  const isTest = process.env.NODE_ENV === 'test';
+
   return (
     <div className={clsx(styles.avatarContainer, sizeClass, ringClass, className)}>
       <div className={styles.inner}>
         {src && !hasError ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
+          <Image
             src={src}
             alt={alt || name}
+            width={dimension}
+            height={dimension}
             className={styles.image}
             onError={() => setHasError(true)}
+            unoptimized={unoptimized ?? (isTest || src.startsWith('data:') || src.endsWith('.svg'))}
           />
         ) : (
           <span className={styles.initials}>{initials}</span>

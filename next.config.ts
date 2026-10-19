@@ -5,6 +5,18 @@ const backendUrl = process.env.BACKEND_INTERNAL_URL || "http://localhost:4000";
 const nextConfig: NextConfig = {
   reactCompiler: true,
   poweredByHeader: false,
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+      },
+    ],
+  },
   async headers() {
     return [
       {

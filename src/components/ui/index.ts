@@ -17,4 +17,5 @@ export * from './tabs';
 export * from './accordion';
 export * from './stack';
 export * from './divider';
-export * from './field-message/field-message';
+export * from './field-message';
+export * from './a11y-announcer';

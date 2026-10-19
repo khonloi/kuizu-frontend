@@ -1,0 +1,101 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.loadingCard {
+  height: 220px;
+  background: var(--bg-card);
+  border: 2px solid var(--border-tactile);
+  border-radius: var(--card-radius);
+  box-shadow: var(--shadow-tactile-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loadingSpinner {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 4px solid var(--border-subtle);
+  border-top-color: var(--kuizu-teal);
+}
+
+.errorCard {
+  text-align: center;
+  background: var(--bg-card);
+  border: 2px solid var(--duo-red);
+  border-radius: var(--card-radius);
+  box-shadow: 0 4px 0 var(--duo-red-subtle);
+}
+
+.errorContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.errorTitle {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.errorSubtitle {
+  color: var(--text-secondary);
+}
+
+.bannerCard {
+  background: var(--bg-card);
+  border: 2px solid var(--border-tactile);
+  border-radius: var(--card-radius);
+  box-shadow: var(--shadow-tactile-md);
+  padding: 2rem;
+}
+
+.bannerHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.bannerBadge {
+  background: var(--kuizu-teal-subtle);
+  color: var(--kuizu-teal-shadow);
+  border: 1px solid var(--kuizu-teal);
+  font-weight: 800;
+}
+
+.bannerTitle {
+  font-size: 1.85rem;
+  font-weight: 800;
+  margin-top: 0.5rem;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+.bannerDescription {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  margin-top: 0.35rem;
+  max-width: 580px;
+  line-height: 1.5;
+}
+
+.bannerActions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.continueGroup {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}

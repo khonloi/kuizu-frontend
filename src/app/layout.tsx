@@ -3,7 +3,7 @@ import { Outfit, Nunito } from 'next/font/google';
 import './globals.css';
 import { QueryProvider } from '@/providers/query-provider';
 import { AuthProvider } from '@/providers/auth-provider';
-import { ToastContainer } from '@/components/ui';
+import { ToastContainer, A11yAnnouncer } from '@/components/ui';
 
 const outfit = Outfit({
   subsets: ['latin'],
@@ -69,6 +69,7 @@ export default function RootLayout({
           <AuthProvider>
             {children}
             <ToastContainer />
+            <A11yAnnouncer />
           </AuthProvider>
         </QueryProvider>
       </body>

@@ -39,8 +39,8 @@ export function StatsBar() {
           <Flame
             size={18}
             className={streak > 0 ? "animate-heart-beat" : undefined}
-            color="#ff9600"
-            fill="#ff9600"
+            color="var(--duo-orange)"
+            fill="var(--duo-orange)"
           />
           <span>{streak}</span>
         </Link>
@@ -53,7 +53,7 @@ export function StatsBar() {
           title="Hearts Remaining (Click to Refill)"
           aria-label={`Hearts remaining: ${hearts}. Click to refill`}
         >
-          <Heart size={18} color="#ff4b4b" fill="#ff4b4b" />
+          <Heart size={18} color="var(--duo-red)" fill="var(--duo-red)" />
           <span>{hearts}</span>
         </button>
 
@@ -64,7 +64,7 @@ export function StatsBar() {
           className={clsx(styles.statBadge, styles.gems)}
           title="Gems Balance (Click to Visit Shop)"
         >
-          <Gem size={18} color="#1cb0f6" fill="#1cb0f6" />
+          <Gem size={18} color="var(--duo-blue)" fill="var(--duo-blue)" />
           <span>{gems}</span>
         </Link>
 
@@ -73,7 +73,7 @@ export function StatsBar() {
           className={clsx(styles.statBadge, styles.xp, styles.xpStat)}
           title="Experience Points Earned"
         >
-          <Zap size={18} color="#ffc800" fill="#ffc800" />
+          <Zap size={18} color="var(--duo-yellow)" fill="var(--duo-yellow)" />
           <span>{xp} XP</span>
         </div>
       </div>
