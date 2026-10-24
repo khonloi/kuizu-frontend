@@ -23,7 +23,6 @@ export default defineConfig({
         'src/features/landing/components/*-footer/**',
         'src/features/landing/components/*-banner/**',
         'src/features/landing/hooks/**',
-        'src/features/arena/hooks/**',
         'src/**/*.module.css',
       ],
       thresholds: {

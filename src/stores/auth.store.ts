@@ -36,9 +36,13 @@ export const useAuthStore = create<AuthState>((set) => ({
   logout: async () => {
     try {
       await api.post('/api/v1/auth/logout');
+    } catch {
+      // Best-effort remote session revocation: network failure shouldn't block local logout
     } finally {
       if (typeof document !== 'undefined') {
         document.cookie = 'kuizu_session=; path=/; max-age=0; SameSite=Lax';
+        document.cookie = 'access_token=; path=/; max-age=0; SameSite=Lax';
+        document.cookie = 'refresh_token=; path=/; max-age=0; SameSite=Lax';
       }
       set({ user: null, isAuthenticated: false, isLoading: false });
     }

@@ -15,17 +15,27 @@ export class ApiError extends Error {
   }
 }
 
-// Concurrency mutex state for silent token refresh
-let isRefreshing = false;
-let refreshSubscribers: Array<(success: boolean) => void> = [];
+// Concurrency mutex state for silent token refresh via shared Promise
+let refreshPromise: Promise<boolean> | null = null;
 
-function subscribeTokenRefresh(cb: (success: boolean) => void) {
-  refreshSubscribers.push(cb);
-}
-
-function onRefreshed(success: boolean) {
-  refreshSubscribers.forEach((cb) => cb(success));
-  refreshSubscribers = [];
+export async function getOrStartRefreshToken(): Promise<boolean> {
+  if (!refreshPromise) {
+    refreshPromise = (async () => {
+      try {
+        const refreshRes = await fetch('/api/v1/auth/refresh', {
+          method: 'POST',
+          credentials: 'include',
+          headers: { 'Content-Type': 'application/json' },
+        });
+        return refreshRes.ok;
+      } catch {
+        return false;
+      } finally {
+        refreshPromise = null;
+      }
+    })();
+  }
+  return refreshPromise;
 }
 
 /**
@@ -88,8 +98,10 @@ export async function executeHttpFetch<T>(
   }
 
   // Chain external signal if provided
+  let externalSignalHandler: (() => void) | null = null;
   if (options.signal) {
-    options.signal.addEventListener('abort', () => controller.abort());
+    externalSignalHandler = () => controller.abort();
+    options.signal.addEventListener('abort', externalSignalHandler);
   }
 
   let response: Response;
@@ -106,6 +118,9 @@ export async function executeHttpFetch<T>(
     throw err;
   } finally {
     if (timerId) clearTimeout(timerId);
+    if (options.signal && externalSignalHandler) {
+      options.signal.removeEventListener('abort', externalSignalHandler);
+    }
   }
 
   // Handle 401 Unauthorized for automatic token refresh (except for auth endpoints)
@@ -115,39 +130,9 @@ export async function executeHttpFetch<T>(
     url.includes('/auth/refresh');
 
   if (response.status === 401 && !isRetry && !isAuthRoute) {
-    if (!isRefreshing) {
-      isRefreshing = true;
-
-      try {
-        const refreshRes = await fetch('/api/v1/auth/refresh', {
-          method: 'POST',
-          credentials: 'include',
-          headers: { 'Content-Type': 'application/json' },
-        });
-
-        if (refreshRes.ok) {
-          isRefreshing = false;
-          onRefreshed(true);
-          return executeHttpFetch<T>(url, options, true);
-        } else {
-          isRefreshing = false;
-          onRefreshed(false);
-        }
-      } catch {
-        isRefreshing = false;
-        onRefreshed(false);
-      }
-    } else {
-      // Wait for active refresh to resolve, then retry or abort
-      return new Promise<T>((resolve, reject) => {
-        subscribeTokenRefresh((success) => {
-          if (success) {
-            resolve(executeHttpFetch<T>(url, options, true));
-          } else {
-            reject(new ApiError(401, 'Session expired. Please log in again.'));
-          }
-        });
-      });
+    const refreshOk = await getOrStartRefreshToken();
+    if (refreshOk) {
+      return executeHttpFetch<T>(url, options, true);
     }
   }
 
@@ -210,10 +195,12 @@ export async function apiClient<T = unknown>(
       throw err;
     }
 
-    // 3. Fallback to offline mock handler if backend connection fails
-    const mockFallback = await mockTransportAdapter.execute<T>(url, requestOptions);
-    if (mockFallback !== null) {
-      return mockFallback;
+    // 3. Fallback to offline mock handler ONLY if explicitly enabled in demo mode
+    if (process.env.NEXT_PUBLIC_DEMO_MODE === 'true') {
+      const mockFallback = await mockTransportAdapter.execute<T>(url, requestOptions);
+      if (mockFallback !== null) {
+        return mockFallback;
+      }
     }
 
     throw new ApiError(0, (err as Error).message || 'Network connection error');
