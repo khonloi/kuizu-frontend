@@ -4,15 +4,27 @@ import { useArenaSocket } from '../use-arena-socket';
 import * as socketModule from '@/lib/socket';
 import { useGameStore } from '@/stores/game.store';
 
+type SocketEventHandler = (...args: unknown[]) => void;
+
+interface MockSocket {
+  connected: boolean;
+  on: ReturnType<typeof vi.fn>;
+  off: ReturnType<typeof vi.fn>;
+  emit: ReturnType<typeof vi.fn>;
+  connect: ReturnType<typeof vi.fn>;
+  disconnect: ReturnType<typeof vi.fn>;
+  removeAllListeners: ReturnType<typeof vi.fn>;
+}
+
 describe('useArenaSocket', () => {
-  let mockSocket: any;
-  let listeners: Record<string, Function> = {};
+  let mockSocket: MockSocket;
+  let listeners: Record<string, SocketEventHandler> = {};
 
   beforeEach(() => {
     listeners = {};
     mockSocket = {
       connected: false,
-      on: vi.fn((event: string, cb: Function) => {
+      on: vi.fn((event: string, cb: SocketEventHandler) => {
         listeners[event] = cb;
       }),
       off: vi.fn((event: string) => {
@@ -24,7 +36,9 @@ describe('useArenaSocket', () => {
       removeAllListeners: vi.fn(),
     };
 
-    vi.spyOn(socketModule, 'getGameSocket').mockReturnValue(mockSocket);
+    vi.spyOn(socketModule, 'getGameSocket').mockReturnValue(
+      mockSocket as unknown as ReturnType<typeof socketModule.getGameSocket>,
+    );
     useGameStore.getState().resetGame();
   });
 

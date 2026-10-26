@@ -57,6 +57,41 @@ export const metadata: Metadata = {
   },
 };
 
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': `${appUrl}#website`,
+      url: appUrl,
+      name: 'Kuizu',
+      description:
+        'Kuizu gamified learning with bite-sized interactive courses and real-time multiplayer arena battles.',
+      publisher: {
+        '@type': 'Organization',
+        name: 'Kuizu Team',
+        url: appUrl,
+      },
+    },
+    {
+      '@type': 'EducationalApplication',
+      '@id': `${appUrl}#app`,
+      name: 'Kuizu',
+      applicationCategory: 'EducationalApplication',
+      operatingSystem: 'Any',
+      offers: {
+        '@type': 'Offer',
+        price: '0',
+        priceCurrency: 'USD',
+      },
+      description:
+        'Master skills in interactive quests and clash in live multiplayer arena quiz battles.',
+    },
+  ],
+};
+
+const safeJsonLd = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -64,6 +99,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${outfit.variable} ${nunito.variable}`}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: safeJsonLd }}
+        />
+      </head>
       <body>
         <QueryProvider>
           <AuthProvider>

@@ -1,5 +1,3 @@
-import { handleMockApiRequest } from '@/mock/mock-handler';
-
 export interface ApiClientOptions extends RequestInit {
   timeout?: number;
 }
@@ -63,11 +61,12 @@ export interface TransportAdapter {
 }
 
 /**
- * Offline & Demo Mode Mock Transport
+ * Offline & Demo Mode Mock Transport (Lazy-loaded to keep production bundle lean)
  */
 export const mockTransportAdapter: TransportAdapter = {
   async execute<T>(url: string, options: ApiClientOptions): Promise<T | null> {
     try {
+      const { handleMockApiRequest } = await import('@/mock/mock-handler');
       const parsedBody =
         options.body && typeof options.body === 'string'
           ? JSON.parse(options.body)

@@ -117,7 +117,7 @@ describe('API Client & Transport Utility', () => {
 
   it('triggers exactly one refresh call when 10 concurrent requests return 401', async () => {
     let refreshCount = 0;
-    let endpointCounts: Record<string, number> = {};
+    const endpointCounts: Record<string, number> = {};
 
     vi.stubGlobal(
       'fetch',

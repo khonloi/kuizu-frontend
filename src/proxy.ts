@@ -8,7 +8,7 @@ import type { NextRequest } from 'next/server';
  * Note: /profile renders a dedicated client-side guest card when unauthenticated,
  * so it is handled client-side rather than with an immediate hard redirect.
  */
-const PROTECTED_ROUTES: string[] = ['/learn', '/lesson', '/arena'];
+const PROTECTED_ROUTES: string[] = ['/learn', '/lesson', '/arena/host'];
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;

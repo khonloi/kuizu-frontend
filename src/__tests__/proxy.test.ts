@@ -35,11 +35,31 @@ describe('Edge Proxy route guard', () => {
     expect(res.headers.get('location')).toBeNull();
   });
 
+  it('allows guest access to /arena/join and /arena/play without authentication', () => {
+    const joinReq = new NextRequest('http://localhost:3000/arena/join');
+    const joinRes = proxy(joinReq);
+    expect(joinRes.status).toBe(200);
+    expect(joinRes.headers.get('location')).toBeNull();
+
+    const playReq = new NextRequest('http://localhost:3000/arena/play');
+    const playRes = proxy(playReq);
+    expect(playRes.status).toBe(200);
+    expect(playRes.headers.get('location')).toBeNull();
+  });
+
+  it('redirects unauthenticated users on /arena/host to /login with returnUrl', () => {
+    const req = new NextRequest('http://localhost:3000/arena/host');
+    const res = proxy(req);
+    expect(res.status).toBe(307);
+    const location = res.headers.get('location');
+    expect(location).toContain('/login?returnUrl=%2Farena%2Fhost');
+  });
+
   it('allows access in demo mode regardless of token', () => {
     const prev = process.env.NEXT_PUBLIC_DEMO_MODE;
     process.env.NEXT_PUBLIC_DEMO_MODE = 'true';
     try {
-      const req = new NextRequest('http://localhost:3000/arena');
+      const req = new NextRequest('http://localhost:3000/arena/host');
       const res = proxy(req);
       expect(res.status).toBe(200);
       expect(res.headers.get('location')).toBeNull();
