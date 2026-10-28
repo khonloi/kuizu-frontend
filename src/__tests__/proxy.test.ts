@@ -67,4 +67,22 @@ describe('Edge Proxy route guard', () => {
       process.env.NEXT_PUBLIC_DEMO_MODE = prev;
     }
   });
+
+  it('allows access when kuizu_demo_mode cookie is true', () => {
+    const req = new NextRequest('http://localhost:3000/learn', {
+      headers: { cookie: 'kuizu_demo_mode=true' },
+    });
+    const res = proxy(req);
+    expect(res.status).toBe(200);
+    expect(res.headers.get('location')).toBeNull();
+  });
+
+  it('allows access when kuizu_session is demo-token', () => {
+    const req = new NextRequest('http://localhost:3000/arena/host', {
+      headers: { cookie: 'kuizu_session=demo-token' },
+    });
+    const res = proxy(req);
+    expect(res.status).toBe(200);
+    expect(res.headers.get('location')).toBeNull();
+  });
 });

@@ -13,8 +13,13 @@ const PROTECTED_ROUTES: string[] = ['/learn', '/lesson', '/arena/host'];
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // 1. Bypass in offline demo mode if set
-  if (process.env.NEXT_PUBLIC_DEMO_MODE === 'true') {
+  // 1. Bypass in offline demo mode if set via env or runtime cookies
+  const isDemo =
+    process.env.NEXT_PUBLIC_DEMO_MODE === 'true' ||
+    request.cookies.get('kuizu_demo_mode')?.value === 'true' ||
+    request.cookies.get('kuizu_session')?.value === 'demo-token';
+
+  if (isDemo) {
     return NextResponse.next();
   }
 

@@ -9,22 +9,28 @@ import { CurriculumPath } from './components/curriculum-path';
 import { LearnSkeleton } from './components/learn-skeleton';
 import { useAudioStore } from '@/stores/audio.store';
 import { useCoursesQuery, useCourseQuery, useCompletedLessonsQuery } from '@/hooks/queries';
-import { SAMPLE_JAPANESE_COURSE } from '@/mock/sample-courses';
+import { SAMPLE_CHINESE_COURSE } from '@/mock/sample-courses';
 
 export function LearnView() {
   const playPop = useAudioStore((s) => s.playPop);
-  const [selectedSlug, setSelectedSlug] = useState<string>('japanese-foundations');
+  const [selectedSlug, setSelectedSlug] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('kuizu_active_course_slug');
+      if (saved && saved !== 'japanese-foundations') return saved;
+    }
+    return 'chinese-foundations';
+  });
 
   const { data: courses = [] } = useCoursesQuery();
   const {
-    data: course = SAMPLE_JAPANESE_COURSE,
+    data: course = SAMPLE_CHINESE_COURSE,
     isLoading: isCourseLoading,
     error: courseError,
     refetch: refetchCourse,
   } = useCourseQuery(selectedSlug);
 
   const {
-    data: completedLessonIds = ['lesson-1'],
+    data: completedLessonIds = ['lesson-cn-1'],
     isLoading: isLessonsLoading,
   } = useCompletedLessonsQuery();
 
@@ -75,8 +81,13 @@ export function LearnView() {
                     value={selectedSlug}
                     onChange={(e) => {
                       playPop();
-                      setSelectedSlug(e.target.value);
+                      const nextSlug = e.target.value;
+                      setSelectedSlug(nextSlug);
+                      if (typeof window !== 'undefined') {
+                        localStorage.setItem('kuizu_active_course_slug', nextSlug);
+                      }
                     }}
+                    aria-label="Select active curriculum course"
                     style={{
                       background: 'var(--bg-input)',
                       color: 'var(--text-primary)',
@@ -89,7 +100,7 @@ export function LearnView() {
                   >
                     {courses.map((c) => (
                       <option key={c.slug} value={c.slug}>
-                        {c.title}
+                        {c.icon ? `${c.icon} ` : ''}{c.title}
                       </option>
                     ))}
                   </select>

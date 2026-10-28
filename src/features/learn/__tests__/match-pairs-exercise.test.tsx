@@ -45,9 +45,9 @@ describe('MatchPairsExercise Component', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Konnichiwa' }));
     fireEvent.click(screen.getByRole('button', { name: 'Hello' }));
 
-    // Both should now be marked as matched (with checkmark)
-    expect(screen.getByRole('button', { name: /Konnichiwa.*✓/ })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /Hello.*✓/ })).toBeInTheDocument();
+    // Both should now be marked as matched (disabled and has matched state)
+    expect(screen.getByRole('button', { name: /Konnichiwa/i })).toBeDisabled();
+    expect(screen.getByRole('button', { name: /Hello/i })).toBeDisabled();
 
     // Not all pairs matched yet, so onSelect not called yet
     expect(handleSelect).not.toHaveBeenCalled();

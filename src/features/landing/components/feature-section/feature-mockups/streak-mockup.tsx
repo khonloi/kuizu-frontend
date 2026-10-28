@@ -22,7 +22,9 @@ export function StreakMockup() {
   return (
     <div className={styles.mockupCard} aria-label="Streak Engine Preview">
       <div className={styles.streakHeader}>
-        <div className={styles.streakFlameIcon}>🔥</div>
+        <div className={styles.streakFlameIcon}>
+          <Flame size={40} color="var(--duo-orange)" fill="var(--duo-orange)" />
+        </div>
         <div style={{ fontSize: '1.75rem', fontWeight: 900, color: 'var(--duo-orange)' }}>
           {activeDays.length} DAYS STREAK
         </div>

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { ArrowRight, Zap, Flame } from 'lucide-react';
+import { ArrowRight, Zap, Flame, Crown } from 'lucide-react';
 import { Button, Card } from '@/components/ui';
 import type { Lesson } from '@/types/api.types';
 import styles from '../../lesson-runner.module.css';
@@ -15,7 +15,9 @@ export function LessonCompletionScreen({ lesson }: LessonCompletionScreenProps) 
   return (
     <div className={styles.runnerWrapper}>
       <div className={styles.completionScreen}>
-        <div className={`${styles.crownIcon} animate-pop`}>👑</div>
+        <div className={`${styles.crownIcon} animate-pop`}>
+          <Crown size={64} color="var(--duo-yellow)" fill="var(--duo-yellow)" />
+        </div>
 
         <div>
           <h1 className={styles.completionTitle}>Lesson Complete!</h1>

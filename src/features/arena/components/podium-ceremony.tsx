@@ -2,6 +2,7 @@
 
 import React, { useEffect } from 'react';
 import clsx from 'clsx';
+import { Crown, Medal, Trophy } from 'lucide-react';
 import styles from '../arena.module.css';
 import { Card, Badge } from '@/components/ui';
 import { fireVictoryConfetti, fireStreakFireworks } from '@/lib/confetti';
@@ -16,7 +17,7 @@ interface PodiumCeremonyProps {
 interface PillarConfig {
   rank: 1 | 2 | 3;
   labelPrefix: string;
-  medal: string;
+  medal: React.ReactNode;
   isLarge: boolean;
   blockClass: string;
 }
@@ -25,21 +26,21 @@ const PILLAR_CONFIGS: Record<1 | 2 | 3, PillarConfig> = {
   1: {
     rank: 1,
     labelPrefix: 'First place winner',
-    medal: '👑',
+    medal: <Crown size={40} color="#ffd900" fill="#ffd900" />,
     isLarge: true,
     blockClass: styles.podiumFirst,
   },
   2: {
     rank: 2,
     labelPrefix: 'Second place',
-    medal: '🥈',
+    medal: <Medal size={32} color="#c0c0c0" fill="#c0c0c0" />,
     isLarge: false,
     blockClass: styles.podiumSecond,
   },
   3: {
     rank: 3,
     labelPrefix: 'Third place',
-    medal: '🥉',
+    medal: <Medal size={32} color="#cd7f32" fill="#cd7f32" />,
     isLarge: false,
     blockClass: styles.podiumThird,
   },
@@ -104,8 +105,8 @@ export function PodiumCeremony({ podium, fullLeaderboard }: PodiumCeremonyProps)
       aria-label="Grand Finale Podium"
       className={styles.podiumWrapper}
     >
-      <Badge variant="yellow" size="md" className={styles.podiumBadge}>
-        🏆 GRAND FINALE PODIUM
+      <Badge variant="yellow" size="md" className={styles.podiumBadge} icon={<Trophy size={16} />}>
+        GRAND FINALE PODIUM
       </Badge>
 
       <h1 className={styles.podiumHeading}>

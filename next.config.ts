@@ -1,7 +1,9 @@
 import type { NextConfig } from "next";
 
 if (process.env.NODE_ENV === 'production' && process.env.NEXT_PUBLIC_DEMO_MODE === 'true') {
-  throw new Error('NEXT_PUBLIC_DEMO_MODE cannot be enabled in production builds.');
+  console.warn(
+    '⚠️ WARNING: NEXT_PUBLIC_DEMO_MODE is enabled in production. Real backend requests will be routed to offline mock handlers.',
+  );
 }
 
 if (

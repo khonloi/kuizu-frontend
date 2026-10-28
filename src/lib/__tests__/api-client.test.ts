@@ -185,9 +185,9 @@ describe('API Client & Transport Utility', () => {
         vi.fn().mockRejectedValue(new Error('Failed to fetch'))
       );
 
-      const res = await apiClient<{ id: string; slug: string }>('/courses/japanese-foundations');
+      const res = await apiClient<{ id: string; slug: string }>('/courses/chinese-foundations');
       expect(res).toBeDefined();
-      expect(res.slug).toBe('japanese-foundations');
+      expect(res.slug).toBe('chinese-foundations');
     } finally {
       process.env.NEXT_PUBLIC_DEMO_MODE = prevEnv;
     }
@@ -203,7 +203,7 @@ describe('API Client & Transport Utility', () => {
       );
 
       await expect(
-        apiClient('/courses/japanese-foundations')
+        apiClient('/courses/chinese-foundations')
       ).rejects.toThrow('Failed to fetch');
     } finally {
       process.env.NEXT_PUBLIC_DEMO_MODE = prevEnv;

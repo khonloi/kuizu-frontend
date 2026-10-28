@@ -2,6 +2,7 @@
 
 import { useEffect, useCallback, useState } from 'react';
 import { getGameSocket, disconnectGameSocket } from '@/lib/socket';
+import { isDemoModeActive } from '@/lib/demo-mode';
 import { useGameStore } from '@/stores/game.store';
 import { toast } from '@/stores/toast.store';
 import { arenaSimulator } from '../services/arena-simulator';
@@ -21,6 +22,7 @@ import type {
 export function useArenaSocket() {
   const [isConnected, setIsConnected] = useState(() => {
     if (typeof window !== 'undefined') {
+      if (isDemoModeActive()) return true;
       return getGameSocket().connected;
     }
     return false;
@@ -28,6 +30,12 @@ export function useArenaSocket() {
   const [connectionError, setConnectionError] = useState<string | null>(null);
 
   useEffect(() => {
+    if (isDemoModeActive()) {
+      return () => {
+        arenaSimulator.reset();
+      };
+    }
+
     const socket = getGameSocket();
 
     const onConnect = () => {
@@ -116,7 +124,7 @@ export function useArenaSocket() {
       const socket = getGameSocket();
       const store = useGameStore.getState();
 
-      if (socket.connected) {
+      if (!isDemoModeActive() && socket.connected) {
         return new Promise((resolve) => {
           socket.emit('host:create', { quizId }, (res: HostCreateResponse) => {
             if (res.success && res.pin) {
@@ -141,7 +149,7 @@ export function useArenaSocket() {
       const socket = getGameSocket();
       const store = useGameStore.getState();
 
-      if (socket.connected) {
+      if (!isDemoModeActive() && socket.connected) {
         return new Promise((resolve) => {
           socket.emit('player:join', { pin, nickname }, (res: PlayerJoinResponse) => {
             if (res.success && res.pin) {
@@ -165,7 +173,7 @@ export function useArenaSocket() {
   const startGame = useCallback(async () => {
     const socket = getGameSocket();
 
-    if (socket.connected) {
+    if (!isDemoModeActive() && socket.connected) {
       return new Promise<{ success: boolean; questionIndex?: number }>((resolve) => {
         socket.emit('host:start', (res: { success: boolean; questionIndex?: number }) => {
           resolve(res);
@@ -184,7 +192,7 @@ export function useArenaSocket() {
 
       store.setSelectedChoiceId(choiceId);
 
-      if (socket.connected) {
+      if (!isDemoModeActive() && socket.connected) {
         return new Promise((resolve) => {
           socket.emit(
             'player:answer',
@@ -205,7 +213,7 @@ export function useArenaSocket() {
   const revealAnswer = useCallback(async () => {
     const socket = getGameSocket();
 
-    if (socket.connected) {
+    if (!isDemoModeActive() && socket.connected) {
       return new Promise<{ success: boolean }>((resolve) => {
         socket.emit('host:reveal', (res: { success: boolean }) => {
           resolve(res);
@@ -220,7 +228,7 @@ export function useArenaSocket() {
   const nextQuestion = useCallback(async () => {
     const socket = getGameSocket();
 
-    if (socket.connected) {
+    if (!isDemoModeActive() && socket.connected) {
       return new Promise<{ success: boolean; isFinished?: boolean }>((resolve) => {
         socket.emit('host:next', (res: { success: boolean; isFinished?: boolean }) => {
           resolve(res);

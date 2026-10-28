@@ -2,6 +2,7 @@
 
 import React from 'react';
 import clsx from 'clsx';
+import { Star } from 'lucide-react';
 import styles from './stats-banner.module.css';
 
 interface Stat {
@@ -36,7 +37,7 @@ const STATS: Stat[] = [
   },
   {
     id: 'rating',
-    value: '4.9 ★',
+    value: '4.9',
     label: 'Average Learner Rating',
     subtext: 'From over 2,000,000 active reviews',
     colorClass: styles.valYellow,
@@ -49,7 +50,10 @@ export function StatsBanner() {
       <div className={styles.inner}>
         {STATS.map((stat) => (
           <div key={stat.id} className={styles.statItem}>
-            <div className={clsx(styles.statValue, stat.colorClass)}>{stat.value}</div>
+            <div className={clsx(styles.statValue, stat.colorClass)} style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '0.25rem' }}>
+              <span>{stat.value}</span>
+              {stat.id === 'rating' && <Star size={22} fill="currentColor" color="currentColor" />}
+            </div>
             <div className={styles.statLabel}>{stat.label}</div>
             <div className={styles.statSubtext}>{stat.subtext}</div>
           </div>

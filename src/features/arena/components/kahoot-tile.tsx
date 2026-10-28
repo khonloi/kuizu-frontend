@@ -2,6 +2,7 @@
 
 import React from 'react';
 import clsx from 'clsx';
+import { Check } from 'lucide-react';
 import styles from '../arena.module.css';
 import { useAudioStore } from '@/stores/audio.store';
 
@@ -64,7 +65,9 @@ export function KahootTile({
         </span>
         <span className={styles.hostChoiceLabel}>{label}</span>
         {isCorrect === true && (
-          <span className={styles.hostChoiceCheckmark}>✓</span>
+          <span className={styles.hostChoiceCheckmark} aria-label="Correct" style={{ display: 'inline-flex', alignItems: 'center' }}>
+            <Check size={18} strokeWidth={3} />
+          </span>
         )}
       </div>
     );

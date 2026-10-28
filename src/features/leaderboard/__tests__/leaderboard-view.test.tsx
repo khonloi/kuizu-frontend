@@ -104,9 +104,9 @@ describe('LeaderboardView Component', () => {
     renderComponent();
 
     expect(screen.getByText('Hikaru')).toBeInTheDocument();
-    expect(screen.getByText('🥇')).toBeInTheDocument();
-    expect(screen.getByText('🥈')).toBeInTheDocument();
-    expect(screen.getByText('🥉')).toBeInTheDocument();
+    expect(screen.getByTestId('rank-medal-1')).toBeInTheDocument();
+    expect(screen.getByTestId('rank-medal-2')).toBeInTheDocument();
+    expect(screen.getByTestId('rank-medal-3')).toBeInTheDocument();
     expect(screen.getByText('#4')).toBeInTheDocument();
     expect(screen.getByText('(You)')).toBeInTheDocument();
   });

@@ -1,3 +1,5 @@
+import { isDemoModeActive } from '@/lib/demo-mode';
+
 export interface ApiClientOptions extends RequestInit {
   timeout?: number;
 }
@@ -179,7 +181,7 @@ export async function apiClient<T = unknown>(
   };
 
   // 1. Offline Demo Mode Check
-  if (process.env.NEXT_PUBLIC_DEMO_MODE === 'true') {
+  if (isDemoModeActive()) {
     const mockRes = await mockTransportAdapter.execute<T>(url, requestOptions);
     if (mockRes !== null) {
       return mockRes;
@@ -194,8 +196,8 @@ export async function apiClient<T = unknown>(
       throw err;
     }
 
-    // 3. Fallback to offline mock handler ONLY if explicitly enabled in demo mode
-    if (process.env.NEXT_PUBLIC_DEMO_MODE === 'true') {
+    // 3. Fallback to offline mock handler if demo mode is active
+    if (isDemoModeActive()) {
       const mockFallback = await mockTransportAdapter.execute<T>(url, requestOptions);
       if (mockFallback !== null) {
         return mockFallback;

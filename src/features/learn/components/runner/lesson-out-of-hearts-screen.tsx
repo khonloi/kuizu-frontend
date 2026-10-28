@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Heart, RotateCcw } from 'lucide-react';
+import { Heart, RotateCcw, HeartCrack } from 'lucide-react';
 import { Button } from '@/components/ui';
 import styles from '../../lesson-runner.module.css';
 
@@ -14,7 +14,9 @@ export function LessonOutOfHeartsScreen({ onRestart }: LessonOutOfHeartsScreenPr
   return (
     <div className={styles.runnerWrapper}>
       <div className={styles.completionScreen}>
-        <div className={`${styles.brokenHeartIcon} animate-shake`}>💔</div>
+        <div className={`${styles.brokenHeartIcon} animate-shake`}>
+          <HeartCrack size={64} color="var(--duo-red)" fill="var(--duo-red)" />
+        </div>
 
         <div>
           <h1 className={styles.outOfHeartsTitle}>Out of Hearts!</h1>

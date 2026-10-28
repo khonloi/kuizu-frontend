@@ -3,14 +3,36 @@
 import React, { useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowRight, ShieldCheck, Gamepad2, Tv } from 'lucide-react';
+import {
+  ArrowRight,
+  ShieldCheck,
+  Gamepad2,
+  Tv,
+  Zap,
+  Sparkles,
+  Flame,
+  Waves,
+  Cat,
+  Rocket,
+  Heart,
+  Star,
+} from 'lucide-react';
 import { Card, Button, Badge } from '@/components/ui';
 import { useArenaSocket } from '@/features/arena/hooks/use-arena-socket';
 import { useAudioStore } from '@/stores/audio.store';
 
 import styles from './join.module.css';
 
-const EMOJI_AVATARS = ['⚡', '🌸', '🔥', '🌊', '🐱', '🚀', '🦊', '⭐'];
+const AVATAR_PRESETS = [
+  { id: '⚡', label: 'Lightning', icon: Zap, color: 'var(--duo-yellow)' },
+  { id: '🌸', label: 'Sparkles', icon: Sparkles, color: '#f472b6' },
+  { id: '🔥', label: 'Flame', icon: Flame, color: 'var(--duo-orange)' },
+  { id: '🌊', label: 'Waves', icon: Waves, color: '#38bdf8' },
+  { id: '🐱', label: 'Cat', icon: Cat, color: '#fb923c' },
+  { id: '🚀', label: 'Rocket', icon: Rocket, color: '#a855f7' },
+  { id: '❤️', label: 'Heart', icon: Heart, color: 'var(--duo-red)' },
+  { id: '⭐', label: 'Star', icon: Star, color: '#eab308' },
+];
 
 function ArenaJoinForm() {
   const router = useRouter();
@@ -101,22 +123,26 @@ function ArenaJoinForm() {
                 Choose Nickname & Avatar
               </label>
 
-              {/* Emoji quick picker */}
+              {/* Avatar icon picker */}
               <div className={styles.emojiGrid}>
-                {EMOJI_AVATARS.map((emoji) => (
-                  <button
-                    key={emoji}
-                    type="button"
-                    aria-label={`Select avatar ${emoji}`}
-                    onClick={() => {
-                      playPop();
-                      setSelectedEmoji(emoji);
-                    }}
-                    className={`${styles.emojiBtn} ${selectedEmoji === emoji ? styles.emojiBtnSelected : ''}`}
-                  >
-                    {emoji}
-                  </button>
-                ))}
+                {AVATAR_PRESETS.map((preset) => {
+                  const Icon = preset.icon;
+                  return (
+                    <button
+                      key={preset.id}
+                      type="button"
+                      aria-label={`Select avatar ${preset.label}`}
+                      onClick={() => {
+                        playPop();
+                        setSelectedEmoji(preset.id);
+                      }}
+                      className={`${styles.emojiBtn} ${selectedEmoji === preset.id ? styles.emojiBtnSelected : ''}`}
+                      style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                      <Icon size={20} color={preset.color} />
+                    </button>
+                  );
+                })}
               </div>
 
               <input

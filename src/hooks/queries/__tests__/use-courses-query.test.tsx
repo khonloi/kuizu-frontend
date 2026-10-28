@@ -33,15 +33,33 @@ describe('Courses queries hooks', () => {
       <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     );
 
-    const { result } = renderHook(() => useCourseQuery('japanese-foundations'), { wrapper });
+    const { result } = renderHook(() => useCourseQuery('chinese-foundations'), { wrapper });
 
     await waitFor(() => {
       expect(result.current.isSuccess).toBe(true);
     });
 
     expect(result.current.data).toBeDefined();
-    expect(result.current.data?.slug).toBe('japanese-foundations');
+    expect(result.current.data?.slug).toBe('chinese-foundations');
     expect(result.current.data?.units?.length).toBeGreaterThan(0);
+  });
+
+  it('useCourseQuery returns Chinese course by chinese-foundations slug', async () => {
+    const queryClient = createTestQueryClient();
+    const wrapper = ({ children }: { children: React.ReactNode }) => (
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    );
+
+    const { result } = renderHook(() => useCourseQuery('chinese-foundations'), { wrapper });
+
+    await waitFor(() => {
+      expect(result.current.isSuccess).toBe(true);
+    });
+
+    expect(result.current.data).toBeDefined();
+    expect(result.current.data?.slug).toBe('chinese-foundations');
+    expect(result.current.data?.units).toHaveLength(2);
+    expect(result.current.data?.title).toContain('Chinese Foundations');
   });
 
   it('useCompletedLessonsQuery returns completed lesson IDs', async () => {
@@ -57,6 +75,6 @@ describe('Courses queries hooks', () => {
     });
 
     expect(result.current.data).toBeDefined();
-    expect(result.current.data).toContain('lesson-1');
+    expect(result.current.data).toContain('lesson-cn-1');
   });
 });

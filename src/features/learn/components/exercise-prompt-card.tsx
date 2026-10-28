@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Volume2 } from 'lucide-react';
+import { Volume2, Lightbulb } from 'lucide-react';
 import styles from '../exercises/exercise.module.css';
 
 export interface ExercisePromptCardProps {
@@ -39,7 +39,12 @@ export function ExercisePromptCard({
       </div>
 
       <h2 className={styles.promptText}>{prompt}</h2>
-      {hint && <p className={styles.hintText}>💡 {hint}</p>}
+      {hint && (
+        <p className={styles.hintText} style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
+          <Lightbulb size={16} color="var(--duo-yellow)" />
+          <span>{hint}</span>
+        </p>
+      )}
     </div>
   );
 }

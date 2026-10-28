@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Flame, Zap, ArrowLeft, CheckCircle2, XCircle, Gamepad2 } from 'lucide-react';
+import { Flame, Zap, ArrowLeft, CheckCircle2, XCircle, Gamepad2, Lock, Trophy, Medal, Award } from 'lucide-react';
 import styles from '@/features/arena/arena.module.css';
 import { Card, Button, Badge } from '@/components/ui';
 import { CountdownTimer } from '@/features/arena/components/countdown-timer';
@@ -77,8 +77,8 @@ export default function ArenaPlayerPlayPage() {
     return (
       <div className={styles.arenaRoot}>
         <main className={styles.lobbyStage}>
-          <div className={`${styles.playerBigEmoji} animate-pop`}>
-            🎮
+          <div className={`${styles.playerBigEmoji} animate-pop`} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <Gamepad2 size={64} color="var(--kahoot-purple)" />
           </div>
           <h1 className={styles.playerTitle}>
             No Active Game Session
@@ -117,8 +117,8 @@ export default function ArenaPlayerPlayPage() {
         </header>
 
         <main className={styles.lobbyStage}>
-          <div className={`${styles.playerBigEmoji} animate-pop`}>
-            🎮
+          <div className={`${styles.playerBigEmoji} animate-pop`} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <Gamepad2 size={64} color="var(--kahoot-purple)" />
           </div>
           <h1 className={styles.playerTitle}>
             You&apos;re in the Game!
@@ -170,7 +170,9 @@ export default function ArenaPlayerPlayPage() {
           {/* If already submitted, show locked-in indicator */}
           {hasSubmitted ? (
             <div className={`${styles.lockedInBanner} animate-pop`}>
-              <div className={styles.lockEmoji}>🔒</div>
+              <div className={styles.lockEmoji} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Lock size={44} color="#ffffff" />
+              </div>
               <h2 className={styles.lockedInTitle}>
                 Answer Locked In!
               </h2>
@@ -253,8 +255,16 @@ export default function ArenaPlayerPlayPage() {
     return (
       <div className={styles.arenaRoot}>
         <main className={styles.lobbyStage}>
-          <div className={styles.podiumBigMedal}>
-            {myRank === 1 ? '🥇' : myRank === 2 ? '🥈' : myRank === 3 ? '🥉' : '🎖️'}
+          <div className={styles.podiumBigMedal} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            {myRank === 1 ? (
+              <Trophy size={64} color="#ffd900" fill="#ffd900" />
+            ) : myRank === 2 ? (
+              <Medal size={64} color="#c0c0c0" fill="#c0c0c0" />
+            ) : myRank === 3 ? (
+              <Medal size={64} color="#cd7f32" fill="#cd7f32" />
+            ) : (
+              <Award size={64} color="var(--kahoot-purple)" />
+            )}
           </div>
 
           <h1 className={styles.playerTitle}>

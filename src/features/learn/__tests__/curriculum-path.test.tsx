@@ -69,7 +69,7 @@ describe('CurriculumPath Component (Kuizu Sine-Wave Path)', () => {
 
     // Lesson 1 is completed
     expect(screen.getByLabelText(/Practice Daily Greetings again, completed/i)).toBeInTheDocument();
-    expect(screen.getByText('👑')).toBeInTheDocument();
+    expect(screen.getByTestId('crown-badge')).toBeInTheDocument();
 
     // Lesson 2 is now active
     expect(screen.getByRole('status')).toHaveTextContent('START');

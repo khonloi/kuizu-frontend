@@ -3,7 +3,10 @@
 import { useQuery } from '@tanstack/react-query';
 import { api } from '@/lib/api';
 import { queryKeys } from '@/lib/query-keys';
-import { SAMPLE_JAPANESE_COURSE } from '@/mock/sample-courses';
+import {
+  SAMPLE_CHINESE_COURSE,
+  ALL_SAMPLE_COURSES,
+} from '@/mock/sample-courses';
 import type { Course } from '@/types/api.types';
 
 export const COURSES_QUERY_KEY = queryKeys.courses.all;
@@ -16,9 +19,9 @@ export function useCoursesQuery() {
     queryFn: async () => {
       try {
         const data = await api.get<Course[]>('/api/v1/courses');
-        return Array.isArray(data) && data.length > 0 ? data : [SAMPLE_JAPANESE_COURSE];
+        return Array.isArray(data) && data.length > 0 ? data : ALL_SAMPLE_COURSES;
       } catch {
-        return [SAMPLE_JAPANESE_COURSE];
+        return ALL_SAMPLE_COURSES;
       }
     },
     staleTime: 5 * 60 * 1000,
@@ -31,9 +34,16 @@ export function useCourseQuery(slug: string) {
     queryFn: async () => {
       try {
         const data = await api.get<Course>(`/api/v1/courses/${slug}`);
-        return data || SAMPLE_JAPANESE_COURSE;
+        return (
+          data ||
+          ALL_SAMPLE_COURSES.find((c) => c.slug === slug) ||
+          SAMPLE_CHINESE_COURSE
+        );
       } catch {
-        return SAMPLE_JAPANESE_COURSE;
+        return (
+          ALL_SAMPLE_COURSES.find((c) => c.slug === slug) ||
+          SAMPLE_CHINESE_COURSE
+        );
       }
     },
     staleTime: 5 * 60 * 1000,
@@ -46,9 +56,9 @@ export function useCompletedLessonsQuery() {
     queryFn: async () => {
       try {
         const res = await api.get<{ completedLessonIds: string[] }>('/api/v1/users/me/progress');
-        return res?.completedLessonIds ?? ['lesson-1'];
+        return res?.completedLessonIds ?? ['lesson-cn-1'];
       } catch {
-        return ['lesson-1'];
+        return ['lesson-cn-1'];
       }
     },
     staleTime: 60 * 1000,

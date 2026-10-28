@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import clsx from "clsx";
-import { BookOpen, CheckCircle2, Lock, Sparkles } from "lucide-react";
+import { BookOpen, CheckCircle2, Lock, Sparkles, Crown, Trophy, Gift } from "lucide-react";
 import styles from "./curriculum-path.module.css";
 import { Badge, Card, ProgressBar } from "@/components/ui";
 import { useAudioStore } from "@/stores/audio.store";
@@ -110,8 +110,8 @@ export function CurriculumPath({
                         title={`${lesson.title} (Practice Again)`}
                         aria-label={`Practice ${lesson.title} again, completed`}
                       >
-                        <span className={styles.crownBadge} aria-hidden="true">
-                          👑
+                        <span className={styles.crownBadge} aria-label="Crown" data-testid="crown-badge">
+                          <Crown size={14} color="#ffd900" fill="#ffd900" />
                         </span>
                         <CheckCircle2 size={36} color="#ffffff" />
                       </Link>
@@ -160,7 +160,11 @@ export function CurriculumPath({
               {/* Unit Completion Milestone Chest */}
               <div className={styles.milestoneChest}>
                 <div className={styles.milestoneEmoji}>
-                  {isUnitCompleted ? "🏆" : "🎁"}
+                  {isUnitCompleted ? (
+                    <Trophy size={32} color="#ffd900" fill="#ffd900" />
+                  ) : (
+                    <Gift size={32} color="#ff4b4b" fill="#ff4b4b" />
+                  )}
                 </div>
                 <div className={styles.milestoneInfo}>
                   <span className={styles.milestoneTitle}>

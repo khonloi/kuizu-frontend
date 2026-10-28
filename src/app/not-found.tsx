@@ -15,7 +15,7 @@ export default function NotFound() {
         className={styles.statusCard}
       >
         <div className={`${styles.emojiBig} animate-pop`}>
-          🗺️
+          <Compass size={72} color="var(--duo-blue)" />
         </div>
 
         <div>

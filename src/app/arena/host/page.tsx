@@ -12,6 +12,8 @@ import {
   ArrowLeft,
   Maximize,
   Minimize,
+  Zap,
+  Trophy,
 } from 'lucide-react';
 import styles from '@/features/arena/arena.module.css';
 import { Card, Button, Badge } from '@/components/ui';
@@ -177,7 +179,9 @@ export default function ArenaHostPage() {
                   className={styles.quizCard}
                 >
                   <div>
-                    <div className={styles.quizCardIcon}>⚡</div>
+                    <div className={styles.quizCardIcon} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <Zap size={24} color="var(--duo-yellow)" fill="var(--duo-yellow)" />
+                    </div>
                     <Badge variant="blue" size="sm">
                       {qCount} Questions
                     </Badge>
@@ -398,9 +402,9 @@ export default function ArenaHostPage() {
               variant="kahoot"
               size="lg"
               onClick={handleNext}
-              rightIcon={<ArrowRight size={20} />}
+              rightIcon={isLastQuestion ? <Trophy size={20} /> : <ArrowRight size={20} />}
             >
-              {isLastQuestion ? 'Go to Grand Finale Podium 🏆' : 'Next Question ➔'}
+              {isLastQuestion ? 'Go to Grand Finale Podium' : 'Next Question'}
             </Button>
           </div>
         </header>

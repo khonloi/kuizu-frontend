@@ -2,6 +2,7 @@
 
 import React, { useState, useMemo } from 'react';
 import clsx from 'clsx';
+import { Check } from 'lucide-react';
 import styles from './exercise.module.css';
 import { useAudioStore } from '@/stores/audio.store';
 import type { Exercise } from '@/types/api.types';
@@ -135,7 +136,11 @@ export function MatchPairsExercise({
                 })}
               >
                 {term}
-                {isMatched && <span className={styles.matchedCheckmark}>✓</span>}
+                {isMatched && (
+                  <span className={styles.matchedCheckmark} style={{ display: 'inline-flex', alignItems: 'center' }}>
+                    <Check size={16} strokeWidth={3} />
+                  </span>
+                )}
               </button>
             );
           })}
@@ -163,7 +168,11 @@ export function MatchPairsExercise({
                 })}
               >
                 {def}
-                {isMatched && <span className={styles.matchedCheckmark}>✓</span>}
+                {isMatched && (
+                  <span className={styles.matchedCheckmark} style={{ display: 'inline-flex', alignItems: 'center' }}>
+                    <Check size={16} strokeWidth={3} />
+                  </span>
+                )}
               </button>
             );
           })}

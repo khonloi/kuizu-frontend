@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { HeartCrack } from 'lucide-react';
 import styles from './status-pages.module.css';
 
 export default function GlobalError({
@@ -14,7 +15,9 @@ export default function GlobalError({
     <html lang="en">
       <body className={styles.globalErrorBody}>
         <div className={styles.globalErrorCard}>
-          <div className={styles.globalErrorEmoji}>💔</div>
+          <div className={styles.globalErrorEmoji}>
+            <HeartCrack size={56} color="var(--duo-red)" />
+          </div>
           <h1 className={styles.globalErrorTitle}>
             Critical App Encounter
           </h1>

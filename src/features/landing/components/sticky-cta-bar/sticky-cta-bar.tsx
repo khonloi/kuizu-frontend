@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import clsx from 'clsx';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Zap } from 'lucide-react';
 import styles from './sticky-cta-bar.module.css';
 import { Button } from '@/components/ui';
 import { useAuthStore } from '@/stores/auth.store';
@@ -31,8 +31,8 @@ export function StickyBottomBar({ isVisible }: StickyBottomBarProps) {
     >
       <div className={styles.inner}>
         <div className={styles.prompt}>
-          <div className={styles.mascotDot} aria-hidden="true">
-            ⚡
+          <div className={styles.mascotDot} aria-hidden="true" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <Zap size={16} fill="var(--duo-yellow)" color="var(--duo-yellow)" />
           </div>
           <div className={styles.promptText}>
             <span className={styles.promptTitle}>Start learning on Kuizu for free</span>

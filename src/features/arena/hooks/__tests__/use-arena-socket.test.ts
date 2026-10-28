@@ -39,6 +39,10 @@ describe('useArenaSocket', () => {
     vi.spyOn(socketModule, 'getGameSocket').mockReturnValue(
       mockSocket as unknown as ReturnType<typeof socketModule.getGameSocket>,
     );
+    delete process.env.NEXT_PUBLIC_DEMO_MODE;
+    document.cookie = 'kuizu_demo_mode=; path=/; max-age=0';
+    document.cookie = 'kuizu_session=; path=/; max-age=0';
+    localStorage.removeItem('kuizu_demo_mode');
     useGameStore.getState().resetGame();
   });
 
@@ -85,5 +89,12 @@ describe('useArenaSocket', () => {
     expect(state.players).toHaveLength(1);
     expect(state.players[0].nickname).toBe('Alice');
     expect(state.totalPlayers).toBe(1);
+  });
+
+  it('reports isConnected=true and skips socket connect when demo mode is active', () => {
+    process.env.NEXT_PUBLIC_DEMO_MODE = 'true';
+    const { result } = renderHook(() => useArenaSocket());
+    expect(result.current.isConnected).toBe(true);
+    expect(mockSocket.connect).not.toHaveBeenCalled();
   });
 });

@@ -75,4 +75,12 @@ describe('LoginPage Component', () => {
       expect(mockPush).toHaveBeenCalledWith('/learn');
     });
   });
+
+  it('does not render Explore Demo Mode button on login page', () => {
+    render(<LoginPage />);
+
+    expect(
+      screen.queryByRole('button', { name: /Explore Demo Mode/i }),
+    ).not.toBeInTheDocument();
+  });
 });
