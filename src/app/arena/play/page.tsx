@@ -127,8 +127,8 @@ export default function ArenaPlayerPlayPage() {
             See your nickname on the host&apos;s big screen? The host will start the quiz shortly.
           </p>
 
-          <div className={`${styles.waitingPill} animate-pulse-ring`}>
-            <span className={styles.pulsingDot} />
+          <div className={`${styles.waitingPill}`}>
+            <span className={styles.statusDot} />
             <span>Ready & Waiting for Host to Start...</span>
           </div>
         </main>

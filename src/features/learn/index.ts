@@ -2,6 +2,7 @@ export * from './learn-view';
 export * from './lesson-runner';
 export * from './components/curriculum-path';
 export * from './components/learn-skeleton';
+export * from './components/quest-skeleton';
 export * from './components/exercise-prompt-card';
 export * from './components/runner';
 export * from './components/word-bank';

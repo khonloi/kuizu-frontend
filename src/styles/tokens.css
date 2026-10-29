@@ -126,7 +126,7 @@
 
   --shadow-sm: 0 2px 0 #e5e5e5;
   --shadow-md: 0 4px 0 #e5e5e5;
-  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.08);
+  --shadow-lg: none;
   --shadow-tactile-sm: 0 2px 0 #e5e5e5;
   --shadow-tactile-md: 0 4px 0 #e5e5e5;
   --shadow-tactile-lg: 0 8px 0 #e5e5e5;
@@ -184,7 +184,7 @@
 
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
   --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.5);
+  --shadow-lg: none;
   --shadow-tactile-sm: 0 2px 0 rgba(0, 0, 0, 0.4);
   --shadow-tactile-md: 0 4px 0 rgba(0, 0, 0, 0.5);
   --shadow-tactile-lg: 0 8px 0 rgba(0, 0, 0, 0.6);

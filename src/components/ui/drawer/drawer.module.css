@@ -6,7 +6,6 @@
   z-index: var(--z-drawer);
   border-top: 2px solid;
   padding: 1.5rem 2rem calc(2rem + env(safe-area-inset-bottom, 0px));
-  box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.12);
   transition: all var(--transition-normal);
 }
 
