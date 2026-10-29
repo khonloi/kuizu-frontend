@@ -30,8 +30,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   border-radius: 12px;
   color: var(--text-muted);
   text-decoration: none;
@@ -74,7 +74,7 @@
   background-color: var(--bg-card);
   color: var(--duo-blue);
   border: 2px solid var(--border-subtle);
-  border-bottom: 4px solid var(--border-subtle);
+  box-shadow: 0 3px 0 var(--border-subtle);
   border-radius: var(--btn-radius, 16px);
   font-family: inherit;
   font-size: 0.85rem;
@@ -87,17 +87,18 @@
   transition:
     transform var(--transition-fast),
     border-color var(--transition-fast),
+    box-shadow var(--transition-fast),
     background-color var(--transition-fast);
 }
 
 .switchBtn:hover {
   background-color: var(--bg-card-hover);
-  border-color: #dcdcdc;
+  border-color: var(--border-hover);
 }
 
 .switchBtn:active {
   transform: translateY(2px);
-  border-bottom-width: 2px;
+  box-shadow: 0 1px 0 var(--border-subtle);
 }
 
 .switchBtn:focus-visible {

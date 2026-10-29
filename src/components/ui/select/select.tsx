@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef, useEffect, forwardRef, KeyboardEvent } from 'react';
+import React, { useState, useRef, useEffect, forwardRef, useId, KeyboardEvent } from 'react';
 import clsx from 'clsx';
 import { ChevronDown, Check } from 'lucide-react';
 import styles from './select.module.css';
@@ -37,6 +37,8 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
     },
     ref,
   ) => {
+    const generatedId = useId();
+    const selectId = id || generatedId;
     const [isOpen, setIsOpen] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
     const playPop = useAudioStore((s) => s.playPop);
@@ -72,21 +74,42 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
 
       if (e.key === 'Escape') {
         setIsOpen(false);
-      } else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      } else if (e.key === 'ArrowDown') {
         e.preventDefault();
         if (!isOpen) {
           setIsOpen(true);
+        } else {
+          const currentIndex = options.findIndex((opt) => opt.value === value);
+          const nextIndex = currentIndex < options.length - 1 ? currentIndex + 1 : 0;
+          if (!options[nextIndex]?.disabled) {
+            handleSelect(options[nextIndex].value);
+          }
+        }
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (!isOpen) {
+          setIsOpen(true);
+        } else {
+          const currentIndex = options.findIndex((opt) => opt.value === value);
+          const prevIndex = currentIndex > 0 ? currentIndex - 1 : options.length - 1;
+          if (!options[prevIndex]?.disabled) {
+            handleSelect(options[prevIndex].value);
+          }
         }
       }
     };
 
     return (
       <div ref={containerRef} className={clsx(styles.selectWrapper, className)}>
-        {label && <label className={styles.label}>{label}</label>}
+        {label && (
+          <label htmlFor={selectId} className={styles.label}>
+            {label}
+          </label>
+        )}
 
         <button
           ref={ref}
-          id={id}
+          id={selectId}
           type="button"
           disabled={disabled}
           onClick={toggleOpen}

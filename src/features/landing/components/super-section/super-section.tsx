@@ -57,10 +57,8 @@ export function SuperSection() {
           <p className={styles.subtitle}>
             Accelerate your language learning with no ads, unlimited hearts, and personalized review to target your mistakes.
           </p>
-          <Link href="/shop" onClick={playPop} style={{ textDecoration: 'none' }}>
-            <button type="button" className={styles.ctaButton}>
-              TRY 1 WEEK FREE
-            </button>
+          <Link href="/shop" onClick={playPop} className={styles.ctaButton}>
+            TRY 1 WEEK FREE
           </Link>
         </div>
       </div>

@@ -19,10 +19,8 @@ export function BottomCtaSection() {
       <div className={styles.inner}>
         <h2 className={styles.title}>learn a language with kuizu</h2>
 
-        <Link href="/learn" onClick={handleGetStarted} style={{ textDecoration: 'none' }}>
-          <button type="button" className={styles.ctaButton}>
-            GET STARTED
-          </button>
+        <Link href="/learn" onClick={handleGetStarted} className={styles.ctaButton}>
+          GET STARTED
         </Link>
 
         {/* Floating Collectibles (Chest, Coins, Heart, Phone, Flame, Weights) */}

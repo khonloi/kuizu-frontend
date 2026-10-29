@@ -30,7 +30,7 @@ describe('LandingNavbar Component', () => {
     render(<LandingNavbar isScrolledPastHero={true} />);
 
     expect(screen.getByText('kuizu')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /GET STARTED/i })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /GET STARTED/i })).toHaveAttribute('href', '/learn');
   });
 
   it('opens language dropdown on click and allows selecting a language', () => {

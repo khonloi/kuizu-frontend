@@ -1,6 +1,7 @@
 'use client';
 
 import React, { forwardRef, ButtonHTMLAttributes } from 'react';
+import Link from 'next/link';
 import clsx from 'clsx';
 import { useAudioStore } from '@/stores/audio.store';
 import styles from './button.module.css';
@@ -25,6 +26,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
   playSoundOnClick?: boolean;
+  href?: string;
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -42,16 +44,17 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       onClick,
       playSoundOnClick = false,
       type = 'button',
+      href,
       ...rest
     },
     ref,
   ) => {
-    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => {
       if (disabled || isLoading) return;
       if (playSoundOnClick) {
         useAudioStore.getState().playPop();
       }
-      if (onClick) onClick(e);
+      if (onClick) onClick(e as React.MouseEvent<HTMLButtonElement>);
     };
 
     const sizeClass = {
@@ -62,23 +65,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     const variantClass = styles[variant] || styles.duo;
 
-    return (
-      <button
-        ref={ref}
-        type={type}
-        disabled={disabled || isLoading}
-        onClick={handleClick}
-        className={clsx(
-          styles.button,
-          variantClass,
-          sizeClass,
-          {
-            [styles.fullWidth]: fullWidth,
-          },
-          className,
-        )}
-        {...rest}
-      >
+    const content = (
+      <>
         {isLoading ? (
           <span className={styles.spinner} aria-label="Loading" />
         ) : (
@@ -90,6 +78,42 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         {!isLoading && rightIcon && (
           <span className={styles.iconSlot}>{rightIcon}</span>
         )}
+      </>
+    );
+
+    const buttonClass = clsx(
+      styles.button,
+      variantClass,
+      sizeClass,
+      {
+        [styles.fullWidth]: fullWidth,
+      },
+      className,
+    );
+
+    if (href) {
+      return (
+        <Link
+          href={href}
+          onClick={handleClick}
+          className={buttonClass}
+          aria-disabled={disabled || isLoading}
+        >
+          {content}
+        </Link>
+      );
+    }
+
+    return (
+      <button
+        ref={ref}
+        type={type}
+        disabled={disabled || isLoading}
+        onClick={handleClick}
+        className={buttonClass}
+        {...rest}
+      >
+        {content}
       </button>
     );
   },

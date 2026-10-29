@@ -33,16 +33,20 @@ export function LandingHero({ heroRef }: LandingHeroProps) {
         </h1>
 
         <div className={styles.buttonGroup}>
-          <Link href="/learn" onClick={handleGetStartedClick} style={{ textDecoration: 'none' }}>
-            <button type="button" className={styles.primaryCta}>
-              GET STARTED
-            </button>
+          <Link
+            href="/learn"
+            onClick={handleGetStartedClick}
+            className={styles.primaryCta}
+          >
+            GET STARTED
           </Link>
 
-          <Link href="/login" onClick={playPop} style={{ textDecoration: 'none' }}>
-            <button type="button" className={styles.secondaryCta}>
-              I ALREADY HAVE AN ACCOUNT
-            </button>
+          <Link
+            href="/login"
+            onClick={playPop}
+            className={styles.secondaryCta}
+          >
+            I ALREADY HAVE AN ACCOUNT
           </Link>
         </div>
       </div>

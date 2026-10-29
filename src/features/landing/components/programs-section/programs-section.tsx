@@ -30,10 +30,8 @@ function ProgramRow({
       <div className={styles.contentCol}>
         <h2 className={styles.title}>{title}</h2>
         <p className={styles.description}>{description}</p>
-        <Link href={href} onClick={playPop} style={{ textDecoration: 'none' }}>
-          <button type="button" className={styles.outlineCta}>
-            {buttonText}
-          </button>
+        <Link href={href} onClick={playPop} className={styles.outlineCta}>
+          {buttonText}
         </Link>
       </div>
       <div className={styles.visualCol}>{children}</div>

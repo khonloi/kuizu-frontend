@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
 import { Heart, RotateCcw, HeartCrack } from "lucide-react";
 import { Button } from "@/components/ui";
 import styles from "../../lesson-runner.module.css";
@@ -29,16 +28,15 @@ export function LessonOutOfHeartsScreen({
         </div>
 
         <div className={styles.outOfHeartsActions}>
-          <Link href="/shop" className={styles.fullWidthLink}>
-            <Button
-              variant="duo"
-              size="lg"
-              fullWidth
-              leftIcon={<Heart size={20} fill="var(--text-inverse)" />}
-            >
-              Refill Hearts in Shop
-            </Button>
-          </Link>
+          <Button
+            href="/shop"
+            variant="duo"
+            size="lg"
+            fullWidth
+            leftIcon={<Heart size={20} fill="var(--text-inverse)" />}
+          >
+            Refill Hearts in Shop
+          </Button>
 
           <Button
             variant="secondary"

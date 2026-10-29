@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { HeartCrack } from 'lucide-react';
+import './globals.css';
 import styles from './status-pages.module.css';
 
 export default function GlobalError({

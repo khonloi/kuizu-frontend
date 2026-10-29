@@ -100,10 +100,12 @@ export function LandingNavbar({ isScrolledPastHero = false }: LandingNavbarProps
         {/* Right Actions */}
         <div className={styles.actions}>
           {isScrolledPastHero ? (
-            <Link href="/learn" onClick={handleGetStarted} style={{ textDecoration: 'none' }}>
-              <button type="button" className={styles.stickyGetStarted}>
-                GET STARTED
-              </button>
+            <Link
+              href="/learn"
+              onClick={handleGetStarted}
+              className={styles.stickyGetStarted}
+            >
+              GET STARTED
             </Link>
           ) : (
             <div className={styles.langSelectorWrapper} ref={dropdownRef}>

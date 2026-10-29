@@ -174,8 +174,15 @@ export function SubjectRibbon() {
     playPop();
     if (scrollRef.current) {
       const offset = direction === 'left' ? -240 : 240;
+      const prefersReducedMotion =
+        typeof window !== 'undefined' &&
+        typeof window.matchMedia === 'function' &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (typeof scrollRef.current.scrollBy === 'function') {
-        scrollRef.current.scrollBy({ left: offset, behavior: 'smooth' });
+        scrollRef.current.scrollBy({
+          left: offset,
+          behavior: prefersReducedMotion ? 'auto' : 'smooth',
+        });
       } else {
         scrollRef.current.scrollLeft += offset;
       }

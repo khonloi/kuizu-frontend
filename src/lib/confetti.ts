@@ -1,5 +1,10 @@
+function prefersReducedMotion() {
+  if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') return false;
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+}
+
 async function getConfetti() {
-  if (typeof window === 'undefined' || process.env.NODE_ENV === 'test') return null;
+  if (typeof window === 'undefined' || process.env.NODE_ENV === 'test' || prefersReducedMotion()) return null;
   try {
     const mod = await import('canvas-confetti');
     return mod.default || mod;
@@ -14,7 +19,8 @@ export function fireVictoryConfetti() {
     const count = 120;
     const defaults = {
       origin: { y: 0.65 },
-      colors: ['#58cc02', '#1cb0f6', '#ffc800', '#ff4b4b', '#ce82ff', '#e21b3c'],
+      colors: ['#00cd9c', '#1cb0f6', '#ffc800', '#ff4b4b', '#ce82ff', '#e21b3c'],
+      disableForReducedMotion: true,
     };
 
     confetti({
@@ -46,6 +52,7 @@ export function fireStreakFireworks() {
         spread: 55,
         origin: { x: 0, y: 0.7 },
         colors,
+        disableForReducedMotion: true,
       });
       confetti({
         particleCount: 3,
@@ -53,6 +60,7 @@ export function fireStreakFireworks() {
         spread: 55,
         origin: { x: 1, y: 0.7 },
         colors,
+        disableForReducedMotion: true,
       });
 
       if (Date.now() < end) {
@@ -71,6 +79,7 @@ export function fireHeartRefillConfetti() {
       origin: { y: 0.5 },
       colors: ['#ff4b4b', '#ff8080', '#ffffff'],
       shapes: ['circle'],
+      disableForReducedMotion: true,
     });
   });
 }

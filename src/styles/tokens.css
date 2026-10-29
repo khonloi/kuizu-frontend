@@ -5,6 +5,7 @@
   --kuizu-teal-shadow: #00a87e;
   --kuizu-teal-light: #d7fff4;
   --kuizu-teal-subtle: rgba(0, 205, 156, 0.12);
+  --kuizu-teal-text: #008565; /* WCAG AA accessible on white (4.62:1) */
 
   /* Duolingo Theme Tokens (Mapped to Kuizu Teal) */
   --duo-green: var(--kuizu-teal);
@@ -27,6 +28,7 @@
   --duo-yellow-hover: #ffd226;
   --duo-yellow-shadow: #e5a400;
   --duo-yellow-subtle: rgba(255, 200, 0, 0.15);
+  --duo-yellow-text: #946800; /* WCAG AA accessible on white (4.75:1) */
 
   --duo-orange: #ff9600;
   --duo-orange-hover: #ffa726;
@@ -38,7 +40,7 @@
   --duo-purple-shadow: #a546e8;
   --duo-purple-subtle: rgba(206, 130, 255, 0.15);
 
-  /* Kahoot 4-Tile Answer Colors */
+  /* Kahoot 4-Tile Answer Colors + Bonus Arena Colors */
   --kahoot-red: #e21b3c;
   --kahoot-red-hover: #f02547;
   --kahoot-red-shadow: #b8122d;
@@ -55,6 +57,10 @@
   --kahoot-green-hover: #2fa310;
   --kahoot-green-shadow: #1b6807;
 
+  --kahoot-purple: #864cbf;
+  --kahoot-purple-hover: #995ed2;
+  --kahoot-purple-shadow: #68369b;
+
   /* Surfaces & Default Light Theme (Kuizu / Duolingo Standard) */
   --bg-canvas: #ffffff;
   --bg-primary: #ffffff;
@@ -63,13 +69,25 @@
   --bg-card-hover: #f7f7f7;
   --bg-card-active: #f0f0f0;
   --bg-input: #ffffff;
+  --bg-elevated: #ffffff;
+  --bg-hover-alpha: rgba(0, 0, 0, 0.04);
 
-  /* Borders & Focus */
+  /* Drawer Feedback Theme Surfaces (Light) */
+  --drawer-success-bg: #d7fff4;
+  --drawer-success-text: #006b52;
+  --drawer-error-bg: #ffdfe0;
+  --drawer-error-text: #c81e1e;
+
+  /* Borders, Outlines & Focus */
   --border-subtle: #e5e5e5;
   --border-card: #e5e5e5;
   --border-tactile: #e5e5e5;
+  --border-hover: #cecece;
   --border-focus: #00cd9c;
   --border-error: #ff4b4b;
+  --focus-ring: rgba(0, 205, 156, 0.25);
+  --focus-ring-error: rgba(255, 75, 75, 0.2);
+  --progress-track-bg: #e5e5e5;
 
   /* Typography Colors */
   --text-primary: #4b4b4b;
@@ -77,7 +95,31 @@
   --text-muted: #afafaf;
   --text-inverse: #ffffff;
 
+  /* Fluid Spacing Scale */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+
+  /* Fluid Typography Scale */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+
   /* Elevation & Tactile Depth */
+  --radius-sm: 10px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
   --btn-radius: 16px;
   --card-radius: 20px;
   --pill-radius: 9999px;
@@ -97,10 +139,13 @@
   /* Z-Index Hierarchy */
   --z-base: 1;
   --z-sticky: 100;
+  --z-floating-badge: 150;
   --z-drawer: 200;
   --z-modal-backdrop: 300;
   --z-modal: 310;
+  --z-popover: 350;
   --z-toast: 400;
+  --z-tooltip: 450;
 }
 
 /* Stadium Dark Theme (Multiplayer Arena) */
@@ -113,12 +158,24 @@
   --bg-card-hover: rgba(30, 41, 69, 0.9);
   --bg-card-active: rgba(37, 50, 82, 0.95);
   --bg-input: rgba(15, 23, 42, 0.85);
+  --bg-elevated: rgba(17, 24, 39, 0.96);
+  --bg-hover-alpha: rgba(255, 255, 255, 0.08);
+
+  /* Drawer Feedback Theme Surfaces (Stadium Dark) */
+  --drawer-success-bg: #0d2e24;
+  --drawer-success-text: #a7f3d0;
+  --drawer-error-bg: #2b1115;
+  --drawer-error-text: #fecaca;
 
   --border-subtle: rgba(255, 255, 255, 0.08);
   --border-card: rgba(255, 255, 255, 0.12);
   --border-tactile: rgba(255, 255, 255, 0.18);
+  --border-hover: rgba(255, 255, 255, 0.28);
   --border-focus: rgba(0, 205, 156, 0.5);
   --border-error: rgba(255, 75, 75, 0.5);
+  --focus-ring: rgba(0, 205, 156, 0.35);
+  --focus-ring-error: rgba(255, 75, 75, 0.35);
+  --progress-track-bg: rgba(255, 255, 255, 0.12);
 
   --text-primary: #f8fafc;
   --text-secondary: #94a3b8;

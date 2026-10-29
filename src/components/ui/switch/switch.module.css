@@ -16,12 +16,18 @@
   width: 48px;
   height: 28px;
   border-radius: var(--pill-radius);
-  background-color: rgba(255, 255, 255, 0.12);
+  background-color: var(--border-tactile);
   border: 2px solid var(--border-subtle);
   transition: all var(--transition-fast);
   display: flex;
   align-items: center;
   padding: 2px;
+  cursor: pointer;
+}
+
+.switchTrack:focus-visible {
+  outline: 3px solid var(--border-focus);
+  outline-offset: 3px;
 }
 
 .switchThumb {
@@ -35,25 +41,25 @@
 }
 
 /* Checked state */
-.checked .switchTrack {
+.switchTrack.checked {
   background-color: var(--duo-green);
   border-color: var(--duo-green-shadow);
 }
 
-.checked .switchThumb {
+.switchTrack.checked .switchThumb {
   transform: translateX(20px);
 }
 
 /* Sizes */
-.sizeSm .switchTrack {
+.switchTrack.sizeSm {
   width: 38px;
   height: 22px;
 }
-.sizeSm .switchThumb {
+.switchTrack.sizeSm .switchThumb {
   width: 14px;
   height: 14px;
 }
-.sizeSm.checked .switchThumb {
+.switchTrack.sizeSm.checked .switchThumb {
   transform: translateX(16px);
 }
 

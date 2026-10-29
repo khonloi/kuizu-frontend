@@ -2,8 +2,15 @@
   position: fixed;
   bottom: 20px;
   right: 20px;
-  z-index: 350;
+  z-index: var(--z-floating-badge);
   font-family: inherit;
+}
+
+@media (max-width: 768px) {
+  .container {
+    bottom: calc(76px + env(safe-area-inset-bottom, 0px));
+    right: 16px;
+  }
 }
 
 .triggerButton {
@@ -41,8 +48,8 @@
 }
 
 .statusDotActive {
-  background-color: var(--duo-green, #58cc02);
-  box-shadow: 0 0 0 2px rgba(88, 204, 2, 0.35);
+  background-color: var(--duo-green);
+  box-shadow: 0 0 0 2px rgba(0, 205, 156, 0.35);
 }
 
 .modalOverlay {
@@ -50,6 +57,7 @@
   bottom: calc(100% + 12px);
   right: 0;
   width: 320px;
+  max-width: min(320px, calc(100vw - 2rem));
   background: rgba(18, 24, 38, 0.96);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
@@ -142,7 +150,7 @@
 }
 
 .toggleSwitchActive {
-  background: var(--duo-green, #58cc02);
+  background: var(--duo-green);
 }
 
 .toggleSlider {
@@ -179,4 +187,27 @@
 .resetButton:hover {
   background: rgba(255, 255, 255, 0.08);
   color: #f1f5f9;
+}
+
+.lessonPosition {
+  top: 16px;
+  bottom: auto;
+  right: 16px;
+}
+
+.lessonPosition .modalOverlay {
+  bottom: auto;
+  top: calc(100% + 12px);
+  animation: fadeInSlideDown 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes fadeInSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

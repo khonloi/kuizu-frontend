@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useState, useSyncExternalStore } from 'react';
+import { usePathname } from 'next/navigation';
+import clsx from 'clsx';
 import { Gamepad2, X, RotateCcw } from 'lucide-react';
 import styles from './demo-mode-banner.module.css';
 import {
@@ -31,6 +33,8 @@ const getMountedSnapshot = () => true;
 const getMountedServerSnapshot = () => false;
 
 export function DemoModeBanner() {
+  const pathname = usePathname();
+  const isLesson = pathname?.startsWith('/lesson');
   const { playPop, playSuccess } = useAudioStore();
   const isMounted = useSyncExternalStore(
     subscribeMounted,
@@ -76,7 +80,10 @@ export function DemoModeBanner() {
   };
 
   return (
-    <aside className={styles.container} aria-label="Demo Mode Control Panel">
+    <aside
+      className={clsx(styles.container, { [styles.lessonPosition]: isLesson })}
+      aria-label="Demo Mode Control Panel"
+    >
       <button
         type="button"
         className={styles.triggerButton}

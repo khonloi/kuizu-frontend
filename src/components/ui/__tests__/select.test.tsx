@@ -15,7 +15,7 @@ describe('Select Primitive', () => {
 
     expect(screen.getByText('Course Language')).toBeInTheDocument();
     expect(screen.getByText('Choose language')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /choose language/i })).toHaveAttribute('aria-haspopup', 'listbox');
+    expect(screen.getByRole('button', { name: /course language/i })).toHaveAttribute('aria-haspopup', 'listbox');
   });
 
   it('opens options menu on click and selects an option', () => {

@@ -27,6 +27,7 @@ export function MultipleChoiceExercise({
     if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
       const utterance = new SpeechSynthesisUtterance(exercise.prompt);
       utterance.rate = 0.9;
+      utterance.lang = /[\u4e00-\u9fa5]/.test(exercise.prompt) ? 'zh-CN' : 'en-US';
       window.speechSynthesis.speak(utterance);
     }
   };

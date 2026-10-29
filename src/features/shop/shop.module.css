@@ -12,6 +12,12 @@
   gap: 1.25rem;
 }
 
+.titleGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
 .headerTitle {
   font-size: 1.85rem;
   font-weight: 800;
@@ -51,7 +57,7 @@
 
 .shopGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
   gap: 1.5rem;
 }
 
@@ -115,4 +121,21 @@
   font-size: 0.875rem;
   line-height: 1.55;
   flex: 1;
+}
+
+.cardTitles {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.cardAction {
+  margin-top: auto;
 }

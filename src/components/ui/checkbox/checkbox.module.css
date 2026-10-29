@@ -29,6 +29,11 @@
   border-color: var(--duo-green);
 }
 
+.box:focus-visible {
+  outline: 3px solid var(--border-focus);
+  outline-offset: 3px;
+}
+
 .checked .box {
   background-color: var(--duo-green);
   border-color: var(--duo-green-shadow);

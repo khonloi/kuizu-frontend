@@ -4,6 +4,9 @@
   left: 0;
   bottom: 0;
   width: 256px;
+  height: 100vh;
+  height: 100dvh;
+  overflow-y: auto;
   background-color: var(--bg-card);
   border-right: 2px solid var(--border-tactile);
   display: flex;
@@ -69,15 +72,20 @@
   color: var(--text-primary);
 }
 
+.navItem:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+}
+
 .navItemActive {
   background-color: var(--kuizu-teal-subtle);
-  color: var(--kuizu-teal);
+  color: var(--kuizu-teal-text);
   border-color: var(--kuizu-teal);
 }
 
 .navItemActive.learn {
   background-color: var(--kuizu-teal-subtle);
-  color: var(--kuizu-teal);
+  color: var(--kuizu-teal-text);
   border-color: var(--kuizu-teal);
 }
 
@@ -89,7 +97,7 @@
 
 .navItemActive.leaderboard {
   background-color: var(--duo-yellow-subtle);
-  color: var(--duo-yellow-shadow);
+  color: var(--duo-yellow-text);
   border-color: var(--duo-yellow);
 }
 
@@ -101,7 +109,7 @@
 
 .navItemActive.profile {
   background-color: var(--kuizu-teal-subtle);
-  color: var(--kuizu-teal);
+  color: var(--kuizu-teal-text);
   border-color: var(--kuizu-teal);
 }
 

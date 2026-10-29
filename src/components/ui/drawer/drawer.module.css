@@ -5,21 +5,21 @@
   right: 0;
   z-index: var(--z-drawer);
   border-top: 2px solid;
-  padding: 1.5rem 2rem 2rem;
-  box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.45);
+  padding: 1.5rem 2rem calc(2rem + env(safe-area-inset-bottom, 0px));
+  box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.12);
   transition: all var(--transition-normal);
 }
 
 .success {
-  background-color: #12281a;
+  background-color: var(--drawer-success-bg);
   border-top-color: var(--duo-green);
-  color: #d7ffb8;
+  color: var(--drawer-success-text);
 }
 
 .error {
-  background-color: #2b1115;
+  background-color: var(--drawer-error-bg);
   border-top-color: var(--duo-red);
-  color: #ffd6d6;
+  color: var(--drawer-error-text);
 }
 
 .neutral {
@@ -68,7 +68,7 @@
 }
 
 .iconNeutral {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: var(--bg-hover-alpha);
   color: var(--text-primary);
 }
 
@@ -95,7 +95,7 @@
 
 @media (max-width: 640px) {
   .drawerWrapper {
-    padding: 1.25rem 1rem 1.75rem;
+    padding: 1.25rem 1rem calc(1.75rem + env(safe-area-inset-bottom, 0px));
   }
   
   .container {

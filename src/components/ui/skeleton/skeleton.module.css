@@ -23,12 +23,12 @@
 }
 
 [data-theme="stadium"] .skeleton,
-.theme-stadium .skeleton {
+:global(.theme-stadium) .skeleton {
   background-color: rgba(255, 255, 255, 0.08);
 }
 
 [data-theme="stadium"] .skeleton::after,
-.theme-stadium .skeleton::after {
+:global(.theme-stadium) .skeleton::after {
   background-image: linear-gradient(
     90deg,
     transparent 0%,

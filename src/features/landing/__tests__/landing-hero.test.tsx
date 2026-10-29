@@ -27,14 +27,14 @@ describe('LandingHero Component', () => {
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(
       /The most fun way to learn languages, chess, and more!/i
     );
-    expect(screen.getByRole('button', { name: /GET STARTED/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /I ALREADY HAVE AN ACCOUNT/i })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /GET STARTED/i })).toHaveAttribute('href', '/learn');
+    expect(screen.getByRole('link', { name: /I ALREADY HAVE AN ACCOUNT/i })).toHaveAttribute('href', '/login');
   });
 
   it('triggers audio and confetti when clicking GET STARTED', () => {
     render(<LandingHero />);
 
-    const getStartedBtn = screen.getByRole('button', { name: /GET STARTED/i });
+    const getStartedBtn = screen.getByRole('link', { name: /GET STARTED/i });
     fireEvent.click(getStartedBtn);
 
     expect(mockPlaySuccess).toHaveBeenCalledTimes(1);

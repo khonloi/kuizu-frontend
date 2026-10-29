@@ -105,8 +105,8 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 32px;
-  height: 32px;
+  width: 44px;
+  height: 44px;
   background: transparent;
   border: none;
   color: #afafaf;
@@ -116,6 +116,11 @@
   cursor: pointer;
   z-index: 5;
   transition: color var(--transition-fast);
+}
+
+.scrollButton:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
 }
 
 .scrollButton:hover {

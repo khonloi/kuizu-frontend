@@ -29,12 +29,12 @@
 
 .inputContainer:focus-within {
   border-color: var(--border-focus);
-  box-shadow: 0 0 0 3px rgba(88, 204, 2, 0.15);
+  box-shadow: 0 0 0 3px var(--focus-ring);
 }
 
 .inputError {
   border-color: var(--border-error) !important;
-  box-shadow: 0 0 0 3px rgba(255, 75, 75, 0.15) !important;
+  box-shadow: 0 0 0 3px var(--focus-ring-error) !important;
 }
 
 .input {

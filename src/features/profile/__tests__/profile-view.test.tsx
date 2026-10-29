@@ -32,8 +32,8 @@ describe('ProfileView Component', () => {
 
     expect(screen.getByTestId('profile-guest-card')).toBeInTheDocument();
     expect(screen.getByText('Create an Account')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /Sign In/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /Create Profile/i })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /Sign In/i })).toHaveAttribute('href', '/login');
+    expect(screen.getByRole('link', { name: /Create Profile/i })).toHaveAttribute('href', '/register');
   });
 
   it('renders user details and statistics when authenticated', () => {

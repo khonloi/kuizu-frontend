@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import Link from 'next/link';
 import { Home, Compass } from 'lucide-react';
 import { Button, Card, Badge } from '@/components/ui';
 
@@ -31,17 +30,13 @@ export default function NotFound() {
         </div>
 
         <div className={styles.statusActions}>
-          <Link href="/learn">
-            <Button variant="duo" size="md" leftIcon={<Home size={18} />}>
-              Back to Learn Path
-            </Button>
-          </Link>
+          <Button href="/learn" variant="duo" size="md" leftIcon={<Home size={18} />}>
+            Back to Learn Path
+          </Button>
 
-          <Link href="/arena/join">
-            <Button variant="kahoot" size="md" leftIcon={<Compass size={18} />}>
-              Join Live Arena
-            </Button>
-          </Link>
+          <Button href="/arena/join" variant="kahoot" size="md" leftIcon={<Compass size={18} />}>
+            Join Live Arena
+          </Button>
         </div>
       </Card>
     </div>

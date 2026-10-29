@@ -26,9 +26,9 @@ export function WordBankAssembly({
       {selectedTokens.length === 0 ? (
         <span className={styles.emptyPlaceholder}>{placeholder}</span>
       ) : (
-        selectedTokens.map((token) => (
+        selectedTokens.map((token, idx) => (
           <button
-            key={token}
+            key={`${token}-${idx}`}
             type="button"
             disabled={disabled}
             onClick={() => onRemoveToken(token)}

@@ -6,8 +6,8 @@
 }
 
 .headerCard {
-  background: linear-gradient(135deg, rgba(88, 204, 2, 0.12) 0%, rgba(28, 176, 246, 0.1) 50%, rgba(23, 32, 54, 0.9) 100%);
-  border-color: rgba(88, 204, 2, 0.3);
+  background: linear-gradient(135deg, var(--kuizu-teal-subtle) 0%, var(--duo-blue-subtle) 50%, var(--bg-card) 100%);
+  border-color: rgba(0, 205, 156, 0.35);
 }
 
 .title {

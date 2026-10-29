@@ -51,6 +51,12 @@
   gap: 1.5rem;
 }
 
+.headerInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
 .userHeading {
   display: flex;
   align-items: center;
@@ -87,12 +93,13 @@
 .statItem {
   display: flex;
   align-items: center;
-  gap: 0.85rem;
-  background-color: var(--bg-card);
-  border: 2px solid var(--border-tactile);
-  border-radius: var(--btn-radius);
-  padding: 1.25rem;
-  box-shadow: var(--shadow-tactile-sm);
+  gap: 1rem;
+}
+
+.statInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
 }
 
 .statValue {

@@ -41,7 +41,7 @@ import {
 } from "@/lib/confetti";
 
 const COLOR_SWATCHES = [
-  { name: "Duolingo Green", varName: "--duo-green", color: "#58cc02" },
+  { name: "Kuizu Teal", varName: "--duo-green", color: "#00cd9c" },
   { name: "Duolingo Blue", varName: "--duo-blue", color: "#1cb0f6" },
   { name: "Duolingo Red", varName: "--duo-red", color: "#ff4b4b" },
   { name: "Duolingo Yellow", varName: "--duo-yellow", color: "#ffc800" },
@@ -51,8 +51,8 @@ const COLOR_SWATCHES = [
   { name: "Kahoot Blue", varName: "--kahoot-blue", color: "#1368ce" },
   { name: "Kahoot Yellow", varName: "--kahoot-yellow", color: "#ffa602" },
   { name: "Kahoot Green", varName: "--kahoot-green", color: "#26890c" },
-  { name: "Surface Primary", varName: "--bg-primary", color: "#0b0f19" },
-  { name: "Surface Secondary", varName: "--bg-secondary", color: "#111827" },
+  { name: "Surface Primary", varName: "--bg-primary", color: "#ffffff" },
+  { name: "Surface Secondary", varName: "--bg-secondary", color: "#f7f7f7" },
 ];
 
 export default function DesignSystemPage() {

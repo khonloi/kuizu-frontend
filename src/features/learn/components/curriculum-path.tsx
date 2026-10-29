@@ -125,7 +125,6 @@ export function CurriculumPath({
                         className={clsx(
                           styles.nodeCircle,
                           styles.nodeActive,
-                          "animate-pulse-ring",
                         )}
                         title={`${lesson.title} (Ready to Start)`}
                         aria-label={`Start ${lesson.title}`}

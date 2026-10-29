@@ -125,18 +125,18 @@
 
 .globalErrorBtn {
   padding: 0.9rem 2rem;
-  border-radius: 16px;
-  background-color: #58cc02;
+  border-radius: var(--btn-radius, 16px);
+  background-color: var(--duo-green);
   color: #ffffff;
   font-weight: 800;
   font-size: 1rem;
   border: none;
   cursor: pointer;
-  box-shadow: 0 4px 0 #46a302;
+  box-shadow: 0 4px 0 var(--duo-green-shadow);
   transition: transform 0.1s ease;
 }
 
 .globalErrorBtn:active {
   transform: translateY(2px);
-  box-shadow: 0 2px 0 #46a302;
+  box-shadow: 0 2px 0 var(--duo-green-shadow);
 }

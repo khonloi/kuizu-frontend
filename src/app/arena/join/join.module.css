@@ -72,6 +72,11 @@
   border-color: var(--kahoot-red);
 }
 
+.pinInput:focus-visible {
+  outline: 3px solid var(--kahoot-red);
+  outline-offset: 2px;
+}
+
 .emojiGrid {
   display: flex;
   gap: 0.5rem;
@@ -80,8 +85,8 @@
 }
 
 .emojiBtn {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border-radius: 10px;
   border: 1px solid var(--border-subtle);
   background-color: rgba(255, 255, 255, 0.05);
@@ -95,6 +100,11 @@
 
 .emojiBtn:hover {
   transform: scale(1.08);
+}
+
+.emojiBtn:focus-visible {
+  outline: 2px solid var(--kahoot-red);
+  outline-offset: 2px;
 }
 
 .emojiBtnSelected {
@@ -117,6 +127,11 @@
 
 .nicknameInput:focus {
   border-color: var(--duo-blue);
+}
+
+.nicknameInput:focus-visible {
+  outline: 3px solid var(--duo-blue);
+  outline-offset: 2px;
 }
 
 .errorMessage {

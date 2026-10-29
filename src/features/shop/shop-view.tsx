@@ -9,6 +9,7 @@ import { ShopItemCard } from './components/shop-item-card';
 import { useAuthStore } from '@/stores/auth.store';
 import { useUiStore } from '@/stores/ui.store';
 import { useStreakFreezeMutation, useDoubleWagerMutation } from '@/hooks/queries';
+import { toast } from '@/stores/toast.store';
 
 export function ShopView() {
   const user = useAuthStore((s) => s.user);
@@ -23,9 +24,12 @@ export function ShopView() {
     setSuccessMsg(null);
     try {
       await streakFreezeMutation.mutateAsync();
-      setSuccessMsg('Streak Freeze equipped! Your streak is protected if you miss a day.');
+      const msg = 'Streak Freeze equipped! Your streak is protected if you miss a day.';
+      setSuccessMsg(msg);
+      toast.success('Streak Freeze Equipped', msg);
     } catch (err) {
-      setSuccessMsg((err as Error).message || 'Unable to purchase Streak Freeze.');
+      const errMsg = (err as Error).message || 'Unable to purchase Streak Freeze.';
+      toast.error('Purchase Failed', errMsg);
     }
   };
 
@@ -33,9 +37,12 @@ export function ShopView() {
     setSuccessMsg(null);
     try {
       const res = await doubleWagerMutation.mutateAsync();
-      setSuccessMsg(res.message || 'Double or Nothing wager placed! Maintain 7-day streak to win 100 gems.');
+      const msg = res.message || 'Double or Nothing wager placed! Maintain 7-day streak to win 100 gems.';
+      setSuccessMsg(msg);
+      toast.success('Wager Placed', msg);
     } catch (err) {
-      setSuccessMsg((err as Error).message || 'Unable to place wager.');
+      const errMsg = (err as Error).message || 'Unable to place wager.';
+      toast.error('Wager Failed', errMsg);
     }
   };
 

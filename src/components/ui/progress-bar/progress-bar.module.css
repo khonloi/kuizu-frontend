@@ -30,7 +30,7 @@
 
 /* Color variants */
 .duo {
-  background: linear-gradient(180deg, #6ae505 0%, var(--duo-green) 100%);
+  background: linear-gradient(180deg, var(--kuizu-teal-hover) 0%, var(--duo-green) 100%);
 }
 
 .blue {

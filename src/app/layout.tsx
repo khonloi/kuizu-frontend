@@ -1,19 +1,13 @@
 import type { Metadata } from 'next';
-import { Outfit, Nunito } from 'next/font/google';
+import { Nunito } from 'next/font/google';
 import './globals.css';
 import { QueryProvider } from '@/providers/query-provider';
 import { AuthProvider } from '@/providers/auth-provider';
 import { ToastContainer, A11yAnnouncer } from '@/components/ui';
 import { DemoModeBanner } from '@/components/layout';
 
-const outfit = Outfit({
-  subsets: ['latin'],
-  variable: '--font-outfit',
-  display: 'swap',
-});
-
 const nunito = Nunito({
-  subsets: ['latin'],
+  subsets: ['latin', 'latin-ext'],
   variable: '--font-nunito',
   display: 'swap',
 });
@@ -99,7 +93,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${outfit.variable} ${nunito.variable}`}>
+    <html lang="en" className={nunito.variable}>
       <head>
         <script
           type="application/ld+json"

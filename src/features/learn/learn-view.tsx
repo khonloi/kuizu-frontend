@@ -88,15 +88,7 @@ export function LearnView() {
                       }
                     }}
                     aria-label="Select active curriculum course"
-                    style={{
-                      background: 'var(--bg-input)',
-                      color: 'var(--text-primary)',
-                      border: '1px solid var(--border-card)',
-                      borderRadius: '8px',
-                      padding: '4px 8px',
-                      fontSize: '0.875rem',
-                      cursor: 'pointer',
-                    }}
+                    className={styles.courseSelect}
                   >
                     {courses.map((c) => (
                       <option key={c.slug} value={c.slug}>

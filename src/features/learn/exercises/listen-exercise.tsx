@@ -33,6 +33,7 @@ export function ListenExercise({
       window.speechSynthesis.cancel();
       const utterance = new SpeechSynthesisUtterance(exercise.prompt);
       utterance.rate = rate;
+      utterance.lang = /[\u4e00-\u9fa5]/.test(exercise.prompt) ? 'zh-CN' : 'en-US';
       window.speechSynthesis.speak(utterance);
     }
   };

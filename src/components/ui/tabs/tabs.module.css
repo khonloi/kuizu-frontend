@@ -33,20 +33,25 @@
 
 .tabTrigger:hover:not(:disabled) {
   color: var(--text-primary);
-  background-color: rgba(255, 255, 255, 0.04);
+  background-color: var(--bg-hover-alpha);
+}
+
+.tabTrigger:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
 }
 
 .tabTriggerActive {
-  color: var(--duo-green);
+  color: var(--kuizu-teal-text);
 }
 
 .tabTriggerActive::after {
   content: '';
   position: absolute;
-  bottom: -4px;
+  bottom: 0;
   left: 0;
   right: 0;
-  height: 4px;
+  height: 3px;
   background-color: var(--duo-green);
   border-radius: var(--pill-radius);
 }

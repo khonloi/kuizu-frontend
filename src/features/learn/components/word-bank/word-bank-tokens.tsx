@@ -19,12 +19,12 @@ export function WordBankTokens({
 }: WordBankTokensProps) {
   return (
     <div className={styles.wordBank}>
-      {options.map((token) => {
+      {options.map((token, idx) => {
         const placed = isPlaced(token);
 
         return (
           <button
-            key={token}
+            key={`${token}-${idx}`}
             type="button"
             disabled={disabled || placed}
             onClick={() => onAddToken(token)}

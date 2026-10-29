@@ -24,8 +24,8 @@
 /* Variants */
 .duo {
   background-color: var(--duo-green-subtle);
-  color: var(--duo-green);
-  border: 1px solid rgba(88, 204, 2, 0.3);
+  color: var(--kuizu-teal-text);
+  border: 1px solid rgba(0, 205, 156, 0.3);
 }
 
 .blue {
@@ -48,8 +48,8 @@
 
 .yellow {
   background-color: var(--duo-yellow-subtle);
-  color: var(--duo-yellow);
-  border: 1px solid rgba(255, 200, 0, 0.3);
+  color: var(--duo-yellow-text);
+  border: 1px solid rgba(255, 200, 0, 0.4);
 }
 
 .purple {
@@ -59,7 +59,7 @@
 }
 
 .neutral {
-  background-color: rgba(255, 255, 255, 0.08);
+  background-color: var(--bg-secondary);
   color: var(--text-secondary);
   border: 1px solid var(--border-subtle);
 }

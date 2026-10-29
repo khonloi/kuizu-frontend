@@ -9,7 +9,7 @@ export function ShopSkeleton() {
       <div className={styles.header}>
         <div className={styles.titleGroup}>
           <Skeleton variant="text" width="220px" height="32px" />
-          <Skeleton variant="text" width="340px" height="18px" />
+          <Skeleton variant="text" width="min(340px, 100%)" height="18px" />
         </div>
         <Skeleton variant="rect" width="130px" height="42px" style={{ borderRadius: '9999px' }} />
       </div>
@@ -18,7 +18,7 @@ export function ShopSkeleton() {
       <div className={styles.shopGrid}>
         {[1, 2, 3].map((i) => (
           <Card key={i} padding="lg" className={styles.itemCard}>
-            <div className={styles.cardHeader}>
+            <div className={styles.itemHeader}>
               <Skeleton variant="circle" width="56px" height="56px" />
               <div className={styles.cardTitles}>
                 <Skeleton variant="text" width="160px" height="22px" />
