@@ -1,16 +1,18 @@
-'use client';
+"use client";
 
-import React from 'react';
-import Link from 'next/link';
-import { Heart, RotateCcw, HeartCrack } from 'lucide-react';
-import { Button } from '@/components/ui';
-import styles from '../../lesson-runner.module.css';
+import React from "react";
+import Link from "next/link";
+import { Heart, RotateCcw, HeartCrack } from "lucide-react";
+import { Button } from "@/components/ui";
+import styles from "../../lesson-runner.module.css";
 
 interface LessonOutOfHeartsScreenProps {
   onRestart: () => void;
 }
 
-export function LessonOutOfHeartsScreen({ onRestart }: LessonOutOfHeartsScreenProps) {
+export function LessonOutOfHeartsScreen({
+  onRestart,
+}: LessonOutOfHeartsScreenProps) {
   return (
     <div className={styles.runnerWrapper}>
       <div className={styles.completionScreen}>
@@ -21,7 +23,8 @@ export function LessonOutOfHeartsScreen({ onRestart }: LessonOutOfHeartsScreenPr
         <div>
           <h1 className={styles.outOfHeartsTitle}>Out of Hearts!</h1>
           <p className={styles.outOfHeartsSubtitle}>
-            You ran out of quest hearts. Refill them in the shop or restart practice to keep learning.
+            You ran out of quest hearts. Refill them in the shop or restart
+            practice to keep learning.
           </p>
         </div>
 
