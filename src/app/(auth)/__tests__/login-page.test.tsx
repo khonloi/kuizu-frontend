@@ -2,6 +2,7 @@ import React from 'react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import LoginPage from '../login/page';
+import { ToastContainer } from '@/components/ui';
 import { api } from '@/lib/api';
 
 const mockPush = vi.fn();
@@ -32,7 +33,12 @@ describe('LoginPage Component', () => {
   });
 
   it('displays error if submitted with empty fields', async () => {
-    render(<LoginPage />);
+    render(
+      <>
+        <ToastContainer />
+        <LoginPage />
+      </>
+    );
 
     const submitBtn = screen.getByRole('button', { name: /^log in$/i });
     fireEvent.click(submitBtn);

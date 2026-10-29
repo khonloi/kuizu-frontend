@@ -20,6 +20,7 @@ import {
 import { Card, Button, Badge } from '@/components/ui';
 import { useArenaSocket } from '@/features/arena/hooks/use-arena-socket';
 import { useAudioStore } from '@/stores/audio.store';
+import { toast } from '@/stores/toast.store';
 
 import styles from './join.module.css';
 
@@ -45,23 +46,21 @@ function ArenaJoinForm() {
   const [nickname, setNickname] = useState('');
   const [selectedEmoji, setSelectedEmoji] = useState('⚡');
   const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleJoin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!pin || pin.length !== 6) {
-      setErrorMessage('Please enter a valid 6-digit room PIN.');
+      toast.error('Game PIN Error', 'Please enter a valid 6-digit room PIN.');
       playError();
       return;
     }
 
     if (!nickname.trim()) {
-      setErrorMessage('Please enter a display nickname.');
+      toast.error('Nickname Required', 'Please enter a display nickname.');
       playError();
       return;
     }
 
-    setErrorMessage(null);
     setIsLoading(true);
     playPop();
 
@@ -74,7 +73,10 @@ function ArenaJoinForm() {
       router.push('/arena/play');
     } else {
       playError();
-      setErrorMessage(result.message || 'Room not found or game already in progress.');
+      toast.error(
+        'Join Arena Failed',
+        result.message || 'Room not found or game already in progress.',
+      );
     }
   };
 
@@ -155,12 +157,6 @@ function ArenaJoinForm() {
                 className={styles.nicknameInput}
               />
             </div>
-
-            {errorMessage && (
-              <div className={`${styles.errorMessage} animate-shake`}>
-                {errorMessage}
-              </div>
-            )}
 
             <Button
               type="submit"

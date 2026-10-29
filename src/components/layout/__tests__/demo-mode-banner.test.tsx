@@ -4,66 +4,67 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { DemoModeBanner } from '../demo-mode-banner';
 import * as demoModeModule from '@/lib/demo-mode';
 
-const mockPush = vi.fn();
-vi.mock('next/navigation', () => ({
-  useRouter: () => ({
-    push: mockPush,
-  }),
-}));
-
-describe('DemoModeBanner Layout Component', () => {
+describe('DemoModeBanner Layout Component (Demo Badge)', () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
 
-  it('renders nothing when demo mode is not active', () => {
+  it('renders trigger button indicating Demo: OFF when inactive', () => {
     vi.spyOn(demoModeModule, 'isDemoModeActive').mockReturnValue(false);
 
-    const { container } = render(<DemoModeBanner />);
-    expect(container.firstChild).toBeNull();
+    render(<DemoModeBanner />);
+
+    const trigger = screen.getByRole('button', { name: /demo: off/i });
+    expect(trigger).toBeInTheDocument();
   });
 
-  it('renders badge, message, and action buttons when demo mode is active', () => {
+  it('renders trigger button indicating Demo: ON when active', () => {
     vi.spyOn(demoModeModule, 'isDemoModeActive').mockReturnValue(true);
 
     render(<DemoModeBanner />);
 
-    expect(screen.getByText(/DEMO MODE ACTIVE/i)).toBeInTheDocument();
-    expect(
-      screen.getByText(/Simulated live backend with offline storage/i),
-    ).toBeInTheDocument();
-    expect(
-      screen.getByRole('button', { name: /Reset Progress/i }),
-    ).toBeInTheDocument();
-    expect(
-      screen.getByRole('button', { name: /Exit Demo/i }),
-    ).toBeInTheDocument();
+    const trigger = screen.getByRole('button', { name: /demo: on/i });
+    expect(trigger).toBeInTheDocument();
   });
 
-  it('triggers resetDemoProgress on clicking Reset Progress button', () => {
+  it('opens popup modal when trigger badge is clicked', () => {
     vi.spyOn(demoModeModule, 'isDemoModeActive').mockReturnValue(true);
-    const resetSpy = vi.spyOn(demoModeModule, 'resetDemoProgress');
 
     render(<DemoModeBanner />);
 
-    const resetBtn = screen.getByRole('button', { name: /Reset Progress/i });
-    fireEvent.click(resetBtn);
+    const trigger = screen.getByRole('button', { name: /demo: on/i });
+    fireEvent.click(trigger);
 
-    expect(resetSpy).toHaveBeenCalledTimes(1);
+    expect(screen.getByText('Offline Demo Mode')).toBeInTheDocument();
+    expect(screen.getByRole('switch', { name: /toggle demo mode/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /reset fixtures & state/i })).toBeInTheDocument();
   });
 
-  it('triggers disableDemoMode and routes to /login on clicking Exit Demo button', async () => {
+  it('toggles demo mode to disabled when switch is clicked while active', async () => {
     vi.spyOn(demoModeModule, 'isDemoModeActive').mockReturnValue(true);
     const disableSpy = vi.spyOn(demoModeModule, 'disableDemoMode').mockResolvedValue();
 
     render(<DemoModeBanner />);
 
-    const exitBtn = screen.getByRole('button', { name: /Exit Demo/i });
-    fireEvent.click(exitBtn);
+    fireEvent.click(screen.getByRole('button', { name: /demo: on/i }));
+    const toggle = screen.getByRole('switch', { name: /toggle demo mode/i });
+    fireEvent.click(toggle);
 
-    expect(disableSpy).toHaveBeenCalledTimes(1);
     await waitFor(() => {
-      expect(mockPush).toHaveBeenCalledWith('/login');
+      expect(disableSpy).toHaveBeenCalledTimes(1);
     });
+  });
+
+  it('triggers resetDemoProgress on clicking Reset Fixtures button', () => {
+    vi.spyOn(demoModeModule, 'isDemoModeActive').mockReturnValue(true);
+    const resetSpy = vi.spyOn(demoModeModule, 'resetDemoProgress');
+
+    render(<DemoModeBanner />);
+
+    fireEvent.click(screen.getByRole('button', { name: /demo: on/i }));
+    const resetBtn = screen.getByRole('button', { name: /reset fixtures & state/i });
+    fireEvent.click(resetBtn);
+
+    expect(resetSpy).toHaveBeenCalledTimes(1);
   });
 });

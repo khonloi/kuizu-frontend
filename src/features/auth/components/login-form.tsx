@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Button, Input, Divider } from '@/components/ui';
-import { AuthAlert } from './auth-alert';
 import { AuthLegalNotice } from './auth-legal-notice';
 import { ForgotPasswordModal } from './forgot-password-modal';
 import { SocialAuthButtons } from './social-auth-buttons';
@@ -12,6 +11,7 @@ import { useSocialAuth } from '../hooks/use-social-auth';
 import { validateLoginForm } from '../utils/auth-validation';
 import { useAuthStore } from '@/stores/auth.store';
 import { useAudioStore } from '@/stores/audio.store';
+import { toast } from '@/stores/toast.store';
 import { api } from '@/lib/api';
 import type { User } from '@/types/api.types';
 import styles from '@/app/(auth)/auth.module.css';
@@ -24,12 +24,11 @@ export function LoginForm() {
   const [emailOrUsername, setEmailOrUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [isForgotModalOpen, setIsForgotModalOpen] = useState(false);
 
   const { handleSocialAuth, isLoading: isSocialLoading } = useSocialAuth({
     mode: 'login',
-    onError: (err) => setErrorMsg(err),
+    onError: (err) => toast.error('Social Login Failed', err),
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -37,12 +36,11 @@ export function LoginForm() {
 
     const validationError = validateLoginForm(emailOrUsername, password);
     if (validationError) {
-      setErrorMsg(validationError);
+      toast.error('Validation Error', validationError);
       return;
     }
 
     setIsLoading(true);
-    setErrorMsg(null);
 
     try {
       const response = await api.post<{ user: User }>('/api/v1/auth/login', {
@@ -61,7 +59,7 @@ export function LoginForm() {
       router.push('/learn');
     } catch (err) {
       playError();
-      setErrorMsg((err as Error).message || 'Invalid credentials. Please try again.');
+      toast.error('Login Failed', (err as Error).message || 'Invalid credentials. Please try again.');
     } finally {
       setIsLoading(false);
     }
@@ -79,8 +77,6 @@ export function LoginForm() {
       <header className={styles.header}>
         <h1 className={styles.title}>Log in</h1>
       </header>
-
-      <AuthAlert message={errorMsg} />
 
       <form onSubmit={handleSubmit} noValidate className={styles.form}>
         <Input

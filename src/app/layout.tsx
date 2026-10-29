@@ -4,6 +4,7 @@ import './globals.css';
 import { QueryProvider } from '@/providers/query-provider';
 import { AuthProvider } from '@/providers/auth-provider';
 import { ToastContainer, A11yAnnouncer } from '@/components/ui';
+import { DemoModeBanner } from '@/components/layout';
 
 const outfit = Outfit({
   subsets: ['latin'],
@@ -109,6 +110,7 @@ export default function RootLayout({
         <QueryProvider>
           <AuthProvider>
             {children}
+            <DemoModeBanner />
             <ToastContainer />
             <A11yAnnouncer />
           </AuthProvider>

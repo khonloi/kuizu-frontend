@@ -2,6 +2,7 @@ import React from 'react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import RegisterPage from '../register/page';
+import { ToastContainer } from '@/components/ui';
 import { api } from '@/lib/api';
 
 const mockPush = vi.fn();
@@ -36,7 +37,12 @@ describe('RegisterPage Component', () => {
   });
 
   it('displays error if username is too short', async () => {
-    render(<RegisterPage />);
+    render(
+      <>
+        <ToastContainer />
+        <RegisterPage />
+      </>
+    );
 
     fireEvent.change(screen.getByPlaceholderText(/^username$/i), { target: { value: 'ab' } });
     fireEvent.click(screen.getByRole('button', { name: /^create account$/i }));

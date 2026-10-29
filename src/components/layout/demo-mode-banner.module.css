@@ -1,109 +1,182 @@
-.demoBanner {
+.container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 350;
+  font-family: inherit;
+}
+
+.triggerButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.85rem;
+  border-radius: 9999px;
+  background: rgba(18, 24, 38, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  color: #ffffff;
+  font-size: 0.775rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+}
+
+.triggerButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.statusDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--duo-red, #ff4b4b);
+  box-shadow: 0 0 0 2px rgba(255, 75, 75, 0.25);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.statusDotActive {
+  background-color: var(--duo-green, #58cc02);
+  box-shadow: 0 0 0 2px rgba(88, 204, 2, 0.35);
+}
+
+.modalOverlay {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  right: 0;
+  width: 320px;
+  background: rgba(18, 24, 38, 0.96);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45);
+  padding: 1rem;
+  color: #f8fafc;
+  animation: fadeInSlideUp 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes fadeInSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
-  padding: 0.5rem 1.25rem;
-  background: rgba(24, 28, 36, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(88, 204, 2, 0.3);
-  color: var(--text-primary);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 0.6rem;
+  margin-bottom: 0.75rem;
+}
+
+.title {
   font-size: 0.875rem;
-  z-index: 999;
-  position: relative;
-  transition: all 0.2s ease-in-out;
-}
-
-.leftContent {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-}
-
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.375rem;
-  padding: 0.25rem 0.625rem;
-  border-radius: 9999px;
-  background: rgba(88, 204, 2, 0.15);
-  border: 1px solid var(--duo-green);
-  color: var(--duo-green);
-  font-weight: 700;
-  font-size: 0.75rem;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
-
-.message {
-  color: var(--text-secondary);
-  font-size: 0.8125rem;
-}
-
-.actions {
+  font-weight: 800;
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  flex-shrink: 0;
+  color: #ffffff;
 }
 
-.resetBtn {
-  display: inline-flex;
+.closeButton {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 0.25rem;
+  display: flex;
   align-items: center;
-  gap: 0.375rem;
-  padding: 0.3rem 0.75rem;
+  border-radius: 6px;
+  transition: color 0.15s ease;
+}
+
+.closeButton:hover {
+  color: #ffffff;
+}
+
+.description {
+  font-size: 0.775rem;
+  line-height: 1.45;
+  color: #cbd5e1;
+  margin-bottom: 0.9rem;
+}
+
+.actionRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 0.5rem 0.75rem;
+  border-radius: 10px;
+  margin-bottom: 0.65rem;
+}
+
+.toggleLabel {
+  font-size: 0.775rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.toggleSwitch {
+  position: relative;
+  width: 44px;
+  height: 24px;
+  background: #475569;
+  border-radius: 9999px;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.2s ease;
+  padding: 2px;
+}
+
+.toggleSwitchActive {
+  background: var(--duo-green, #58cc02);
+}
+
+.toggleSlider {
+  width: 20px;
+  height: 20px;
+  background: #ffffff;
+  border-radius: 50%;
+  display: block;
+  transition: transform 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.toggleSliderActive {
+  transform: translateX(20px);
+}
+
+.resetButton {
+  width: 100%;
+  padding: 0.5rem;
   font-size: 0.75rem;
   font-weight: 700;
   border-radius: 8px;
-  border: 1px solid var(--border-card);
-  background: var(--bg-card);
-  color: var(--text-primary);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: transparent;
+  color: #94a3b8;
   cursor: pointer;
-  transition: all 0.15s ease;
-}
-
-.resetBtn:hover {
-  background: var(--bg-hover);
-  border-color: var(--duo-orange);
-  color: var(--duo-orange);
-}
-
-.exitBtn {
-  display: inline-flex;
+  transition: all 0.2s ease;
+  display: flex;
   align-items: center;
-  gap: 0.375rem;
-  padding: 0.3rem 0.75rem;
-  font-size: 0.75rem;
-  font-weight: 700;
-  border-radius: 8px;
-  border: 1px solid rgba(255, 75, 75, 0.4);
-  background: rgba(255, 75, 75, 0.1);
-  color: var(--duo-red);
-  cursor: pointer;
-  transition: all 0.15s ease;
+  justify-content: center;
+  gap: 0.35rem;
 }
 
-.exitBtn:hover {
-  background: rgba(255, 75, 75, 0.2);
-  border-color: var(--duo-red);
-}
-
-@media (max-width: 640px) {
-  .demoBanner {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 0.5rem 0.75rem;
-    gap: 0.5rem;
-  }
-
-  .message {
-    display: none;
-  }
-
-  .actions {
-    width: 100%;
-    justify-content: flex-end;
-  }
+.resetButton:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #f1f5f9;
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './layout.module.css';
-import { Sidebar, MobileNav, StatsBar, SkipLink, DemoModeBanner } from '@/components/layout';
+import { Sidebar, MobileNav, StatsBar, SkipLink } from '@/components/layout';
 import { HeartRefillModal } from '@/features/gamification/heart-refill-modal';
 
 export default function AppLayout({
@@ -18,7 +18,6 @@ export default function AppLayout({
 
       {/* Main Body */}
       <div className={styles.mainWrapper}>
-        <DemoModeBanner />
         <StatsBar />
         <main id="main-content" tabIndex={-1} className={styles.contentContainer}>
           {children}

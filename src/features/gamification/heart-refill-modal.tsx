@@ -1,11 +1,12 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Heart, Gem, Sparkles } from 'lucide-react';
 import { Modal, Button } from '@/components/ui';
 import { useUiStore } from '@/stores/ui.store';
 import { useAuthStore } from '@/stores/auth.store';
 import { useHeartRefillMutation } from '@/hooks/queries';
+import { toast } from '@/stores/toast.store';
 import styles from './heart-refill-modal.module.css';
 
 const REFILL_GEM_COST = 350;
@@ -14,7 +15,6 @@ export function HeartRefillModal() {
   const { isHeartModalOpen, closeHeartModal } = useUiStore();
   const user = useAuthStore((s) => s.user);
   const refillMutation = useHeartRefillMutation();
-  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const currentHearts = user?.hearts ?? 5;
   const currentGems = user?.gems ?? 100;
@@ -23,13 +23,13 @@ export function HeartRefillModal() {
 
   const handleRefill = async () => {
     if (isFull) return;
-    setErrorMsg(null);
 
     try {
       await refillMutation.mutateAsync();
       closeHeartModal();
+      toast.success('Hearts Refilled', 'Your hearts are at maximum!');
     } catch (err) {
-      setErrorMsg((err as Error).message || 'Failed to refill hearts');
+      toast.error('Refill Failed', (err as Error).message || 'Failed to refill hearts');
     }
   };
 
@@ -95,12 +95,6 @@ export function HeartRefillModal() {
             <span>{currentGems}</span>
           </div>
         </div>
-
-        {errorMsg && (
-          <div className={styles.errorMessage}>
-            {errorMsg}
-          </div>
-        )}
       </div>
     </Modal>
   );

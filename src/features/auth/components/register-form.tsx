@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Button, Input, Divider } from '@/components/ui';
-import { AuthAlert } from './auth-alert';
 import { AuthLegalNotice } from './auth-legal-notice';
 import { SocialAuthButtons } from './social-auth-buttons';
 import { useSocialAuth } from '../hooks/use-social-auth';
@@ -12,6 +11,7 @@ import { validateRegistrationForm } from '../utils/auth-validation';
 import { useAuthStore } from '@/stores/auth.store';
 import { useAudioStore } from '@/stores/audio.store';
 import { fireVictoryConfetti } from '@/lib/confetti';
+import { toast } from '@/stores/toast.store';
 import { api } from '@/lib/api';
 import type { User } from '@/types/api.types';
 import styles from '@/app/(auth)/auth.module.css';
@@ -25,12 +25,11 @@ export function RegisterForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const { handleSocialAuth, isLoading: isSocialLoading } = useSocialAuth({
     mode: 'register',
     onSuccess: () => fireVictoryConfetti(),
-    onError: (err) => setErrorMsg(err),
+    onError: (err) => toast.error('Social Registration Failed', err),
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -43,12 +42,11 @@ export function RegisterForm() {
     });
 
     if (validationError) {
-      setErrorMsg(validationError);
+      toast.error('Validation Error', validationError);
       return;
     }
 
     setIsLoading(true);
-    setErrorMsg(null);
 
     try {
       const response = await api.post<{ user: User }>('/api/v1/auth/register', {
@@ -69,7 +67,8 @@ export function RegisterForm() {
       router.push('/learn');
     } catch (err) {
       playError();
-      setErrorMsg(
+      toast.error(
+        'Registration Failed',
         (err as Error).message ||
           'Registration failed. Please try a different username/email.',
       );
@@ -85,8 +84,6 @@ export function RegisterForm() {
       <header className={styles.header}>
         <h1 className={styles.title}>Create your profile</h1>
       </header>
-
-      <AuthAlert message={errorMsg} />
 
       <form onSubmit={handleSubmit} noValidate className={styles.form}>
         <Input

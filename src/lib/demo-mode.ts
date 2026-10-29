@@ -82,7 +82,7 @@ export async function enableDemoMode(): Promise<void> {
     if (!localStorage.getItem(DEMO_COMPLETED_LESSONS_KEY)) {
       localStorage.setItem(
         DEMO_COMPLETED_LESSONS_KEY,
-        JSON.stringify(["lesson-1", "lesson-cn-1"]),
+        JSON.stringify(["lesson-cn-1"]),
       );
     }
   } catch {
@@ -139,7 +139,7 @@ export function resetDemoProgress(): void {
     );
     localStorage.setItem(
       DEMO_COMPLETED_LESSONS_KEY,
-      JSON.stringify(["lesson-1", "lesson-cn-1"]),
+      JSON.stringify(["lesson-cn-1"]),
     );
   } catch {
     // Ignore storage errors
