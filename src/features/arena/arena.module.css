@@ -11,7 +11,7 @@
   display: flex;
   flex-direction: column;
   background-color: var(--bg-primary);
-  background-image: 
+  background-image:
     radial-gradient(circle at 10% 20%, rgba(226, 27, 60, 0.12) 0%, transparent 40%),
     radial-gradient(circle at 90% 20%, rgba(19, 104, 206, 0.12) 0%, transparent 40%),
     radial-gradient(circle at 50% 90%, rgba(38, 137, 12, 0.08) 0%, transparent 50%);
@@ -341,9 +341,11 @@
   .hostChoicesGrid {
     grid-template-columns: 1fr;
   }
+
   .questionTitle {
     font-size: 1.4rem;
   }
+
   .podiumContainer {
     gap: 0.75rem;
   }
@@ -864,5 +866,3 @@
   font-weight: 800;
   color: var(--text-muted);
 }
-
-

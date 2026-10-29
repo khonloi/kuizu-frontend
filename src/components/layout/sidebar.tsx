@@ -12,7 +12,6 @@ import {
   User,
   Volume2,
   VolumeX,
-  Sliders,
 } from 'lucide-react';
 import styles from './sidebar.module.css';
 import { useAudioStore } from '@/stores/audio.store';
@@ -31,7 +30,6 @@ const NAV_LINKS: NavLink[] = [
   { href: '/leaderboard', label: 'Leaderboard', icon: Trophy, theme: 'leaderboard' },
   { href: '/shop', label: 'Shop', icon: ShoppingBag, theme: 'shop' },
   { href: '/arena/join', label: 'Live Arena', icon: Gamepad2, theme: 'arena' },
-  { href: '/design-system', label: 'Design System', icon: Sliders, theme: 'learn' },
   { href: '/profile', label: 'Profile', icon: User, theme: 'profile' },
 ];
 

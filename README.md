@@ -108,7 +108,6 @@ kuizu-frontend/
 ├── src/
 │   ├── app/                   # Next.js 16 App Router routes
 │   │   ├── (app)/             # Authenticated shell layout (Sidebar + StatsBar)
-│   │   │   ├── design-system/ # Interactive live component library showcase
 │   │   │   ├── leaderboard/   # Diamond League standings with promotion zones
 │   │   │   ├── learn/         # Duolingo curriculum sine-wave quest map
 │   │   │   ├── profile/       # Player showcase matrix & stats / Guest CTA card
